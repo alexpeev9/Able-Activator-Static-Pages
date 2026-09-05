@@ -10,26 +10,55 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   body { margin: 0; background: #1c1c1c; -webkit-font-smoothing: antialiased; }
   a { color: #29abe2; }
   a:hover { color: #7ad2f2; }
   * { box-sizing: border-box; }
+  .mod-head {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr) 32px;
+    column-gap: 28px;
+    align-items: start;
+    width: 100%;
+  }
+  .mod-rail {
+    padding-top: 3px;
+    white-space: nowrap;
+  }
+  .mod-body { padding-left: 228px; }
+  .mod-day {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    column-gap: 28px;
+    align-items: baseline;
+  }
+  @media (max-width: 760px) {
+    .mod-head {
+      grid-template-columns: minmax(0, 1fr) 32px;
+      row-gap: 10px;
+      column-gap: 12px;
+    }
+    .mod-rail { grid-column: 1 / -1; padding-top: 0; }
+    .mod-body { padding-left: 0; }
+    .mod-day { grid-template-columns: 1fr; row-gap: 6px; }
+  }
 </style>
 </helmet>
-<div style="min-height:100vh;background:#1c1c1c;padding:clamp(30px,5vw,80px) clamp(16px,4vw,40px);font-family:Barlow,Helvetica,sans-serif;color:#e9edef">
-  <div style="max-width:1000px;margin:0 auto">
+<div style="background:#1c1c1c;padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);font-family:Barlow,Helvetica,sans-serif;color:#e9edef">
+  <div style="max-width:1120px;margin:0 auto">
 
-    <div style="text-align:center;margin-bottom:clamp(26px,4vw,44px)">
-      <div style="font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:#8d979b;font-weight:600;margin-bottom:14px">ABLE Activator 2027</div>
-      <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(32px,6.4vw,60px);line-height:1;letter-spacing:.005em;text-transform:uppercase;color:#29abe2;text-wrap:balance">Program modules</h1>
+    <div style="max-width:720px;margin-bottom:clamp(28px,4vw,48px)">
+      <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8d979b;font-weight:600;margin-bottom:14px">{{ yearLabel }}</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(28px,5vw,48px);line-height:1.05;letter-spacing:-.01em;color:#fff;text-wrap:balance">Program modules</h2>
+      <p style="margin:16px 0 0;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a9b2b6;max-width:62ch;text-wrap:pretty">Weekend modules open Friday evening (7:00 PM – 9:00 PM) and run full days on Saturday and Sunday (8:00 AM – 8:00 PM). Between them, Wednesday evenings host a guest founder from the Bulgarian start-up ecosystem. Open a module to see the topics and what each day is for.</p>
     </div>
 
     <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding-bottom:16px;border-bottom:1px solid #2b2b2b;margin-bottom:16px">
       <div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:14.5px;color:#8d979b">
         <span>7 modules</span><span style="color:#3d4245">•</span>
-        <span>4 Wednesday sessions</span><span style="color:#3d4245">•</span>
+        <span>4 Wednesdays</span><span style="color:#3d4245">•</span>
         <span>Demo Day</span><span style="color:#3d4245">•</span>
         <span>19 Feb — 16 Apr 2027</span>
       </div>
@@ -38,150 +67,181 @@
 
     <div style="display:flex;flex-direction:column;gap:10px">
       <sc-for list="{{ items }}" as="it" hint-placeholder-count="12">
-        <section data-screen-label="{{ it.label }}" style="border:1px solid #2b2b2b;border-radius:14px;overflow:hidden;background:#232323;transition:border-color .2s ease,background .2s ease" style-hover="border-color:#3d4a50;background:#262626">
-          <button onClick="{{ it.onToggle }}" aria-expanded="{{ it.open }}" style="width:100%;display:flex;align-items:center;gap:clamp(12px,2vw,18px);padding:clamp(13px,2.1vw,20px);background:transparent;border:0;border-left:4px solid {{ it.rail }};cursor:{{ it.cursor }};text-align:left;font-family:Barlow;color:inherit;min-height:58px;transition:border-color .2s ease">
-            <span style="flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:{{ it.chipBg }};color:{{ it.chipFg }};font-family:Poppins;font-weight:700;font-size:14px;line-height:1">{{ it.chipText }}</span>
-            <span style="flex:1;min-width:0">
-              <span style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#29abe2;margin-bottom:4px">{{ it.kicker }}</span>
-              <span style="display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(15.5px,2.3vw,19px);line-height:1.3;color:#fff;text-wrap:pretty">{{ it.title }}</span>
-              <span style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:13.5px;color:#8d979b">
-                <span style="font-weight:600;color:#c8d0d3">{{ it.date }}</span>
-                <span style="color:#3d4245">•</span>
-                <span>{{ it.time }}</span>
-                <span style="color:#3d4245">•</span>
-                <span>{{ it.meta }}</span>
-              </span>
+        <section data-screen-label="{{ it.label }}" style="border:1px solid #2b2b2b;border-radius:16px;overflow:hidden;background:#232323;transition:border-color .2s ease,background .2s ease" style-hover="border-color:#3d4a50;background:#262626">
+          <button class="mod-head" onClick="{{ it.onToggle }}" aria-expanded="{{ it.open }}" style="padding:clamp(16px,2.2vw,22px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:64px">
+            <span class="mod-rail" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#29abe2;line-height:1.35">{{ it.railLabel }}</span>
+            <span style="min-width:0">
+              <span style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#8d979b;margin-bottom:6px">{{ it.dateRange }}</span>
+              <span style="display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(16px,2.3vw,20px);line-height:1.3;color:#fff;text-wrap:pretty">{{ it.title }}</span>
+              <span style="display:block;font-size:14px;color:#8d979b;margin-top:8px">{{ it.meta }}</span>
             </span>
-            <sc-if value="{{ it.collapsible }}" hint-placeholder-val="{{ true }}">
-              <span style="flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#2c2c2c;color:#29abe2;font-size:11px;transition:transform .24s ease;transform:{{ it.caret }}">▼</span>
-            </sc-if>
+            <span style="width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#2c2c2c;color:#29abe2;font-size:15px;line-height:1;transition:transform .24s ease;transform:{{ it.caret }}">{{ it.icon }}</span>
           </button>
 
           <sc-if value="{{ it.open }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:0 clamp(15px,2.4vw,24px) clamp(18px,2.6vw,26px);margin-left:4px">
-              <div style="border-top:1px solid #2f2f2f;padding-top:18px;display:grid;gap:18px;grid-template-columns:1fr">
+            <div style="padding:0 clamp(16px,2.2vw,22px) clamp(20px,2.8vw,28px)">
+              <div class="mod-body" style="border-top:1px solid #2f2f2f;padding-top:20px;display:grid;gap:clamp(20px,2.6vw,28px)">
                 <sc-if value="{{ it.hasTopics }}" hint-placeholder-val="{{ false }}">
                   <div>
                     <div style="font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#8d979b;margin-bottom:12px">Topics covered</div>
-                    <ul style="margin:0;padding:0;list-style:none;display:grid;gap:9px 14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+                    <ul style="margin:0;padding:0;list-style:none;display:grid;gap:8px 24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
                       <sc-for list="{{ it.topics }}" as="t" hint-placeholder-count="6">
-                        <li style="display:flex;align-items:center;gap:11px;font-size:15.5px;line-height:1.45;color:#e3e9eb;background:#2a2a2a;border:1px solid #333;border-radius:11px;padding:11px 14px">
-                          <span style="flex:none;width:7px;height:7px;border-radius:50%;background:#29abe2"></span>
+                        <li style="display:flex;align-items:baseline;gap:10px;font-size:15.5px;line-height:1.5;color:#d6dcde">
+                          <span style="flex:none;color:#29abe2">—</span>
                           <span>{{ t }}</span>
                         </li>
                       </sc-for>
                     </ul>
                   </div>
                 </sc-if>
-                <sc-for list="{{ it.paras }}" as="p" hint-placeholder-count="1">
-                  <p style="margin:0;font-size:15.5px;line-height:1.68;color:#b6bec2;max-width:72ch;text-wrap:pretty">{{ p }}</p>
-                </sc-for>
+
+                <div>
+                  <div style="font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#8d979b;padding-bottom:10px;border-bottom:1px solid #2f2f2f;margin-bottom:4px">{{ it.scheduleLabel }}</div>
+                  <sc-for list="{{ it.days }}" as="d" hint-placeholder-count="3">
+                    <div class="mod-day" style="padding:14px 0;border-bottom:1px solid #2f2f2f">
+                      <div>
+                        <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:15px;color:#fff">{{ d.day }}</div>
+                        <div style="font-size:13px;color:#29abe2;margin-top:4px;font-weight:600">{{ d.time }}</div>
+                      </div>
+                      <p style="margin:0;font-size:15px;line-height:1.6;color:#a9b2b6;text-wrap:pretty">{{ d.purpose }}</p>
+                    </div>
+                  </sc-for>
+                  <sc-for list="{{ it.paras }}" as="p" hint-placeholder-count="0">
+                    <p style="margin:14px 0 0;font-size:15.5px;line-height:1.68;color:#b6bec2;max-width:70ch;text-wrap:pretty">{{ p }}</p>
+                  </sc-for>
+                </div>
               </div>
             </div>
           </sc-if>
         </section>
       </sc-for>
     </div>
-
-    <p style="margin:26px 0 0;font-size:14px;color:#767f83">Weekend modules run Friday evening through Sunday. Wednesday sessions host a different guest from the Bulgarian start-up ecosystem, followed by a dedicated Q&amp;A.</p>
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;expandFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showTopics&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;yearLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ABLE Activator 2027&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const wknd = (dates, purposes) => [
+  { day: "Friday " + dates[0], time: "7:00 PM – 9:00 PM", purpose: purposes[0] },
+  { day: "Saturday " + dates[1], time: "8:00 AM – 8:00 PM", purpose: purposes[1] },
+  { day: "Sunday " + dates[2], time: "8:00 AM – 8:00 PM", purpose: purposes[2] }
+];
+
+const WED_PURPOSE = "One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&A with the cohort.";
+
 const DATA = [
   {
-    id: "m1", kind: "module", chipText: "01", label: "Module 1", kicker: "Module 1",
+    id: "m1", label: "Module 1",
+    railTop: "Module", railBottom: "01", dateRange: "19 – 21 Feb 2027",
     title: "Leadership and Community Ignition: Thinking Like an Entrepreneur",
-    date: "19 Feb – 21 Feb 2027", time: "7AM Fri – 8PM Sun",
     topics: ["Motivation & Inspiration", "Introduction to Entrepreneurship", "Teamwork & Leadership", "Idea Generation & Market Research", "Connecting with Entrepreneurs", "Problem Validation"],
-    paras: []
+    days: wknd(["19 Feb", "20 Feb", "21 Feb"], [
+      "Opening evening: meet the cohort, the trainers and the ABLE community, and set your intentions for the edition.",
+      "The entrepreneurial mindset — teamwork, leadership and how founders make decisions under uncertainty.",
+      "Idea generation, first market research and validating that the problem you picked is real."
+    ])
   },
   {
-    id: "w1", kind: "session", chipText: "Q&A", label: "Wednesday session 24 Feb", kicker: "Wednesday session",
-    title: "Founder stories & live Q&A",
-    date: "24 Feb 2027", time: "7PM Wed",
+    id: "w1", label: "Wednesday 24 Feb",
+    railTop: "Wednesday", railBottom: "Session", dateRange: "24 Feb 2027",
+    title: "Founder story & live Q&A",
     topics: [],
-    paras: []
+    days: [{ day: "Wednesday 24 Feb", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
   },
   {
-    id: "m2", kind: "module", chipText: "02", label: "Module 2", kicker: "Module 2",
+    id: "m2", label: "Module 2",
+    railTop: "Module", railBottom: "02", dateRange: "26 – 28 Feb 2027",
     title: "The Path to the Customer: Startup Launchpad",
-    date: "26 Feb – 28 Feb 2027", time: "7PM Fri – 8PM Sun",
-    topics: ["Team Formation", "Understanding Customer Needs", "Defining Value Proposition", "Building Unfair Advantage", "Identifying Traction Channels", "Crafting Revenue Streams", "Managing Cost Structure", "Establishing Key Metrics", "Testing Hypotheses through Customer Interviews", "Motivation on Pivoting Strategies"],
-    paras: []
+    topics: ["Team Formation", "Understanding Customer Needs", "Defining Value Proposition", "Building Unfair Advantage", "Identifying Traction Channels", "Crafting Revenue Streams", "Managing Cost Structure", "Establishing Key Metrics", "Testing Hypotheses through Customer Interviews", "Pivoting Strategies"],
+    days: wknd(["26 Feb", "27 Feb", "28 Feb"], [
+      "Teams are formed and each team picks the customer need it will chase for the rest of the program.",
+      "Value proposition, unfair advantage and the traction channels that could realistically reach that customer.",
+      "Revenue streams, cost structure and key metrics — then you plan the customer interviews you run during the week."
+    ])
   },
   {
-    id: "w2", kind: "session", chipText: "Q&A", label: "Wednesday session 10 Mar", kicker: "Wednesday session",
-    title: "Founder stories & live Q&A",
-    date: "10 Mar 2027", time: "7PM Wed",
-    topics: [], paras: []
+    id: "w2", label: "Wednesday 10 Mar",
+    railTop: "Wednesday", railBottom: "Session", dateRange: "10 Mar 2027",
+    title: "Founder story & live Q&A",
+    topics: [],
+    days: [{ day: "Wednesday 10 Mar", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
   },
   {
-    id: "m3", kind: "module", chipText: "03", label: "Module 3", kicker: "Module 3",
+    id: "m3", label: "Module 3",
+    railTop: "Module", railBottom: "03", dateRange: "12 – 14 Mar 2027",
     title: "Refining Your Venture: Innovate & Collaborate",
-    date: "12 Mar – 14 Mar 2027", time: "7PM Fri – 8PM Sun",
-    topics: ["Analyzing Customer Interview Results", "Setting Expectations for Demo Day Presentations", "Exploring Design Thinking", "Facilitating Team Synergy", "Hands-On Session: Building a Minimum Viable Product (MVP) through Prototyping", "Pitching Session #1: Presenting Initial Ideas", "Roundtable Discussions"],
-    paras: []
+    topics: ["Analyzing Customer Interview Results", "Design Thinking", "Team Synergy", "Hands-On: Building an MVP through Prototyping", "Pitching Session #1", "Roundtable Discussions", "Setting Expectations for Demo Day"],
+    days: wknd(["12 Mar", "13 Mar", "14 Mar"], [
+      "You bring back what customers actually told you and read the results as a team.",
+      "Design thinking and a hands-on prototyping session — the first version of your MVP takes shape.",
+      "Pitching Session #1 in front of trainers, then roundtable feedback and Demo Day expectations."
+    ])
   },
   {
-    id: "m4", kind: "module", chipText: "04", label: "Module 4", kicker: "Module 4",
+    id: "m4", label: "Module 4",
+    railTop: "Module", railBottom: "04", dateRange: "19 – 21 Mar 2027",
     title: "Market and Business Mastery",
-    date: "19 Mar – 21 Mar 2027", time: "8AM Fri – 8PM Sun",
-    topics: ["Exploring Go-to-Market Strategies", "Insights into Startup Marketing", "Motivational Panel with Successful Entrepreneurs", "Mastering Sales Techniques and Strategies", "Hands-on Work Time in Teams", "Pitching Session #2: Refining Presentation Skills", "Roundtable Discussions"],
-    paras: []
+    topics: ["Go-to-Market Strategies", "Startup Marketing", "Sales Techniques and Strategies", "Motivational Panel with Entrepreneurs", "Hands-on Work Time in Teams", "Pitching Session #2", "Roundtable Discussions"],
+    days: wknd(["19 Mar", "20 Mar", "21 Mar"], [
+      "How a product reaches its market: go-to-market strategy for your specific idea.",
+      "Start-up marketing and sales — the techniques founders use before they can afford a team.",
+      "Focused work time in teams, then Pitching Session #2 and roundtable feedback."
+    ])
   },
   {
-    id: "w3", kind: "session", chipText: "Q&A", label: "Wednesday session 31 Mar", kicker: "Wednesday session",
-    title: "Founder stories & live Q&A",
-    date: "31 Mar 2027", time: "7PM Wed",
-    topics: [], paras: []
+    id: "w3", label: "Wednesday 31 Mar",
+    railTop: "Wednesday", railBottom: "Session", dateRange: "31 Mar 2027",
+    title: "Founder story & live Q&A",
+    topics: [],
+    days: [{ day: "Wednesday 31 Mar", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
   },
   {
-    id: "m5", kind: "module", chipText: "05", label: "Module 5", kicker: "Module 5",
+    id: "m5", label: "Module 5",
+    railTop: "Module", railBottom: "05", dateRange: "2 – 4 Apr 2027",
     title: "Financial Mastery & Strategic Scaling",
-    date: "2 – 4 Apr 2027", time: "7PM Fri – 8PM Sun",
-    topics: ["Navigating Entrepreneurial Finance", "Teamwork & Collaboration", "Insights into Splitting Equity: The Legal Perspective", "Growth Strategies Tailored for Startups", "Motivational Panel with Successful Entrepreneurs", "In-depth Work Time in Teams", "Pitching Session #3: Showcasing Growth Plans", "Roundtable Discussions: Comprehensive Feedback on Pitches"],
-    paras: []
+    topics: ["Entrepreneurial Finance", "Splitting Equity: The Legal Perspective", "Growth Strategies for Startups", "Motivational Panel with Entrepreneurs", "In-depth Work Time in Teams", "Pitching Session #3", "Roundtable Discussions"],
+    days: wknd(["2 Apr", "3 Apr", "4 Apr"], [
+      "Entrepreneurial finance: the numbers a founder has to be able to defend.",
+      "Splitting equity from the legal side, plus growth strategies built for early-stage teams.",
+      "Pitching Session #3 — the last full rehearsal before Demo Day — and detailed roundtable feedback."
+    ])
   },
   {
-    id: "w4", kind: "session", chipText: "Q&A", label: "Wednesday session 7 Apr", kicker: "Wednesday session",
-    title: "Founder stories & live Q&A",
-    date: "7 Apr 2027", time: "7PM Wed",
-    topics: [], paras: []
+    id: "w4", label: "Wednesday 7 Apr",
+    railTop: "Wednesday", railBottom: "Session", dateRange: "7 Apr 2027",
+    title: "Founder story & live Q&A",
+    topics: [],
+    days: [{ day: "Wednesday 7 Apr", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
   },
   {
-    id: "demo", kind: "demo", chipText: "★", label: "Demo Day", kicker: "Demo Day",
+    id: "demo", label: "Demo Day",
+    railTop: "Demo", railBottom: "Day", dateRange: "14 Apr 2027",
     title: "Grand Final Pitch Event",
-    date: "15 Apr 2027", time: "7PM – 11PM Wed",
-    topics: ["Grand Final Pitch Event", "Hand-picked Jury from the Start-up Ecosystem", "Representatives of the ABLE Community, Sponsors & Partners", "Announcement of the Best-performing Team"],
-    paras: ["Teams pitch for 5 minutes to a hand-picked jury of founders and investors, and the best-performing team of the edition is announced."]
+    topics: ["Team pitches in front of a live audience", "Hand-picked jury from the start-up ecosystem", "ABLE community, sponsors & partners in the room", "Announcement of the best-performing team"],
+    days: [{ day: "Wednesday 14 Apr", time: "7:00 PM – 11:00 PM", purpose: "Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team of the edition." }]
   },
   {
-    id: "m51", kind: "module", chipText: "5.1", label: "Module 5.1", kicker: "Module 5.1 — Closing",
+    id: "m51", label: "Module 5.1",
+    railTop: "Module", railBottom: "05.1", dateRange: "16 Apr 2027",
     title: "Reflection & certificate ceremony",
-    date: "16 Apr 2027", time: "5PM – 9PM Fri",
-    topics: ["Reflection and key takeaways from the Activator journey", "Official certificate ceremony and celebration with ABLE alumni"],
-    paras: []
+    topics: ["Reflection and key takeaways from the Activator journey", "Official certificate ceremony", "Celebration with ABLE alumni"],
+    days: [{ day: "Friday 16 Apr", time: "5:00 PM – 9:00 PM", purpose: "A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni." }]
   },
   {
-    id: "m6", kind: "module", chipText: "06", label: "Module 6", kicker: "Module 6 — Retreat",
+    id: "m6", label: "Module 6",
+    railTop: "Module", railBottom: "06", dateRange: "Dates to be confirmed",
     title: "Welcome to the community",
-    date: "TBC", time: "7PM Fri – 1PM Sun",
     topics: ["Team building activities", "Interactive sessions", "Celebrations and a warm welcome to ABLE"],
-    paras: []
+    days: [],
+    paras: ["A weekend retreat outside Sofia that welcomes the new cohort into the ABLE community. Dates are confirmed with the participants after Demo Day."]
   }
 ];
 
-const WED_PARAS = ["An evening with a guest founder from the Bulgarian start-up ecosystem, followed by a dedicated Q&A."];
-
-const STYLES = {
-  module: { chipBg: "#2596be", chipFg: "#ffffff", rail: "#29abe2" },
-  session: { chipBg: "rgba(41,171,226,.16)", chipFg: "#7ad2f2", rail: "#5b8b9c" },
-  demo: { chipBg: "#29abe2", chipFg: "#12242c", rail: "#29abe2" }
-};
-
 class Component extends DCLogic {
-  state = { open: { m1: true } };
+  constructor(props) {
+    super(props);
+    const expand = props.expandFirst ?? true;
+    this.state = { open: expand ? { m1: true } : {} };
+  }
 
   toggle(id) {
     this.setState(s => ({ open: { ...s.open, [id]: !s.open[id] } }));
@@ -189,8 +249,10 @@ class Component extends DCLogic {
 
   renderVals() {
     const open = this.state.open;
-    const allOpen = DATA.slice(1).every(d => open[d.id]);
+    const showTopics = this.props.showTopics ?? true;
+    const allOpen = DATA.every(d => open[d.id]);
     return {
+      yearLabel: this.props.yearLabel ?? "ABLE Activator 2027",
       toggleLabel: allOpen ? "Collapse all" : "Expand all",
       toggleAll: () => {
         const next = {};
@@ -198,21 +260,18 @@ class Component extends DCLogic {
         this.setState({ open: next });
       },
       items: DATA.map(d => {
-        const s = STYLES[d.kind];
-        const paras = d.paras.length ? d.paras : (d.kind === "session" ? WED_PARAS : d.paras);
         const isOpen = !!open[d.id];
+        const isWeekend = d.days && d.days.length === 3;
         return {
           ...d,
-          paras,
-          meta: d.topics.length ? d.topics.length + " topics" : "Guest session",
+          paras: d.paras || [],
+          meta: d.topics.length ? d.topics.length + " topics" : "Guest founder + open Q&A",
           open: isOpen,
-          collapsible: true,
-          cursor: "pointer",
-          caret: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-          hasTopics: d.topics.length > 0,
-          rail: isOpen ? s.rail : "transparent",
-          chipBg: s.chipBg,
-          chipFg: s.chipFg,
+          railLabel: (d.railTop + " " + d.railBottom).trim(),
+          icon: "+",
+          caret: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+          hasTopics: showTopics && d.topics.length > 0,
+          scheduleLabel: d.days.length ? (isWeekend ? "What each day is for" : "The evening") : "Good to know",
           onToggle: () => this.toggle(d.id)
         };
       })
