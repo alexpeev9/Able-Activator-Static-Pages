@@ -13,16 +13,18 @@ Package manager is **pnpm** (pinned via `packageManager`; Node 20+).
 | `pnpm preview` | Serve the production build (landing routes work here too) |
 | `pnpm lint` | ESLint over the project |
 | `pnpm add-landing <file.html> [slug] [title]` | Register a standalone HTML page as a landing |
-| `node scripts/flatten-landing.mjs <src.html> <out.html>` | Prerender a self-unpacking "bundler" export into plain static HTML |
+| `pnpm flatten-landing` | Prerender `landings-src` Design Compiler pages into `public/landings/` |
+| `node scripts/flatten-landing.mjs <src.html> <out.html>` | Flatten one `.dc.html` or bundler HTML file |
 
 There is no test suite.
 
 ## Architecture
 
-Two layers that barely touch each other:
+Three layers that barely touch each other:
 
 1. **The React index** (`src/`) — a single page listing the available landings. `src/Landings.tsx` fetches `/landings/landings.json` at runtime (not a build-time import) and renders one `<a href="/{slug}">` per entry. Adding a landing therefore requires no React change.
-2. **The landing pages** (`public/landings/<slug>/index.html`) — fully standalone HTML files with no React, no bundling, no shared assets. They are copied verbatim into `dist/` by Vite's public-dir handling.
+2. **Editable landing sources** (`landings-src/`) — Design Compiler documents (`.dc.html` + `support.js`). This is the readable source of truth. `pnpm dev` assembles them on each request and full-reloads when they change.
+3. **The landing pages** (`public/landings/<slug>/index.html`) — flattened standalone HTML produced by `pnpm flatten-landing` for preview and deploy. They are copied verbatim into `dist/` by Vite's public-dir handling.
 
 ### Clean-URL routing is duplicated per environment
 
@@ -39,4 +41,4 @@ An array of `{ slug, title }`. It drives the index page and is appended to by `s
 
 ### `scripts/flatten-landing.mjs`
 
-Standalone tooling, not part of `build`. Some landing sources ship the real page as gzipped base64 inside `<script type="__bundler/*">` islands that unpack at runtime. This script decodes the bundle ahead of time, inlines assets (fonts as data: URIs), drops unused Google font subsets (keeps only `latin`/`latin-ext`), and prerenders the DOM with headless Chromium (`playwright`) so the output paints without JS. The original client runtime still boots afterwards for interactivity.
+Standalone tooling, not part of `build`. With no args it reads `landings-src/landings.json` and writes each entry to `public/landings/<slug>/index.html`. Design Compiler pages are opened in headless Chromium (`playwright`), expanded, captured as a no-JS prerender, then packed with inlined `support.js`, sibling `.dc.html` blobs, and latin/latin-ext fonts as `data:` URIs so the page still boots for FAQ/module toggles. A Claude Design bundler export can still be flattened with explicit `<src.html> <out.html>` args.

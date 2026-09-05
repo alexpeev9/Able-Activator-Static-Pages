@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #1c1c1c; -webkit-font-smoothing: antialiased; }
+  a { color: #29abe2; text-decoration: none; }
+  a:hover { color: #7ad2f2; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  [id] { scroll-margin-top: 94px; }
+  @media (max-width: 860px) { [id] { scroll-margin-top: 80px; } }
+  @keyframes drift-a { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,-40px) scale(1.15); } }
+  @keyframes drift-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-70px,50px) scale(1.1); } }
+  @keyframes dash-move { to { stroke-dashoffset: -400; } }
+  @keyframes pulse-ring { 0% { r: 3; opacity: .9; } 100% { r: 26; opacity: 0; } }
+
+  /* ---- site header ---- */
+  .hdr {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(20,20,20,.9);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid #2b2b2b;
+  }
+  .hdr-in {
+    max-width: 1180px; margin: 0 auto;
+    padding: 0 clamp(14px,3vw,32px);
+    height: 78px; display: flex; align-items: center; gap: clamp(14px,3vw,32px);
+  }
+  .brand { flex: none; display: flex; align-items: center; opacity: .96; transition: opacity .18s ease; }
+  .brand:hover { opacity: 1; }
+  .brand svg { display: block; height: 40px; width: auto; }
+  .nav { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+  .nav a {
+    position: relative; color: #b6bec2; font-size: 14px; font-weight: 500;
+    padding: 10px 13px; border-radius: 9px;
+    transition: color .18s ease, background .18s ease;
+  }
+  .nav a::after {
+    content: ""; position: absolute; left: 13px; right: 13px; bottom: 5px;
+    height: 1.5px; background: #29abe2; border-radius: 2px;
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform .22s cubic-bezier(.4,0,.2,1);
+  }
+  .nav a:hover { color: #fff; }
+  .nav a:hover::after { transform: scaleX(1); }
+  .hdr .cta {
+    flex: none; background: #29abe2; color: #12242c;
+    font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 13.5px;
+    letter-spacing: .04em; text-transform: uppercase;
+    padding: 11px 22px; border-radius: 999px; min-height: 44px;
+    display: inline-flex; align-items: center;
+    transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .hdr .cta:hover {
+    background: #7ad2f2; color: #0f1e24;
+    box-shadow: 0 6px 22px rgba(41,171,226,.3); transform: translateY(-1px);
+  }
+  .hdr a:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
+
+  /* desktop: header + hero fill exactly one screen */
+  @media (min-width: 861px) {
+    .hero {
+      min-height: calc(100vh - 79px);
+      display: grid; align-content: center;
+      padding-top: clamp(40px,6vw,80px); padding-bottom: clamp(40px,6vw,80px);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .nav { display: none; }
+    .hdr-in { height: 66px; justify-content: space-between; }
+    .brand svg { height: 34px; }
+    .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .nav a::after, .hdr .cta { transition: none; }
+  }
+  @keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+</style>
+</helmet>
+<div style="background:#1c1c1c;font-family:Barlow,Helvetica,sans-serif;color:#e9edef;overflow-x:hidden">
+
+  <header class="hdr">
+    <div class="hdr-in">
+      <a class="brand" href="#top" aria-label="ABLE Activator">
+        <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#program" >The program</a>
+        <a href="#modules" >Modules</a>
+        <a href="#details" >Fees &amp; scholarships</a>
+        <a href="#faq" >FAQ</a>
+      </nav>
+      <a class="cta" href="#apply">Apply now</a>
+    </div>
+  </header>
+
+  <section id="top" class="hero" style="position:relative;padding:clamp(56px,10vw,120px) clamp(16px,4vw,40px) clamp(48px,8vw,96px);overflow:hidden">
+    <div style="position:absolute;inset:0;pointer-events:none">{{ heroArt }}</div>
+    <div style="position:relative;max-width:1000px;margin:0 auto;text-align:center">
+      <div style="display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:#29abe2;border:1px solid rgba(41,171,226,.4);border-radius:999px;padding:8px 16px;margin-bottom:22px">Applications open · Edition 2027</div>
+      <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(38px,8.4vw,84px);line-height:.98;letter-spacing:-.015em;color:#fff;text-wrap:balance">Six weekends that<br><span style="color:#29abe2">activate</span> founders</h1>
+      <p style="margin:20px auto 0;max-width:58ch;font-size:clamp(16px,2.2vw,19px);line-height:1.6;color:#b6bec2;text-wrap:pretty">ABLE Activator is an exclusive entrepreneurship program for 30 ambitious self-starters — the knowledge, mentorship and network you need to take an idea to fruition.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px">
+        <a href="#apply" style="background:#29abe2;color:#12242c;font-family:Poppins;font-weight:600;font-size:15px;letter-spacing:.03em;padding:15px 30px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#7ad2f2">Apply for the 2027 edition</a>
+        <a href="#modules" style="border:1px solid #3a3f42;color:#e9edef;font-family:Poppins;font-weight:600;font-size:15px;padding:15px 28px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="border-color:#29abe2;color:#29abe2">See the 6 modules</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:760px;margin:44px auto 0">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="background:#232323;border:1px solid #2b2b2b;border-radius:14px;padding:18px 16px">
+            <div style="font-family:Poppins;font-weight:700;font-size:clamp(24px,4vw,32px);color:#29abe2;line-height:1">{{ s.value }}</div>
+            <div style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#8d979b;margin-top:7px">{{ s.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="program" style="padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);border-top:1px solid #2b2b2b">
+    <div style="max-width:1120px;margin:0 auto">
+      <div style="max-width:720px;margin-bottom:clamp(28px,4vw,48px)">
+        <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8d979b;font-weight:600;margin-bottom:14px">The program</div>
+        <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(28px,5vw,48px);line-height:1.05;letter-spacing:-.01em;color:#fff;text-wrap:balance">What you walk away with</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+        <div style="background:#232323;border:1px solid #2b2b2b;border-radius:16px;padding:clamp(20px,2.6vw,28px);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#29abe2;transform:translateY(-3px)">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#29abe2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;margin-bottom:16px"><path d="M4 9h16a1 1 0 0 1 1 1v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a1 1 0 0 1 1-1Z"/><path d="M8.5 9V6.5A2.5 2.5 0 0 1 11 4h2a2.5 2.5 0 0 1 2.5 2.5V9"/><path d="M3 14h6.5m5 0H21"/><path d="M9.5 12.6h5v2.8h-5z"/></svg>
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#fff">Entrepreneurial toolkit</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;color:#a9b2b6;text-wrap:pretty">Take an idea from validation to a working product, step by step.</p>
+          </div>
+          <div style="background:#232323;border:1px solid #2b2b2b;border-radius:16px;padding:clamp(20px,2.6vw,28px);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#29abe2;transform:translateY(-3px)">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#29abe2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;margin-bottom:16px"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M17 11.2a2.6 2.6 0 1 0 0-5.2"/><path d="M18.4 20a5.9 5.9 0 0 0-2.5-4.7"/></svg>
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#fff">Founder mentorship</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;color:#a9b2b6;text-wrap:pretty">Work directly with entrepreneurs who have built and scaled companies.</p>
+          </div>
+          <div style="background:#232323;border:1px solid #2b2b2b;border-radius:16px;padding:clamp(20px,2.6vw,28px);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#29abe2;transform:translateY(-3px)">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#29abe2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;margin-bottom:16px"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3Z"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/><path d="M8.5 21h7"/></svg>
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#fff">Pitching mastery</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;color:#a9b2b6;text-wrap:pretty">Three pitching sessions, each sharper than the last, ending on Demo Day.</p>
+          </div>
+          <div style="background:#232323;border:1px solid #2b2b2b;border-radius:16px;padding:clamp(20px,2.6vw,28px);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#29abe2;transform:translateY(-3px)">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#29abe2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;margin-bottom:16px"><circle cx="12" cy="7" r="3"/><circle cx="5" cy="10.5" r="2.2"/><circle cx="19" cy="10.5" r="2.2"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0"/><path d="M2 18.5a4 4 0 0 1 2.9-3.8"/><path d="M22 18.5a4 4 0 0 0-2.9-3.8"/></svg>
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#fff">A real team</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;color:#a9b2b6;text-wrap:pretty">Form a team with peers as ambitious as you and build together.</p>
+          </div>
+          <div style="background:#232323;border:1px solid #2b2b2b;border-radius:16px;padding:clamp(20px,2.6vw,28px);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#29abe2;transform:translateY(-3px)">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#29abe2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;margin-bottom:16px"><circle cx="12" cy="12" r="2.7"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M6.5 6.5 10.1 10.1M17.5 6.5 13.9 10.1M6.5 17.5 10.1 13.9M17.5 17.5 13.9 13.9"/></svg>
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#fff">Network that compounds</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;color:#a9b2b6;text-wrap:pretty">Meet founders, investors and partners across the Bulgarian ecosystem.</p>
+          </div>
+          <div style="background:#232323;border:1px solid #2b2b2b;border-radius:16px;padding:clamp(20px,2.6vw,28px);transition:border-color .2s ease,transform .2s ease" style-hover="border-color:#29abe2;transform:translateY(-3px)">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#29abe2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;margin-bottom:16px"><path d="M20.6 6.9a4.5 4.5 0 0 0-6.4 0L12 9.1 9.8 6.9a4.5 4.5 0 1 0-6.4 6.4l8.6 8.5 8.6-8.5a4.5 4.5 0 0 0 0-6.4Z"/></svg>
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#fff">A community for life</h3>
+            <p style="margin:0;font-size:15.5px;line-height:1.6;color:#a9b2b6;text-wrap:pretty">Join the ABLE alumni network and stay part of it long after the program.</p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="modules" style="border-top:1px solid #2b2b2b">
+    <dc-import name="landing-1-modules" hint-size="100%,900px"></dc-import>
+  </section>
+
+  <section id="details" style="padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);border-top:1px solid #2b2b2b;background:#191919">
+    <div style="max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:14px">
+      <sc-for list="{{ blocks }}" as="bl" hint-placeholder-count="3">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(16px,3vw,40px);align-items:start;background:#232323;border:1px solid #2b2b2b;border-radius:18px;padding:clamp(20px,3vw,36px)">
+          <div>
+            <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;font-weight:600;margin-bottom:10px">{{ bl.tag }}</div>
+            <h3 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(22px,3.4vw,30px);line-height:1.12;color:#fff;text-wrap:balance">{{ bl.title }}</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <p style="margin:0;font-size:16px;line-height:1.65;color:#b6bec2;max-width:60ch;text-wrap:pretty">{{ bl.body }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ bl.facts }}" as="f" hint-placeholder-count="2">
+                <span style="font-size:14px;font-weight:500;color:#e3e9eb;background:#2a2a2a;border:1px solid #333;border-radius:999px;padding:8px 14px">{{ f }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="apply" style="position:relative;padding:clamp(52px,8vw,104px) clamp(16px,4vw,40px);border-top:1px solid #2b2b2b;overflow:hidden">
+    <div style="position:absolute;inset:0;pointer-events:none">{{ ctaArt }}</div>
+    <div style="position:relative;max-width:900px;margin:0 auto;text-align:center">
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(30px,6.4vw,60px);line-height:1;text-transform:uppercase;color:#fff;text-wrap:balance">Are you ready to <span style="color:#29abe2">activate?</span></h2>
+      <p style="margin:18px auto 0;max-width:52ch;font-size:17px;line-height:1.6;color:#b6bec2">30 places, one cohort a year. Applications for the 2027 edition close 31 January.</p>
+      <a href="#apply" style="margin-top:28px;background:#29abe2;color:#12242c;font-family:Poppins;font-weight:600;font-size:16px;letter-spacing:.03em;padding:16px 34px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#7ad2f2">Start my application</a>
+    </div>
+  </section>
+
+  <section id="faq" style="padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);border-top:1px solid #2b2b2b">
+    <div style="max-width:880px;margin:0 auto">
+      <h2 style="margin:0 0 clamp(22px,3vw,36px);font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;text-transform:uppercase;color:#29abe2;text-align:center">FAQ</h2>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="8">
+          <div style="border:1px solid #2b2b2b;border-radius:14px;background:#232323;overflow:hidden;transition:border-color .2s ease" style-hover="border-color:#3d4a50">
+            <button sc-camel-on-click="{{ f.onToggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;align-items:center;gap:14px;padding:16px clamp(14px,2.4vw,22px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:56px">
+              <span style="flex:1;min-width:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(15px,2.1vw,17px);line-height:1.35;color:#fff;text-wrap:pretty">{{ f.q }}</span>
+              <span style="flex:none;width:30px;height:30px;border-radius:50%;background:#2c2c2c;color:#29abe2;display:grid;place-items:center;font-size:15px;line-height:1;transition:transform .24s ease;transform:{{ f.caret }}">+</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;padding:0 clamp(14px,2.4vw,22px) 20px;font-size:16px;line-height:1.65;color:#b6bec2;max-width:70ch;text-wrap:pretty">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:clamp(32px,5vw,56px) clamp(16px,4vw,40px);border-top:1px solid #2b2b2b;background:#161616">
+    <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between;font-size:14px;color:#767f83">
+      <div style="display:flex;align-items:center">
+        <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator" style="display:block;flex:none;height:32px;width:auto"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 22px">
+        <a href="#program" style="color:#767f83" style-hover="color:#29abe2">Mentors</a>
+        <a href="#details" style="color:#767f83" style-hover="color:#29abe2">Media kit</a>
+        <a href="#faq" style="color:#767f83" style-hover="color:#29abe2">FAQ</a>
+        <a href="#apply" style="color:#767f83" style-hover="color:#29abe2">Contact</a>
+      </div>
+      <div>© 2027 ABLE</div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{}">
+const STATS = [
+  { value: "6", label: "weekend modules" },
+  { value: "30", label: "self-starters" },
+  { value: "20+", label: "founders & mentors" },
+  { value: "1", label: "demo day" }
+];
+
+const BENEFITS = [
+  { title: "Entrepreneurial toolkit", body: "Take an idea from validation to a working product, step by step." },
+  { title: "Founder mentorship", body: "Work directly with entrepreneurs who have built and scaled companies." },
+  { title: "Pitching mastery", body: "Three pitching sessions, each sharper than the last, ending on Demo Day." },
+  { title: "A real team", body: "Form a team with peers as ambitious as you and build together." },
+  { title: "Network that compounds", body: "Meet founders, investors and partners across the Bulgarian ecosystem." },
+  { title: "A community for life", body: "Join the ABLE alumni network and stay part of it long after the program." }
+];
+
+const BLOCKS = [
+  {
+    tag: "Wednesday sessions", title: "Guest founders, every other Wednesday",
+    body: "Between the weekend modules we host a different guest founder for their story and an open Q&A, some sessions exclusive to Activator participants.",
+    facts: ["4 sessions", "7PM · online", "Q&A included"]
+  },
+  {
+    tag: "Scholarships", title: "Talent should never be the blocker",
+    body: "A limited number of scholarships covers the participation fee for candidates who show exceptional drive but cannot cover the cost.",
+    facts: ["Needs-based", "Apply in the same form"]
+  },
+  {
+    tag: "Participation fee", title: "What it costs to take part",
+    body: "The fee covers the full six-weekend program, mentorship and Demo Day, and can be paid in instalments on request.",
+    facts: ["200 EUR · students", "400 EUR · young professionals", "Instalments possible"]
+  }
+];
+
+const FAQS = [
+  { q: "Will the program be conducted online or offline?", a: "The weekend modules are held in person; Wednesday guest sessions run online." },
+  { q: "Where do the trainings take place?", a: "In Sofia, at a venue announced to participants before each module." },
+  { q: "Can I miss or skip any of the trainings?", a: "Attendance is expected at all modules — the program is built as one continuous journey." },
+  { q: "Will I work on my own start-up idea throughout ABLE Activator?", a: "Yes, you work on a real idea in a team from the first weekend onwards." },
+  { q: "Which mentor will my team work with?", a: "Teams are matched with a mentor whose experience fits their idea and stage." },
+  { q: "What is Demo Day?", a: "The final pitch event where teams present to a hand-picked jury and the best-performing team is announced." },
+  { q: "How can I apply for the program?", a: "Through the application form on this page, before the deadline for the edition." },
+  { q: "How will I find out if I have been selected?", a: "Shortlisted candidates are invited to an interview, and all applicants hear back by email." },
+  { q: "Can I apply again if I am not selected this time?", a: "Yes — many participants are accepted on a second application." },
+  { q: "Can I pay the participation fee in parts?", a: "Yes, instalment plans are arranged individually after selection." }
+];
+
+class Component extends DCLogic {
+  state = { faq: {} };
+
+  componentDidMount() {
+    this.setState({ ready: true });
+  }
+
+  art(id, opts) {
+    if (!this._art) this._art = {};
+    if (this._art[id]) return this._art[id];
+    const h = React.createElement;
+    const blob = (cx, cy, r, anim, dur, op) => h("circle", {
+      key: "b" + cx + cy, cx, cy, r, fill: "#29abe2", opacity: op,
+      style: { filter: "blur(60px)", animation: anim + " " + dur + "s ease-in-out infinite", transformOrigin: cx + "px " + cy + "px" }
+    });
+    const dots = [];
+    for (let x = 0; x < 12; x++) {
+      for (let y = 0; y < 5; y++) {
+        dots.push(h("circle", { key: "d" + x + y, cx: 60 + x * 100, cy: 60 + y * 100, r: 1.6, fill: "#ffffff", opacity: 0.09 }));
+      }
+    }
+    const line = (d, dur, delay) => h("path", {
+      key: "l" + d, d, fill: "none", stroke: "#29abe2", strokeWidth: 1.4, opacity: 0.5,
+      strokeDasharray: "12 340",
+      style: { animation: "dash-move " + dur + "s linear infinite", animationDelay: delay + "s" }
+    });
+    const el = h("svg", {
+      viewBox: "0 0 1200 560", preserveAspectRatio: "xMidYMid slice",
+      style: { width: "100%", height: "100%", display: "block" }, "aria-hidden": "true"
+    },
+      h("g", null, blob(220, 130, 130, "drift-a", 18, opts.blob), blob(980, 420, 160, "drift-b", 22, opts.blob)),
+      h("g", null, dots),
+      h("g", null,
+        line("M-20 460 C 240 460, 300 200, 620 200 S 1020 380, 1240 300", 9, 0),
+        line("M-20 120 C 260 120, 360 340, 640 340 S 1000 140, 1240 200", 11, 1.5)
+      ),
+      h("g", null,
+        h("circle", { cx: 620, cy: 200, r: 3.5, fill: "#29abe2" }),
+        h("circle", { cx: 620, cy: 200, r: 3, fill: "none", stroke: "#29abe2", strokeWidth: 1.4, style: { animation: "pulse-ring 3.2s ease-out infinite" } }),
+        h("circle", { cx: 640, cy: 340, r: 3.5, fill: "#7ad2f2", style: { animation: "float-y 6s ease-in-out infinite" } })
+      )
+    );
+    this._art[id] = el;
+    return el;
+  }
+
+  renderVals() {
+    const faq = this.state.faq;
+    return {
+      stats: STATS,
+      benefits: BENEFITS,
+      blocks: BLOCKS,
+      heroArt: this.art("hero", { blob: 0.3 }),
+      ctaArt: this.art("cta", { blob: 0.18 }),
+      faqs: FAQS.map((f, i) => ({
+        ...f,
+        open: !!faq[i],
+        caret: faq[i] ? "rotate(45deg)" : "rotate(0deg)",
+        onToggle: () => this.setState(s => ({ faq: { ...s.faq, [i]: !s.faq[i] } }))
+      }))
+    };
+  }
+}
+</script>
+
+
+</body></html>

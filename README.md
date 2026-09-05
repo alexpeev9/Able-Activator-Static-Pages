@@ -61,7 +61,11 @@ pnpm dev
 ```
 
 Vite prints a local URL (by default <http://localhost:5173>). Landing pages are
-served from `/landings/<slug>/index.html` in development.
+served at `/{slug}` (for example `/landing-1`).
+
+While `pnpm dev` is running, edits in `landings-src/` reload the page on their
+own. You do not need `pnpm flatten-landing` until you want to update the
+committed static files for preview or deploy.
 
 ### 4. Other scripts
 
@@ -72,13 +76,33 @@ served from `/landings/<slug>/index.html` in development.
 | `pnpm preview` | Serve the production build locally |
 | `pnpm lint` | Run ESLint over the project |
 | `pnpm add-landing <file.html> [slug] [title]` | Copy a standalone HTML file into `public/landings/` and register it in `landings.json` |
+| `pnpm flatten-landing` | Prerender `landings-src/*.dc.html` into `public/landings/<slug>/index.html` |
+| `node scripts/flatten-landing.mjs <src.html> <out.html>` | Flatten one Design Compiler or bundler HTML file |
 
-### 5. Adding a landing page
+### 5. Landing sources and the flatten command
+
+Editable Design Compiler documents live in `landings-src/`:
+
+| File | What it is |
+| --- | --- |
+| `landing-1/landing-1.dc.html` | Landing page 1 (full page) |
+| `landing-1/landing-1-modules.dc.html` | Landing page 1 modules section |
+| `landing-2/landing-2.dc.html` | Landing page 2 (full page) |
+| `landing-2/landing-2-modules.dc.html` | Landing page 2 modules section |
+
+During `pnpm dev`, save a file in `landings-src/` and the open landing reloads.
+
+When you want to update the committed static files for Vercel / `pnpm preview`:
+
+```bash
+pnpm flatten-landing
+```
+
+That writes `public/landings/<slug>/index.html` (committed in the repo) and
+updates `public/landings/landings.json` from `landings-src/landings.json`.
+
+To register a finished standalone HTML file that is not a Design Compiler page:
 
 ```bash
 pnpm add-landing ./my-page.html landing-3 "Landing Page 3"
 ```
-
-This creates `public/landings/landing-3/index.html` and appends the entry to
-`public/landings/landings.json`, so it shows up on the index and becomes
-available at `/landing-3` once deployed.
