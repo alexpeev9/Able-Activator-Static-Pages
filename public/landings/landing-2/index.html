@@ -2,8 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="color-scheme" content="dark">
   <title>Bundled Page</title>
   <style>
+    :root { color-scheme: dark; }
+    html { background: #131313; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #131313; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
     #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
@@ -294,6 +297,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const resourceScript = '<script>window.__resources = ' +
       JSON.stringify(resourceMap).replace(/<\//g, '<\\/') +
       ';</' + 'script>';
+    const foucStyle = '<style id="__bundler_fouc">html:not(.__bundler_ready){visibility:hidden!important;background:#1c1c1c}</style>';
     // Inject after <head> so the DOCTYPE stays first; prepending the script
     // would push the parser into quirks mode. DOMParser always emits a <head>
     // (synthesizing one if the source HTML omitted it) but may carry
@@ -302,7 +306,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const headOpen = template.match(/<head[^>]*>/i);
     if (headOpen) {
       const i = headOpen.index + headOpen[0].length;
-      template = template.slice(0, i) + resourceScript + template.slice(i);
+      template = template.slice(0, i) + foucStyle + resourceScript + template.slice(i);
     }
 
     // Parse the template and swap the root element. Scripts inserted via
@@ -360,6 +364,30 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (window.Babel && typeof window.Babel.transformScriptTags === 'function') {
       window.Babel.transformScriptTags();
     }
+
+    function revealWhenReady() {
+      function reveal() {
+        document.documentElement.classList.add('__bundler_ready');
+        const el = document.getElementById('__bundler_fouc');
+        if (el) el.remove();
+      }
+      function hasPlaceholders() {
+        return /\{\{[^}]+\}\}/.test(document.body ? document.body.textContent : '');
+      }
+      if (!hasPlaceholders()) {
+        reveal();
+        return;
+      }
+      const obs = new MutationObserver(function() {
+        if (!hasPlaceholders()) {
+          obs.disconnect();
+          reveal();
+        }
+      });
+      obs.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+      setTimeout(function() { obs.disconnect(); reveal(); }, 10000);
+    }
+    revealWhenReady();
   } catch (err) {
     setStatus('Error unpacking: ' + err.message);
     console.error('Bundle unpack error:', err);
