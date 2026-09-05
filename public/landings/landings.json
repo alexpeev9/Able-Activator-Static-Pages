@@ -1,0 +1,16 @@
+[
+  {
+    "slug": "landing-1",
+    "label": "Version A",
+    "title": "Landing page 1",
+    "headline": "Six weekends that activate founders",
+    "note": "Programme-first. Leads with the six weekends and what happens in each."
+  },
+  {
+    "slug": "landing-2",
+    "label": "Version B",
+    "title": "Landing page 2",
+    "headline": "Idea in. Company out.",
+    "note": "Outcome-first. Leads with the promise, details follow."
+  }
+]

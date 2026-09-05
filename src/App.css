@@ -1,0 +1,188 @@
+:root {
+  --ink: #0d1417;
+  --ink-raised: #131c20;
+  --line: #222f34;
+  --text: #f2f6f7;
+  --muted: #97a3a8;
+  --cyan: #29abe2;
+  --lime: #8ec54a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100dvh;
+  padding: clamp(48px, 9vh, 112px) 24px clamp(40px, 8vh, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(40px, 7vh, 72px);
+  background: var(--ink);
+  color: var(--text);
+  font-family: Barlow, system-ui, sans-serif;
+}
+
+/* Masthead */
+
+.masthead {
+  width: 100%;
+  max-width: 760px;
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.masthead h1 {
+  margin: 0;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(38px, 7vw, 68px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.standfirst {
+  margin: 20px 0 0;
+  max-width: 46ch;
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.6;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* Choices */
+
+.choices {
+  width: 100%;
+  max-width: 760px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+.choice {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  padding: 28px clamp(24px, 4vw, 36px) 26px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--ink-raised);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* The rule that draws across the top of a card on hover. */
+.choice::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--lime));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.choice:hover,
+.choice:focus-visible {
+  border-color: #33454c;
+  transform: translateY(-2px);
+}
+
+.choice:hover::before,
+.choice:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.choice:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.choice-label {
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.choice-headline {
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3.6vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.choice-note {
+  max-width: 52ch;
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.choice-action {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--cyan);
+}
+
+.choice-action svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.25s ease;
+}
+
+.choice:hover .choice-action svg {
+  transform: translateX(4px);
+}
+
+.notice {
+  max-width: 760px;
+  width: 100%;
+  margin: 0;
+  color: var(--muted);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .choice,
+  .choice::before,
+  .choice-action svg {
+    transition: none;
+  }
+}
+
