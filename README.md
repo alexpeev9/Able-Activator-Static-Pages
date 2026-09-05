@@ -81,9 +81,14 @@ committed static files for preview or deploy.
 
 ### 5. Landing sources and the flatten command
 
-Editable Design Compiler documents live in `landings-src/`. Landing 1 is
-`Program Page.dc.html` + `Program Content.dc.html`. Landing 2 is
-`landing-2/Page.dc.html` + `landing-2/ProgramContent.dc.html`. Those are the files to edit.
+Editable Design Compiler documents live in `landings-src/`:
+
+| File | What it is |
+| --- | --- |
+| `landing-1/landing-1.dc.html` | Landing page 1 (full page) |
+| `landing-1/landing-1-modules.dc.html` | Landing page 1 modules section |
+| `landing-2/landing-2.dc.html` | Landing page 2 (full page) |
+| `landing-2/landing-2-modules.dc.html` | Landing page 2 modules section |
 
 During `pnpm dev`, save a file in `landings-src/` and the open landing reloads.
 
