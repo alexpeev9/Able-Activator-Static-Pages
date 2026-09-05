@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #1c1c1c; -webkit-font-smoothing: antialiased; }
+  a { color: #29abe2; }
+  a:hover { color: #7ad2f2; }
+  * { box-sizing: border-box; }
+</style>
+</helmet>
+<div style="min-height:100vh;background:#1c1c1c;padding:clamp(30px,5vw,80px) clamp(16px,4vw,40px);font-family:Barlow,Helvetica,sans-serif;color:#e9edef">
+  <div style="max-width:1000px;margin:0 auto">
+
+    <div style="text-align:center;margin-bottom:clamp(26px,4vw,44px)">
+      <div style="font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:#8d979b;font-weight:600;margin-bottom:14px">ABLE Activator 2027</div>
+      <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(32px,6.4vw,60px);line-height:1;letter-spacing:.005em;text-transform:uppercase;color:#29abe2;text-wrap:balance">Program modules</h1>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding-bottom:16px;border-bottom:1px solid #2b2b2b;margin-bottom:16px">
+      <div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:14.5px;color:#8d979b">
+        <span>7 modules</span><span style="color:#3d4245">•</span>
+        <span>4 Wednesday sessions</span><span style="color:#3d4245">•</span>
+        <span>Demo Day</span><span style="color:#3d4245">•</span>
+        <span>19 Feb — 16 Apr 2027</span>
+      </div>
+      <button onClick="{{ toggleAll }}" style="flex:none;background:transparent;border:1px solid #3a3f42;color:#29abe2;font-family:Barlow;font-weight:600;font-size:14px;letter-spacing:.02em;padding:11px 20px;border-radius:999px;cursor:pointer;transition:all .18s ease;min-height:44px" style-hover="border-color:#29abe2;background:rgba(41,171,226,.12)">{{ toggleLabel }}</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="12">
+        <section data-screen-label="{{ it.label }}" style="border:1px solid #2b2b2b;border-radius:14px;overflow:hidden;background:#232323;transition:border-color .2s ease,background .2s ease" style-hover="border-color:#3d4a50;background:#262626">
+          <button onClick="{{ it.onToggle }}" aria-expanded="{{ it.open }}" style="width:100%;display:flex;align-items:center;gap:clamp(12px,2vw,18px);padding:clamp(13px,2.1vw,20px);background:transparent;border:0;border-left:4px solid {{ it.rail }};cursor:{{ it.cursor }};text-align:left;font-family:Barlow;color:inherit;min-height:58px;transition:border-color .2s ease">
+            <span style="flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:{{ it.chipBg }};color:{{ it.chipFg }};font-family:Poppins;font-weight:700;font-size:14px;line-height:1">{{ it.chipText }}</span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#29abe2;margin-bottom:4px">{{ it.kicker }}</span>
+              <span style="display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(15.5px,2.3vw,19px);line-height:1.3;color:#fff;text-wrap:pretty">{{ it.title }}</span>
+              <span style="display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;font-size:13.5px;color:#8d979b">
+                <span style="font-weight:600;color:#c8d0d3">{{ it.date }}</span>
+                <span style="color:#3d4245">•</span>
+                <span>{{ it.time }}</span>
+                <span style="color:#3d4245">•</span>
+                <span>{{ it.meta }}</span>
+              </span>
+            </span>
+            <sc-if value="{{ it.collapsible }}" hint-placeholder-val="{{ true }}">
+              <span style="flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#2c2c2c;color:#29abe2;font-size:11px;transition:transform .24s ease;transform:{{ it.caret }}">▼</span>
+            </sc-if>
+          </button>
+
+          <sc-if value="{{ it.open }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 clamp(15px,2.4vw,24px) clamp(18px,2.6vw,26px);margin-left:4px">
+              <div style="border-top:1px solid #2f2f2f;padding-top:18px;display:grid;gap:18px;grid-template-columns:1fr">
+                <sc-if value="{{ it.hasTopics }}" hint-placeholder-val="{{ false }}">
+                  <div>
+                    <div style="font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#8d979b;margin-bottom:12px">Topics covered</div>
+                    <ul style="margin:0;padding:0;list-style:none;display:grid;gap:9px 14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+                      <sc-for list="{{ it.topics }}" as="t" hint-placeholder-count="6">
+                        <li style="display:flex;align-items:center;gap:11px;font-size:15.5px;line-height:1.45;color:#e3e9eb;background:#2a2a2a;border:1px solid #333;border-radius:11px;padding:11px 14px">
+                          <span style="flex:none;width:7px;height:7px;border-radius:50%;background:#29abe2"></span>
+                          <span>{{ t }}</span>
+                        </li>
+                      </sc-for>
+                    </ul>
+                  </div>
+                </sc-if>
+                <sc-for list="{{ it.paras }}" as="p" hint-placeholder-count="1">
+                  <p style="margin:0;font-size:15.5px;line-height:1.68;color:#b6bec2;max-width:72ch;text-wrap:pretty">{{ p }}</p>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </section>
+      </sc-for>
+    </div>
+
+    <p style="margin:26px 0 0;font-size:14px;color:#767f83">Weekend modules run Friday evening through Sunday. Wednesday sessions host a different guest from the Bulgarian start-up ecosystem, followed by a dedicated Q&amp;A.</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const DATA = [
+  {
+    id: "m1", kind: "module", chipText: "01", label: "Module 1", kicker: "Module 1",
+    title: "Leadership and Community Ignition: Thinking Like an Entrepreneur",
+    date: "19 Feb – 21 Feb 2027", time: "7AM Fri – 8PM Sun",
+    topics: ["Motivation & Inspiration", "Introduction to Entrepreneurship", "Teamwork & Leadership", "Idea Generation & Market Research", "Connecting with Entrepreneurs", "Problem Validation"],
+    paras: []
+  },
+  {
+    id: "w1", kind: "session", chipText: "Q&A", label: "Wednesday session 24 Feb", kicker: "Wednesday session",
+    title: "Founder stories & live Q&A",
+    date: "24 Feb 2027", time: "7PM Wed",
+    topics: [],
+    paras: []
+  },
+  {
+    id: "m2", kind: "module", chipText: "02", label: "Module 2", kicker: "Module 2",
+    title: "The Path to the Customer: Startup Launchpad",
+    date: "26 Feb – 28 Feb 2027", time: "7PM Fri – 8PM Sun",
+    topics: ["Team Formation", "Understanding Customer Needs", "Defining Value Proposition", "Building Unfair Advantage", "Identifying Traction Channels", "Crafting Revenue Streams", "Managing Cost Structure", "Establishing Key Metrics", "Testing Hypotheses through Customer Interviews", "Motivation on Pivoting Strategies"],
+    paras: []
+  },
+  {
+    id: "w2", kind: "session", chipText: "Q&A", label: "Wednesday session 10 Mar", kicker: "Wednesday session",
+    title: "Founder stories & live Q&A",
+    date: "10 Mar 2027", time: "7PM Wed",
+    topics: [], paras: []
+  },
+  {
+    id: "m3", kind: "module", chipText: "03", label: "Module 3", kicker: "Module 3",
+    title: "Refining Your Venture: Innovate & Collaborate",
+    date: "12 Mar – 14 Mar 2027", time: "7PM Fri – 8PM Sun",
+    topics: ["Analyzing Customer Interview Results", "Setting Expectations for Demo Day Presentations", "Exploring Design Thinking", "Facilitating Team Synergy", "Hands-On Session: Building a Minimum Viable Product (MVP) through Prototyping", "Pitching Session #1: Presenting Initial Ideas", "Roundtable Discussions"],
+    paras: []
+  },
+  {
+    id: "m4", kind: "module", chipText: "04", label: "Module 4", kicker: "Module 4",
+    title: "Market and Business Mastery",
+    date: "19 Mar – 21 Mar 2027", time: "8AM Fri – 8PM Sun",
+    topics: ["Exploring Go-to-Market Strategies", "Insights into Startup Marketing", "Motivational Panel with Successful Entrepreneurs", "Mastering Sales Techniques and Strategies", "Hands-on Work Time in Teams", "Pitching Session #2: Refining Presentation Skills", "Roundtable Discussions"],
+    paras: []
+  },
+  {
+    id: "w3", kind: "session", chipText: "Q&A", label: "Wednesday session 31 Mar", kicker: "Wednesday session",
+    title: "Founder stories & live Q&A",
+    date: "31 Mar 2027", time: "7PM Wed",
+    topics: [], paras: []
+  },
+  {
+    id: "m5", kind: "module", chipText: "05", label: "Module 5", kicker: "Module 5",
+    title: "Financial Mastery & Strategic Scaling",
+    date: "2 – 4 Apr 2027", time: "7PM Fri – 8PM Sun",
+    topics: ["Navigating Entrepreneurial Finance", "Teamwork & Collaboration", "Insights into Splitting Equity: The Legal Perspective", "Growth Strategies Tailored for Startups", "Motivational Panel with Successful Entrepreneurs", "In-depth Work Time in Teams", "Pitching Session #3: Showcasing Growth Plans", "Roundtable Discussions: Comprehensive Feedback on Pitches"],
+    paras: []
+  },
+  {
+    id: "w4", kind: "session", chipText: "Q&A", label: "Wednesday session 7 Apr", kicker: "Wednesday session",
+    title: "Founder stories & live Q&A",
+    date: "7 Apr 2027", time: "7PM Wed",
+    topics: [], paras: []
+  },
+  {
+    id: "demo", kind: "demo", chipText: "★", label: "Demo Day", kicker: "Demo Day",
+    title: "Grand Final Pitch Event",
+    date: "15 Apr 2027", time: "7PM – 11PM Wed",
+    topics: ["Grand Final Pitch Event", "Hand-picked Jury from the Start-up Ecosystem", "Representatives of the ABLE Community, Sponsors & Partners", "Announcement of the Best-performing Team"],
+    paras: ["Teams pitch for 5 minutes to a hand-picked jury of founders and investors, and the best-performing team of the edition is announced."]
+  },
+  {
+    id: "m51", kind: "module", chipText: "5.1", label: "Module 5.1", kicker: "Module 5.1 — Closing",
+    title: "Reflection & certificate ceremony",
+    date: "16 Apr 2027", time: "5PM – 9PM Fri",
+    topics: ["Reflection and key takeaways from the Activator journey", "Official certificate ceremony and celebration with ABLE alumni"],
+    paras: []
+  },
+  {
+    id: "m6", kind: "module", chipText: "06", label: "Module 6", kicker: "Module 6 — Retreat",
+    title: "Welcome to the community",
+    date: "TBC", time: "7PM Fri – 1PM Sun",
+    topics: ["Team building activities", "Interactive sessions", "Celebrations and a warm welcome to ABLE"],
+    paras: []
+  }
+];
+
+const WED_PARAS = ["An evening with a guest founder from the Bulgarian start-up ecosystem, followed by a dedicated Q&A."];
+
+const STYLES = {
+  module: { chipBg: "#2596be", chipFg: "#ffffff", rail: "#29abe2" },
+  session: { chipBg: "rgba(41,171,226,.16)", chipFg: "#7ad2f2", rail: "#5b8b9c" },
+  demo: { chipBg: "#29abe2", chipFg: "#12242c", rail: "#29abe2" }
+};
+
+class Component extends DCLogic {
+  state = { open: { m1: true } };
+
+  toggle(id) {
+    this.setState(s => ({ open: { ...s.open, [id]: !s.open[id] } }));
+  }
+
+  renderVals() {
+    const open = this.state.open;
+    const allOpen = DATA.slice(1).every(d => open[d.id]);
+    return {
+      toggleLabel: allOpen ? "Collapse all" : "Expand all",
+      toggleAll: () => {
+        const next = {};
+        if (!allOpen) DATA.forEach(d => { next[d.id] = true; });
+        this.setState({ open: next });
+      },
+      items: DATA.map(d => {
+        const s = STYLES[d.kind];
+        const paras = d.paras.length ? d.paras : (d.kind === "session" ? WED_PARAS : d.paras);
+        const isOpen = !!open[d.id];
+        return {
+          ...d,
+          paras,
+          meta: d.topics.length ? d.topics.length + " topics" : "Guest session",
+          open: isOpen,
+          collapsible: true,
+          cursor: "pointer",
+          caret: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+          hasTopics: d.topics.length > 0,
+          rail: isOpen ? s.rail : "transparent",
+          chipBg: s.chipBg,
+          chipFg: s.chipFg,
+          onToggle: () => this.toggle(d.id)
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

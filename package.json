@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "add-landing": "node scripts/add-landing.mjs"
+    "add-landing": "node scripts/add-landing.mjs",
+    "flatten-landing": "node scripts/flatten-landing.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
