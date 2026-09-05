@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react'
 
 type Landing = {
   slug: string
-  label: string
   title: string
-  headline: string
-  note: string
 }
 
 export function Landings() {
@@ -32,19 +29,13 @@ export function Landings() {
       {landings.map((landing) => (
         <li key={landing.slug}>
           <a className="choice" href={`/${landing.slug}`}>
-            <span className="choice-label">{landing.label}</span>
-            <span className="choice-headline">{landing.headline}</span>
-            <span className="choice-note">{landing.note}</span>
-            <span className="choice-action">
-              Read {landing.title.toLowerCase()}
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 12h15M13 6l6 6-6 6" />
-              </svg>
-            </span>
+            <span className="choice-headline">{landing.title}</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12h15M13 6l6 6-6 6" />
+            </svg>
           </a>
         </li>
       ))}
     </ul>
   )
 }
-

@@ -76,9 +76,11 @@
 
 .choice {
   position: relative;
-  display: grid;
-  gap: 10px;
-  padding: 28px clamp(24px, 4vw, 36px) 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px clamp(24px, 4vw, 36px);
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--ink-raised);
@@ -119,54 +121,29 @@
   outline-offset: 3px;
 }
 
-.choice-label {
-  font-family: Poppins, system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
 .choice-headline {
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 800;
-  font-size: clamp(24px, 3.6vw, 34px);
+  font-size: clamp(20px, 2.8vw, 28px);
   line-height: 1.05;
   letter-spacing: -0.015em;
   text-wrap: balance;
 }
 
-.choice-note {
-  max-width: 52ch;
-  font-size: 15.5px;
-  line-height: 1.55;
-  color: var(--muted);
-}
-
-.choice-action {
-  margin-top: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: Poppins, system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  color: var(--cyan);
-}
-
-.choice-action svg {
-  width: 18px;
-  height: 18px;
+.choice svg {
+  flex: none;
+  width: 20px;
+  height: 20px;
   fill: none;
-  stroke: currentColor;
+  stroke: var(--cyan);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
   transition: transform 0.25s ease;
 }
 
-.choice:hover .choice-action svg {
+.choice:hover svg,
+.choice:focus-visible svg {
   transform: translateX(4px);
 }
 
@@ -177,11 +154,10 @@
   color: var(--muted);
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   .choice,
   .choice::before,
-  .choice-action svg {
+  .choice svg {
     transition: none;
   }
 }
