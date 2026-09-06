@@ -8,5 +8,10 @@
     "slug": "landing-2",
     "title": "Landing Page 2",
     "entry": "landing-2/landing-2.dc.html"
+  },
+  {
+    "slug": "landing-3",
+    "title": "Landing Page 3",
+    "entry": "landing-3/landing-3.dc.html"
   }
 ]

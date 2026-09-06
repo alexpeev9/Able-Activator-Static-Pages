@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #1c1c1c; -webkit-font-smoothing: antialiased; }
+  a { color: #29abe2; }
+  a:hover { color: #7ad2f2; }
+  * { box-sizing: border-box; }
+  .cal-overlay {
+    position: fixed; inset: 0; z-index: 60;
+    background: rgba(8,10,12,.72);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 0;
+    overscroll-behavior: none;
+    touch-action: none;
+  }
+  .cal-sheet {
+    width: 100%; max-width: 520px;
+    display: flex; flex-direction: column;
+    max-height: min(88vh, calc(100dvh - 8px));
+    background: #1e2224;
+    border: 1px solid #33393c;
+    border-bottom: 0;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -18px 50px rgba(0,0,0,.45);
+    overflow: hidden;
+    overscroll-behavior: contain;
+    touch-action: auto;
+    position: relative;
+  }
+  .cal-sheet::before {
+    content: "";
+    display: block;
+    height: 3px;
+    background: #29abe2;
+    flex: none;
+  }
+  .cal-sheet-head {
+    flex: none;
+    padding: 8px 12px 12px 18px;
+    background: #1e2224;
+    border-bottom: 1px solid #2f3538;
+  }
+  .cal-sheet-grab {
+    width: 36px; height: 4px; border-radius: 99px;
+    background: #4a5256; margin: 8px auto 12px;
+  }
+  .cal-sheet-head-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .cal-sheet-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: #8d979b;
+  }
+  .cal-close {
+    flex: none; width: 44px; height: 44px;
+    background: #15181a; border: 1px solid #3a454a; border-radius: 50%;
+    color: #7ad2f2; font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px; line-height: 1; cursor: pointer;
+  }
+  .cal-close:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
+  .cal-sheet-body {
+    flex: 1 1 auto; min-height: 0;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    padding: 18px 20px max(28px, env(safe-area-inset-bottom));
+  }
+  .cal-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: #29abe2; margin-bottom: 8px;
+  }
+  .cal-title {
+    margin: 0;
+    font-family: Poppins, Helvetica, sans-serif;
+    font-weight: 600; font-size: 22px; line-height: 1.28;
+    color: #fff; text-wrap: pretty;
+  }
+  .cal-meta {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 16px 0 0;
+  }
+  .cal-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: .04em;
+    color: #e9edef;
+    background: #15191b;
+    border: 1px solid #32383b;
+    padding: 8px 11px;
+  }
+  .cal-chip-muted { color: #9aa3a7; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+  .cal-copy { margin: 16px 0 0; font-size: 15.5px; line-height: 1.62; color: #a8b1b5; text-wrap: pretty; }
+  .cal-part { margin-top: 18px; padding-top: 16px; border-top: 1px solid #2f2f2f; }
+  .cal-part-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+    color: #767f83; margin-bottom: 10px;
+  }
+  .cal-part-name { font-size: 15px; line-height: 1.5; color: #d6dcde; }
+</style>
+</helmet>
+<div id="calendar" style="min-height:100vh;background:#1c1c1c;padding:clamp(30px,5vw,80px) clamp(16px,4vw,40px);font-family:Barlow,Helvetica,sans-serif;color:#e9edef">
+  <div style="max-width:1180px;margin:0 auto">
+
+    <div style="margin-bottom:clamp(22px,3.4vw,36px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8d979b;margin-bottom:12px">ABLE Activator 2027</div>
+      <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(30px,5.6vw,54px);line-height:1;text-transform:uppercase;color:#29abe2;text-wrap:balance">Program calendar</h1>
+      <p style="margin:16px 0 0;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a8b1b5;max-width:60ch;text-wrap:pretty">Every date you are expected to show up, from the opening evening to the certificate ceremony. Hover a highlighted day — or tap it on a phone — to see what happens and how long it runs.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8d979b;padding-bottom:16px;border-bottom:1px solid #2b2b2b">
+      <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
+        <span style="display:flex;align-items:center;gap:8px">
+          <span style="width:12px;height:12px;flex:none;background:{{ l.swatch }};border:1px solid {{ l.border }}"></span>
+          <span>{{ l.label }}</span>
+        </span>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,44px);align-items:flex-start;padding-top:clamp(20px,3vw,34px)">
+
+      <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:clamp(22px,3vw,36px);min-width:0;max-width:520px">
+        <sc-for list="{{ months }}" as="m" hint-placeholder-count="3">
+          <div style="min-width:0">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid #2b2b2b">
+              <span style="font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.06em;color:#fff">{{ m.name }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#767f83">{{ m.year }}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px">
+              <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+                <div style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#5f686c;padding-bottom:6px">{{ w }}</div>
+              </sc-for>
+              <sc-for list="{{ m.cells }}" as="c" hint-placeholder-count="35">
+                <div onMouseEnter="{{ c.onEnter }}" onClick="{{ c.onSelect }}" onFocus="{{ c.onEnter }}" tabIndex="{{ c.tabIndex }}" role="{{ c.role }}" aria-label="{{ c.aria }}" style="position:relative;aspect-ratio:1;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:13px;background:{{ c.bg }};color:{{ c.color }};border:1px solid {{ c.border }};cursor:{{ c.cursor }};outline:none;transition:background .16s ease,border-color .16s ease,transform .16s ease;transform:{{ c.scale }}">{{ c.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <aside style="display:{{ asideDisplay }};position:sticky;top:24px;flex:1 1 300px;min-width:0;max-width:100%;border:1px solid #2b2b2b;background:#222222;padding:clamp(18px,2.4vw,26px)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:12px;border-bottom:1px solid #2f2f2f;margin-bottom:16px">{{ detail.kicker }}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#29abe2;margin-bottom:8px">{{ detail.dateLine }}</div>
+        <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(19px,2.2vw,23px);line-height:1.28;color:#fff;text-wrap:pretty">{{ detail.title }}</h2>
+        <sc-if value="{{ detail.hasTime }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px;padding:12px 0;border-top:1px solid #2f2f2f;border-bottom:1px solid #2f2f2f">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#fff;letter-spacing:.03em">{{ detail.time }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8d979b">{{ detail.duration }}</span>
+          </div>
+        </sc-if>
+        <p style="margin:16px 0 0;font-size:15.5px;line-height:1.62;color:#a8b1b5;text-wrap:pretty">{{ detail.purpose }}</p>
+        <sc-if value="{{ detail.hasTopics }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:18px;padding-top:16px;border-top:1px solid #2f2f2f">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;margin-bottom:10px">Part of</div>
+            <div style="font-size:15px;line-height:1.5;color:#d6dcde">{{ detail.parent }}</div>
+          </div>
+        </sc-if>
+      </aside>
+    </div>
+
+    <sc-if value="{{ showModal }}" hint-placeholder-val="{{ false }}">
+      <div class="cal-overlay" onClick="{{ closeModal }}">
+        <div class="cal-sheet" data-cal-sheet="1" onClick="{{ stopSheet }}" role="dialog" aria-modal="true" aria-labelledby="cal-sheet-title">
+          <div class="cal-sheet-head">
+            <div class="cal-sheet-grab" aria-hidden="true"></div>
+            <div class="cal-sheet-head-row">
+              <div class="cal-sheet-kicker">{{ detail.kicker }}</div>
+              <button class="cal-close" onClick="{{ closeModal }}" aria-label="Close">✕</button>
+            </div>
+          </div>
+          <div class="cal-sheet-body">
+            <div class="cal-date">{{ detail.dateLine }}</div>
+            <h2 class="cal-title" id="cal-sheet-title">{{ detail.title }}</h2>
+            <div class="cal-meta">
+              <span class="cal-chip">{{ detail.time }}</span>
+              <span class="cal-chip cal-chip-muted">{{ detail.duration }}</span>
+            </div>
+            <p class="cal-copy">{{ detail.purpose }}</p>
+            <sc-if value="{{ detail.hasTopics }}" hint-placeholder-val="{{ false }}">
+              <div class="cal-part">
+                <div class="cal-part-label">Part of</div>
+                <div class="cal-part-name">{{ detail.parent }}</div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180}}">
+const WED = "One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&A with the cohort.";
+const EVE = { time: "7:00 PM – 9:00 PM", duration: "2 hours", evening: true };
+const DAY = { time: "8:00 AM – 8:00 PM", duration: "Full day" };
+
+// kind: module (weekend day) | wed | demo | close
+const EVENTS = {
+  "2027-02-19": { kind: "module", parent: "Module 01 — Leadership and Community Ignition", title: "Opening day", ...DAY, purpose: "Meet the cohort, the trainers and the ABLE community, and set your intentions for the edition." },
+  "2027-02-20": { kind: "module", parent: "Module 01 — Leadership and Community Ignition", title: "Thinking like an entrepreneur", ...DAY, purpose: "The entrepreneurial mindset — teamwork, leadership and how founders make decisions under uncertainty." },
+  "2027-02-21": { kind: "module", parent: "Module 01 — Leadership and Community Ignition", title: "Ideas and first validation", ...DAY, purpose: "Idea generation, first market research and validating that the problem you picked is real." },
+  "2027-02-24": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
+  "2027-02-26": { kind: "module", parent: "Module 02 — The Path to the Customer", title: "Teams are formed", ...EVE, purpose: "Teams are formed and each team picks the customer need it will chase for the rest of the program." },
+  "2027-02-27": { kind: "module", parent: "Module 02 — The Path to the Customer", title: "Value proposition & traction", ...DAY, purpose: "Value proposition, unfair advantage and the traction channels that could realistically reach that customer." },
+  "2027-02-28": { kind: "module", parent: "Module 02 — The Path to the Customer", title: "Revenue, cost & metrics", ...DAY, purpose: "Revenue streams, cost structure and key metrics — then you plan the customer interviews you run during the week." },
+  "2027-03-10": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
+  "2027-03-12": { kind: "module", parent: "Module 03 — Refining Your Venture", title: "Interview results", ...EVE, purpose: "You bring back what customers actually told you and read the results as a team." },
+  "2027-03-13": { kind: "module", parent: "Module 03 — Refining Your Venture", title: "Design thinking & prototyping", ...DAY, purpose: "Design thinking and a hands-on prototyping session — the first version of your MVP takes shape." },
+  "2027-03-14": { kind: "module", parent: "Module 03 — Refining Your Venture", title: "Pitching Session #1", ...DAY, purpose: "Your first pitch in front of trainers, then roundtable feedback and Demo Day expectations." },
+  "2027-03-19": { kind: "module", parent: "Module 04 — Market and Business Mastery", title: "Go-to-market", ...EVE, purpose: "How a product reaches its market: go-to-market strategy for your specific idea." },
+  "2027-03-20": { kind: "module", parent: "Module 04 — Market and Business Mastery", title: "Marketing & sales", ...DAY, purpose: "Start-up marketing and sales — the techniques founders use before they can afford a team." },
+  "2027-03-21": { kind: "module", parent: "Module 04 — Market and Business Mastery", title: "Pitching Session #2", ...DAY, purpose: "Focused work time in teams, then your second pitch and roundtable feedback." },
+  "2027-03-31": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
+  "2027-04-02": { kind: "module", parent: "Module 05 — Financial Mastery & Strategic Scaling", title: "Entrepreneurial finance", ...EVE, purpose: "The numbers a founder has to be able to defend in front of an investor." },
+  "2027-04-03": { kind: "module", parent: "Module 05 — Financial Mastery & Strategic Scaling", title: "Equity & growth", ...DAY, purpose: "Splitting equity from the legal side, plus growth strategies built for early-stage teams." },
+  "2027-04-04": { kind: "module", parent: "Module 05 — Financial Mastery & Strategic Scaling", title: "Pitching Session #3", ...DAY, purpose: "The last full rehearsal before Demo Day, with detailed roundtable feedback." },
+  "2027-04-07": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
+  "2027-04-14": { kind: "demo", title: "Demo Day — Grand Final Pitch", time: "7:00 PM – 11:00 PM", duration: "4 hours", evening: true, purpose: "Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team." },
+  "2027-04-16": { kind: "close", title: "Reflection & certificate ceremony", time: "5:00 PM – 9:00 PM", duration: "4 hours", evening: true, purpose: "A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni." }
+};
+
+const STYLE = {
+  module: { bg: "#2a4657", border: "#39657a", color: "#e3f3fb", eveColor: "#cfe6f2" },
+  wed:    { bg: "#2a4657", border: "#39657a", color: "#e3f3fb", eveColor: "#cfe6f2" },
+  demo:   { bg: "#29abe2", border: "#29abe2", color: "#0f2733", eveColor: "#9adcfa" },
+  close:  { bg: "#1f3a34", border: "#2f5f53", color: "#dbf3ec", eveColor: "#bfe6db" },
+  empty:  { bg: "rgba(255,255,255,.012)", border: "#272727", color: "#7b8386" }
+};
+
+const MONTHS = [
+  { name: "February", year: "2027", m: 2, days: 28, firstDow: 0 },
+  { name: "March", year: "2027", m: 3, days: 31, firstDow: 0 },
+  { name: "April", year: "2027", m: 4, days: 30, firstDow: 3 }
+];
+const MN = { 2: "February", 3: "March", 4: "April" };
+const DOW = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+const fill = (c, evening, edge) => {
+  if (c.indexOf("rgba") === 0) return c;
+  if (!evening) return c;
+  return "linear-gradient(to top, " + c + " 0 32%, " + edge + " 32% calc(32% + 1px), rgba(255,255,255,.035) calc(32% + 1px) 100%)";
+};
+
+const key = (m, d) => "2027-" + String(m).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+
+class Component extends DCLogic {
+  state = { active: "2027-02-19", narrow: false, modal: false };
+
+  lockScroll() {
+    if (this._scrollLocked) return;
+    this._scrollLocked = true;
+    this._scrollY = window.scrollY || window.pageYOffset || 0;
+    const html = document.documentElement;
+    const body = document.body;
+    html.style.overflow = "hidden";
+    html.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.overscrollBehavior = "none";
+    body.style.position = "fixed";
+    body.style.top = "-" + this._scrollY + "px";
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    this._blockTouch = (e) => {
+      if (!e.target || !e.target.closest || !e.target.closest("[data-cal-sheet]")) {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener("touchmove", this._blockTouch, { passive: false });
+  }
+
+  unlockScroll() {
+    if (!this._scrollLocked) return;
+    this._scrollLocked = false;
+    const html = document.documentElement;
+    const body = document.body;
+    html.style.overflow = "";
+    html.style.overscrollBehavior = "";
+    body.style.overflow = "";
+    body.style.overscrollBehavior = "";
+    body.style.position = "";
+    body.style.top = "";
+    body.style.left = "";
+    body.style.right = "";
+    body.style.width = "";
+    if (this._blockTouch) {
+      document.removeEventListener("touchmove", this._blockTouch);
+      this._blockTouch = null;
+    }
+    window.scrollTo(0, this._scrollY || 0);
+  }
+
+  componentDidMount() {
+    this.sync = () => {
+      const narrow = window.innerWidth <= 760;
+      this.setState((s) => {
+        if (!narrow && s.modal) this.unlockScroll();
+        if (!narrow) {
+          return { narrow, modal: false, active: s.active || "2027-02-19" };
+        }
+        return { narrow, modal: s.modal, active: s.modal ? s.active : null };
+      });
+    };
+    this.sync();
+    window.addEventListener("resize", this.sync);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.sync);
+    this.unlockScroll();
+  }
+
+  pick(k) {
+    const open = this.state.narrow;
+    this.setState({ active: k, modal: open });
+    if (open) this.lockScroll();
+  }
+
+  closeModal() {
+    this.unlockScroll();
+    const focused = document.activeElement;
+    if (focused && focused.blur) focused.blur();
+    this.setState({ modal: false, active: this.state.narrow ? null : this.state.active });
+  }
+
+  renderVals() {
+    const active = this.state.active;
+    const ev = EVENTS[active] || EVENTS["2027-02-19"];
+    const dateKey = active || "2027-02-19";
+    const [, mm, dd] = dateKey.split("-");
+    const mi = MONTHS.findIndex(x => x.m === +mm);
+    const dow = DOW[(MONTHS[mi].firstDow + (+dd - 1)) % 7];
+
+    return {
+      weekdays: ["M", "T", "W", "T", "F", "S", "S"],
+      legend: [
+        { label: "Full day · 8 AM – 8 PM", swatch: STYLE.module.bg, border: STYLE.module.border },
+        { label: "Evening · 2–4 hours", swatch: fill(STYLE.module.bg, true, STYLE.module.border), border: STYLE.module.border },
+        { label: "Demo Day", swatch: fill(STYLE.demo.bg, true, "#8fd8f6"), border: STYLE.demo.border },
+        { label: "Ceremony", swatch: fill(STYLE.close.bg, true, STYLE.close.border), border: STYLE.close.border }
+      ],
+      months: MONTHS.map(mo => {
+        const cells = [];
+        for (let i = 0; i < mo.firstDow; i++) {
+          cells.push({ label: "", ...STYLE.empty, cursor: "default", scale: "none", tabIndex: -1, role: "presentation", aria: "", onEnter: null, onSelect: null });
+        }
+        for (let d = 1; d <= mo.days; d++) {
+          const k = key(mo.m, d);
+          const e = EVENTS[k];
+          const s = e ? STYLE[e.kind] : STYLE.empty;
+          const isActive = !!active && k === active;
+          cells.push({
+            label: String(d),
+            bg: fill(isActive ? "#29abe2" : s.bg, e && e.evening, isActive ? "#8fd8f6" : s.border),
+            border: isActive ? "#7ad2f2" : s.border,
+            color: e && e.evening ? (isActive ? "#dff1fa" : s.eveColor || s.color) : (isActive ? "#0f2733" : s.color),
+            cursor: e ? "pointer" : "default",
+            scale: isActive ? "scale(1.06)" : "none",
+            tabIndex: e ? 0 : -1,
+            role: e ? "button" : "presentation",
+            aria: e ? d + " " + mo.name + " — " + e.title : "",
+            onEnter: e && !this.state.narrow ? () => this.setState({ active: k }) : null,
+            onSelect: e ? () => this.pick(k) : null
+          });
+        }
+        return { ...mo, cells };
+      }),
+      showModal: this.state.modal,
+      asideDisplay: this.state.narrow ? "none" : "block",
+      closeModal: () => this.closeModal(),
+      stopSheet: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
+      detail: {
+        kicker: ev.kind === "wed" ? "Guest evening" : ev.kind === "demo" ? "Final event" : ev.kind === "close" ? "Closing" : "Module day",
+        dateLine: dow + " " + (+dd) + " " + MN[+mm] + " 2027",
+        title: ev.title,
+        hasTime: true,
+        time: ev.time,
+        duration: ev.duration,
+        purpose: ev.purpose,
+        hasTopics: !!ev.parent,
+        parent: ev.parent || ""
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
