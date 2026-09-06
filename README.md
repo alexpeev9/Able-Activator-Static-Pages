@@ -63,7 +63,7 @@ pnpm dev
 Vite prints a local URL (by default <http://localhost:5173>). Landing pages are
 served at `/{slug}` (for example `/landing-1`).
 
-While `pnpm dev` is running, edits in `landings-src/` reload the page on their
+While `pnpm dev` is running, edits in `src/landings/` reload the page on their
 own. You do not need `pnpm flatten-landing` until you want to update the
 committed static files for preview or deploy.
 
@@ -75,13 +75,14 @@ committed static files for preview or deploy.
 | `pnpm build` | Type-check (`tsc -b`) and build to `dist/` |
 | `pnpm preview` | Serve the production build locally |
 | `pnpm lint` | Run ESLint over the project |
-| `pnpm add-landing <file.html> [slug] [title]` | Copy a standalone HTML file into `public/landings/` and register it in `landings.json` |
-| `pnpm flatten-landing` | Prerender `landings-src/*.dc.html` into `public/landings/<slug>/index.html` |
-| `node scripts/flatten-landing.mjs <src.html> <out.html>` | Flatten one Design Compiler or bundler HTML file |
+| `pnpm add-landing <file.html> [slug] [title]` | Copy a standalone HTML file into `src/landings/` and register it in the manifest |
+| `pnpm flatten-landing` | Prerender `src/landings/*.dc.html` into `public/landings/<slug>/index.html` |
+| `pnpm flatten-landing <src.html> <out.html>` | Flatten one Design Compiler or bundler HTML file |
+| `pnpm unpack-bundler <bundler.html> <out-dir>` | Unpack a Claude Design bundler export |
 
 ### 5. Landing sources and the flatten command
 
-Editable Design Compiler documents live in `landings-src/`:
+The app is one React project. Editable Design Compiler documents live in `src/landings/`:
 
 | File | What it is |
 | --- | --- |
@@ -90,7 +91,7 @@ Editable Design Compiler documents live in `landings-src/`:
 | `landing-2/landing-2.dc.html` | Landing page 2 (full page) |
 | `landing-2/landing-2-modules.dc.html` | Landing page 2 modules section |
 
-During `pnpm dev`, save a file in `landings-src/` and the open landing reloads.
+During `pnpm dev`, save a file in `src/landings/` and the open landing reloads.
 
 When you want to update the committed static files for Vercel / `pnpm preview`:
 
@@ -99,7 +100,7 @@ pnpm flatten-landing
 ```
 
 That writes `public/landings/<slug>/index.html` (committed in the repo) and
-updates `public/landings/landings.json` from `landings-src/landings.json`.
+updates `public/landings/landings.json` from `src/landings/landings.json`.
 
 To register a finished standalone HTML file that is not a Design Compiler page:
 

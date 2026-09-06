@@ -1,12 +1,6 @@
-#!/usr/bin/env node
-// Flatten Design Compiler (.dc.html) or Claude Design bundler HTML into a
-// single static file that paints without JS and keeps the DC runtime for
-// interactivity.
-//
-//   node scripts/flatten-landing.mjs
-//   node scripts/flatten-landing.mjs <src.html> <out.html>
 import fs from 'node:fs'
 import http from 'node:http'
+import type { AddressInfo } from 'node:net'
 import path from 'node:path'
 import { chromium } from 'playwright'
 import {
@@ -17,15 +11,13 @@ import {
   isBundler,
   isDcDocument,
   readManifest,
-  root,
-  srcDir,
-} from './assemble-landing.mjs'
-
-const publicLandings = path.join(root, 'public', 'landings')
+  resolveLandingEntry,
+} from './assemble.ts'
+import { PUBLIC_LANDINGS, PUBLIC_MANIFEST_PATH, ROOT } from './paths.ts'
 
 const [srcArg, outArg] = process.argv.slice(2)
 
-const MIME = {
+const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -35,10 +27,10 @@ const MIME = {
   '.woff2': 'font/woff2',
 }
 
-const serveDirectory = (dir) =>
-  new Promise((resolve, reject) => {
+const serveDirectory = (dir: string) =>
+  new Promise<{ url: string; close: () => Promise<void> }>((resolve, reject) => {
     const server = http.createServer((req, res) => {
-      const urlPath = decodeURIComponent((req.url ?? '/').split('?')[0])
+      const urlPath = decodeURIComponent((req.url ?? '/').split('?')[0] ?? '')
       const rel = urlPath === '/' ? 'index.html' : urlPath.replace(/^\/+/, '')
       const file = path.resolve(dir, rel)
       if (!file.startsWith(path.resolve(dir))) {
@@ -57,18 +49,21 @@ const serveDirectory = (dir) =>
       fs.createReadStream(file).pipe(res)
     })
     server.listen(0, '127.0.0.1', () => {
-      const { port } = server.address()
+      const { port } = server.address() as AddressInfo
       resolve({
         url: `http://127.0.0.1:${port}`,
-        close: () => new Promise((done) => server.close(done)),
+        close: () =>
+          new Promise<void>((resolve, reject) => {
+            server.close((err) => (err ? reject(err) : resolve()))
+          }),
       })
     })
     server.on('error', reject)
   })
 
-const filterFontCss = (css) => {
+const filterFontCss = (css: string) => {
   const blocks = css.split(/\/\*\s*/).filter(Boolean)
-  const kept = []
+  const kept: string[] = []
   for (const block of blocks) {
     const commentEnd = block.indexOf('*/')
     const label = commentEnd === -1 ? '' : block.slice(0, commentEnd).trim().toLowerCase()
@@ -82,9 +77,9 @@ const filterFontCss = (css) => {
   return kept.join('\n').trim() || css
 }
 
-const inlineFontUrls = async (css) => {
-  const urls = [...css.matchAll(/url\((['"]?)(https?:\/\/[^'")]+)\1\)/g)].map((m) => m[2])
-  const unique = [...new Set(urls)]
+const inlineFontUrls = async (css: string) => {
+  const urls = [...css.matchAll(/url\((['"]?)(https?:\/\/[^'")]+)\1\)/g)].map((m) => m[2] ?? '')
+  const unique = [...new Set(urls.filter(Boolean))]
   let next = css
   for (const url of unique) {
     const res = await fetch(url)
@@ -96,7 +91,7 @@ const inlineFontUrls = async (css) => {
   return next
 }
 
-const capturePage = async (pageUrl) => {
+const capturePage = async (pageUrl: string) => {
   const browser = await chromium.launch({ headless: true })
   try {
     const page = await browser.newPage()
@@ -106,12 +101,12 @@ const capturePage = async (pageUrl) => {
     })
     await page.goto(pageUrl, { waitUntil: 'networkidle', timeout: 60_000 })
     await page.waitForFunction(() => {
-      const root = document.querySelector('#dc-root')
+      const root = document.querySelector('#dc-root') as HTMLElement | null
       return Boolean(root && root.innerText && root.innerText.length > 80)
     }, { timeout: 45_000 })
 
     await page.evaluate(() => {
-      const clickMatching = (re) => {
+      const clickMatching = (re: RegExp) => {
         for (const btn of document.querySelectorAll('button')) {
           if (re.test(btn.textContent ?? '')) btn.click()
         }
@@ -121,7 +116,7 @@ const capturePage = async (pageUrl) => {
     await page.waitForTimeout(400)
     await page.evaluate(() => {
       for (const btn of document.querySelectorAll('button[aria-expanded="false"]')) {
-        btn.click()
+        ;(btn as HTMLButtonElement).click()
       }
     })
     await page.waitForTimeout(400)
@@ -134,7 +129,7 @@ const capturePage = async (pageUrl) => {
         .join('\n')
       const fontCss = (
         await Promise.all(
-          [...document.querySelectorAll('link[rel="stylesheet"]')]
+          [...document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')]
             .filter((el) => (el.href || '').includes('fonts.googleapis.com'))
             .map(async (el) => {
               const res = await fetch(el.href)
@@ -155,7 +150,23 @@ const capturePage = async (pageUrl) => {
   }
 }
 
-const buildStaticHtml = ({ title, styles, fontCss, prerender, entryHtml, blobs, supportJs }) => {
+const buildStaticHtml = ({
+  title,
+  styles,
+  fontCss,
+  prerender,
+  entryHtml,
+  blobs,
+  supportJs,
+}: {
+  title: string
+  styles: string
+  fontCss: string
+  prerender: string
+  entryHtml: string
+  blobs: Record<string, string>
+  supportJs: string
+}) => {
   const { dcInner, dcScript } = extractDcParts(entryHtml)
   const blobScript = blobBootScript(blobs)
 
@@ -199,7 +210,7 @@ ${dcScript}
 `
 }
 
-const flattenDcFile = async (entryPath, outPath) => {
+const flattenDcFile = async (entryPath: string, outPath: string) => {
   const entryDir = path.dirname(entryPath)
   const entryHtml = fs.readFileSync(entryPath, 'utf8')
   if (!isDcDocument(entryHtml)) {
@@ -229,11 +240,10 @@ const flattenDcFile = async (entryPath, outPath) => {
 
   fs.mkdirSync(path.dirname(outPath), { recursive: true })
   fs.writeFileSync(outPath, html)
-  console.log(`Wrote ${path.relative(root, outPath)} (${html.length} bytes)`)
+  console.log(`Wrote ${path.relative(ROOT, outPath)} (${html.length} bytes)`)
 }
 
-const flattenBundlerFile = async (entryPath, outPath) => {
-  const html = fs.readFileSync(entryPath, 'utf8')
+const flattenBundlerFile = async (entryPath: string, outPath: string) => {
   const server = await serveDirectory(path.dirname(entryPath))
   const browser = await chromium.launch({ headless: true })
   try {
@@ -250,34 +260,34 @@ const flattenBundlerFile = async (entryPath, outPath) => {
     const serialized = await page.content()
     fs.mkdirSync(path.dirname(outPath), { recursive: true })
     fs.writeFileSync(outPath, serialized)
-    console.log(`Wrote ${path.relative(root, outPath)} (${serialized.length} bytes)`)
+    console.log(`Wrote ${path.relative(ROOT, outPath)} (${serialized.length} bytes)`)
   } finally {
     await browser.close()
     await server.close()
   }
 }
 
-const flattenOne = async (entryPath, outPath) => {
+const flattenOne = async (entryPath: string, outPath: string) => {
   const html = fs.readFileSync(entryPath, 'utf8')
   if (isDcDocument(html)) return flattenDcFile(entryPath, outPath)
   if (isBundler(html)) return flattenBundlerFile(entryPath, outPath)
   fs.mkdirSync(path.dirname(outPath), { recursive: true })
   fs.copyFileSync(entryPath, outPath)
-  console.log(`Copied plain HTML ${path.relative(root, outPath)}`)
+  console.log(`Copied plain HTML ${path.relative(ROOT, outPath)}`)
 }
 
 const flattenFromManifest = async () => {
   const manifest = readManifest()
   if (!manifest.length) {
-    throw new Error(`Missing or empty ${path.relative(root, path.join(srcDir, 'landings.json'))}`)
+    throw new Error('Missing or empty src/landings/landings.json')
   }
   for (const landing of manifest) {
-    const entry = path.join(srcDir, landing.entry)
-    const out = path.join(publicLandings, landing.slug, 'index.html')
+    const entry = resolveLandingEntry(landing.entry)
+    const out = path.join(PUBLIC_LANDINGS, landing.slug, 'index.html')
     await flattenOne(entry, out)
   }
   fs.writeFileSync(
-    path.join(publicLandings, 'landings.json'),
+    PUBLIC_MANIFEST_PATH,
     `${JSON.stringify(
       manifest.map(({ slug, title }) => ({ slug, title })),
       null,
@@ -293,13 +303,13 @@ const main = async () => {
     return
   }
   if (srcArg || outArg) {
-    console.error('usage: node scripts/flatten-landing.mjs [<src.html> <out.html>]')
+    console.error('usage: pnpm flatten-landing [<src.html> <out.html>]')
     process.exit(1)
   }
   await flattenFromManifest()
 }
 
-main().catch((err) => {
+main().catch((err: unknown) => {
   console.error(err instanceof Error ? err.message : err)
   process.exit(1)
 })
