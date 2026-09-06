@@ -24,6 +24,10 @@
   @keyframes drift-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-70px,50px) scale(1.1); } }
   @keyframes dash-move { to { stroke-dashoffset: -400; } }
   @keyframes pulse-ring { 0% { r: 3; opacity: .9; } 100% { r: 26; opacity: 0; } }
+  @keyframes star-drift-a { 0%,100% { transform: translate(0,0); } 50% { transform: translate(14px,-11px); } }
+  @keyframes star-drift-b { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-12px,13px); } }
+  @keyframes star-drift-c { 0%,100% { transform: translate(0,0); } 50% { transform: translate(9px,16px); } }
+  @keyframes star-twinkle { 0%,100% { opacity: var(--o,.28); } 45% { opacity: calc(var(--o,.28) * 2.6); } }
 
   /* ---- site header ---- */
   .hdr {
@@ -69,6 +73,8 @@
   }
   .hdr a:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
 
+  .hero { padding-top: clamp(16px, 4vw, 40px); }
+
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero {
@@ -83,10 +89,14 @@
     .hdr-in { height: 66px; justify-content: space-between; }
     .brand svg { height: 34px; }
     .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
+    .hero-art { display: none; }
+    .hero-ctas { flex-direction: column; align-items: stretch; }
+    .hero-ctas a { width: 100%; justify-content: center; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .nav a::after, .hdr .cta { transition: none; }
+    .hero-art circle { animation: none !important; }
   }
   @keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 </style>
@@ -108,13 +118,13 @@
     </div>
   </header>
 
-  <section id="top" class="hero" style="position:relative;padding:clamp(56px,10vw,120px) clamp(16px,4vw,40px) clamp(48px,8vw,96px);overflow:hidden">
-    <div style="position:absolute;inset:0;pointer-events:none">{{ heroArt }}</div>
+  <section id="top" class="hero" style="position:relative;padding-right:clamp(16px,4vw,40px);padding-bottom:clamp(48px,8vw,96px);padding-left:clamp(16px,4vw,40px);overflow:hidden">
+    <div class="hero-art" style="position:absolute;inset:0;pointer-events:none">{{ heroArt }}</div>
     <div style="position:relative;max-width:1000px;margin:0 auto;text-align:center">
       <div style="display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:#29abe2;border:1px solid rgba(41,171,226,.4);border-radius:999px;padding:8px 16px;margin-bottom:22px">Applications open · Edition 2027</div>
       <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(38px,8.4vw,84px);line-height:.98;letter-spacing:-.015em;color:#fff;text-wrap:balance">Six weekends that<br><span style="color:#29abe2">activate</span> founders</h1>
-      <p style="margin:20px auto 0;max-width:58ch;font-size:clamp(16px,2.2vw,19px);line-height:1.6;color:#b6bec2;text-wrap:pretty">ABLE Activator is an exclusive entrepreneurship program for 30 ambitious self-starters — the knowledge, mentorship and network you need to take an idea to fruition.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px">
+      <p style="margin:20px auto 0;max-width:58ch;font-size:clamp(16px,2.2vw,19px);line-height:1.6;color:#b6bec2;text-wrap:pretty">ABLE Activator is an exclusive program for 30 ambitious self-starters. You get the knowledge, mentorship and network to take an idea to fruition.</p>
+      <div class="hero-ctas" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px">
         <a href="#apply" style="background:#29abe2;color:#12242c;font-family:Poppins;font-weight:600;font-size:15px;letter-spacing:.03em;padding:15px 30px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#7ad2f2">Apply for the 2027 edition</a>
         <a href="#modules" style="border:1px solid #3a3f42;color:#e9edef;font-family:Poppins;font-weight:600;font-size:15px;padding:15px 28px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="border-color:#29abe2;color:#29abe2">See the 6 modules</a>
       </div>
@@ -277,13 +287,13 @@ const BLOCKS = [
 const FAQS = [
   { q: "Will the program be conducted online or offline?", a: "The weekend modules are held in person; Wednesday guest sessions run online." },
   { q: "Where do the trainings take place?", a: "In Sofia, at a venue announced to participants before each module." },
-  { q: "Can I miss or skip any of the trainings?", a: "Attendance is expected at all modules — the program is built as one continuous journey." },
+  { q: "Can I miss or skip any of the trainings?", a: "Attendance is expected at all modules, and the program is built as one continuous journey." },
   { q: "Will I work on my own start-up idea throughout ABLE Activator?", a: "Yes, you work on a real idea in a team from the first weekend onwards." },
   { q: "Which mentor will my team work with?", a: "Teams are matched with a mentor whose experience fits their idea and stage." },
   { q: "What is Demo Day?", a: "The final pitch event where teams present to a hand-picked jury and the best-performing team is announced." },
   { q: "How can I apply for the program?", a: "Through the application form on this page, before the deadline for the edition." },
   { q: "How will I find out if I have been selected?", a: "Shortlisted candidates are invited to an interview, and all applicants hear back by email." },
-  { q: "Can I apply again if I am not selected this time?", a: "Yes — many participants are accepted on a second application." },
+  { q: "Can I apply again if I am not selected this time?", a: "Yes, and many participants are accepted on a second application." },
   { q: "Can I pay the participation fee in parts?", a: "Yes, instalment plans are arranged individually after selection." }
 ];
 
@@ -300,34 +310,52 @@ class Component extends DCLogic {
     const h = React.createElement;
     const blob = (cx, cy, r, anim, dur, op) => h("circle", {
       key: "b" + cx + cy, cx, cy, r, fill: "#29abe2", opacity: op,
-      style: { filter: "blur(60px)", animation: anim + " " + dur + "s ease-in-out infinite", transformOrigin: cx + "px " + cy + "px" }
+      style: { filter: "blur(70px)", animation: anim + " " + dur + "s ease-in-out infinite", transformOrigin: cx + "px " + cy + "px" }
     });
+    let seed = id === "hero" ? 17 : 41;
+    const rnd = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+    const drifts = ["star-drift-a", "star-drift-b", "star-drift-c"];
+    const gauss = () => {
+      const u = Math.max(rnd(), 1e-6);
+      const v = rnd();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(6.283185 * v);
+    };
+    const clusters = [
+      { x: 210, y: 120, sx: 210, sy: 130, n: 34 },
+      { x: 980, y: 430, sx: 230, sy: 140, n: 36 },
+      { x: 600, y: 250, sx: 420, sy: 220, n: 28 }
+    ];
     const dots = [];
-    for (let x = 0; x < 12; x++) {
-      for (let y = 0; y < 5; y++) {
-        dots.push(h("circle", { key: "d" + x + y, cx: 60 + x * 100, cy: 60 + y * 100, r: 1.6, fill: "#ffffff", opacity: 0.09 }));
+    let i = 0;
+    clusters.forEach((c) => {
+      for (let k = 0; k < c.n; k++, i++) {
+        const cx = Math.min(1188, Math.max(12, c.x + gauss() * c.sx));
+        const cy = Math.min(548, Math.max(12, c.y + gauss() * c.sy));
+        const rad = 0.45 + rnd() * rnd() * 2.8;
+        const op = 0.16 + rnd() * 0.52;
+        const dur = 10 + rnd() * 16;
+        const tw = 2.2 + rnd() * 4.8;
+        const delay = -(rnd() * 14);
+        const fill = rnd() > 0.28 ? "#e8f6fb" : "#7ad2f2";
+        dots.push(h("circle", {
+          key: "d" + i, cx, cy, r: rad, fill,
+          style: {
+            "--o": String(op),
+            transformOrigin: cx + "px " + cy + "px",
+            animation: drifts[i % 3] + " " + dur + "s ease-in-out " + delay + "s infinite, star-twinkle " + tw + "s ease-in-out " + delay + "s infinite"
+          }
+        }));
       }
-    }
-    const line = (d, dur, delay) => h("path", {
-      key: "l" + d, d, fill: "none", stroke: "#29abe2", strokeWidth: 1.4, opacity: 0.5,
-      strokeDasharray: "12 340",
-      style: { animation: "dash-move " + dur + "s linear infinite", animationDelay: delay + "s" }
     });
     const el = h("svg", {
       viewBox: "0 0 1200 560", preserveAspectRatio: "xMidYMid slice",
       style: { width: "100%", height: "100%", display: "block" }, "aria-hidden": "true"
     },
-      h("g", null, blob(220, 130, 130, "drift-a", 18, opts.blob), blob(980, 420, 160, "drift-b", 22, opts.blob)),
-      h("g", null, dots),
-      h("g", null,
-        line("M-20 460 C 240 460, 300 200, 620 200 S 1020 380, 1240 300", 9, 0),
-        line("M-20 120 C 260 120, 360 340, 640 340 S 1000 140, 1240 200", 11, 1.5)
-      ),
-      h("g", null,
-        h("circle", { cx: 620, cy: 200, r: 3.5, fill: "#29abe2" }),
-        h("circle", { cx: 620, cy: 200, r: 3, fill: "none", stroke: "#29abe2", strokeWidth: 1.4, style: { animation: "pulse-ring 3.2s ease-out infinite" } }),
-        h("circle", { cx: 640, cy: 340, r: 3.5, fill: "#7ad2f2", style: { animation: "float-y 6s ease-in-out infinite" } })
-      )
+      h("g", null, blob(160, 80, 150, "drift-a", 18, opts.blob), blob(1060, 480, 180, "drift-b", 22, opts.blob)),
+      h("g", null, dots)
     );
     this._art[id] = el;
     return el;

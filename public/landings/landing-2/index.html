@@ -514,8 +514,31 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero { min-height: calc(100vh - 79px); display: grid; grid-template-rows: 1fr; }
-    .hero > div { height: 100%; }
+    .hero > div { height: 100%; width: 100%; }
     .hero-copy { display: flex; flex-direction: column; justify-content: center; }
+  }
+
+  .stats {
+    border-bottom: 1px solid #262626;
+    background: #0f0f0f;
+    padding: 0 clamp(16px, 3vw, 28px);
+  }
+  .stats-in {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .stat {
+    padding: 22px 24px;
+    border-right: 1px solid #1e1e1e;
+  }
+  .stat:first-child { padding-left: 0; }
+  .stat:last-child { border-right: none; padding-right: 0; }
+  @media (max-width: 700px) {
+    .stats-in { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat:nth-child(2n) { border-right: none; }
+    .stat:nth-child(n + 3) { border-top: 1px solid #1e1e1e; }
   }
 
 
@@ -577,7 +600,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
   <section data-dc-tpl="31" id="top" class="hero" style="border-bottom: 1px solid rgb(38, 38, 38);">
     <div data-dc-tpl="32" style="max-width: 1240px; margin: 0px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: stretch;">
       <div data-dc-tpl="33" class="hero-copy" style="padding: clamp(36px, 6vw, 84px) clamp(16px, 3vw, 28px);">
-        <div data-dc-tpl="34" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgb(41, 171, 226); margin-bottom: clamp(20px, 4vw, 40px);">Edition 2027 · 19 Feb — 16 Apr</div>
+        <div data-dc-tpl="34" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgb(41, 171, 226); margin-bottom: clamp(20px, 4vw, 40px);">Edition 2027 · 19 Feb to 16 Apr</div>
         <h1 data-dc-tpl="35" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(40px, 8vw, 78px); line-height: 0.94; letter-spacing: -0.02em; color: rgb(255, 255, 255); text-wrap: balance;">Idea in.<br data-dc-tpl="36">Company<br data-dc-tpl="37"><span data-dc-tpl="38" style="color: rgb(41, 171, 226);">out.</span></h1>
         <p data-dc-tpl="39" style="margin: 24px 0px 0px; max-width: 44ch; font-size: clamp(16px, 2vw, 18.5px); line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;">Six weekends, four guest evenings and one Demo Day. Thirty self-starters, real mentors, and a team you build it with.</p>
         <div data-dc-tpl="40" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(24px, 3vw, 36px);">
@@ -595,25 +618,25 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     </div>
   </section>
 
-  <div data-dc-tpl="49" style="border-bottom: 1px solid rgb(38, 38, 38); background: rgb(15, 15, 15);">
-    <div data-dc-tpl="50" style="max-width: 1240px; margin: 0px auto; padding: 0px clamp(16px, 3vw, 28px); display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+  <div data-dc-tpl="49" class="stats">
+    <div data-dc-tpl="50" class="stats-in">
       
-        <div data-dc-tpl="52" style="padding: 22px 0px; border-right: 1px solid rgb(30, 30, 30);">
+        <div data-dc-tpl="52" class="stat">
           <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">6</span></div>
           <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">weekend modules</span></div>
         </div>
       
-        <div data-dc-tpl="52" style="padding: 22px 0px; border-right: 1px solid rgb(30, 30, 30);">
+        <div data-dc-tpl="52" class="stat">
           <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">4</span></div>
           <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">guest evenings</span></div>
         </div>
       
-        <div data-dc-tpl="52" style="padding: 22px 0px; border-right: 1px solid rgb(30, 30, 30);">
+        <div data-dc-tpl="52" class="stat">
           <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">20+</span></div>
           <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">mentors</span></div>
         </div>
       
-        <div data-dc-tpl="52" style="padding: 22px 0px; border-right: 1px solid rgb(30, 30, 30);">
+        <div data-dc-tpl="52" class="stat">
           <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">8 weeks</span></div>
           <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">end to end</span></div>
         </div>
@@ -696,7 +719,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
         <span data-dc-tpl="13">7 modules</span><span data-dc-tpl="14" style="color: rgb(61, 66, 69);">/</span>
         <span data-dc-tpl="15">4 Wednesdays</span><span data-dc-tpl="16" style="color: rgb(61, 66, 69);">/</span>
         <span data-dc-tpl="17">Demo Day</span><span data-dc-tpl="18" style="color: rgb(61, 66, 69);">/</span>
-        <span data-dc-tpl="19">19 Feb — 16 Apr 2027</span>
+        <span data-dc-tpl="19">19 Feb to 16 Apr 2027</span>
       </div>
       <button data-dc-tpl="20" class="scp5" style="flex: 0 0 auto; background: transparent; border: 1px solid rgb(51, 57, 60); color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 18px; cursor: pointer; transition: 0.18s; min-height: 44px;"><span class="sc-interp">Collapse all</span></button>
     </div>
@@ -723,32 +746,32 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Motivation &amp; Inspiration</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Introduction to Entrepreneurship</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Teamwork &amp; Leadership</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Idea Generation &amp; Market Research</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Connecting with Entrepreneurs</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Problem Validation</span></span>
                         </li>
                       
@@ -772,7 +795,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Saturday 20 Feb</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">8:00 AM – 8:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">The entrepreneurial mindset — teamwork, leadership and how founders make decisions under uncertainty.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">The entrepreneurial mindset, covering teamwork, leadership and how founders make decisions under uncertainty.</span></p>
                     </div>
                   
                     <div data-dc-tpl="45" class="mod-day" style="padding: 14px 0px; border-bottom: 1px solid rgb(34, 34, 34);">
@@ -814,7 +837,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Wednesday 24 Feb</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">7:00 PM – 9:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&amp;A with the cohort.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</span></p>
                     </div>
                   
                   
@@ -844,52 +867,52 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Team Formation</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Understanding Customer Needs</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Defining Value Proposition</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Building Unfair Advantage</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Identifying Traction Channels</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Crafting Revenue Streams</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Managing Cost Structure</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Establishing Key Metrics</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Testing Hypotheses through Customer Interviews</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Pivoting Strategies</span></span>
                         </li>
                       
@@ -921,7 +944,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Sunday 28 Feb</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">8:00 AM – 8:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Revenue streams, cost structure and key metrics — then you plan the customer interviews you run during the week.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Revenue streams, cost structure and key metrics, then you plan the customer interviews you run during the week.</span></p>
                     </div>
                   
                   
@@ -955,7 +978,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Wednesday 10 Mar</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">7:00 PM – 9:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&amp;A with the cohort.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</span></p>
                     </div>
                   
                   
@@ -985,37 +1008,37 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Analyzing Customer Interview Results</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Design Thinking</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Team Synergy</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Hands-On: Building an MVP through Prototyping</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Pitching Session #1</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Roundtable Discussions</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Setting Expectations for Demo Day</span></span>
                         </li>
                       
@@ -1039,7 +1062,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Saturday 13 Mar</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">8:00 AM – 8:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Design thinking and a hands-on prototyping session — the first version of your MVP takes shape.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Design thinking and a hands-on prototyping session, and the first version of your MVP takes shape.</span></p>
                     </div>
                   
                     <div data-dc-tpl="45" class="mod-day" style="padding: 14px 0px; border-bottom: 1px solid rgb(34, 34, 34);">
@@ -1077,37 +1100,37 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Go-to-Market Strategies</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Startup Marketing</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Sales Techniques and Strategies</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Motivational Panel with Entrepreneurs</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Hands-on Work Time in Teams</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Pitching Session #2</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Roundtable Discussions</span></span>
                         </li>
                       
@@ -1131,7 +1154,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Saturday 20 Mar</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">8:00 AM – 8:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Start-up marketing and sales — the techniques founders use before they can afford a team.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Start-up marketing and sales, including the techniques founders use before they can afford a team.</span></p>
                     </div>
                   
                     <div data-dc-tpl="45" class="mod-day" style="padding: 14px 0px; border-bottom: 1px solid rgb(34, 34, 34);">
@@ -1173,7 +1196,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Wednesday 31 Mar</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">7:00 PM – 9:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&amp;A with the cohort.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</span></p>
                     </div>
                   
                   
@@ -1203,37 +1226,37 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Entrepreneurial Finance</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Splitting Equity: The Legal Perspective</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Growth Strategies for Startups</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Motivational Panel with Entrepreneurs</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">In-depth Work Time in Teams</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Pitching Session #3</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Roundtable Discussions</span></span>
                         </li>
                       
@@ -1265,7 +1288,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Sunday 4 Apr</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">8:00 AM – 8:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Pitching Session #3 — the last full rehearsal before Demo Day — and detailed roundtable feedback.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">Pitching Session #3, the last full rehearsal before Demo Day, and detailed roundtable feedback.</span></p>
                     </div>
                   
                   
@@ -1299,7 +1322,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                         <div data-dc-tpl="47" style="font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 15px; color: rgb(255, 255, 255);"><span class="sc-interp">Wednesday 7 Apr</span></div>
                         <div data-dc-tpl="48" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12.5px; color: rgb(41, 171, 226); margin-top: 4px; letter-spacing: 0.04em;"><span class="sc-interp">7:00 PM – 9:00 PM</span></div>
                       </div>
-                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&amp;A with the cohort.</span></p>
+                      <p data-dc-tpl="49" style="margin: 0px; font-size: 15px; line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;"><span class="sc-interp">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</span></p>
                     </div>
                   
                   
@@ -1329,22 +1352,22 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Team pitches in front of a live audience</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Hand-picked jury from the start-up ecosystem</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">ABLE community, sponsors &amp; partners in the room</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Announcement of the best-performing team</span></span>
                         </li>
                       
@@ -1390,17 +1413,17 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Reflection and key takeaways from the Activator journey</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Official certificate ceremony</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Celebration with ABLE alumni</span></span>
                         </li>
                       
@@ -1446,17 +1469,17 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
                     <ul data-dc-tpl="37" style="margin: 0px; padding: 0px; list-style: none; display: grid; gap: 8px 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Team building activities</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Interactive sessions</span></span>
                         </li>
                       
                         <li data-dc-tpl="39" style="display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgb(214, 220, 222);">
-                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">—</span>
+                          <span data-dc-tpl="40" style="flex: 0 0 auto; color: rgb(41, 171, 226); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px;">•</span>
                           <span data-dc-tpl="41"><span class="sc-interp">Celebrations and a warm welcome to ABLE</span></span>
                         </li>
                       
@@ -1503,12 +1526,12 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
             
               <li data-dc-tpl="83" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
                 <span data-dc-tpl="84" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
-                <span data-dc-tpl="85"><span class="sc-interp">200 EUR — students</span></span>
+                <span data-dc-tpl="85"><span class="sc-interp">200 EUR • students</span></span>
               </li>
             
               <li data-dc-tpl="83" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
                 <span data-dc-tpl="84" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
-                <span data-dc-tpl="85"><span class="sc-interp">400 EUR — young professionals</span></span>
+                <span data-dc-tpl="85"><span class="sc-interp">400 EUR • young professionals</span></span>
               </li>
             
               <li data-dc-tpl="83" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
@@ -1569,7 +1592,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
               <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Attendance is expected at all modules — the program is built as one continuous journey.</span></p>
+              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Attendance is expected at all modules, and the program is built as one continuous journey.</span></p>
             
           </div>
         
@@ -1635,7 +1658,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
               <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes — many participants are accepted on a second application.</span></p>
+              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes, and many participants are accepted on a second application.</span></p>
             
           </div>
         
@@ -1751,8 +1774,31 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero { min-height: calc(100vh - 79px); display: grid; grid-template-rows: 1fr; }
-    .hero > div { height: 100%; }
+    .hero > div { height: 100%; width: 100%; }
     .hero-copy { display: flex; flex-direction: column; justify-content: center; }
+  }
+
+  .stats {
+    border-bottom: 1px solid #262626;
+    background: #0f0f0f;
+    padding: 0 clamp(16px, 3vw, 28px);
+  }
+  .stats-in {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .stat {
+    padding: 22px 24px;
+    border-right: 1px solid #1e1e1e;
+  }
+  .stat:first-child { padding-left: 0; }
+  .stat:last-child { border-right: none; padding-right: 0; }
+  @media (max-width: 700px) {
+    .stats-in { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat:nth-child(2n) { border-right: none; }
+    .stat:nth-child(n + 3) { border-top: 1px solid #1e1e1e; }
   }
 </style>
 </helmet>
@@ -1776,7 +1822,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
   <section id="top" class="hero" style="border-bottom:1px solid #262626">
     <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:stretch">
       <div class="hero-copy" style="padding:clamp(36px,6vw,84px) clamp(16px,3vw,28px)">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#29abe2;margin-bottom:clamp(20px,4vw,40px)">Edition 2027 · 19 Feb — 16 Apr</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#29abe2;margin-bottom:clamp(20px,4vw,40px)">Edition 2027 · 19 Feb to 16 Apr</div>
         <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(40px,8vw,78px);line-height:.94;letter-spacing:-.02em;color:#fff;text-wrap:balance">Idea in.<br>Company<br><span style="color:#29abe2">out.</span></h1>
         <p style="margin:24px 0 0;max-width:44ch;font-size:clamp(16px,2vw,18.5px);line-height:1.6;color:#a9b1b4;text-wrap:pretty">Six weekends, four guest evenings and one Demo Day. Thirty self-starters, real mentors, and a team you build it with.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(24px,3vw,36px)">
@@ -1794,10 +1840,10 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     </div>
   </section>
 
-  <div style="border-bottom:1px solid #262626;background:#0f0f0f">
-    <div style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,3vw,28px);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+  <div class="stats">
+    <div class="stats-in">
       <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
-        <div style="padding:22px 0;border-right:1px solid #1e1e1e">
+        <div class="stat">
           <div style="font-family:Poppins;font-weight:700;font-size:clamp(22px,3vw,30px);color:#29abe2;line-height:1">{{ s.value }}</div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296;margin-top:8px">{{ s.label }}</div>
         </div>
@@ -1925,7 +1971,7 @@ const TABS = [
   {
     tag: "Fee", title: "What it costs to take part",
     body: "The fee covers the full six-weekend program, mentorship and Demo Day, and can be paid in instalments on request.",
-    facts: ["200 EUR — students", "400 EUR — young professionals", "Instalment plans on request"]
+    facts: ["200 EUR • students", "400 EUR • young professionals", "Instalment plans on request"]
   },
   {
     tag: "Scholarships", title: "Talent should never be the blocker",
@@ -1942,13 +1988,13 @@ const TABS = [
 const FAQS = [
   { q: "Will the program be conducted online or offline?", a: "The weekend modules are held in person; Wednesday guest sessions run online." },
   { q: "Where do the trainings take place?", a: "In Sofia, at a venue announced to participants before each module." },
-  { q: "Can I miss or skip any of the trainings?", a: "Attendance is expected at all modules — the program is built as one continuous journey." },
+  { q: "Can I miss or skip any of the trainings?", a: "Attendance is expected at all modules, and the program is built as one continuous journey." },
   { q: "Will I work on my own start-up idea throughout ABLE Activator?", a: "Yes, you work on a real idea in a team from the first weekend onwards." },
   { q: "Which mentor will my team work with?", a: "Teams are matched with a mentor whose experience fits their idea and stage." },
   { q: "What is Demo Day?", a: "The final pitch event where teams present to a hand-picked jury and the best-performing team is announced." },
   { q: "How can I apply for the program?", a: "Through the application form on this page, before the deadline for the edition." },
   { q: "How will I find out if I have been selected?", a: "Shortlisted candidates are invited to an interview, and all applicants hear back by email." },
-  { q: "Can I apply again if I am not selected this time?", a: "Yes — many participants are accepted on a second application." },
+  { q: "Can I apply again if I am not selected this time?", a: "Yes, and many participants are accepted on a second application." },
   { q: "Can I pay the participation fee in parts?", a: "Yes, instalment plans are arranged individually after selection." }
 ];
 
@@ -2039,7 +2085,7 @@ class Component extends DCLogic {
   }
 }
 </script>
-<script>window.__resourceBlobs = Object.fromEntries([["./landing-2-modules.dc.html","<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<script src=\"./support.js\"><\/script>\n</head>\n<body>\n<x-dc>\n<helmet>\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\" />\n<link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap\" rel=\"stylesheet\" />\n<style>\n  body { margin: 0; background: #131313; -webkit-font-smoothing: antialiased; }\n  a { color: #29abe2; }\n  a:hover { color: #bfe9f8; }\n  * { box-sizing: border-box; }\n  .mod-head {\n    display: grid;\n    grid-template-columns: 200px minmax(0, 1fr) 26px;\n    column-gap: 28px;\n    align-items: start;\n    width: 100%;\n  }\n  .mod-rail {\n    padding-top: 3px;\n    white-space: nowrap;\n  }\n  .mod-body { padding-left: 228px; }\n  .mod-day {\n    display: grid;\n    grid-template-columns: 200px minmax(0, 1fr);\n    column-gap: 28px;\n    align-items: baseline;\n  }\n  @media (max-width: 760px) {\n    .mod-head {\n      grid-template-columns: minmax(0, 1fr) 26px;\n      row-gap: 10px;\n      column-gap: 12px;\n    }\n    .mod-rail { grid-column: 1 / -1; padding-top: 0; }\n    .mod-body { padding-left: 0; }\n    .mod-day { grid-template-columns: 1fr; row-gap: 6px; }\n  }\n</style>\n</helmet>\n<div style=\"background:#131313;padding:clamp(44px,7vw,96px) clamp(16px,3vw,28px);font-family:Barlow,Helvetica,sans-serif;color:#eceff0\">\n  <div style=\"max-width:1240px;margin:0 auto\">\n\n    <div style=\"display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;margin-bottom:14px\">\n      <h2 style=\"margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff\">Program modules</h2>\n      <span style=\"font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296\">02 / Modules</span>\n    </div>\n    <p style=\"margin:0 0 clamp(24px,4vw,40px);font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a9b1b4;max-width:62ch;text-wrap:pretty\">Weekend modules open Friday evening (7:00 PM – 9:00 PM) and run full days on Saturday and Sunday (8:00 AM – 8:00 PM). Between them, Wednesday evenings host a guest founder from the Bulgarian start-up ecosystem. Open a module to see the topics and what each day is for.</p>\n\n    <div style=\"display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:0 clamp(12px,2vw,20px) 14px;border-bottom:1px solid #262626;margin-bottom:0\">\n      <div style=\"display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8b9296\">\n        <span>7 modules</span><span style=\"color:#3d4245\">/</span>\n        <span>4 Wednesdays</span><span style=\"color:#3d4245\">/</span>\n        <span>Demo Day</span><span style=\"color:#3d4245\">/</span>\n        <span>19 Feb — 16 Apr 2027</span>\n      </div>\n      <button onClick=\"{{ toggleAll }}\" style=\"flex:none;background:transparent;border:1px solid #33393c;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px;cursor:pointer;transition:all .18s ease;min-height:44px\" style-hover=\"border-color:#29abe2;background:rgba(41,171,226,.1)\">{{ toggleLabel }}</button>\n    </div>\n\n    <div style=\"display:flex;flex-direction:column\">\n      <sc-for list=\"{{ items }}\" as=\"it\" hint-placeholder-count=\"12\">\n        <section data-screen-label=\"{{ it.label }}\" style=\"border-bottom:1px solid #262626;background:{{ it.rowBg }};transition:background .2s ease\">\n          <button class=\"mod-head\" onClick=\"{{ it.onToggle }}\" aria-expanded=\"{{ it.open }}\" style=\"padding:clamp(18px,2.4vw,26px) clamp(12px,2vw,20px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:64px;transition:opacity .18s ease\" style-hover=\"opacity:.82\">\n            <span class=\"mod-rail\" style=\"font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#29abe2;line-height:1.35\">{{ it.railLabel }}</span>\n            <span style=\"min-width:0\">\n              <span style=\"display:block;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b9296;margin-bottom:7px\">{{ it.dateRange }}</span>\n              <span style=\"display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(17px,2.5vw,23px);line-height:1.28;color:#fff;text-wrap:pretty\">{{ it.title }}</span>\n              <span style=\"display:block;font-size:14px;color:#8b9296;margin-top:8px\">{{ it.meta }}</span>\n            </span>\n            <span style=\"width:26px;height:26px;display:grid;place-items:center;color:#29abe2;font-size:16px;line-height:1;transition:transform .24s ease;transform:{{ it.caret }}\">{{ it.icon }}</span>\n          </button>\n\n          <sc-if value=\"{{ it.open }}\" hint-placeholder-val=\"{{ false }}\">\n            <div style=\"padding:0 clamp(12px,2vw,20px) clamp(22px,3vw,32px)\">\n              <div class=\"mod-body\" style=\"min-width:0;display:grid;gap:clamp(22px,2.6vw,30px)\">\n                <sc-if value=\"{{ it.hasTopics }}\" hint-placeholder-val=\"{{ false }}\">\n                  <div>\n                    <div style=\"font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #262626;margin-bottom:14px\">Topics covered</div>\n                    <ul style=\"margin:0;padding:0;list-style:none;display:grid;gap:8px 24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))\">\n                      <sc-for list=\"{{ it.topics }}\" as=\"t\" hint-placeholder-count=\"6\">\n                        <li style=\"display:flex;align-items:baseline;gap:10px;font-size:15.5px;line-height:1.5;color:#d6dcde\">\n                          <span style=\"flex:none;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px\">—</span>\n                          <span>{{ t }}</span>\n                        </li>\n                      </sc-for>\n                    </ul>\n                  </div>\n                </sc-if>\n\n                <div>\n                  <div style=\"font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #262626;margin-bottom:4px\">{{ it.scheduleLabel }}</div>\n                  <sc-for list=\"{{ it.days }}\" as=\"d\" hint-placeholder-count=\"3\">\n                    <div class=\"mod-day\" style=\"padding:14px 0;border-bottom:1px solid #222\">\n                      <div>\n                        <div style=\"font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:15px;color:#fff\">{{ d.day }}</div>\n                        <div style=\"font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#29abe2;margin-top:4px;letter-spacing:.04em\">{{ d.time }}</div>\n                      </div>\n                      <p style=\"margin:0;font-size:15px;line-height:1.6;color:#a9b1b4;text-wrap:pretty\">{{ d.purpose }}</p>\n                    </div>\n                  </sc-for>\n                  <sc-for list=\"{{ it.paras }}\" as=\"p\" hint-placeholder-count=\"0\">\n                    <p style=\"margin:14px 0 0;font-size:15px;line-height:1.65;color:#a9b1b4;max-width:70ch;text-wrap:pretty\">{{ p }}</p>\n                  </sc-for>\n                </div>\n              </div>\n            </div>\n          </sc-if>\n        </section>\n      </sc-for>\n    </div>\n  </div>\n</div>\n</x-dc>\n<script type=\"text/x-dc\" data-dc-script data-props=\"{&quot;expandFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showTopics&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;yearLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ABLE Activator 2027&quot;,&quot;tsType&quot;:&quot;string&quot;}}\">\nconst wknd = (dates, purposes) => [\n  { day: \"Friday \" + dates[0], time: \"7:00 PM – 9:00 PM\", purpose: purposes[0] },\n  { day: \"Saturday \" + dates[1], time: \"8:00 AM – 8:00 PM\", purpose: purposes[1] },\n  { day: \"Sunday \" + dates[2], time: \"8:00 AM – 8:00 PM\", purpose: purposes[2] }\n];\n\nconst WED_PURPOSE = \"One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&A with the cohort.\";\n\nconst DATA = [\n  {\n    id: \"m1\", label: \"Module 1\",\n    railTop: \"Module\", railBottom: \"01\", dateRange: \"19 – 21 Feb 2027\",\n    title: \"Leadership and Community Ignition: Thinking Like an Entrepreneur\",\n    topics: [\"Motivation & Inspiration\", \"Introduction to Entrepreneurship\", \"Teamwork & Leadership\", \"Idea Generation & Market Research\", \"Connecting with Entrepreneurs\", \"Problem Validation\"],\n    days: wknd([\"19 Feb\", \"20 Feb\", \"21 Feb\"], [\n      \"Opening evening: meet the cohort, the trainers and the ABLE community, and set your intentions for the edition.\",\n      \"The entrepreneurial mindset — teamwork, leadership and how founders make decisions under uncertainty.\",\n      \"Idea generation, first market research and validating that the problem you picked is real.\"\n    ])\n  },\n  {\n    id: \"w1\", label: \"Wednesday 24 Feb\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"24 Feb 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 24 Feb\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"m2\", label: \"Module 2\",\n    railTop: \"Module\", railBottom: \"02\", dateRange: \"26 – 28 Feb 2027\",\n    title: \"The Path to the Customer: Startup Launchpad\",\n    topics: [\"Team Formation\", \"Understanding Customer Needs\", \"Defining Value Proposition\", \"Building Unfair Advantage\", \"Identifying Traction Channels\", \"Crafting Revenue Streams\", \"Managing Cost Structure\", \"Establishing Key Metrics\", \"Testing Hypotheses through Customer Interviews\", \"Pivoting Strategies\"],\n    days: wknd([\"26 Feb\", \"27 Feb\", \"28 Feb\"], [\n      \"Teams are formed and each team picks the customer need it will chase for the rest of the program.\",\n      \"Value proposition, unfair advantage and the traction channels that could realistically reach that customer.\",\n      \"Revenue streams, cost structure and key metrics — then you plan the customer interviews you run during the week.\"\n    ])\n  },\n  {\n    id: \"w2\", label: \"Wednesday 10 Mar\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"10 Mar 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 10 Mar\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"m3\", label: \"Module 3\",\n    railTop: \"Module\", railBottom: \"03\", dateRange: \"12 – 14 Mar 2027\",\n    title: \"Refining Your Venture: Innovate & Collaborate\",\n    topics: [\"Analyzing Customer Interview Results\", \"Design Thinking\", \"Team Synergy\", \"Hands-On: Building an MVP through Prototyping\", \"Pitching Session #1\", \"Roundtable Discussions\", \"Setting Expectations for Demo Day\"],\n    days: wknd([\"12 Mar\", \"13 Mar\", \"14 Mar\"], [\n      \"You bring back what customers actually told you and read the results as a team.\",\n      \"Design thinking and a hands-on prototyping session — the first version of your MVP takes shape.\",\n      \"Pitching Session #1 in front of trainers, then roundtable feedback and Demo Day expectations.\"\n    ])\n  },\n  {\n    id: \"m4\", label: \"Module 4\",\n    railTop: \"Module\", railBottom: \"04\", dateRange: \"19 – 21 Mar 2027\",\n    title: \"Market and Business Mastery\",\n    topics: [\"Go-to-Market Strategies\", \"Startup Marketing\", \"Sales Techniques and Strategies\", \"Motivational Panel with Entrepreneurs\", \"Hands-on Work Time in Teams\", \"Pitching Session #2\", \"Roundtable Discussions\"],\n    days: wknd([\"19 Mar\", \"20 Mar\", \"21 Mar\"], [\n      \"How a product reaches its market: go-to-market strategy for your specific idea.\",\n      \"Start-up marketing and sales — the techniques founders use before they can afford a team.\",\n      \"Focused work time in teams, then Pitching Session #2 and roundtable feedback.\"\n    ])\n  },\n  {\n    id: \"w3\", label: \"Wednesday 31 Mar\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"31 Mar 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 31 Mar\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"m5\", label: \"Module 5\",\n    railTop: \"Module\", railBottom: \"05\", dateRange: \"2 – 4 Apr 2027\",\n    title: \"Financial Mastery & Strategic Scaling\",\n    topics: [\"Entrepreneurial Finance\", \"Splitting Equity: The Legal Perspective\", \"Growth Strategies for Startups\", \"Motivational Panel with Entrepreneurs\", \"In-depth Work Time in Teams\", \"Pitching Session #3\", \"Roundtable Discussions\"],\n    days: wknd([\"2 Apr\", \"3 Apr\", \"4 Apr\"], [\n      \"Entrepreneurial finance: the numbers a founder has to be able to defend.\",\n      \"Splitting equity from the legal side, plus growth strategies built for early-stage teams.\",\n      \"Pitching Session #3 — the last full rehearsal before Demo Day — and detailed roundtable feedback.\"\n    ])\n  },\n  {\n    id: \"w4\", label: \"Wednesday 7 Apr\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"7 Apr 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 7 Apr\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"demo\", label: \"Demo Day\",\n    railTop: \"Demo\", railBottom: \"Day\", dateRange: \"14 Apr 2027\",\n    title: \"Grand Final Pitch Event\",\n    topics: [\"Team pitches in front of a live audience\", \"Hand-picked jury from the start-up ecosystem\", \"ABLE community, sponsors & partners in the room\", \"Announcement of the best-performing team\"],\n    days: [{ day: \"Wednesday 14 Apr\", time: \"7:00 PM – 11:00 PM\", purpose: \"Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team of the edition.\" }]\n  },\n  {\n    id: \"m51\", label: \"Module 5.1\",\n    railTop: \"Module\", railBottom: \"05.1\", dateRange: \"16 Apr 2027\",\n    title: \"Reflection & certificate ceremony\",\n    topics: [\"Reflection and key takeaways from the Activator journey\", \"Official certificate ceremony\", \"Celebration with ABLE alumni\"],\n    days: [{ day: \"Friday 16 Apr\", time: \"5:00 PM – 9:00 PM\", purpose: \"A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni.\" }]\n  },\n  {\n    id: \"m6\", label: \"Module 6\",\n    railTop: \"Module\", railBottom: \"06\", dateRange: \"Dates to be confirmed\",\n    title: \"Welcome to the community\",\n    topics: [\"Team building activities\", \"Interactive sessions\", \"Celebrations and a warm welcome to ABLE\"],\n    days: [],\n    paras: [\"A weekend retreat outside Sofia that welcomes the new cohort into the ABLE community. Dates are confirmed with the participants after Demo Day.\"]\n  }\n];\n\nclass Component extends DCLogic {\n  constructor(props) {\n    super(props);\n    const expand = props.expandFirst ?? true;\n    this.state = { open: expand ? { m1: true } : {} };\n  }\n\n  toggle(id) {\n    this.setState(s => ({ open: { ...s.open, [id]: !s.open[id] } }));\n  }\n\n  renderVals() {\n    const open = this.state.open;\n    const showTopics = this.props.showTopics ?? true;\n    const allOpen = DATA.every(d => open[d.id]);\n    return {\n      yearLabel: this.props.yearLabel ?? \"ABLE Activator 2027\",\n      toggleLabel: allOpen ? \"Collapse all\" : \"Expand all\",\n      toggleAll: () => {\n        const next = {};\n        if (!allOpen) DATA.forEach(d => { next[d.id] = true; });\n        this.setState({ open: next });\n      },\n      items: DATA.map((d, i) => {\n        const isOpen = !!open[d.id];\n        const isWeekend = d.days && d.days.length === 3;\n        return {\n          ...d,\n          paras: d.paras || [],\n          meta: d.topics.length ? d.topics.length + \" topics\" : \"Guest founder + open Q&A\",\n          open: isOpen,\n          rowBg: i % 2 ? \"#131313\" : \"#171717\",\n          railLabel: (d.railTop + \" \" + d.railBottom).trim(),\n          icon: \"+\",\n          caret: isOpen ? \"rotate(45deg)\" : \"rotate(0deg)\",\n          hasTopics: showTopics && d.topics.length > 0,\n          scheduleLabel: d.days.length ? (isWeekend ? \"What each day is for\" : \"The evening\") : \"Good to know\",\n          onToggle: () => this.toggle(d.id)\n        };\n      })\n    };\n  }\n}\n<\/script>\n</body>\n</html>\n"]].map(([url, text]) => [url, new Blob([text], { type: "text/html" })]));</script>
+<script>window.__resourceBlobs = Object.fromEntries([["./landing-2-modules.dc.html","<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<script src=\"./support.js\"><\/script>\n</head>\n<body>\n<x-dc>\n<helmet>\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin=\"\" />\n<link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap\" rel=\"stylesheet\" />\n<style>\n  body { margin: 0; background: #131313; -webkit-font-smoothing: antialiased; }\n  a { color: #29abe2; }\n  a:hover { color: #bfe9f8; }\n  * { box-sizing: border-box; }\n  .mod-head {\n    display: grid;\n    grid-template-columns: 200px minmax(0, 1fr) 26px;\n    column-gap: 28px;\n    align-items: start;\n    width: 100%;\n  }\n  .mod-rail {\n    padding-top: 3px;\n    white-space: nowrap;\n  }\n  .mod-body { padding-left: 228px; }\n  .mod-day {\n    display: grid;\n    grid-template-columns: 200px minmax(0, 1fr);\n    column-gap: 28px;\n    align-items: baseline;\n  }\n  @media (max-width: 760px) {\n    .mod-head {\n      grid-template-columns: minmax(0, 1fr) 26px;\n      row-gap: 10px;\n      column-gap: 12px;\n    }\n    .mod-rail { grid-column: 1 / -1; padding-top: 0; }\n    .mod-body { padding-left: 0; }\n    .mod-day { grid-template-columns: 1fr; row-gap: 6px; }\n  }\n</style>\n</helmet>\n<div style=\"background:#131313;padding:clamp(44px,7vw,96px) clamp(16px,3vw,28px);font-family:Barlow,Helvetica,sans-serif;color:#eceff0\">\n  <div style=\"max-width:1240px;margin:0 auto\">\n\n    <div style=\"display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;margin-bottom:14px\">\n      <h2 style=\"margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff\">Program modules</h2>\n      <span style=\"font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296\">02 / Modules</span>\n    </div>\n    <p style=\"margin:0 0 clamp(24px,4vw,40px);font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a9b1b4;max-width:62ch;text-wrap:pretty\">Weekend modules open Friday evening (7:00 PM – 9:00 PM) and run full days on Saturday and Sunday (8:00 AM – 8:00 PM). Between them, Wednesday evenings host a guest founder from the Bulgarian start-up ecosystem. Open a module to see the topics and what each day is for.</p>\n\n    <div style=\"display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:0 clamp(12px,2vw,20px) 14px;border-bottom:1px solid #262626;margin-bottom:0\">\n      <div style=\"display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8b9296\">\n        <span>7 modules</span><span style=\"color:#3d4245\">/</span>\n        <span>4 Wednesdays</span><span style=\"color:#3d4245\">/</span>\n        <span>Demo Day</span><span style=\"color:#3d4245\">/</span>\n        <span>19 Feb to 16 Apr 2027</span>\n      </div>\n      <button onClick=\"{{ toggleAll }}\" style=\"flex:none;background:transparent;border:1px solid #33393c;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px;cursor:pointer;transition:all .18s ease;min-height:44px\" style-hover=\"border-color:#29abe2;background:rgba(41,171,226,.1)\">{{ toggleLabel }}</button>\n    </div>\n\n    <div style=\"display:flex;flex-direction:column\">\n      <sc-for list=\"{{ items }}\" as=\"it\" hint-placeholder-count=\"12\">\n        <section data-screen-label=\"{{ it.label }}\" style=\"border-bottom:1px solid #262626;background:{{ it.rowBg }};transition:background .2s ease\">\n          <button class=\"mod-head\" onClick=\"{{ it.onToggle }}\" aria-expanded=\"{{ it.open }}\" style=\"padding:clamp(18px,2.4vw,26px) clamp(12px,2vw,20px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:64px;transition:opacity .18s ease\" style-hover=\"opacity:.82\">\n            <span class=\"mod-rail\" style=\"font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#29abe2;line-height:1.35\">{{ it.railLabel }}</span>\n            <span style=\"min-width:0\">\n              <span style=\"display:block;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b9296;margin-bottom:7px\">{{ it.dateRange }}</span>\n              <span style=\"display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(17px,2.5vw,23px);line-height:1.28;color:#fff;text-wrap:pretty\">{{ it.title }}</span>\n              <span style=\"display:block;font-size:14px;color:#8b9296;margin-top:8px\">{{ it.meta }}</span>\n            </span>\n            <span style=\"width:26px;height:26px;display:grid;place-items:center;color:#29abe2;font-size:16px;line-height:1;transition:transform .24s ease;transform:{{ it.caret }}\">{{ it.icon }}</span>\n          </button>\n\n          <sc-if value=\"{{ it.open }}\" hint-placeholder-val=\"{{ false }}\">\n            <div style=\"padding:0 clamp(12px,2vw,20px) clamp(22px,3vw,32px)\">\n              <div class=\"mod-body\" style=\"min-width:0;display:grid;gap:clamp(22px,2.6vw,30px)\">\n                <sc-if value=\"{{ it.hasTopics }}\" hint-placeholder-val=\"{{ false }}\">\n                  <div>\n                    <div style=\"font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #262626;margin-bottom:14px\">Topics covered</div>\n                    <ul style=\"margin:0;padding:0;list-style:none;display:grid;gap:8px 24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))\">\n                      <sc-for list=\"{{ it.topics }}\" as=\"t\" hint-placeholder-count=\"6\">\n                        <li style=\"display:flex;align-items:baseline;gap:10px;font-size:15.5px;line-height:1.5;color:#d6dcde\">\n                          <span style=\"flex:none;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px\">•</span>\n                          <span>{{ t }}</span>\n                        </li>\n                      </sc-for>\n                    </ul>\n                  </div>\n                </sc-if>\n\n                <div>\n                  <div style=\"font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #262626;margin-bottom:4px\">{{ it.scheduleLabel }}</div>\n                  <sc-for list=\"{{ it.days }}\" as=\"d\" hint-placeholder-count=\"3\">\n                    <div class=\"mod-day\" style=\"padding:14px 0;border-bottom:1px solid #222\">\n                      <div>\n                        <div style=\"font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:15px;color:#fff\">{{ d.day }}</div>\n                        <div style=\"font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#29abe2;margin-top:4px;letter-spacing:.04em\">{{ d.time }}</div>\n                      </div>\n                      <p style=\"margin:0;font-size:15px;line-height:1.6;color:#a9b1b4;text-wrap:pretty\">{{ d.purpose }}</p>\n                    </div>\n                  </sc-for>\n                  <sc-for list=\"{{ it.paras }}\" as=\"p\" hint-placeholder-count=\"0\">\n                    <p style=\"margin:14px 0 0;font-size:15px;line-height:1.65;color:#a9b1b4;max-width:70ch;text-wrap:pretty\">{{ p }}</p>\n                  </sc-for>\n                </div>\n              </div>\n            </div>\n          </sc-if>\n        </section>\n      </sc-for>\n    </div>\n  </div>\n</div>\n</x-dc>\n<script type=\"text/x-dc\" data-dc-script data-props=\"{&quot;expandFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showTopics&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;yearLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ABLE Activator 2027&quot;,&quot;tsType&quot;:&quot;string&quot;}}\">\nconst wknd = (dates, purposes) => [\n  { day: \"Friday \" + dates[0], time: \"7:00 PM – 9:00 PM\", purpose: purposes[0] },\n  { day: \"Saturday \" + dates[1], time: \"8:00 AM – 8:00 PM\", purpose: purposes[1] },\n  { day: \"Sunday \" + dates[2], time: \"8:00 AM – 8:00 PM\", purpose: purposes[2] }\n];\n\nconst WED_PURPOSE = \"One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&A with the cohort.\";\n\nconst DATA = [\n  {\n    id: \"m1\", label: \"Module 1\",\n    railTop: \"Module\", railBottom: \"01\", dateRange: \"19 – 21 Feb 2027\",\n    title: \"Leadership and Community Ignition: Thinking Like an Entrepreneur\",\n    topics: [\"Motivation & Inspiration\", \"Introduction to Entrepreneurship\", \"Teamwork & Leadership\", \"Idea Generation & Market Research\", \"Connecting with Entrepreneurs\", \"Problem Validation\"],\n    days: wknd([\"19 Feb\", \"20 Feb\", \"21 Feb\"], [\n      \"Opening evening: meet the cohort, the trainers and the ABLE community, and set your intentions for the edition.\",\n      \"The entrepreneurial mindset, covering teamwork, leadership and how founders make decisions under uncertainty.\",\n      \"Idea generation, first market research and validating that the problem you picked is real.\"\n    ])\n  },\n  {\n    id: \"w1\", label: \"Wednesday 24 Feb\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"24 Feb 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 24 Feb\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"m2\", label: \"Module 2\",\n    railTop: \"Module\", railBottom: \"02\", dateRange: \"26 – 28 Feb 2027\",\n    title: \"The Path to the Customer: Startup Launchpad\",\n    topics: [\"Team Formation\", \"Understanding Customer Needs\", \"Defining Value Proposition\", \"Building Unfair Advantage\", \"Identifying Traction Channels\", \"Crafting Revenue Streams\", \"Managing Cost Structure\", \"Establishing Key Metrics\", \"Testing Hypotheses through Customer Interviews\", \"Pivoting Strategies\"],\n    days: wknd([\"26 Feb\", \"27 Feb\", \"28 Feb\"], [\n      \"Teams are formed and each team picks the customer need it will chase for the rest of the program.\",\n      \"Value proposition, unfair advantage and the traction channels that could realistically reach that customer.\",\n      \"Revenue streams, cost structure and key metrics, then you plan the customer interviews you run during the week.\"\n    ])\n  },\n  {\n    id: \"w2\", label: \"Wednesday 10 Mar\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"10 Mar 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 10 Mar\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"m3\", label: \"Module 3\",\n    railTop: \"Module\", railBottom: \"03\", dateRange: \"12 – 14 Mar 2027\",\n    title: \"Refining Your Venture: Innovate & Collaborate\",\n    topics: [\"Analyzing Customer Interview Results\", \"Design Thinking\", \"Team Synergy\", \"Hands-On: Building an MVP through Prototyping\", \"Pitching Session #1\", \"Roundtable Discussions\", \"Setting Expectations for Demo Day\"],\n    days: wknd([\"12 Mar\", \"13 Mar\", \"14 Mar\"], [\n      \"You bring back what customers actually told you and read the results as a team.\",\n      \"Design thinking and a hands-on prototyping session, and the first version of your MVP takes shape.\",\n      \"Pitching Session #1 in front of trainers, then roundtable feedback and Demo Day expectations.\"\n    ])\n  },\n  {\n    id: \"m4\", label: \"Module 4\",\n    railTop: \"Module\", railBottom: \"04\", dateRange: \"19 – 21 Mar 2027\",\n    title: \"Market and Business Mastery\",\n    topics: [\"Go-to-Market Strategies\", \"Startup Marketing\", \"Sales Techniques and Strategies\", \"Motivational Panel with Entrepreneurs\", \"Hands-on Work Time in Teams\", \"Pitching Session #2\", \"Roundtable Discussions\"],\n    days: wknd([\"19 Mar\", \"20 Mar\", \"21 Mar\"], [\n      \"How a product reaches its market: go-to-market strategy for your specific idea.\",\n      \"Start-up marketing and sales, including the techniques founders use before they can afford a team.\",\n      \"Focused work time in teams, then Pitching Session #2 and roundtable feedback.\"\n    ])\n  },\n  {\n    id: \"w3\", label: \"Wednesday 31 Mar\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"31 Mar 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 31 Mar\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"m5\", label: \"Module 5\",\n    railTop: \"Module\", railBottom: \"05\", dateRange: \"2 – 4 Apr 2027\",\n    title: \"Financial Mastery & Strategic Scaling\",\n    topics: [\"Entrepreneurial Finance\", \"Splitting Equity: The Legal Perspective\", \"Growth Strategies for Startups\", \"Motivational Panel with Entrepreneurs\", \"In-depth Work Time in Teams\", \"Pitching Session #3\", \"Roundtable Discussions\"],\n    days: wknd([\"2 Apr\", \"3 Apr\", \"4 Apr\"], [\n      \"Entrepreneurial finance: the numbers a founder has to be able to defend.\",\n      \"Splitting equity from the legal side, plus growth strategies built for early-stage teams.\",\n      \"Pitching Session #3, the last full rehearsal before Demo Day, and detailed roundtable feedback.\"\n    ])\n  },\n  {\n    id: \"w4\", label: \"Wednesday 7 Apr\",\n    railTop: \"Wednesday\", railBottom: \"Session\", dateRange: \"7 Apr 2027\",\n    title: \"Founder story & live Q&A\",\n    topics: [],\n    days: [{ day: \"Wednesday 7 Apr\", time: \"7:00 PM – 9:00 PM\", purpose: WED_PURPOSE }]\n  },\n  {\n    id: \"demo\", label: \"Demo Day\",\n    railTop: \"Demo\", railBottom: \"Day\", dateRange: \"14 Apr 2027\",\n    title: \"Grand Final Pitch Event\",\n    topics: [\"Team pitches in front of a live audience\", \"Hand-picked jury from the start-up ecosystem\", \"ABLE community, sponsors & partners in the room\", \"Announcement of the best-performing team\"],\n    days: [{ day: \"Wednesday 14 Apr\", time: \"7:00 PM – 11:00 PM\", purpose: \"Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team of the edition.\" }]\n  },\n  {\n    id: \"m51\", label: \"Module 5.1\",\n    railTop: \"Module\", railBottom: \"05.1\", dateRange: \"16 Apr 2027\",\n    title: \"Reflection & certificate ceremony\",\n    topics: [\"Reflection and key takeaways from the Activator journey\", \"Official certificate ceremony\", \"Celebration with ABLE alumni\"],\n    days: [{ day: \"Friday 16 Apr\", time: \"5:00 PM – 9:00 PM\", purpose: \"A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni.\" }]\n  },\n  {\n    id: \"m6\", label: \"Module 6\",\n    railTop: \"Module\", railBottom: \"06\", dateRange: \"Dates to be confirmed\",\n    title: \"Welcome to the community\",\n    topics: [\"Team building activities\", \"Interactive sessions\", \"Celebrations and a warm welcome to ABLE\"],\n    days: [],\n    paras: [\"A weekend retreat outside Sofia that welcomes the new cohort into the ABLE community. Dates are confirmed with the participants after Demo Day.\"]\n  }\n];\n\nclass Component extends DCLogic {\n  constructor(props) {\n    super(props);\n    const expand = props.expandFirst ?? true;\n    this.state = { open: expand ? { m1: true } : {} };\n  }\n\n  toggle(id) {\n    this.setState(s => ({ open: { ...s.open, [id]: !s.open[id] } }));\n  }\n\n  renderVals() {\n    const open = this.state.open;\n    const showTopics = this.props.showTopics ?? true;\n    const allOpen = DATA.every(d => open[d.id]);\n    return {\n      yearLabel: this.props.yearLabel ?? \"ABLE Activator 2027\",\n      toggleLabel: allOpen ? \"Collapse all\" : \"Expand all\",\n      toggleAll: () => {\n        const next = {};\n        if (!allOpen) DATA.forEach(d => { next[d.id] = true; });\n        this.setState({ open: next });\n      },\n      items: DATA.map((d, i) => {\n        const isOpen = !!open[d.id];\n        const isWeekend = d.days && d.days.length === 3;\n        return {\n          ...d,\n          paras: d.paras || [],\n          meta: d.topics.length ? d.topics.length + \" topics\" : \"Guest founder + open Q&A\",\n          open: isOpen,\n          rowBg: i % 2 ? \"#131313\" : \"#171717\",\n          railLabel: (d.railTop + \" \" + d.railBottom).trim(),\n          icon: \"+\",\n          caret: isOpen ? \"rotate(45deg)\" : \"rotate(0deg)\",\n          hasTopics: showTopics && d.topics.length > 0,\n          scheduleLabel: d.days.length ? (isWeekend ? \"What each day is for\" : \"The evening\") : \"Good to know\",\n          onToggle: () => this.toggle(d.id)\n        };\n      })\n    };\n  }\n}\n<\/script>\n</body>\n</html>\n"]].map(([url, text]) => [url, new Blob([text], { type: "text/html" })]));</script>
 <script>// GENERATED from dc-runtime/src/*.ts — do not edit. Rebuild with `cd dc-runtime && bun run build`.
 "use strict";
 (() => {

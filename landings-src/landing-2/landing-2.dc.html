@@ -92,8 +92,31 @@
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero { min-height: calc(100vh - 79px); display: grid; grid-template-rows: 1fr; }
-    .hero > div { height: 100%; }
+    .hero > div { height: 100%; width: 100%; }
     .hero-copy { display: flex; flex-direction: column; justify-content: center; }
+  }
+
+  .stats {
+    border-bottom: 1px solid #262626;
+    background: #0f0f0f;
+    padding: 0 clamp(16px, 3vw, 28px);
+  }
+  .stats-in {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .stat {
+    padding: 22px 24px;
+    border-right: 1px solid #1e1e1e;
+  }
+  .stat:first-child { padding-left: 0; }
+  .stat:last-child { border-right: none; padding-right: 0; }
+  @media (max-width: 700px) {
+    .stats-in { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat:nth-child(2n) { border-right: none; }
+    .stat:nth-child(n + 3) { border-top: 1px solid #1e1e1e; }
   }
 </style>
 </helmet>
@@ -117,7 +140,7 @@
   <section id="top" class="hero" style="border-bottom:1px solid #262626">
     <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:stretch">
       <div class="hero-copy" style="padding:clamp(36px,6vw,84px) clamp(16px,3vw,28px)">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#29abe2;margin-bottom:clamp(20px,4vw,40px)">Edition 2027 · 19 Feb — 16 Apr</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#29abe2;margin-bottom:clamp(20px,4vw,40px)">Edition 2027 · 19 Feb to 16 Apr</div>
         <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(40px,8vw,78px);line-height:.94;letter-spacing:-.02em;color:#fff;text-wrap:balance">Idea in.<br>Company<br><span style="color:#29abe2">out.</span></h1>
         <p style="margin:24px 0 0;max-width:44ch;font-size:clamp(16px,2vw,18.5px);line-height:1.6;color:#a9b1b4;text-wrap:pretty">Six weekends, four guest evenings and one Demo Day. Thirty self-starters, real mentors, and a team you build it with.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(24px,3vw,36px)">
@@ -135,10 +158,10 @@
     </div>
   </section>
 
-  <div style="border-bottom:1px solid #262626;background:#0f0f0f">
-    <div style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,3vw,28px);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+  <div class="stats">
+    <div class="stats-in">
       <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
-        <div style="padding:22px 0;border-right:1px solid #1e1e1e">
+        <div class="stat">
           <div style="font-family:Poppins;font-weight:700;font-size:clamp(22px,3vw,30px);color:#29abe2;line-height:1">{{ s.value }}</div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296;margin-top:8px">{{ s.label }}</div>
         </div>
@@ -266,7 +289,7 @@ const TABS = [
   {
     tag: "Fee", title: "What it costs to take part",
     body: "The fee covers the full six-weekend program, mentorship and Demo Day, and can be paid in instalments on request.",
-    facts: ["200 EUR — students", "400 EUR — young professionals", "Instalment plans on request"]
+    facts: ["200 EUR • students", "400 EUR • young professionals", "Instalment plans on request"]
   },
   {
     tag: "Scholarships", title: "Talent should never be the blocker",
@@ -283,13 +306,13 @@ const TABS = [
 const FAQS = [
   { q: "Will the program be conducted online or offline?", a: "The weekend modules are held in person; Wednesday guest sessions run online." },
   { q: "Where do the trainings take place?", a: "In Sofia, at a venue announced to participants before each module." },
-  { q: "Can I miss or skip any of the trainings?", a: "Attendance is expected at all modules — the program is built as one continuous journey." },
+  { q: "Can I miss or skip any of the trainings?", a: "Attendance is expected at all modules, and the program is built as one continuous journey." },
   { q: "Will I work on my own start-up idea throughout ABLE Activator?", a: "Yes, you work on a real idea in a team from the first weekend onwards." },
   { q: "Which mentor will my team work with?", a: "Teams are matched with a mentor whose experience fits their idea and stage." },
   { q: "What is Demo Day?", a: "The final pitch event where teams present to a hand-picked jury and the best-performing team is announced." },
   { q: "How can I apply for the program?", a: "Through the application form on this page, before the deadline for the edition." },
   { q: "How will I find out if I have been selected?", a: "Shortlisted candidates are invited to an interview, and all applicants hear back by email." },
-  { q: "Can I apply again if I am not selected this time?", a: "Yes — many participants are accepted on a second application." },
+  { q: "Can I apply again if I am not selected this time?", a: "Yes, and many participants are accepted on a second application." },
   { q: "Can I pay the participation fee in parts?", a: "Yes, instalment plans are arranged individually after selection." }
 ];
 

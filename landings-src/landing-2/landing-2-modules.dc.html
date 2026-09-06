@@ -60,7 +60,7 @@
         <span>7 modules</span><span style="color:#3d4245">/</span>
         <span>4 Wednesdays</span><span style="color:#3d4245">/</span>
         <span>Demo Day</span><span style="color:#3d4245">/</span>
-        <span>19 Feb — 16 Apr 2027</span>
+        <span>19 Feb to 16 Apr 2027</span>
       </div>
       <button onClick="{{ toggleAll }}" style="flex:none;background:transparent;border:1px solid #33393c;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px;cursor:pointer;transition:all .18s ease;min-height:44px" style-hover="border-color:#29abe2;background:rgba(41,171,226,.1)">{{ toggleLabel }}</button>
     </div>
@@ -87,7 +87,7 @@
                     <ul style="margin:0;padding:0;list-style:none;display:grid;gap:8px 24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
                       <sc-for list="{{ it.topics }}" as="t" hint-placeholder-count="6">
                         <li style="display:flex;align-items:baseline;gap:10px;font-size:15.5px;line-height:1.5;color:#d6dcde">
-                          <span style="flex:none;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px">—</span>
+                          <span style="flex:none;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px">•</span>
                           <span>{{ t }}</span>
                         </li>
                       </sc-for>
@@ -126,7 +126,7 @@ const wknd = (dates, purposes) => [
   { day: "Sunday " + dates[2], time: "8:00 AM – 8:00 PM", purpose: purposes[2] }
 ];
 
-const WED_PURPOSE = "One guest founder from the Bulgarian start-up ecosystem tells their story — the decisions, the mistakes, the numbers — followed by an open Q&A with the cohort.";
+const WED_PURPOSE = "One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&A with the cohort.";
 
 const DATA = [
   {
@@ -136,7 +136,7 @@ const DATA = [
     topics: ["Motivation & Inspiration", "Introduction to Entrepreneurship", "Teamwork & Leadership", "Idea Generation & Market Research", "Connecting with Entrepreneurs", "Problem Validation"],
     days: wknd(["19 Feb", "20 Feb", "21 Feb"], [
       "Opening evening: meet the cohort, the trainers and the ABLE community, and set your intentions for the edition.",
-      "The entrepreneurial mindset — teamwork, leadership and how founders make decisions under uncertainty.",
+      "The entrepreneurial mindset, covering teamwork, leadership and how founders make decisions under uncertainty.",
       "Idea generation, first market research and validating that the problem you picked is real."
     ])
   },
@@ -155,7 +155,7 @@ const DATA = [
     days: wknd(["26 Feb", "27 Feb", "28 Feb"], [
       "Teams are formed and each team picks the customer need it will chase for the rest of the program.",
       "Value proposition, unfair advantage and the traction channels that could realistically reach that customer.",
-      "Revenue streams, cost structure and key metrics — then you plan the customer interviews you run during the week."
+      "Revenue streams, cost structure and key metrics, then you plan the customer interviews you run during the week."
     ])
   },
   {
@@ -172,7 +172,7 @@ const DATA = [
     topics: ["Analyzing Customer Interview Results", "Design Thinking", "Team Synergy", "Hands-On: Building an MVP through Prototyping", "Pitching Session #1", "Roundtable Discussions", "Setting Expectations for Demo Day"],
     days: wknd(["12 Mar", "13 Mar", "14 Mar"], [
       "You bring back what customers actually told you and read the results as a team.",
-      "Design thinking and a hands-on prototyping session — the first version of your MVP takes shape.",
+      "Design thinking and a hands-on prototyping session, and the first version of your MVP takes shape.",
       "Pitching Session #1 in front of trainers, then roundtable feedback and Demo Day expectations."
     ])
   },
@@ -183,7 +183,7 @@ const DATA = [
     topics: ["Go-to-Market Strategies", "Startup Marketing", "Sales Techniques and Strategies", "Motivational Panel with Entrepreneurs", "Hands-on Work Time in Teams", "Pitching Session #2", "Roundtable Discussions"],
     days: wknd(["19 Mar", "20 Mar", "21 Mar"], [
       "How a product reaches its market: go-to-market strategy for your specific idea.",
-      "Start-up marketing and sales — the techniques founders use before they can afford a team.",
+      "Start-up marketing and sales, including the techniques founders use before they can afford a team.",
       "Focused work time in teams, then Pitching Session #2 and roundtable feedback."
     ])
   },
@@ -202,7 +202,7 @@ const DATA = [
     days: wknd(["2 Apr", "3 Apr", "4 Apr"], [
       "Entrepreneurial finance: the numbers a founder has to be able to defend.",
       "Splitting equity from the legal side, plus growth strategies built for early-stage teams.",
-      "Pitching Session #3 — the last full rehearsal before Demo Day — and detailed roundtable feedback."
+      "Pitching Session #3, the last full rehearsal before Demo Day, and detailed roundtable feedback."
     ])
   },
   {
