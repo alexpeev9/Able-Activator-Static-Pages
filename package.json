@@ -8,8 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "add-landing": "node scripts/add-landing.mjs",
-    "flatten-landing": "node scripts/flatten-landing.mjs"
+    "add-landing": "node --experimental-strip-types src/landings/pipeline/add-landing.ts",
+    "flatten-landing": "node --experimental-strip-types src/landings/pipeline/flatten.ts",
+    "unpack-bundler": "node --experimental-strip-types src/landings/pipeline/unpack-bundler.ts"
   },
   "dependencies": {
     "react": "^19.2.8",

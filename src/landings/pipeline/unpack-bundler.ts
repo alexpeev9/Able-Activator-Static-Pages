@@ -1,34 +1,44 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import zlib from 'node:zlib'
-import { fileURLToPath } from 'node:url'
+import { ROOT } from './paths.ts'
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+type BundlerEntry = {
+  mime: string
+  data: string
+  compressed?: boolean
+}
+
+type ExtResource = {
+  id: string
+  uuid: string
+}
+
 const [inRel, outRel] = process.argv.slice(2)
 if (!inRel || !outRel) {
-  console.error('usage: node scripts/unpack-bundler.mjs <bundler.html> <out-dir>')
+  console.error('usage: pnpm unpack-bundler <bundler.html> <out-dir>')
   process.exit(1)
 }
 
-const bundled = path.resolve(root, inRel)
-const outDir = path.resolve(root, outRel)
+const bundled = path.resolve(ROOT, inRel)
+const outDir = path.resolve(ROOT, outRel)
 const html = fs.readFileSync(bundled, 'utf8')
 
-const extractJson = (type) => {
+const extractJson = (type: string) => {
   const re = new RegExp(
     `<script type="${type}">\\s*([\\s\\S]*?)\\s*</script>`,
     'i',
   )
   const match = html.match(re)
-  if (!match) throw new Error(`Missing ${type}`)
-  return JSON.parse(match[1])
+  if (!match?.[1]) throw new Error(`Missing ${type}`)
+  return JSON.parse(match[1]) as unknown
 }
 
-const manifest = extractJson('__bundler/manifest')
-const template = extractJson('__bundler/template')
-const extResources = extractJson('__bundler/ext_resources')
+const manifest = extractJson('__bundler/manifest') as Record<string, BundlerEntry>
+const template = extractJson('__bundler/template') as string
+const extResources = extractJson('__bundler/ext_resources') as ExtResource[]
 
-const decodeEntry = (entry) => {
+const decodeEntry = (entry: BundlerEntry) => {
   const bytes = Buffer.from(entry.data, 'base64')
   const raw = entry.compressed ? zlib.gunzipSync(bytes) : bytes
   return { raw, text: raw.toString('utf8') }
@@ -51,16 +61,21 @@ pageHtml = pageHtml.replace(
 fs.mkdirSync(outDir, { recursive: true })
 fs.writeFileSync(path.join(outDir, 'Page.dc.html'), pageHtml)
 if (supportUuid) {
-  fs.writeFileSync(path.join(outDir, 'support.js'), decodeEntry(manifest[supportUuid]).text)
+  const support = manifest[supportUuid]
+  if (support) {
+    fs.writeFileSync(path.join(outDir, 'support.js'), decodeEntry(support).text)
+  }
 }
 
-const written = new Set()
+const written = new Set<string>()
 for (const resource of extResources) {
   if (!resource.id.endsWith('.dc.html')) continue
   if (written.has(resource.uuid)) continue
   written.add(resource.uuid)
   const name = path.basename(resource.id)
-  fs.writeFileSync(path.join(outDir, name), decodeEntry(manifest[resource.uuid]).text)
+  const entry = manifest[resource.uuid]
+  if (!entry) continue
+  fs.writeFileSync(path.join(outDir, name), decodeEntry(entry).text)
   console.log('sibling', name)
 }
 

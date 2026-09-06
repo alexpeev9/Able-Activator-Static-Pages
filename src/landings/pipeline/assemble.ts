@@ -1,25 +1,24 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { LANDINGS_SRC, MANIFEST_PATH } from './paths.ts'
+import type { LandingManifestEntry } from './types.ts'
 
-export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-export const srcDir = path.join(root, 'landings-src')
+export const escapeScript = (code: string) => code.replace(/<\/script/gi, '<\\/script')
 
-export const escapeScript = (code) => code.replace(/<\/script/gi, '<\\/script')
-
-export const isBundler = (html) =>
+export const isBundler = (html: string) =>
   html.includes('__bundler/manifest') || html.includes('type="__bundler/')
 
-export const isDcDocument = (html) => /<x-dc[\s>]/.test(html)
+export const isDcDocument = (html: string) => /<x-dc[\s>]/.test(html)
 
-export const collectSiblings = (entryHtml, entryDir) => {
-  const names = new Set()
+export const collectSiblings = (entryHtml: string, entryDir: string) => {
+  const names = new Set<string>()
   const re = /<(?:dc-import|x-import)\b[^>]*\bname=["']([^"']+)["']/gi
-  let match
-  while ((match = re.exec(entryHtml))) names.add(match[1])
+  let match: RegExpExecArray | null
+  while ((match = re.exec(entryHtml))) names.add(match[1] ?? '')
 
-  const blobs = {}
+  const blobs: Record<string, string> = {}
   for (const name of names) {
+    if (!name) continue
     const file = path.join(entryDir, `${name}.dc.html`)
     if (!fs.existsSync(file)) {
       throw new Error(`Missing sibling for <dc-import name="${name}">: ${file}`)
@@ -30,7 +29,7 @@ export const collectSiblings = (entryHtml, entryDir) => {
   return blobs
 }
 
-export const extractDcParts = (entryHtml) => {
+export const extractDcParts = (entryHtml: string) => {
   const xdcOpen = /<x-dc(?:\s[^>]*)?>/.exec(entryHtml)
   const xdcClose = entryHtml.lastIndexOf('</x-dc>')
   if (!xdcOpen || xdcClose === -1) {
@@ -43,18 +42,25 @@ export const extractDcParts = (entryHtml) => {
   return { dcInner, dcScript: scriptMatch ? scriptMatch[0] : '' }
 }
 
-export const blobBootScript = (blobs) =>
+export const blobBootScript = (blobs: Record<string, string>) =>
   `window.__resourceBlobs = Object.fromEntries(${JSON.stringify(
     Object.entries(blobs),
   )}.map(([url, text]) => [url, new Blob([text], { type: "text/html" })]));`
 
-export const readManifest = () => {
-  const manifestPath = path.join(srcDir, 'landings.json')
-  if (!fs.existsSync(manifestPath)) return []
-  return JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
+export const readManifest = (): LandingManifestEntry[] => {
+  if (!fs.existsSync(MANIFEST_PATH)) return []
+  return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8')) as LandingManifestEntry[]
 }
 
-export const assembleLiveHtml = (entryPath, title, { viteClient = false } = {}) => {
+export const writeManifest = (manifest: LandingManifestEntry[]) => {
+  fs.writeFileSync(MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`)
+}
+
+export const assembleLiveHtml = (
+  entryPath: string,
+  title: string,
+  { viteClient = false } = {},
+) => {
   const entryDir = path.dirname(entryPath)
   const entryHtml = fs.readFileSync(entryPath, 'utf8')
   if (!isDcDocument(entryHtml)) {
@@ -88,4 +94,12 @@ ${dcScript}
 </body>
 </html>
 `
+}
+
+export const resolveLandingEntry = (entry: string) => {
+  const resolved = path.resolve(LANDINGS_SRC, entry)
+  if (!resolved.startsWith(path.resolve(LANDINGS_SRC))) {
+    throw new Error(`Landing entry escapes src/landings: ${entry}`)
+  }
+  return resolved
 }
