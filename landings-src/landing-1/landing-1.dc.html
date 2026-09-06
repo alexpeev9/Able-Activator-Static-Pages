@@ -73,6 +73,8 @@
   }
   .hdr a:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
 
+  .hero { padding-top: clamp(16px, 4vw, 40px); }
+
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero {
@@ -88,6 +90,8 @@
     .brand svg { height: 34px; }
     .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
     .hero-art { display: none; }
+    .hero-ctas { flex-direction: column; align-items: stretch; }
+    .hero-ctas a { width: 100%; justify-content: center; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -114,13 +118,13 @@
     </div>
   </header>
 
-  <section id="top" class="hero" style="position:relative;padding:clamp(56px,10vw,120px) clamp(16px,4vw,40px) clamp(48px,8vw,96px);overflow:hidden">
+  <section id="top" class="hero" style="position:relative;padding-right:clamp(16px,4vw,40px);padding-bottom:clamp(48px,8vw,96px);padding-left:clamp(16px,4vw,40px);overflow:hidden">
     <div class="hero-art" style="position:absolute;inset:0;pointer-events:none">{{ heroArt }}</div>
     <div style="position:relative;max-width:1000px;margin:0 auto;text-align:center">
       <div style="display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:#29abe2;border:1px solid rgba(41,171,226,.4);border-radius:999px;padding:8px 16px;margin-bottom:22px">Applications open · Edition 2027</div>
       <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(38px,8.4vw,84px);line-height:.98;letter-spacing:-.015em;color:#fff;text-wrap:balance">Six weekends that<br><span style="color:#29abe2">activate</span> founders</h1>
-      <p style="margin:20px auto 0;max-width:58ch;font-size:clamp(16px,2.2vw,19px);line-height:1.6;color:#b6bec2;text-wrap:pretty">ABLE Activator is an exclusive entrepreneurship program for 30 ambitious self-starters, with the knowledge, mentorship and network you need to take an idea to fruition.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px">
+      <p style="margin:20px auto 0;max-width:58ch;font-size:clamp(16px,2.2vw,19px);line-height:1.6;color:#b6bec2;text-wrap:pretty">ABLE Activator is an exclusive program for 30 ambitious self-starters. You get the knowledge, mentorship and network to take an idea to fruition.</p>
+      <div class="hero-ctas" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px">
         <a href="#apply" style="background:#29abe2;color:#12242c;font-family:Poppins;font-weight:600;font-size:15px;letter-spacing:.03em;padding:15px 30px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#7ad2f2">Apply for the 2027 edition</a>
         <a href="#modules" style="border:1px solid #3a3f42;color:#e9edef;font-family:Poppins;font-weight:600;font-size:15px;padding:15px 28px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="border-color:#29abe2;color:#29abe2">See the 6 modules</a>
       </div>
