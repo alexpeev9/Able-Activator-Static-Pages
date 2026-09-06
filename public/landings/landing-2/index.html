@@ -541,6 +541,11 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     .stat:nth-child(n + 3) { border-top: 1px solid #1e1e1e; }
   }
 
+  #teams { scroll-margin-top: 78px; }
+  @media (max-width: 860px) {
+    #teams { scroll-margin-top: 66px; }
+  }
+
 
   body { margin: 0; background: #131313; -webkit-font-smoothing: antialiased; }
   a { color: #29abe2; }
@@ -590,113 +595,114 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
       <nav data-dc-tpl="25" class="nav" aria-label="Primary">
         <a data-dc-tpl="26" href="#value">The program</a>
         <a data-dc-tpl="27" href="#modules">Modules</a>
-        <a data-dc-tpl="28" href="#terms">Fees &amp; scholarships</a>
-        <a data-dc-tpl="29" href="#faq">FAQ</a>
+        <a data-dc-tpl="28" href="#teams">Teams</a>
+        <a data-dc-tpl="29" href="#terms">Fees &amp; scholarships</a>
+        <a data-dc-tpl="30" href="#faq">FAQ</a>
       </nav>
-      <a data-dc-tpl="30" class="cta" href="#apply">Apply now</a>
+      <a data-dc-tpl="31" class="cta" href="#" role="button">Apply now</a>
     </div>
   </header>
 
-  <section data-dc-tpl="31" id="top" class="hero" style="border-bottom: 1px solid rgb(38, 38, 38);">
-    <div data-dc-tpl="32" style="max-width: 1240px; margin: 0px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: stretch;">
-      <div data-dc-tpl="33" class="hero-copy" style="padding: clamp(36px, 6vw, 84px) clamp(16px, 3vw, 28px);">
-        <div data-dc-tpl="34" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgb(41, 171, 226); margin-bottom: clamp(20px, 4vw, 40px);">Edition 2027 · 19 Feb to 16 Apr</div>
-        <h1 data-dc-tpl="35" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(40px, 8vw, 78px); line-height: 0.94; letter-spacing: -0.02em; color: rgb(255, 255, 255); text-wrap: balance;">Idea in.<br data-dc-tpl="36">Company<br data-dc-tpl="37"><span data-dc-tpl="38" style="color: rgb(41, 171, 226);">out.</span></h1>
-        <p data-dc-tpl="39" style="margin: 24px 0px 0px; max-width: 44ch; font-size: clamp(16px, 2vw, 18.5px); line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;">Six weekends, four guest evenings and one Demo Day. Thirty self-starters, real mentors, and a team you build it with.</p>
-        <div data-dc-tpl="40" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(24px, 3vw, 36px);">
-          <a data-dc-tpl="41" href="#apply" class="scp0" style="background: rgb(41, 171, 226); color: rgb(15, 28, 34); font-family: Poppins; font-weight: 700; font-size: 15px; padding: 16px 28px; min-height: 48px; display: inline-flex; align-items: center;">Apply now</a>
-          <a data-dc-tpl="42" href="#modules" class="scp1" style="border: 1px solid rgb(51, 57, 60); color: rgb(236, 239, 240); font-family: Poppins; font-weight: 600; font-size: 15px; padding: 16px 26px; min-height: 48px; display: inline-flex; align-items: center;">Read the curriculum</a>
+  <section data-dc-tpl="32" id="top" class="hero" style="border-bottom: 1px solid rgb(38, 38, 38);">
+    <div data-dc-tpl="33" style="max-width: 1240px; margin: 0px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: stretch;">
+      <div data-dc-tpl="34" class="hero-copy" style="padding: clamp(36px, 6vw, 84px) clamp(16px, 3vw, 28px);">
+        <div data-dc-tpl="35" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgb(41, 171, 226); margin-bottom: clamp(20px, 4vw, 40px);">Edition 2027 · 19 Feb to 16 Apr</div>
+        <h1 data-dc-tpl="36" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(40px, 8vw, 78px); line-height: 0.94; letter-spacing: -0.02em; color: rgb(255, 255, 255); text-wrap: balance;">Idea in.<br data-dc-tpl="37">Company<br data-dc-tpl="38"><span data-dc-tpl="39" style="color: rgb(41, 171, 226);">out.</span></h1>
+        <p data-dc-tpl="40" style="margin: 24px 0px 0px; max-width: 44ch; font-size: clamp(16px, 2vw, 18.5px); line-height: 1.6; color: rgb(169, 177, 180); text-wrap: pretty;">Six weekends, four guest evenings and one Demo Day. Thirty self-starters, real mentors, and a team you build it with.</p>
+        <div data-dc-tpl="41" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(24px, 3vw, 36px);">
+          <a data-dc-tpl="42" href="#" role="button" class="scp0" style="background: rgb(41, 171, 226); color: rgb(15, 28, 34); font-family: Poppins; font-weight: 700; font-size: 15px; padding: 16px 28px; min-height: 48px; display: inline-flex; align-items: center;">Apply now</a>
+          <a data-dc-tpl="43" href="#modules" class="scp1" style="border: 1px solid rgb(51, 57, 60); color: rgb(236, 239, 240); font-family: Poppins; font-weight: 600; font-size: 15px; padding: 16px 26px; min-height: 48px; display: inline-flex; align-items: center;">Read the curriculum</a>
         </div>
       </div>
-      <div data-dc-tpl="43" style="position: relative; min-height: clamp(300px, 52vw, 560px); background: rgb(23, 23, 23); border-left: 1px solid rgb(38, 38, 38); display: grid; place-items: center; overflow: hidden;">
-        <video data-dc-tpl="44" autoplay="autoplay" loop="" playsinline="playsinline" width="100%" aria-label="ABLE Activator program video" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover; pointer-events: none;"><source data-dc-tpl="45" src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"></video>
-        <div data-dc-tpl="46" style="position: absolute; inset: 0px; background: linear-gradient(to right, rgba(19, 19, 19, 0.86), rgba(19, 19, 19, 0.45) 55%, rgba(41, 171, 226, 0.16)); pointer-events: none;"></div>
-        <div data-dc-tpl="47" style="position: relative; text-align: center; pointer-events: none;">
-          <div data-dc-tpl="48" style="font-family: Poppins; font-weight: 800; font-size: clamp(22px, 3.4vw, 36px); line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255);">30 places</div>
+      <div data-dc-tpl="44" style="position: relative; min-height: clamp(300px, 52vw, 560px); background: rgb(23, 23, 23); border-left: 1px solid rgb(38, 38, 38); display: grid; place-items: center; overflow: hidden;">
+        <video data-dc-tpl="45" autoplay="autoplay" loop="" playsinline="playsinline" width="100%" aria-label="ABLE Activator program video" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover; pointer-events: none;"><source data-dc-tpl="46" src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"></video>
+        <div data-dc-tpl="47" style="position: absolute; inset: 0px; background: linear-gradient(to right, rgba(19, 19, 19, 0.86), rgba(19, 19, 19, 0.45) 55%, rgba(41, 171, 226, 0.16)); pointer-events: none;"></div>
+        <div data-dc-tpl="48" style="position: relative; text-align: center; pointer-events: none;">
+          <div data-dc-tpl="49" style="font-family: Poppins; font-weight: 800; font-size: clamp(22px, 3.4vw, 36px); line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255);">30 places</div>
         </div>
       </div>
     </div>
   </section>
 
-  <div data-dc-tpl="49" class="stats">
-    <div data-dc-tpl="50" class="stats-in">
+  <div data-dc-tpl="50" class="stats">
+    <div data-dc-tpl="51" class="stats-in">
       
-        <div data-dc-tpl="52" class="stat">
-          <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">6</span></div>
-          <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">weekend modules</span></div>
+        <div data-dc-tpl="53" class="stat">
+          <div data-dc-tpl="54" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">6</span></div>
+          <div data-dc-tpl="55" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">weekend modules</span></div>
         </div>
       
-        <div data-dc-tpl="52" class="stat">
-          <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">4</span></div>
-          <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">guest evenings</span></div>
+        <div data-dc-tpl="53" class="stat">
+          <div data-dc-tpl="54" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">4</span></div>
+          <div data-dc-tpl="55" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">guest evenings</span></div>
         </div>
       
-        <div data-dc-tpl="52" class="stat">
-          <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">20+</span></div>
-          <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">mentors</span></div>
+        <div data-dc-tpl="53" class="stat">
+          <div data-dc-tpl="54" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">20+</span></div>
+          <div data-dc-tpl="55" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">mentors</span></div>
         </div>
       
-        <div data-dc-tpl="52" class="stat">
-          <div data-dc-tpl="53" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">8 weeks</span></div>
-          <div data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">end to end</span></div>
+        <div data-dc-tpl="53" class="stat">
+          <div data-dc-tpl="54" style="font-family: Poppins; font-weight: 700; font-size: clamp(22px, 3vw, 30px); color: rgb(41, 171, 226); line-height: 1;"><span class="sc-interp">8 weeks</span></div>
+          <div data-dc-tpl="55" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150); margin-top: 8px;"><span class="sc-interp">end to end</span></div>
         </div>
       
     </div>
   </div>
 
-  <section data-dc-tpl="55" id="value" style="padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px); border-bottom: 1px solid rgb(38, 38, 38);">
-    <div data-dc-tpl="56" style="max-width: 1240px; margin: 0px auto;">
-      <div data-dc-tpl="57" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; justify-content: space-between; margin-bottom: clamp(24px, 4vw, 44px);">
-        <h2 data-dc-tpl="58" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(26px, 4.6vw, 44px); line-height: 1.05; color: rgb(255, 255, 255);">What the program gives you</h2>
-        <span data-dc-tpl="59" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150);">01 / Value</span>
+  <section data-dc-tpl="56" id="value" style="padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px); border-bottom: 1px solid rgb(38, 38, 38);">
+    <div data-dc-tpl="57" style="max-width: 1240px; margin: 0px auto;">
+      <div data-dc-tpl="58" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; justify-content: space-between; margin-bottom: clamp(24px, 4vw, 44px);">
+        <h2 data-dc-tpl="59" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(26px, 4.6vw, 44px); line-height: 1.05; color: rgb(255, 255, 255);">What the program gives you</h2>
+        <span data-dc-tpl="60" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150);">01 / Value</span>
       </div>
-      <div data-dc-tpl="60" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0px clamp(20px, 4vw, 56px);">
+      <div data-dc-tpl="61" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0px clamp(20px, 4vw, 56px);">
         
-          <div data-dc-tpl="62" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
-            <span data-dc-tpl="63" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">01</span></span>
-            <div data-dc-tpl="64">
-              <h3 data-dc-tpl="65" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Entrepreneurial toolkit</span></h3>
-              <p data-dc-tpl="66" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Take an idea from validation to a working product, weekend by weekend.</span></p>
+          <div data-dc-tpl="63" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
+            <span data-dc-tpl="64" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">01</span></span>
+            <div data-dc-tpl="65">
+              <h3 data-dc-tpl="66" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Entrepreneurial toolkit</span></h3>
+              <p data-dc-tpl="67" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Take an idea from validation to a working product, weekend by weekend.</span></p>
             </div>
           </div>
         
-          <div data-dc-tpl="62" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
-            <span data-dc-tpl="63" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">02</span></span>
-            <div data-dc-tpl="64">
-              <h3 data-dc-tpl="65" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Founder mentorship</span></h3>
-              <p data-dc-tpl="66" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Work directly with entrepreneurs who have built and scaled companies.</span></p>
+          <div data-dc-tpl="63" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
+            <span data-dc-tpl="64" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">02</span></span>
+            <div data-dc-tpl="65">
+              <h3 data-dc-tpl="66" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Founder mentorship</span></h3>
+              <p data-dc-tpl="67" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Work directly with entrepreneurs who have built and scaled companies.</span></p>
             </div>
           </div>
         
-          <div data-dc-tpl="62" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
-            <span data-dc-tpl="63" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">03</span></span>
-            <div data-dc-tpl="64">
-              <h3 data-dc-tpl="65" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Pitching mastery</span></h3>
-              <p data-dc-tpl="66" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Three pitching sessions, each sharper than the last, ending on Demo Day.</span></p>
+          <div data-dc-tpl="63" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
+            <span data-dc-tpl="64" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">03</span></span>
+            <div data-dc-tpl="65">
+              <h3 data-dc-tpl="66" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Pitching mastery</span></h3>
+              <p data-dc-tpl="67" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Three pitching sessions, each sharper than the last, ending on Demo Day.</span></p>
             </div>
           </div>
         
-          <div data-dc-tpl="62" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
-            <span data-dc-tpl="63" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">04</span></span>
-            <div data-dc-tpl="64">
-              <h3 data-dc-tpl="65" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">A real team</span></h3>
-              <p data-dc-tpl="66" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Form a team with peers as ambitious as you and build together.</span></p>
+          <div data-dc-tpl="63" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
+            <span data-dc-tpl="64" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">04</span></span>
+            <div data-dc-tpl="65">
+              <h3 data-dc-tpl="66" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">A real team</span></h3>
+              <p data-dc-tpl="67" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Form a team with peers as ambitious as you and build together.</span></p>
             </div>
           </div>
         
-          <div data-dc-tpl="62" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
-            <span data-dc-tpl="63" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">05</span></span>
-            <div data-dc-tpl="64">
-              <h3 data-dc-tpl="65" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Network that compounds</span></h3>
-              <p data-dc-tpl="66" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Founders, investors and partners from across the Bulgarian ecosystem.</span></p>
+          <div data-dc-tpl="63" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
+            <span data-dc-tpl="64" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">05</span></span>
+            <div data-dc-tpl="65">
+              <h3 data-dc-tpl="66" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">Network that compounds</span></h3>
+              <p data-dc-tpl="67" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Founders, investors and partners from across the Bulgarian ecosystem.</span></p>
             </div>
           </div>
         
-          <div data-dc-tpl="62" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
-            <span data-dc-tpl="63" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">06</span></span>
-            <div data-dc-tpl="64">
-              <h3 data-dc-tpl="65" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">A community for life</span></h3>
-              <p data-dc-tpl="66" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Join the ABLE alumni network and stay part of it long after the program.</span></p>
+          <div data-dc-tpl="63" style="display: flex; gap: 18px; padding: 22px 0px; border-top: 1px solid rgb(38, 38, 38);">
+            <span data-dc-tpl="64" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226); padding-top: 4px;"><span class="sc-interp">06</span></span>
+            <div data-dc-tpl="65">
+              <h3 data-dc-tpl="66" style="margin: 0px 0px 6px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 18px; line-height: 1.3; color: rgb(255, 255, 255);"><span class="sc-interp">A community for life</span></h3>
+              <p data-dc-tpl="67" style="margin: 0px; font-size: 15.5px; line-height: 1.6; color: rgb(169, 177, 180); max-width: 44ch; text-wrap: pretty;"><span class="sc-interp">Join the ABLE alumni network and stay part of it long after the program.</span></p>
             </div>
           </div>
         
@@ -704,8 +710,8 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     </div>
   </section>
 
-  <section data-dc-tpl="67" id="modules" style="border-bottom: 1px solid rgb(38, 38, 38);">
-    <div class="sc-host" data-sc-name="landing-2-modules" data-dc-tpl="68"><div data-dc-tpl="5" style="background: rgb(19, 19, 19); padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px); font-family: Barlow, Helvetica, sans-serif; color: rgb(236, 239, 240);">
+  <section data-dc-tpl="68" id="modules" style="border-bottom: 1px solid rgb(38, 38, 38);">
+    <div class="sc-host" data-sc-name="landing-2-modules" data-dc-tpl="69"><div data-dc-tpl="5" style="background: rgb(19, 19, 19); padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px); font-family: Barlow, Helvetica, sans-serif; color: rgb(236, 239, 240);">
   <div data-dc-tpl="6" style="max-width: 1240px; margin: 0px auto;">
 
     <div data-dc-tpl="7" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; justify-content: space-between; margin-bottom: 14px;">
@@ -1503,40 +1509,61 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
   </div></div></div>
   </section>
 
-  <section data-dc-tpl="69" id="terms" style="padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px); border-bottom: 1px solid rgb(38, 38, 38);">
-    <div data-dc-tpl="70" style="max-width: 1240px; margin: 0px auto;">
-      <div data-dc-tpl="71" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; justify-content: space-between; margin-bottom: clamp(20px, 3vw, 32px);">
-        <h2 data-dc-tpl="72" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(26px, 4.6vw, 44px); line-height: 1.05; color: rgb(255, 255, 255);">The practical part</h2>
-        <span data-dc-tpl="73" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150);">03 / Terms</span>
+  <section data-dc-tpl="70" id="teams" style="padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px); border-bottom: 1px solid rgb(38, 38, 38);">
+    <div data-dc-tpl="71" style="max-width: 1240px; margin: 0px auto;">
+      <div data-dc-tpl="72" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(139, 146, 150); margin-bottom: 12px;">03 / Teams</div>
+      <h2 data-dc-tpl="73" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(24px, 3.4vw, 36px); line-height: 1.08; color: rgb(255, 255, 255); text-wrap: balance;">Nobody arrives with a team</h2>
+      <p data-dc-tpl="74" style="margin: 16px 0px 0px; font-size: 16px; line-height: 1.5; color: rgb(169, 177, 180); max-width: 62ch; text-wrap: pretty;">People walk in alone. By the second weekend they have chosen who to build with. From then on the work is shared — and the team often stays together after Demo Day.</p>
+      <div data-dc-tpl="75" style="margin-top: clamp(22px, 3vw, 32px);">
+        <div data-dc-tpl="76" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(41, 171, 226); margin-bottom: 10px;">How they work</div>
+        <ul data-dc-tpl="77" style="margin: 0px; padding: 0px; list-style: none; display: flex; flex-direction: column; gap: 8px; max-width: 62ch;">
+          <li data-dc-tpl="78" style="font-size: 15px; line-height: 1.4; color: rgb(214, 220, 222);">One table, one problem, five or six people who did not arrive as a group.</li>
+          <li data-dc-tpl="79" style="font-size: 15px; line-height: 1.4; color: rgb(214, 220, 222);">Customer interviews, the prototype and the pitch are done together.</li>
+          <li data-dc-tpl="80" style="font-size: 15px; line-height: 1.4; color: rgb(214, 220, 222);">They stay a team through Demo Day — often as friends or co-founders after it.</li>
+        </ul>
       </div>
-      <div data-dc-tpl="74" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+      <div data-dc-tpl="81" style="display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 0px; margin-top: clamp(20px, 3vw, 28px); border-top: 1px solid rgb(38, 38, 38); border-bottom: 1px solid rgb(38, 38, 38); font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(139, 146, 150);">
+        <span data-dc-tpl="82">Arrive alone</span><span data-dc-tpl="83" style="color: rgb(61, 66, 69);">/</span>
+        <span data-dc-tpl="84">Form together</span><span data-dc-tpl="85" style="color: rgb(61, 66, 69);">/</span>
+        <span data-dc-tpl="86">Stay a team</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-dc-tpl="87" id="terms" style="padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px); border-bottom: 1px solid rgb(38, 38, 38);">
+    <div data-dc-tpl="88" style="max-width: 1240px; margin: 0px auto;">
+      <div data-dc-tpl="89" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; justify-content: space-between; margin-bottom: clamp(20px, 3vw, 32px);">
+        <h2 data-dc-tpl="90" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(26px, 4.6vw, 44px); line-height: 1.05; color: rgb(255, 255, 255);">The practical part</h2>
+        <span data-dc-tpl="91" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150);">04 / Terms</span>
+      </div>
+      <div data-dc-tpl="92" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
         
-          <button data-dc-tpl="76" class="scp2" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; min-height: 44px; cursor: pointer; border: 1px solid rgb(41, 171, 226); background: rgb(41, 171, 226); color: rgb(15, 28, 34); transition: 0.18s;"><span class="sc-interp">Fee</span></button>
+          <button data-dc-tpl="94" class="scp2" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; min-height: 44px; cursor: pointer; border: 1px solid rgb(41, 171, 226); background: rgb(41, 171, 226); color: rgb(15, 28, 34); transition: 0.18s;"><span class="sc-interp">Fee</span></button>
         
-          <button data-dc-tpl="76" class="scp2" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; min-height: 44px; cursor: pointer; border: 1px solid rgb(51, 57, 60); background: transparent; color: rgb(179, 186, 189); transition: 0.18s;"><span class="sc-interp">Scholarships</span></button>
+          <button data-dc-tpl="94" class="scp2" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; min-height: 44px; cursor: pointer; border: 1px solid rgb(51, 57, 60); background: transparent; color: rgb(179, 186, 189); transition: 0.18s;"><span class="sc-interp">Scholarships</span></button>
         
-          <button data-dc-tpl="76" class="scp2" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; min-height: 44px; cursor: pointer; border: 1px solid rgb(51, 57, 60); background: transparent; color: rgb(179, 186, 189); transition: 0.18s;"><span class="sc-interp">Wednesdays</span></button>
+          <button data-dc-tpl="94" class="scp2" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; min-height: 44px; cursor: pointer; border: 1px solid rgb(51, 57, 60); background: transparent; color: rgb(179, 186, 189); transition: 0.18s;"><span class="sc-interp">Wednesdays</span></button>
         
       </div>
-      <div data-dc-tpl="77" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(18px, 3vw, 48px); border-top: 1px solid rgb(38, 38, 38); padding-top: clamp(20px, 3vw, 32px);">
-        <h3 data-dc-tpl="78" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 700; font-size: clamp(22px, 3.2vw, 30px); line-height: 1.15; color: rgb(41, 171, 226); text-wrap: balance;"><span class="sc-interp">What it costs to take part</span></h3>
-        <div data-dc-tpl="79" style="display: flex; flex-direction: column; gap: 16px;">
-          <p data-dc-tpl="80" style="margin: 0px; font-size: 16.5px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 58ch; text-wrap: pretty;"><span class="sc-interp">The fee covers the full six-weekend program, mentorship and Demo Day, and can be paid in instalments on request.</span></p>
-          <ul data-dc-tpl="81" style="margin: 0px; padding: 0px; list-style: none; display: flex; flex-direction: column; gap: 10px;">
+      <div data-dc-tpl="95" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(18px, 3vw, 48px); border-top: 1px solid rgb(38, 38, 38); padding-top: clamp(20px, 3vw, 32px);">
+        <h3 data-dc-tpl="96" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 700; font-size: clamp(22px, 3.2vw, 30px); line-height: 1.15; color: rgb(41, 171, 226); text-wrap: balance;"><span class="sc-interp">What it costs to take part</span></h3>
+        <div data-dc-tpl="97" style="display: flex; flex-direction: column; gap: 16px;">
+          <p data-dc-tpl="98" style="margin: 0px; font-size: 16.5px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 58ch; text-wrap: pretty;"><span class="sc-interp">The fee covers the full six-weekend program, mentorship and Demo Day, and can be paid in instalments on request.</span></p>
+          <ul data-dc-tpl="99" style="margin: 0px; padding: 0px; list-style: none; display: flex; flex-direction: column; gap: 10px;">
             
-              <li data-dc-tpl="83" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
-                <span data-dc-tpl="84" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
-                <span data-dc-tpl="85"><span class="sc-interp">200 EUR • students</span></span>
+              <li data-dc-tpl="101" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
+                <span data-dc-tpl="102" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
+                <span data-dc-tpl="103"><span class="sc-interp">200 EUR • students</span></span>
               </li>
             
-              <li data-dc-tpl="83" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
-                <span data-dc-tpl="84" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
-                <span data-dc-tpl="85"><span class="sc-interp">400 EUR • young professionals</span></span>
+              <li data-dc-tpl="101" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
+                <span data-dc-tpl="102" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
+                <span data-dc-tpl="103"><span class="sc-interp">400 EUR • young professionals</span></span>
               </li>
             
-              <li data-dc-tpl="83" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
-                <span data-dc-tpl="84" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
-                <span data-dc-tpl="85"><span class="sc-interp">Instalment plans on request</span></span>
+              <li data-dc-tpl="101" style="display: flex; gap: 12px; align-items: baseline; font-size: 15.5px; color: rgb(236, 239, 240); border-bottom: 1px solid rgb(34, 34, 34); padding-bottom: 10px;">
+                <span data-dc-tpl="102" style="flex: 0 0 auto; width: 6px; height: 6px; background: rgb(41, 171, 226); display: block;"></span>
+                <span data-dc-tpl="103"><span class="sc-interp">Instalment plans on request</span></span>
               </li>
             
           </ul>
@@ -1545,131 +1572,131 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     </div>
   </section>
 
-  <section data-dc-tpl="86" id="apply" style="padding: clamp(48px, 7vw, 100px) clamp(16px, 3vw, 28px); border-bottom: 1px solid rgb(38, 38, 38); background: rgb(41, 171, 226); color: rgb(15, 28, 34);">
-    <div data-dc-tpl="87" style="max-width: 1240px; margin: 0px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(20px, 4vw, 56px); align-items: center;">
-      <h2 data-dc-tpl="88" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(30px, 5.6vw, 56px); line-height: 0.98; text-transform: uppercase; color: rgb(15, 28, 34); text-wrap: balance;">Are you ready to activate?</h2>
-      <div data-dc-tpl="89">
-        <p data-dc-tpl="90" style="margin: 0px 0px 22px; font-size: 17px; line-height: 1.6; color: rgb(18, 48, 57); max-width: 44ch;">Applications for the 2027 edition close 31 January. Thirty places, one cohort a year.</p>
-        <a data-dc-tpl="91" href="#apply" class="scp3" style="background: rgb(15, 28, 34); color: rgb(255, 255, 255); font-family: Poppins; font-weight: 700; font-size: 16px; padding: 17px 32px; min-height: 48px; display: inline-flex; align-items: center;">Start my application →</a>
+  <section data-dc-tpl="104" id="apply" style="padding: clamp(48px, 7vw, 100px) clamp(16px, 3vw, 28px); border-bottom: 1px solid rgb(38, 38, 38); background: rgb(41, 171, 226); color: rgb(15, 28, 34);">
+    <div data-dc-tpl="105" style="max-width: 1240px; margin: 0px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(20px, 4vw, 56px); align-items: center;">
+      <h2 data-dc-tpl="106" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(30px, 5.6vw, 56px); line-height: 0.98; text-transform: uppercase; color: rgb(15, 28, 34); text-wrap: balance;">Are you ready to activate?</h2>
+      <div data-dc-tpl="107">
+        <p data-dc-tpl="108" style="margin: 0px 0px 22px; font-size: 17px; line-height: 1.6; color: rgb(18, 48, 57); max-width: 44ch;">Applications for the 2027 edition close 31 January. Thirty places, one cohort a year.</p>
+        <a data-dc-tpl="109" href="#" role="button" class="scp3" style="background: rgb(15, 28, 34); color: rgb(255, 255, 255); font-family: Poppins; font-weight: 700; font-size: 16px; padding: 17px 32px; min-height: 48px; display: inline-flex; align-items: center;">Start my application →</a>
       </div>
     </div>
   </section>
 
-  <section data-dc-tpl="92" id="faq" style="padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px);">
-    <div data-dc-tpl="93" style="max-width: 940px; margin: 0px auto;">
-      <div data-dc-tpl="94" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; justify-content: space-between; margin-bottom: clamp(18px, 3vw, 28px);">
-        <h2 data-dc-tpl="95" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(26px, 4.6vw, 44px); line-height: 1.05; color: rgb(255, 255, 255);">Questions</h2>
-        <span data-dc-tpl="96" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150);">04 / FAQ</span>
+  <section data-dc-tpl="110" id="faq" style="padding: clamp(44px, 7vw, 96px) clamp(16px, 3vw, 28px);">
+    <div data-dc-tpl="111" style="max-width: 940px; margin: 0px auto;">
+      <div data-dc-tpl="112" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: baseline; justify-content: space-between; margin-bottom: clamp(18px, 3vw, 28px);">
+        <h2 data-dc-tpl="113" style="margin: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 800; font-size: clamp(26px, 4.6vw, 44px); line-height: 1.05; color: rgb(255, 255, 255);">Questions</h2>
+        <span data-dc-tpl="114" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: rgb(139, 146, 150);">05 / FAQ</span>
       </div>
-      <div data-dc-tpl="97" style="display: flex; flex-direction: column;">
+      <div data-dc-tpl="115" style="display: flex; flex-direction: column;">
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">01</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Will the program be conducted online or offline?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">01</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Will the program be conducted online or offline?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">The weekend modules are held in person; Wednesday guest sessions run online.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">The weekend modules are held in person; Wednesday guest sessions run online.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">02</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Where do the trainings take place?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">02</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Where do the trainings take place?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">In Sofia, at a venue announced to participants before each module.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">In Sofia, at a venue announced to participants before each module.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">03</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Can I miss or skip any of the trainings?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">03</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Can I miss or skip any of the trainings?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Attendance is expected at all modules, and the program is built as one continuous journey.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Attendance is expected at all modules, and the program is built as one continuous journey.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">04</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Will I work on my own start-up idea throughout ABLE Activator?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">04</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Will I work on my own start-up idea throughout ABLE Activator?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes, you work on a real idea in a team from the first weekend onwards.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes, you work on a real idea in a team from the first weekend onwards.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">05</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Which mentor will my team work with?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">05</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Which mentor will my team work with?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Teams are matched with a mentor whose experience fits their idea and stage.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Teams are matched with a mentor whose experience fits their idea and stage.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">06</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">What is Demo Day?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">06</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">What is Demo Day?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">The final pitch event where teams present to a hand-picked jury and the best-performing team is announced.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">The final pitch event where teams present to a hand-picked jury and the best-performing team is announced.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">07</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">How can I apply for the program?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">07</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">How can I apply for the program?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Through the application form on this page, before the deadline for the edition.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Through the application form on this page, before the deadline for the edition.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">08</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">How will I find out if I have been selected?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">08</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">How will I find out if I have been selected?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Shortlisted candidates are invited to an interview, and all applicants hear back by email.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Shortlisted candidates are invited to an interview, and all applicants hear back by email.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">09</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Can I apply again if I am not selected this time?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">09</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Can I apply again if I am not selected this time?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes, and many participants are accepted on a second application.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes, and many participants are accepted on a second application.</span></p>
             
           </div>
         
-          <div data-dc-tpl="99" style="border-top: 1px solid rgb(38, 38, 38);">
-            <button data-dc-tpl="100" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
-              <span data-dc-tpl="101" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">10</span></span>
-              <span data-dc-tpl="102" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Can I pay the participation fee in parts?</span></span>
-              <span data-dc-tpl="103" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
+          <div data-dc-tpl="117" style="border-top: 1px solid rgb(38, 38, 38);">
+            <button data-dc-tpl="118" aria-expanded="true" style="width: 100%; display: flex; align-items: center; gap: 16px; padding: 18px 2px; background: transparent; border: 0px; cursor: pointer; text-align: left; font-family: Barlow; color: inherit; min-height: 56px;">
+              <span data-dc-tpl="119" style="flex: 0 0 auto; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 12px; color: rgb(41, 171, 226);"><span class="sc-interp">10</span></span>
+              <span data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: clamp(15px, 2vw, 17.5px); line-height: 1.35; color: rgb(255, 255, 255); text-wrap: pretty;"><span class="sc-interp">Can I pay the participation fee in parts?</span></span>
+              <span data-dc-tpl="121" style="flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; color: rgb(41, 171, 226); font-size: 16px; line-height: 1; transition: transform 0.24s; transform: rotate(45deg);">+</span>
             </button>
             
-              <p data-dc-tpl="105" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes, instalment plans are arranged individually after selection.</span></p>
+              <p data-dc-tpl="123" style="margin: 0px; padding: 0px 42px 22px; font-size: 16px; line-height: 1.65; color: rgb(179, 186, 189); max-width: 70ch; text-wrap: pretty;"><span class="sc-interp">Yes, instalment plans are arranged individually after selection.</span></p>
             
           </div>
         
@@ -1677,16 +1704,16 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     </div>
   </section>
 
-  <footer data-dc-tpl="106" style="padding: clamp(28px, 4vw, 48px) clamp(16px, 3vw, 28px); border-top: 1px solid rgb(38, 38, 38); background: rgb(15, 15, 15);">
-    <div data-dc-tpl="107" style="max-width: 1240px; margin: 0px auto; display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; justify-content: space-between; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(113, 120, 123);">
-      <span data-dc-tpl="108">ABLE<span data-dc-tpl="109" style="color: rgb(41, 171, 226);">/</span>Activator</span>
-      <div data-dc-tpl="110" style="display: flex; flex-wrap: wrap; gap: 10px 22px;">
-        <a data-dc-tpl="111" href="#value" class="scp4" style="color: rgb(113, 120, 123);">Mentors</a>
-        <a data-dc-tpl="112" href="#terms" class="scp4" style="color: rgb(113, 120, 123);">Media kit</a>
-        <a data-dc-tpl="113" href="#faq" class="scp4" style="color: rgb(113, 120, 123);">FAQ</a>
-        <a data-dc-tpl="114" href="#apply" class="scp4" style="color: rgb(113, 120, 123);">Contact</a>
+  <footer data-dc-tpl="124" style="padding: clamp(28px, 4vw, 48px) clamp(16px, 3vw, 28px); border-top: 1px solid rgb(38, 38, 38); background: rgb(15, 15, 15);">
+    <div data-dc-tpl="125" style="max-width: 1240px; margin: 0px auto; display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; justify-content: space-between; font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(113, 120, 123);">
+      <span data-dc-tpl="126">ABLE<span data-dc-tpl="127" style="color: rgb(41, 171, 226);">/</span>Activator</span>
+      <div data-dc-tpl="128" style="display: flex; flex-wrap: wrap; gap: 10px 22px;">
+        <a data-dc-tpl="129" href="#value" class="scp4" style="color: rgb(113, 120, 123);">Mentors</a>
+        <a data-dc-tpl="130" href="#terms" class="scp4" style="color: rgb(113, 120, 123);">Media kit</a>
+        <a data-dc-tpl="131" href="#faq" class="scp4" style="color: rgb(113, 120, 123);">FAQ</a>
+        <a data-dc-tpl="132" href="#apply" class="scp4" style="color: rgb(113, 120, 123);">Contact</a>
       </div>
-      <span data-dc-tpl="115">© 2027</span>
+      <span data-dc-tpl="133">© 2027</span>
     </div>
   </footer></div></div></div>
 <x-dc>
@@ -1800,6 +1827,11 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     .stat:nth-child(2n) { border-right: none; }
     .stat:nth-child(n + 3) { border-top: 1px solid #1e1e1e; }
   }
+
+  #teams { scroll-margin-top: 78px; }
+  @media (max-width: 860px) {
+    #teams { scroll-margin-top: 66px; }
+  }
 </style>
 </helmet>
 <div style="background:#131313;font-family:Barlow,Helvetica,sans-serif;color:#eceff0;overflow-x:hidden">
@@ -1812,10 +1844,11 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
       <nav class="nav" aria-label="Primary">
         <a href="#value" >The program</a>
         <a href="#modules" >Modules</a>
+        <a href="#teams" >Teams</a>
         <a href="#terms" >Fees &amp; scholarships</a>
         <a href="#faq" >FAQ</a>
       </nav>
-      <a class="cta" href="#apply">Apply now</a>
+      <a class="cta" href="#" role="button" onclick="return false">Apply now</a>
     </div>
   </header>
 
@@ -1826,7 +1859,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
         <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(40px,8vw,78px);line-height:.94;letter-spacing:-.02em;color:#fff;text-wrap:balance">Idea in.<br>Company<br><span style="color:#29abe2">out.</span></h1>
         <p style="margin:24px 0 0;max-width:44ch;font-size:clamp(16px,2vw,18.5px);line-height:1.6;color:#a9b1b4;text-wrap:pretty">Six weekends, four guest evenings and one Demo Day. Thirty self-starters, real mentors, and a team you build it with.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(24px,3vw,36px)">
-          <a href="#apply" style="background:#29abe2;color:#0f1c22;font-family:Poppins;font-weight:700;font-size:15px;padding:16px 28px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#bfe9f8">Apply now</a>
+          <a href="#" role="button" onclick="return false" style="background:#29abe2;color:#0f1c22;font-family:Poppins;font-weight:700;font-size:15px;padding:16px 28px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#bfe9f8">Apply now</a>
           <a href="#modules" style="border:1px solid #33393c;color:#eceff0;font-family:Poppins;font-weight:600;font-size:15px;padding:16px 26px;min-height:48px;display:inline-flex;align-items:center" style-hover="border-color:#29abe2;color:#29abe2">Read the curriculum</a>
         </div>
       </div>
@@ -1875,11 +1908,32 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     <dc-import name="landing-2-modules" hint-size="100%,900px"></dc-import>
   </section>
 
+  <section id="teams" style="padding:clamp(44px,7vw,96px) clamp(16px,3vw,28px);border-bottom:1px solid #262626">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b9296;margin-bottom:12px">03 / Teams</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,36px);line-height:1.08;color:#fff;text-wrap:balance">Nobody arrives with a team</h2>
+      <p style="margin:16px 0 0;font-size:16px;line-height:1.5;color:#a9b1b4;max-width:62ch;text-wrap:pretty">People walk in alone. By the second weekend they have chosen who to build with. From then on the work is shared — and the team often stays together after Demo Day.</p>
+      <div style="margin-top:clamp(22px,3vw,32px)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#29abe2;margin-bottom:10px">How they work</div>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;max-width:62ch">
+          <li style="font-size:15px;line-height:1.4;color:#d6dcde">One table, one problem, five or six people who did not arrive as a group.</li>
+          <li style="font-size:15px;line-height:1.4;color:#d6dcde">Customer interviews, the prototype and the pitch are done together.</li>
+          <li style="font-size:15px;line-height:1.4;color:#d6dcde">They stay a team through Demo Day — often as friends or co-founders after it.</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 16px;padding:12px 0;margin-top:clamp(20px,3vw,28px);border-top:1px solid #262626;border-bottom:1px solid #262626;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8b9296">
+        <span>Arrive alone</span><span style="color:#3d4245">/</span>
+        <span>Form together</span><span style="color:#3d4245">/</span>
+        <span>Stay a team</span>
+      </div>
+    </div>
+  </section>
+
   <section id="terms" style="padding:clamp(44px,7vw,96px) clamp(16px,3vw,28px);border-bottom:1px solid #262626">
     <div style="max-width:1240px;margin:0 auto">
       <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;margin-bottom:clamp(20px,3vw,32px)">
         <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff">The practical part</h2>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">03 / Terms</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">04 / Terms</span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
@@ -1908,7 +1962,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
       <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(30px,5.6vw,56px);line-height:.98;text-transform:uppercase;color:#0f1c22;text-wrap:balance">Are you ready to activate?</h2>
       <div>
         <p style="margin:0 0 22px;font-size:17px;line-height:1.6;color:#123039;max-width:44ch">Applications for the 2027 edition close 31 January. Thirty places, one cohort a year.</p>
-        <a href="#apply" style="background:#0f1c22;color:#fff;font-family:Poppins;font-weight:700;font-size:16px;padding:17px 32px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#183038">Start my application →</a>
+        <a href="#" role="button" onclick="return false" style="background:#0f1c22;color:#fff;font-family:Poppins;font-weight:700;font-size:16px;padding:17px 32px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#183038">Start my application →</a>
       </div>
     </div>
   </section>
@@ -1917,7 +1971,7 @@ html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}
     <div style="max-width:940px;margin:0 auto">
       <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;margin-bottom:clamp(18px,3vw,28px)">
         <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff">Questions</h2>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">04 / FAQ</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">05 / FAQ</span>
       </div>
       <div style="display:flex;flex-direction:column">
         <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="10">
@@ -3997,6 +4051,12 @@ class Component extends DCLogic {
     throw err;
   });
 })();
+</script>
+<script>
+document.addEventListener("click", function (event) {
+  var link = event.target.closest && event.target.closest("a[role='button'][href='#']");
+  if (link) event.preventDefault();
+});
 </script>
 <script>
 (function () {

@@ -8,6 +8,7 @@ import {
   collectSiblings,
   escapeScript,
   extractDcParts,
+  INERT_APPLY_SCRIPT,
   isBundler,
   isDcDocument,
   readManifest,
@@ -190,6 +191,7 @@ ${dcInner}
 ${dcScript}
 <script>${escapeScript(blobScript)}</script>
 <script>${escapeScript(supportJs)}</script>
+${INERT_APPLY_SCRIPT}
 <script>
 (function () {
   var prerender = document.getElementById('__prerender');

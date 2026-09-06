@@ -47,6 +47,13 @@ export const blobBootScript = (blobs: Record<string, string>) =>
     Object.entries(blobs),
   )}.map(([url, text]) => [url, new Blob([text], { type: "text/html" })]));`
 
+export const INERT_APPLY_SCRIPT = `<script>
+document.addEventListener("click", function (event) {
+  var link = event.target.closest && event.target.closest("a[role='button'][href='#']");
+  if (link) event.preventDefault();
+});
+</script>`
+
 export const readManifest = (): LandingManifestEntry[] => {
   if (!fs.existsSync(MANIFEST_PATH)) return []
   return JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8')) as LandingManifestEntry[]
@@ -91,6 +98,7 @@ ${dcInner}
 ${dcScript}
 <script>${escapeScript(blobBootScript(blobs))}</script>
 <script>${escapeScript(fs.readFileSync(supportPath, 'utf8'))}</script>
+${INERT_APPLY_SCRIPT}
 </body>
 </html>
 `

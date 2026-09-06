@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
+  html, body { overflow-x: clip; }
   body { margin: 0; background: #1c1c1c; -webkit-font-smoothing: antialiased; }
   a { color: #29abe2; text-decoration: none; }
   a:hover { color: #7ad2f2; }
@@ -28,6 +29,19 @@
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border-bottom: 1px solid #2b2b2b;
+  }
+  .hdr.cal-hdr-dim {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    width: 100%;
+    z-index: 50;
+  }
+  .hdr.cal-hdr-dim::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(8,10,12,.72);
+    pointer-events: none;
   }
   .hdr-in {
     max-width: 1180px; margin: 0 auto;
@@ -65,12 +79,59 @@
   }
   .hdr a:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
 
+  .page-bg {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; background: #111314;
+  }
+  .page-bg video {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.36) saturate(.7) contrast(1.08);
+  }
+  .page-bg-veil {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(8,10,12,.74) 0%, rgba(8,10,12,.68) 42%, rgba(8,10,12,.84) 100%),
+      linear-gradient(90deg, rgba(8,10,12,.4), transparent 38%, rgba(8,10,12,.4));
+  }
+  .scene {
+    position: relative; z-index: 1;
+    background: transparent;
+    border-bottom: 1px solid #262626;
+  }
+  .quiz-scene { overflow: hidden; }
+  .quiz-bg {
+    position: absolute; inset: 0; z-index: 0;
+    pointer-events: none; background: #111314;
+  }
+  .quiz-bg video {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.42) saturate(.75) contrast(1.06);
+  }
+  .quiz-in { position: relative; z-index: 1; }
+  .slab {
+    position: relative; z-index: 1;
+    background: #1f1f1f;
+    border-top: 1px solid #262626;
+  }
+  .hero {
+    overflow: hidden;
+    border-bottom: 1px solid #262626;
+  }
+  .hero-in {
+    position: relative; z-index: 1;
+    max-width: 1180px; margin: 0 auto;
+    padding: clamp(28px,5vw,64px) clamp(16px,4vw,40px) clamp(24px,4vw,48px);
+  }
+  .hero-title { text-shadow: 0 2px 28px rgba(0,0,0,.45); }
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero {
       min-height: calc(100vh - 79px);
       display: grid; align-content: center;
     }
+  }
+  @media (min-width: 861px) and (max-height: 820px) {
+    .hero-in { padding-top: 28px; padding-bottom: 24px; }
   }
 
   @media (max-width: 860px) {
@@ -82,6 +143,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .nav a::after, .hdr .cta { transition: none; }
+    .page-bg video, .quiz-bg video { display: none; }
   }
   .gains-grid {
     display: grid;
@@ -111,7 +173,7 @@
     .hero-actions { justify-content: center; }
   }
   .cal-overlay {
-    position: fixed; inset: 0; z-index: 60;
+    position: fixed; inset: 0; z-index: 40;
     background: rgba(8,10,12,.72);
     display: flex; align-items: flex-end; justify-content: center;
     padding: 0;
@@ -203,9 +265,34 @@
     color: #767f83; margin-bottom: 10px;
   }
   .cal-part-name { font-size: 15px; line-height: 1.5; color: #d6dcde; }
+  .cal-split {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(20px, 3vw, 44px);
+    align-items: flex-start;
+    padding-top: clamp(20px, 3vw, 34px);
+  }
+  .cal-aside {
+    position: sticky;
+    top: 88px;
+    flex: 1 1 300px;
+    align-self: flex-start;
+    min-width: 0;
+    max-width: 100%;
+    border: 1px solid #2b2b2b;
+    background: rgba(18,20,22,.88);
+    padding: clamp(18px, 2.4vw, 26px);
+  }
+  @media (max-width: 860px) {
+    .cal-aside { top: 76px; }
+  }
 </style>
 </helmet>
-<div style="background:#1c1c1c;font-family:Barlow,Helvetica,sans-serif;color:#e9edef;overflow-x:clip">
+<div style="background:transparent;font-family:Barlow,Helvetica,sans-serif;color:#e9edef">
+  <div class="page-bg" aria-hidden="true">
+    <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" width="100%" oncanplay="this.muted=true;this.loop=true;this.play()"><source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"></video>
+    <div class="page-bg-veil"></div>
+  </div>
 
   <header class="hdr">
     <div class="hdr-in">
@@ -216,41 +303,44 @@
         <a href="#about">The program</a>
         <a href="#fit">Is it for you?</a>
         <a href="#calendar">Calendar</a>
+        <a href="#community">Community</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="cta" href="#apply">Apply now</a>
+      <a class="cta" href="#" role="button" onclick="return false">Apply now</a>
     </div>
   </header>
 
-  <section id="top" class="hero" style="max-width:1180px;margin:0 auto;padding:clamp(36px,6vw,84px) clamp(16px,4vw,40px) clamp(30px,4vw,54px)">
-    <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#8d979b;margin-bottom:clamp(16px,2.6vw,26px)">
-      <span style="color:#29abe2">2027</span><span style="color:#3d4245">/</span>
-      <span>30 places</span><span style="color:#3d4245">/</span>
-      <span>6 weekends</span><span style="color:#3d4245">/</span>
+  <section id="top" class="hero scene">
+    <div class="hero-in">
+    <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#c5ced1;margin-bottom:clamp(16px,2.6vw,26px)">
+      <span style="color:#29abe2">2027</span><span style="color:#5c6569">/</span>
+      <span>30 places</span><span style="color:#5c6569">/</span>
+      <span>6 weekends</span><span style="color:#5c6569">/</span>
       <span>Sofia</span>
     </div>
 
-    <h1 class="hero-title" style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(34px,7.4vw,74px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#fff;max-width:14ch;text-wrap:balance">Nine weeks. <span style="color:#29abe2">One founder.</span></h1>
+    <h1 class="hero-title" style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(34px,7.4vw,74px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#fff;max-width:18ch;text-wrap:balance">Nine weeks to go <span style="color:#29abe2">from idea to founder.</span></h1>
 
-    <div class="hero-cards" style="display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(12px,2vw,18px);margin-top:clamp(24px,3.4vw,40px)">
-      <div style="flex:1 1 260px;min-width:0;border:1px solid #2f3437;background:#202020;padding:clamp(18px,2.4vw,26px)">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#767f83;margin-bottom:12px">Before</div>
-        <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.3vw,25px);line-height:1.3;color:#cfd6d9;text-wrap:pretty">An idea you keep not starting.</p>
+    <div class="hero-cards" style="display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(12px,2vw,18px);margin-top:clamp(18px,2.8vw,32px)">
+      <div style="flex:1 1 260px;min-width:0;border:1px solid rgba(255,255,255,.12);background:rgba(18,20,22,.78);padding:clamp(18px,2.4vw,26px)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#a8b1b5;margin-bottom:12px">Before</div>
+        <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.3vw,25px);line-height:1.3;color:#e9edef;text-wrap:pretty">An idea you keep not starting.</p>
       </div>
       <div class="flow-arrow" aria-hidden="true"></div>
-      <div style="flex:1 1 260px;min-width:0;border:1px solid #29abe2;background:#1e2c33;padding:clamp(18px,2.4vw,26px)">
+      <div style="flex:1 1 260px;min-width:0;border:1px solid #29abe2;background:rgba(16,32,40,.82);padding:clamp(18px,2.4vw,26px)">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">After</div>
         <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.3vw,25px);line-height:1.3;color:#fff;text-wrap:pretty">A team, an MVP and a pitch you've already given.</p>
       </div>
     </div>
 
     <div class="hero-actions" style="display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;margin-top:clamp(22px,3vw,32px)">
-      <a href="#apply" style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:16px 30px;min-height:52px;display:flex;align-items:center">Apply for 2027</a>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#767f83">19 Feb — 16 Apr 2027</span>
+      <a href="#" role="button" onclick="return false" style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:16px 30px;min-height:52px;display:flex;align-items:center">Apply for 2027</a>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#c5ced1">19 Feb — 16 Apr 2027</span>
+    </div>
     </div>
   </section>
 
-  <section id="about" style="border-top:1px solid #262626;background:#1f1f1f">
+  <section id="about" class="slab">
     <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,72px) clamp(16px,4vw,40px)">
       <div style="max-width:820px;margin:0 auto;border:1px solid #2f3437;background:#222222">
         <div style="height:3px;background:#29abe2"></div>
@@ -262,15 +352,18 @@
     </div>
   </section>
 
-  <section id="fit" style="border-top:1px solid #262626">
-    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
+  <section id="fit" class="scene quiz-scene" style="border-top:1px solid #262626">
+    <div class="quiz-bg" aria-hidden="true">
+      <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" width="100%" oncanplay="this.muted=true;this.loop=true;this.play()"><source src="https://res.cloudinary.com/alexpeev9/video/upload/v1788735313/Weekend_Activator.mp4"></video>
+    </div>
+    <div class="quiz-in" style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
       <div style="max-width:640px;margin:0 auto;text-align:center">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">30 seconds</div>
         <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Is it for you?</h2>
-        <p style="margin:14px 0 0;font-size:16px;line-height:1.55;color:#8d979b;text-wrap:pretty">Five questions. No wrong answers — the program takes people at very different stages.</p>
+        <p style="margin:14px 0 0;font-size:16px;line-height:1.55;color:#c5ced1;text-wrap:pretty">Five questions. No wrong answers — the program takes people at very different stages.</p>
       </div>
 
-      <div style="max-width:640px;margin:clamp(26px,3.4vw,40px) auto 0;border:1px solid {{ quiz.frame }};background:#222222;transition:border-color .25s ease">
+      <div style="max-width:640px;margin:clamp(26px,3.4vw,40px) auto 0;border:1px solid {{ quiz.frame }};background:rgba(18,20,22,.86);transition:border-color .25s ease">
         <div style="height:3px;background:#29abe2"></div>
         <div style="padding:clamp(24px,3.6vw,40px) clamp(20px,3.2vw,38px)">
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;text-align:center;margin-bottom:10px">{{ quiz.progress }}</div>
@@ -301,7 +394,7 @@
               <h3 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(27px,3.8vw,40px);line-height:1.06;text-transform:uppercase;color:#fff;text-wrap:balance">{{ quiz.name }}</h3>
               <p style="margin:16px auto 0;max-width:46ch;font-size:16.5px;line-height:1.55;color:#a8b1b5;text-wrap:pretty">{{ quiz.body }}</p>
               <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;justify-content:center">
-                <a href="#apply" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:15px 30px;min-height:48px;display:flex;align-items:center">Apply</a>
+                <a href="#" role="button" onclick="return false" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:15px 30px;min-height:48px;display:flex;align-items:center">Apply</a>
                 <button onClick="{{ quiz.onReset }}" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:transparent;color:#8d979b;border:1px solid #3a3f42;padding:15px 30px;min-height:48px;cursor:pointer">Again</button>
               </div>
             </div>
@@ -312,7 +405,7 @@
     </div>
   </section>
 
-  <section style="border-top:1px solid #262626;background:#1f1f1f">
+  <section class="slab">
     <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">What you leave with</div>
       <h2 style="margin:0 0 clamp(22px,3vw,34px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Six things</h2>
@@ -328,7 +421,7 @@
     </div>
   </section>
 
-  <section id="calendar" style="border-top:1px solid #262626">
+  <section id="calendar" class="scene" style="border-top:1px solid #262626">
     <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
 
       <div style="margin-bottom:clamp(22px,3.4vw,36px)">
@@ -337,7 +430,7 @@
         <p style="margin:16px 0 0;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a8b1b5;max-width:60ch;text-wrap:pretty">Every date you are expected to show up, from the opening evening to the certificate ceremony. Hover a highlighted day or tap it on a phone to see what happens and how long it runs.</p>
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8d979b;padding-bottom:16px;border-bottom:1px solid #2b2b2b">
+      <div style="display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#c5ced1;padding-bottom:16px;border-bottom:1px solid #2b2b2b">
         <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
           <span style="display:flex;align-items:center;gap:8px">
             <span style="width:12px;height:12px;flex:none;background:{{ l.swatch }};border:1px solid {{ l.border }}"></span>
@@ -346,7 +439,7 @@
         </sc-for>
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,44px);align-items:flex-start;padding-top:clamp(20px,3vw,34px)">
+      <div class="cal-split">
 
         <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:clamp(22px,3vw,36px);min-width:0;max-width:520px">
           <sc-for list="{{ months }}" as="m" hint-placeholder-count="3">
@@ -367,7 +460,7 @@
           </sc-for>
         </div>
 
-        <aside style="display:{{ asideDisplay }};position:sticky;top:88px;flex:1 1 300px;min-width:0;max-width:100%;border:1px solid #2b2b2b;background:#222222;padding:clamp(18px,2.4vw,26px)">
+        <aside class="cal-aside" style="display:{{ asideDisplay }}">
           <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:12px;border-bottom:1px solid #2f2f2f;margin-bottom:16px">{{ detail.kicker }}</div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#29abe2;margin-bottom:8px">{{ detail.dateLine }}</div>
           <h3 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(19px,2.2vw,23px);line-height:1.28;color:#fff;text-wrap:pretty">{{ detail.title }}</h3>
@@ -386,39 +479,21 @@
           </sc-if>
         </aside>
       </div>
-
-      <sc-if value="{{ showModal }}" hint-placeholder-val="{{ false }}">
-        <div class="cal-overlay" onClick="{{ closeModal }}">
-          <div class="cal-sheet" data-cal-sheet="1" onClick="{{ stopSheet }}" role="dialog" aria-modal="true" aria-labelledby="cal-sheet-title">
-            <div class="cal-sheet-head">
-              <div class="cal-sheet-grab" aria-hidden="true"></div>
-              <div class="cal-sheet-head-row">
-                <div class="cal-sheet-kicker">{{ detail.kicker }}</div>
-                <button class="cal-close" onClick="{{ closeModal }}" aria-label="Close">✕</button>
-              </div>
-            </div>
-            <div class="cal-sheet-body">
-              <div class="cal-date">{{ detail.dateLine }}</div>
-              <h3 class="cal-title" id="cal-sheet-title">{{ detail.title }}</h3>
-              <div class="cal-meta">
-                <span class="cal-chip">{{ detail.time }}</span>
-                <span class="cal-chip cal-chip-muted">{{ detail.duration }}</span>
-              </div>
-              <p class="cal-copy">{{ detail.purpose }}</p>
-              <sc-if value="{{ detail.hasTopics }}" hint-placeholder-val="{{ false }}">
-                <div class="cal-part">
-                  <div class="cal-part-label">Part of</div>
-                  <div class="cal-part-name">{{ detail.parent }}</div>
-                </div>
-              </sc-if>
-            </div>
-          </div>
-        </div>
-      </sc-if>
     </div>
   </section>
 
-  <section id="faq" style="border-top:1px solid #262626;background:#1f1f1f">
+  <section id="community" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">After the program</div>
+      <h2 style="margin:0 0 clamp(20px,3vw,32px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">ABLE Community</h2>
+      <div style="max-width:68ch">
+        <p style="margin:0;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a8b1b5;text-wrap:pretty">We are a vibrant community of young people who make a difference wherever they go. Our goal is to develop an active civil society, inspire leadership and promote entrepreneurial culture in Bulgaria.</p>
+        <p style="margin:18px 0 0;padding:16px 18px;border:1px solid #2f3437;background:#222222;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#e9edef;text-wrap:pretty">Completing the program gives you the opportunity to join ABLE.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="slab">
     <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
       <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">Before you apply</div>
       <h2 style="margin:0 0 clamp(22px,3vw,34px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Questions</h2>
@@ -439,19 +514,48 @@
     </div>
   </section>
 
-  <section id="apply" style="border-top:1px solid #262626">
+  <section id="apply" class="slab">
     <div style="max-width:1180px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:20px 36px;align-items:center;justify-content:space-between">
       <h2 style="margin:0;flex:1 1 340px;min-width:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(27px,5vw,52px);line-height:1.02;text-transform:uppercase;color:#fff;text-wrap:balance">Thirty places. <span style="color:#29abe2">Take one.</span></h2>
-      <a href="#apply" style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:20px 40px;min-height:58px;display:flex;align-items:center">Apply now</a>
+      <a href="#" role="button" onclick="return false" style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:20px 40px;min-height:58px;display:flex;align-items:center">Apply now</a>
     </div>
   </section>
 
-  <footer style="border-top:1px solid #262626;background:#1a1a1a">
+  <footer style="position:relative;z-index:1;border-top:1px solid #262626;background:#1a1a1a">
     <div style="max-width:1180px;margin:0 auto;padding:24px clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5f686c">
       <span>ABLE Activator</span>
       <span>Sofia · 2027</span>
     </div>
   </footer>
+
+  <sc-if value="{{ showModal }}" hint-placeholder-val="{{ false }}">
+    <div class="cal-overlay" onClick="{{ closeModal }}">
+      <div class="cal-sheet" data-cal-sheet="1" onClick="{{ stopSheet }}" role="dialog" aria-modal="true" aria-labelledby="cal-sheet-title">
+        <div class="cal-sheet-head">
+          <div class="cal-sheet-grab" aria-hidden="true"></div>
+          <div class="cal-sheet-head-row">
+            <div class="cal-sheet-kicker">{{ detail.kicker }}</div>
+            <button class="cal-close" onClick="{{ closeModal }}" aria-label="Close">✕</button>
+          </div>
+        </div>
+        <div class="cal-sheet-body">
+          <div class="cal-date">{{ detail.dateLine }}</div>
+          <h3 class="cal-title" id="cal-sheet-title">{{ detail.title }}</h3>
+          <div class="cal-meta">
+            <span class="cal-chip">{{ detail.time }}</span>
+            <span class="cal-chip cal-chip-muted">{{ detail.duration }}</span>
+          </div>
+          <p class="cal-copy">{{ detail.purpose }}</p>
+          <sc-if value="{{ detail.hasTopics }}" hint-placeholder-val="{{ false }}">
+            <div class="cal-part">
+              <div class="cal-part-label">Part of</div>
+              <div class="cal-part-name">{{ detail.parent }}</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;faqOpenFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;$preview&quot;:{&quot;width&quot;:1180}}">
@@ -522,7 +626,7 @@ const STYLE = {
   wed:    { bg: "#2a4657", border: "#39657a", color: "#e3f3fb", eveColor: "#cfe6f2" },
   demo:   { bg: "#29abe2", border: "#29abe2", color: "#0f2733", eveColor: "#9adcfa" },
   close:  { bg: "#1f3a34", border: "#2f5f53", color: "#dbf3ec", eveColor: "#bfe6db" },
-  empty:  { bg: "rgba(255,255,255,.012)", border: "#272727", color: "#7b8386" }
+  empty:  { bg: "rgba(16,18,20,.62)", border: "#2a2f32", color: "#9aa3a7" }
 };
 
 const MONTHS = [
@@ -554,6 +658,20 @@ class Component extends DCLogic {
     };
   }
 
+  pinHeader() {
+    const hdr = document.querySelector(".hdr");
+    if (!hdr || this._hdrPinned) return;
+    this._hdrPinned = hdr;
+    hdr.classList.add("cal-hdr-dim");
+  }
+
+  unpinHeader() {
+    const hdr = this._hdrPinned;
+    if (!hdr) return;
+    hdr.classList.remove("cal-hdr-dim");
+    this._hdrPinned = null;
+  }
+
   lockScroll() {
     if (this._scrollLocked) return;
     this._scrollLocked = true;
@@ -564,13 +682,10 @@ class Component extends DCLogic {
     html.style.overscrollBehavior = "none";
     body.style.overflow = "hidden";
     body.style.overscrollBehavior = "none";
-    body.style.position = "fixed";
-    body.style.top = "-" + this._scrollY + "px";
-    body.style.left = "0";
-    body.style.right = "0";
-    body.style.width = "100%";
+    body.style.touchAction = "none";
+    this.pinHeader();
     this._blockTouch = (e) => {
-      if (!e.target || !e.target.closest || !e.target.closest("[data-cal-sheet]")) {
+      if (!e.target || !e.target.closest || !e.target.closest("[data-cal-sheet], .hdr")) {
         e.preventDefault();
       }
     };
@@ -582,20 +697,21 @@ class Component extends DCLogic {
     this._scrollLocked = false;
     const html = document.documentElement;
     const body = document.body;
+    const y = this._scrollY || 0;
+    const prevBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
     html.style.overflow = "";
     html.style.overscrollBehavior = "";
     body.style.overflow = "";
     body.style.overscrollBehavior = "";
-    body.style.position = "";
-    body.style.top = "";
-    body.style.left = "";
-    body.style.right = "";
-    body.style.width = "";
+    body.style.touchAction = "";
+    this.unpinHeader();
     if (this._blockTouch) {
       document.removeEventListener("touchmove", this._blockTouch);
       this._blockTouch = null;
     }
-    window.scrollTo(0, this._scrollY || 0);
+    window.scrollTo({ top: y, left: 0, behavior: "instant" });
+    html.style.scrollBehavior = prevBehavior;
   }
 
   componentDidMount() {
@@ -625,9 +741,9 @@ class Component extends DCLogic {
   }
 
   closeModal() {
-    this.unlockScroll();
     const focused = document.activeElement;
     if (focused && focused.blur) focused.blur();
+    this.unlockScroll();
     this.setState({ modal: false, active: this.state.narrow ? null : this.state.active });
   }
 
