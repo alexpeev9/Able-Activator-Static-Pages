@@ -24,6 +24,10 @@
   @keyframes drift-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-70px,50px) scale(1.1); } }
   @keyframes dash-move { to { stroke-dashoffset: -400; } }
   @keyframes pulse-ring { 0% { r: 3; opacity: .9; } 100% { r: 26; opacity: 0; } }
+  @keyframes star-drift-a { 0%,100% { transform: translate(0,0); } 50% { transform: translate(14px,-11px); } }
+  @keyframes star-drift-b { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-12px,13px); } }
+  @keyframes star-drift-c { 0%,100% { transform: translate(0,0); } 50% { transform: translate(9px,16px); } }
+  @keyframes star-twinkle { 0%,100% { opacity: var(--o,.28); } 45% { opacity: calc(var(--o,.28) * 2.6); } }
 
   /* ---- site header ---- */
   .hdr {
@@ -83,10 +87,12 @@
     .hdr-in { height: 66px; justify-content: space-between; }
     .brand svg { height: 34px; }
     .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
+    .hero-art { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .nav a::after, .hdr .cta { transition: none; }
+    .hero-art circle { animation: none !important; }
   }
   @keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 </style>
@@ -109,7 +115,7 @@
   </header>
 
   <section id="top" class="hero" style="position:relative;padding:clamp(56px,10vw,120px) clamp(16px,4vw,40px) clamp(48px,8vw,96px);overflow:hidden">
-    <div style="position:absolute;inset:0;pointer-events:none">{{ heroArt }}</div>
+    <div class="hero-art" style="position:absolute;inset:0;pointer-events:none">{{ heroArt }}</div>
     <div style="position:relative;max-width:1000px;margin:0 auto;text-align:center">
       <div style="display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:#29abe2;border:1px solid rgba(41,171,226,.4);border-radius:999px;padding:8px 16px;margin-bottom:22px">Applications open · Edition 2027</div>
       <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(38px,8.4vw,84px);line-height:.98;letter-spacing:-.015em;color:#fff;text-wrap:balance">Six weekends that<br><span style="color:#29abe2">activate</span> founders</h1>
@@ -300,34 +306,52 @@ class Component extends DCLogic {
     const h = React.createElement;
     const blob = (cx, cy, r, anim, dur, op) => h("circle", {
       key: "b" + cx + cy, cx, cy, r, fill: "#29abe2", opacity: op,
-      style: { filter: "blur(60px)", animation: anim + " " + dur + "s ease-in-out infinite", transformOrigin: cx + "px " + cy + "px" }
+      style: { filter: "blur(70px)", animation: anim + " " + dur + "s ease-in-out infinite", transformOrigin: cx + "px " + cy + "px" }
     });
+    let seed = id === "hero" ? 17 : 41;
+    const rnd = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+    const drifts = ["star-drift-a", "star-drift-b", "star-drift-c"];
+    const gauss = () => {
+      const u = Math.max(rnd(), 1e-6);
+      const v = rnd();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(6.283185 * v);
+    };
+    const clusters = [
+      { x: 210, y: 120, sx: 210, sy: 130, n: 34 },
+      { x: 980, y: 430, sx: 230, sy: 140, n: 36 },
+      { x: 600, y: 250, sx: 420, sy: 220, n: 28 }
+    ];
     const dots = [];
-    for (let x = 0; x < 12; x++) {
-      for (let y = 0; y < 5; y++) {
-        dots.push(h("circle", { key: "d" + x + y, cx: 60 + x * 100, cy: 60 + y * 100, r: 1.6, fill: "#ffffff", opacity: 0.09 }));
+    let i = 0;
+    clusters.forEach((c) => {
+      for (let k = 0; k < c.n; k++, i++) {
+        const cx = Math.min(1188, Math.max(12, c.x + gauss() * c.sx));
+        const cy = Math.min(548, Math.max(12, c.y + gauss() * c.sy));
+        const rad = 0.45 + rnd() * rnd() * 2.8;
+        const op = 0.16 + rnd() * 0.52;
+        const dur = 10 + rnd() * 16;
+        const tw = 2.2 + rnd() * 4.8;
+        const delay = -(rnd() * 14);
+        const fill = rnd() > 0.28 ? "#e8f6fb" : "#7ad2f2";
+        dots.push(h("circle", {
+          key: "d" + i, cx, cy, r: rad, fill,
+          style: {
+            "--o": String(op),
+            transformOrigin: cx + "px " + cy + "px",
+            animation: drifts[i % 3] + " " + dur + "s ease-in-out " + delay + "s infinite, star-twinkle " + tw + "s ease-in-out " + delay + "s infinite"
+          }
+        }));
       }
-    }
-    const line = (d, dur, delay) => h("path", {
-      key: "l" + d, d, fill: "none", stroke: "#29abe2", strokeWidth: 1.4, opacity: 0.5,
-      strokeDasharray: "12 340",
-      style: { animation: "dash-move " + dur + "s linear infinite", animationDelay: delay + "s" }
     });
     const el = h("svg", {
       viewBox: "0 0 1200 560", preserveAspectRatio: "xMidYMid slice",
       style: { width: "100%", height: "100%", display: "block" }, "aria-hidden": "true"
     },
-      h("g", null, blob(220, 130, 130, "drift-a", 18, opts.blob), blob(980, 420, 160, "drift-b", 22, opts.blob)),
-      h("g", null, dots),
-      h("g", null,
-        line("M-20 460 C 240 460, 300 200, 620 200 S 1020 380, 1240 300", 9, 0),
-        line("M-20 120 C 260 120, 360 340, 640 340 S 1000 140, 1240 200", 11, 1.5)
-      ),
-      h("g", null,
-        h("circle", { cx: 620, cy: 200, r: 3.5, fill: "#29abe2" }),
-        h("circle", { cx: 620, cy: 200, r: 3, fill: "none", stroke: "#29abe2", strokeWidth: 1.4, style: { animation: "pulse-ring 3.2s ease-out infinite" } }),
-        h("circle", { cx: 640, cy: 340, r: 3.5, fill: "#7ad2f2", style: { animation: "float-y 6s ease-in-out infinite" } })
-      )
+      h("g", null, blob(160, 80, 150, "drift-a", 18, opts.blob), blob(1060, 480, 180, "drift-b", 22, opts.blob)),
+      h("g", null, dots)
     );
     this._art[id] = el;
     return el;
