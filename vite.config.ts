@@ -11,7 +11,7 @@ const LANDINGS_DIR = path.resolve(ROOT, 'public/landings')
 const slugFromUrl = (raw: string) =>
   decodeURIComponent(raw.split('?')[0]).replace(/^\/+|\/+$/g, '')
 
-const serveFlattened = (req: Connect.IncomingMessage, res: Connect.ServerResponse, next: Connect.NextFunction) => {
+const serveFlattened: Connect.NextHandleFunction = (req, res, next) => {
   const slug = slugFromUrl(req.url ?? '/')
   if (!/^[a-z0-9-]+$/i.test(slug)) return next()
 
