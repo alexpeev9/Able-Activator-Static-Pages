@@ -118,6 +118,11 @@
     .stat:nth-child(2n) { border-right: none; }
     .stat:nth-child(n + 3) { border-top: 1px solid #1e1e1e; }
   }
+
+  #teams { scroll-margin-top: 78px; }
+  @media (max-width: 860px) {
+    #teams { scroll-margin-top: 66px; }
+  }
 </style>
 </helmet>
 <div style="background:#131313;font-family:Barlow,Helvetica,sans-serif;color:#eceff0;overflow-x:hidden">
@@ -130,10 +135,11 @@
       <nav class="nav" aria-label="Primary">
         <a href="#value" >The program</a>
         <a href="#modules" >Modules</a>
+        <a href="#teams" >Teams</a>
         <a href="#terms" >Fees &amp; scholarships</a>
         <a href="#faq" >FAQ</a>
       </nav>
-      <a class="cta" href="#apply">Apply now</a>
+      <a class="cta" href="#" role="button" onclick="return false">Apply now</a>
     </div>
   </header>
 
@@ -144,7 +150,7 @@
         <h1 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(40px,8vw,78px);line-height:.94;letter-spacing:-.02em;color:#fff;text-wrap:balance">Idea in.<br>Company<br><span style="color:#29abe2">out.</span></h1>
         <p style="margin:24px 0 0;max-width:44ch;font-size:clamp(16px,2vw,18.5px);line-height:1.6;color:#a9b1b4;text-wrap:pretty">Six weekends, four guest evenings and one Demo Day. Thirty self-starters, real mentors, and a team you build it with.</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(24px,3vw,36px)">
-          <a href="#apply" style="background:#29abe2;color:#0f1c22;font-family:Poppins;font-weight:700;font-size:15px;padding:16px 28px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#bfe9f8">Apply now</a>
+          <a href="#" role="button" onclick="return false" style="background:#29abe2;color:#0f1c22;font-family:Poppins;font-weight:700;font-size:15px;padding:16px 28px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#bfe9f8">Apply now</a>
           <a href="#modules" style="border:1px solid #33393c;color:#eceff0;font-family:Poppins;font-weight:600;font-size:15px;padding:16px 26px;min-height:48px;display:inline-flex;align-items:center" style-hover="border-color:#29abe2;color:#29abe2">Read the curriculum</a>
         </div>
       </div>
@@ -193,11 +199,32 @@
     <dc-import name="landing-2-modules" hint-size="100%,900px"></dc-import>
   </section>
 
+  <section id="teams" style="padding:clamp(44px,7vw,96px) clamp(16px,3vw,28px);border-bottom:1px solid #262626">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b9296;margin-bottom:12px">03 / Teams</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,36px);line-height:1.08;color:#fff;text-wrap:balance">Nobody arrives with a team</h2>
+      <p style="margin:16px 0 0;font-size:16px;line-height:1.5;color:#a9b1b4;max-width:62ch;text-wrap:pretty">People walk in alone. By the second weekend they have chosen who to build with. From then on the work is shared — and the team often stays together after Demo Day.</p>
+      <div style="margin-top:clamp(22px,3vw,32px)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#29abe2;margin-bottom:10px">How they work</div>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;max-width:62ch">
+          <li style="font-size:15px;line-height:1.4;color:#d6dcde">One table, one problem, five or six people who did not arrive as a group.</li>
+          <li style="font-size:15px;line-height:1.4;color:#d6dcde">Customer interviews, the prototype and the pitch are done together.</li>
+          <li style="font-size:15px;line-height:1.4;color:#d6dcde">They stay a team through Demo Day — often as friends or co-founders after it.</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 16px;padding:12px 0;margin-top:clamp(20px,3vw,28px);border-top:1px solid #262626;border-bottom:1px solid #262626;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8b9296">
+        <span>Arrive alone</span><span style="color:#3d4245">/</span>
+        <span>Form together</span><span style="color:#3d4245">/</span>
+        <span>Stay a team</span>
+      </div>
+    </div>
+  </section>
+
   <section id="terms" style="padding:clamp(44px,7vw,96px) clamp(16px,3vw,28px);border-bottom:1px solid #262626">
     <div style="max-width:1240px;margin:0 auto">
       <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;margin-bottom:clamp(20px,3vw,32px)">
         <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff">The practical part</h2>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">03 / Terms</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">04 / Terms</span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
@@ -226,7 +253,7 @@
       <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(30px,5.6vw,56px);line-height:.98;text-transform:uppercase;color:#0f1c22;text-wrap:balance">Are you ready to activate?</h2>
       <div>
         <p style="margin:0 0 22px;font-size:17px;line-height:1.6;color:#123039;max-width:44ch">Applications for the 2027 edition close 31 January. Thirty places, one cohort a year.</p>
-        <a href="#apply" style="background:#0f1c22;color:#fff;font-family:Poppins;font-weight:700;font-size:16px;padding:17px 32px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#183038">Start my application →</a>
+        <a href="#" role="button" onclick="return false" style="background:#0f1c22;color:#fff;font-family:Poppins;font-weight:700;font-size:16px;padding:17px 32px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#183038">Start my application →</a>
       </div>
     </div>
   </section>
@@ -235,7 +262,7 @@
     <div style="max-width:940px;margin:0 auto">
       <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;margin-bottom:clamp(18px,3vw,28px)">
         <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff">Questions</h2>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">04 / FAQ</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">05 / FAQ</span>
       </div>
       <div style="display:flex;flex-direction:column">
         <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="10">
