@@ -13,15 +13,5 @@
     "slug": "landing-3",
     "title": "Landing Page 3",
     "entry": "landing-3/landing-3.dc.html"
-  },
-  {
-    "slug": "landing-4",
-    "title": "Landing Page 4",
-    "entry": "landing-4/landing-4.dc.html"
-  },
-  {
-    "slug": "landing-5",
-    "title": "Landing Page 5",
-    "entry": "landing-5/landing-5.dc.html"
   }
 ]
