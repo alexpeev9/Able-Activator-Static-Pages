@@ -34,28 +34,35 @@
     column-gap: 28px;
     align-items: baseline;
   }
+  .mod-toolbar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 14px; padding: 0 clamp(12px,2vw,20px) 14px; border-bottom: 1px solid #262626;
+  }
   @media (max-width: 760px) {
     .mod-head {
       grid-template-columns: minmax(0, 1fr) 26px;
-      row-gap: 10px;
+      row-gap: 8px;
       column-gap: 12px;
     }
     .mod-rail { grid-column: 1 / -1; padding-top: 0; }
     .mod-body { padding-left: 0; }
     .mod-day { grid-template-columns: 1fr; row-gap: 6px; }
+    .mod-toolbar { padding-left: 0; padding-right: 0; }
+    .mod-toolbar button { width: 100%; justify-content: center; display: inline-flex; align-items: center; }
+    .sec-head { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
 </style>
 </helmet>
-<div style="background:#131313;padding:clamp(44px,7vw,96px) clamp(16px,3vw,28px);font-family:Barlow,Helvetica,sans-serif;color:#eceff0">
+<div style="background:#131313;padding:clamp(40px,7vw,96px) clamp(20px,3vw,28px);font-family:Barlow,Helvetica,sans-serif;color:#eceff0">
   <div style="max-width:1240px;margin:0 auto">
 
-    <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+    <div class="sec-head" style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between;margin-bottom:14px">
       <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff">Program modules</h2>
       <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">02 / Modules</span>
     </div>
     <p style="margin:0 0 clamp(24px,4vw,40px);font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a9b1b4;max-width:62ch;text-wrap:pretty">Modules 2, 3 and 5 open Friday evening (7:00 PM – 9:00 PM) and run full days on Saturday and Sunday (8:00 AM – 8:00 PM). Modules 1, 4 and 6 include a full Friday. Between some weekends, Wednesday evenings host a guest from the Bulgarian start-up scene. Open a module to see the topics and what each day is for.</p>
 
-    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:0 clamp(12px,2vw,20px) 14px;border-bottom:1px solid #262626;margin-bottom:0">
+    <div class="mod-toolbar">
       <div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8b9296">
         <span>7 modules</span><span style="color:#3d4245">/</span>
         <span>4 Wednesdays</span><span style="color:#3d4245">/</span>
