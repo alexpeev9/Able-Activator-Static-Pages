@@ -88,10 +88,10 @@ The app is one React project. Editable Design Compiler documents live in `src/la
 | File | What it is |
 | --- | --- |
 | `landing-1/landing-1.dc.html` | Landing page 1 (full page) |
-| `landing-1/landing-1-modules.dc.html` | Landing page 1 modules section |
 | `landing-2/landing-2.dc.html` | Landing page 2 (full page) |
 | `landing-2/landing-2-modules.dc.html` | Landing page 2 modules section |
 | `landing-3/landing-3.dc.html` | Landing page 3 (full page) |
+| `landing-3/landing-3-modules.dc.html` | Landing page 3 modules section |
 
 During `pnpm dev`, save a file in `src/landings/` and the open landing reloads.
 
