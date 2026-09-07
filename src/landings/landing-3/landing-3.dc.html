@@ -119,7 +119,15 @@
   .hero-copy h1 {
     margin: 0; font-family: Poppins, Helvetica, sans-serif; font-weight: 800;
     font-size: clamp(40px, 8vw, 78px); line-height: .94; letter-spacing: -.02em;
-    color: #fff; text-wrap: balance;
+    color: #fff; text-wrap: pretty;
+  }
+  .hero-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #29abe2;
+    margin-bottom: clamp(16px, 3vw, 32px);
   }
   .hero-copy p { max-width: 44ch; }
   .hero-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(24px,3vw,36px); }
@@ -150,16 +158,37 @@
     .hero-grid { grid-template-columns: 1fr; }
     .hero-copy {
       text-align: center; align-items: center;
-      padding: 36px 20px 28px;
+      padding: 28px 20px 22px;
     }
-    .hero-copy h1 { font-size: clamp(32px, 10.5vw, 42px); line-height: 1.05; }
-    .hero-copy h1 br { display: none; }
-    .hero-copy p { margin-left: auto; margin-right: auto; }
-    .hero-ctas { width: 100%; flex-direction: column; align-items: stretch; }
+    .hero-kicker {
+      font-size: 11px;
+      letter-spacing: .12em;
+      margin-bottom: 14px;
+      white-space: nowrap;
+    }
+    .hero-copy h1 {
+      font-size: clamp(28px, 7.6vw, 38px);
+      line-height: 1.12;
+    }
+    .hero-copy p { margin-left: auto; margin-right: auto; padding: 0 4px; }
+    .hero-ctas { width: 100%; max-width: 360px; flex-direction: column; align-items: stretch; gap: 12px; }
     .hero-ctas a { width: 100%; justify-content: center; }
-    .hero-media { min-height: 220px; border-left: none; border-top: 1px solid #262626; }
+    .hero-media {
+      min-height: 260px;
+      border-left: none;
+      border-top: 1px solid #262626;
+    }
     .hero-scrim { background: linear-gradient(180deg, rgba(19,19,19,.2), rgba(19,19,19,.15) 40%, rgba(19,19,19,.82)) !important; }
     .hero-badge { padding: 28px 16px 18px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-copy { padding: 20px 16px 16px; }
+    .hero-kicker { font-size: 10px; letter-spacing: .1em; }
+    .hero-copy h1 { font-size: clamp(24px, 7.4vw, 30px); }
+    .hero-ctas { margin-top: 18px; gap: 10px; }
+    .hero-ctas a { padding: 13px 18px !important; min-height: 44px !important; }
+    .hero-media { min-height: 220px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -212,8 +241,8 @@
   <section id="top" class="hero" style="border-bottom:1px solid #262626">
     <div class="hero-grid">
       <div class="hero-copy">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#29abe2;margin-bottom:clamp(16px,3vw,32px)">Sofia · Feb–Apr 2027 · 30 places</div>
-        <h1>ABLE’s flagship<br>6-weekend<br><span style="color:#29abe2">program.</span></h1>
+        <div class="hero-kicker">Sofia · Feb–Apr 2027 · 30 places</div>
+        <h1>ABLE’s flagship 6-weekend <span style="color:#29abe2">program.</span></h1>
         <p style="margin:20px 0 0;font-size:clamp(16px,2vw,18.5px);line-height:1.6;color:#a9b1b4;text-wrap:pretty">Thirty ambitious self-starters join an entirely offline program. You leave with mentorship, a team and a Demo Day pitch — even if you arrive without an idea.</p>
         <div class="hero-ctas">
           <a href="#" role="button" onclick="return false" style="background:#29abe2;color:#0f1c22;font-family:Poppins;font-weight:700;font-size:15px;padding:16px 28px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#bfe9f8">Apply now</a>
