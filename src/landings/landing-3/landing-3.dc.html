@@ -22,26 +22,13 @@
   [id] { scroll-margin-top: 94px; }
   @media (max-width: 860px) { [id] { scroll-margin-top: 80px; } }
 
-  /* ---- site header (shared with landing-2) ---- */
+  /* ---- site header (shared with landing-3) ---- */
   .hdr {
     position: sticky; top: 0; z-index: 50;
     background: rgba(28,28,28,.9);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border-bottom: 1px solid #2b2b2b;
-  }
-  .hdr.cal-hdr-dim {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    width: 100%;
-    z-index: 50;
-  }
-  .hdr.cal-hdr-dim::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(8,10,12,.72);
-    pointer-events: none;
   }
   .hdr-in {
     max-width: 1180px; margin: 0 auto;
@@ -102,7 +89,9 @@
   .quiz-bg {
     position: absolute; inset: 0; z-index: 0;
     pointer-events: none; background: #111314;
+    overflow: hidden;
   }
+  #modules { scroll-margin-top: 110px; }
   .quiz-bg video {
     width: 100%; height: 100%; object-fit: cover;
     filter: brightness(.42) saturate(.75) contrast(1.06);
@@ -114,24 +103,43 @@
     border-top: 1px solid #262626;
   }
   .hero {
+    position: relative; z-index: 1;
     overflow: hidden;
+    background: #131313;
     border-bottom: 1px solid #262626;
   }
-  .hero-in {
-    position: relative; z-index: 1;
-    max-width: 1180px; margin: 0 auto;
-    padding: clamp(28px,5vw,64px) clamp(16px,4vw,40px) clamp(24px,4vw,48px);
+  .hero-grid {
+    max-width: 1240px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch;
   }
-  .hero-title { text-shadow: 0 2px 28px rgba(0,0,0,.45); }
-  /* desktop: header + hero fill exactly one screen */
+  .hero-copy {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(36px,6vw,84px) clamp(20px,3vw,28px);
+  }
+  .hero-copy h1 {
+    margin: 0; font-family: Poppins, Helvetica, sans-serif; font-weight: 800;
+    font-size: clamp(40px, 8vw, 78px); line-height: .94; letter-spacing: -.02em;
+    color: #fff; text-wrap: balance;
+  }
+  .hero-copy p { max-width: 44ch; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(24px,3vw,36px); }
+  .hero-media {
+    position: relative; min-height: clamp(300px,52vw,560px);
+    background: #171717; border-left: 1px solid #262626;
+    display: grid; place-items: center; overflow: hidden;
+  }
+  .hero-badge {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 22px 16px 20px;
+    text-align: center; pointer-events: none;
+    background: linear-gradient(180deg, transparent, rgba(19,19,19,.88));
+  }
   @media (min-width: 861px) {
     .hero {
       min-height: calc(100vh - 79px);
-      display: grid; align-content: center;
+      display: grid; align-items: stretch;
     }
-  }
-  @media (min-width: 861px) and (max-height: 820px) {
-    .hero-in { padding-top: 28px; padding-bottom: 24px; }
+    .hero-grid { height: 100%; }
   }
 
   @media (max-width: 860px) {
@@ -139,11 +147,24 @@
     .hdr-in { height: 66px; justify-content: space-between; }
     .brand svg { height: 34px; }
     .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-copy {
+      text-align: center; align-items: center;
+      padding: 36px 20px 28px;
+    }
+    .hero-copy h1 { font-size: clamp(32px, 10.5vw, 42px); line-height: 1.05; }
+    .hero-copy h1 br { display: none; }
+    .hero-copy p { margin-left: auto; margin-right: auto; }
+    .hero-ctas { width: 100%; flex-direction: column; align-items: stretch; }
+    .hero-ctas a { width: 100%; justify-content: center; }
+    .hero-media { min-height: 220px; border-left: none; border-top: 1px solid #262626; }
+    .hero-scrim { background: linear-gradient(180deg, rgba(19,19,19,.2), rgba(19,19,19,.15) 40%, rgba(19,19,19,.82)) !important; }
+    .hero-badge { padding: 28px 16px 18px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .nav a::after, .hdr .cta { transition: none; }
-    .page-bg video, .quiz-bg video { display: none; }
+    .page-bg video, .quiz-bg video, .hero-media video { display: none; }
   }
   .gains-grid {
     display: grid;
@@ -152,140 +173,18 @@
     background: #2b2b2b;
     border: 1px solid #2b2b2b;
   }
+  .fit-rules {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: #2b2b2b;
+    border: 1px solid #2b2b2b;
+    margin-bottom: clamp(28px, 4vw, 44px);
+  }
+  @media (max-width: 820px) { .fit-rules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .fit-rules { grid-template-columns: minmax(0, 1fr); } }
   @media (max-width: 820px) { .gains-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 520px) { .gains-grid { grid-template-columns: minmax(0, 1fr); } }
-  .flow-arrow {
-    flex: 0 0 auto;
-    display: flex; align-items: center; justify-content: center;
-    color: #29abe2;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 22px;
-    padding: 4px 0;
-  }
-  .flow-arrow::before { content: "\2192"; }
-  /* stacked hero: arrow turns down and the whole block centers */
-  @media (max-width: 700px) {
-    .flow-arrow { width: 100%; padding: 2px 0; font-size: 24px; }
-    .flow-arrow::before { content: "\2193"; }
-    .hero-meta { justify-content: center; }
-    .hero-title { text-align: center; margin-left: auto !important; margin-right: auto !important; }
-    .hero-cards { text-align: center; }
-    .hero-actions { justify-content: center; }
-  }
-  .cal-overlay {
-    position: fixed; inset: 0; z-index: 40;
-    background: rgba(8,10,12,.72);
-    display: flex; align-items: flex-end; justify-content: center;
-    padding: 0;
-    overscroll-behavior: none;
-    touch-action: none;
-  }
-  .cal-sheet {
-    width: 100%; max-width: 520px;
-    display: flex; flex-direction: column;
-    max-height: min(88vh, calc(100dvh - 8px));
-    background: #1e2224;
-    border: 1px solid #33393c;
-    border-bottom: 0;
-    border-radius: 18px 18px 0 0;
-    box-shadow: 0 -18px 50px rgba(0,0,0,.45);
-    overflow: hidden;
-    overscroll-behavior: contain;
-    touch-action: auto;
-    position: relative;
-  }
-  .cal-sheet::before {
-    content: "";
-    display: block;
-    height: 3px;
-    background: #29abe2;
-    flex: none;
-  }
-  .cal-sheet-head {
-    flex: none;
-    padding: 8px 12px 12px 18px;
-    background: #1e2224;
-    border-bottom: 1px solid #2f3538;
-  }
-  .cal-sheet-grab {
-    width: 36px; height: 4px; border-radius: 99px;
-    background: #4a5256; margin: 8px auto 12px;
-  }
-  .cal-sheet-head-row {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  }
-  .cal-sheet-kicker {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-    color: #8d979b;
-  }
-  .cal-close {
-    flex: none; width: 44px; height: 44px;
-    background: #15181a; border: 1px solid #3a454a; border-radius: 50%;
-    color: #7ad2f2; font-family: 'IBM Plex Mono', monospace;
-    font-size: 16px; line-height: 1; cursor: pointer;
-  }
-  .cal-close:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
-  .cal-sheet-body {
-    flex: 1 1 auto; min-height: 0;
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    touch-action: pan-y;
-    padding: 18px 20px max(28px, env(safe-area-inset-bottom));
-  }
-  .cal-date {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-    color: #29abe2; margin-bottom: 8px;
-  }
-  .cal-title {
-    margin: 0;
-    font-family: Poppins, Helvetica, sans-serif;
-    font-weight: 600; font-size: 22px; line-height: 1.28;
-    color: #fff; text-wrap: pretty;
-  }
-  .cal-meta {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    margin: 16px 0 0;
-  }
-  .cal-chip {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px; letter-spacing: .04em;
-    color: #e9edef;
-    background: #15191b;
-    border: 1px solid #32383b;
-    padding: 8px 11px;
-  }
-  .cal-chip-muted { color: #9aa3a7; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
-  .cal-copy { margin: 16px 0 0; font-size: 15.5px; line-height: 1.62; color: #a8b1b5; text-wrap: pretty; }
-  .cal-part { margin-top: 18px; padding-top: 16px; border-top: 1px solid #2f2f2f; }
-  .cal-part-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
-    color: #767f83; margin-bottom: 10px;
-  }
-  .cal-part-name { font-size: 15px; line-height: 1.5; color: #d6dcde; }
-  .cal-split {
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(20px, 3vw, 44px);
-    align-items: flex-start;
-    padding-top: clamp(20px, 3vw, 34px);
-  }
-  .cal-aside {
-    position: sticky;
-    top: 88px;
-    flex: 1 1 300px;
-    align-self: flex-start;
-    min-width: 0;
-    max-width: 100%;
-    border: 1px solid #2b2b2b;
-    background: rgba(18,20,22,.88);
-    padding: clamp(18px, 2.4vw, 26px);
-  }
-  @media (max-width: 860px) {
-    .cal-aside { top: 76px; }
-  }
 </style>
 </helmet>
 <div style="background:transparent;font-family:Barlow,Helvetica,sans-serif;color:#e9edef">
@@ -300,67 +199,162 @@
         <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="#about">The program</a>
-        <a href="#fit">Is it for you?</a>
-        <a href="#calendar">Calendar</a>
-        <a href="#community">Community</a>
+        <a href="#fit">Who</a>
+        <a href="#modules">Modules</a>
+        <a href="#fees">Fees</a>
         <a href="#faq">FAQ</a>
+        <a href="#quiz">Quiz</a>
       </nav>
       <a class="cta" href="#" role="button" onclick="return false">Apply now</a>
     </div>
   </header>
 
-  <section id="top" class="hero scene">
-    <div class="hero-in">
-    <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#c5ced1;margin-bottom:clamp(16px,2.6vw,26px)">
-      <span style="color:#29abe2">2027</span><span style="color:#5c6569">/</span>
-      <span>30 places</span><span style="color:#5c6569">/</span>
-      <span>6 weekends</span><span style="color:#5c6569">/</span>
-      <span>Sofia</span>
-    </div>
-
-    <h1 class="hero-title" style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(34px,7.4vw,74px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#fff;max-width:18ch;text-wrap:balance">Nine weeks to go <span style="color:#29abe2">from idea to founder.</span></h1>
-
-    <div class="hero-cards" style="display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(12px,2vw,18px);margin-top:clamp(18px,2.8vw,32px)">
-      <div style="flex:1 1 260px;min-width:0;border:1px solid rgba(255,255,255,.12);background:rgba(18,20,22,.78);padding:clamp(18px,2.4vw,26px)">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#a8b1b5;margin-bottom:12px">Before</div>
-        <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.3vw,25px);line-height:1.3;color:#e9edef;text-wrap:pretty">An idea you keep not starting.</p>
+  <section id="top" class="hero" style="border-bottom:1px solid #262626">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#29abe2;margin-bottom:clamp(16px,3vw,32px)">Sofia · Feb–Apr 2027 · 30 places</div>
+        <h1>ABLE’s flagship<br>6-weekend<br><span style="color:#29abe2">program.</span></h1>
+        <p style="margin:20px 0 0;font-size:clamp(16px,2vw,18.5px);line-height:1.6;color:#a9b1b4;text-wrap:pretty">Thirty ambitious self-starters join an entirely offline program. You leave with mentorship, a team and a Demo Day pitch — even if you arrive without an idea.</p>
+        <div class="hero-ctas">
+          <a href="#" role="button" onclick="return false" style="background:#29abe2;color:#0f1c22;font-family:Poppins;font-weight:700;font-size:15px;padding:16px 28px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#bfe9f8">Apply now</a>
+          <a href="#modules" style="border:1px solid #33393c;color:#eceff0;font-family:Poppins;font-weight:600;font-size:15px;padding:16px 26px;min-height:48px;display:inline-flex;align-items:center" style-hover="border-color:#29abe2;color:#29abe2">Read the curriculum</a>
+        </div>
       </div>
-      <div class="flow-arrow" aria-hidden="true"></div>
-      <div style="flex:1 1 260px;min-width:0;border:1px solid #29abe2;background:rgba(16,32,40,.82);padding:clamp(18px,2.4vw,26px)">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">After</div>
-        <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.3vw,25px);line-height:1.3;color:#fff;text-wrap:pretty">A team, an MVP and a pitch you've already given.</p>
-      </div>
-    </div>
-
-    <div class="hero-actions" style="display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;margin-top:clamp(22px,3vw,32px)">
-      <a href="#" role="button" onclick="return false" style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:16px 30px;min-height:52px;display:flex;align-items:center">Apply for 2027</a>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#c5ced1">19 Feb — 16 Apr 2027</span>
-    </div>
-    </div>
-  </section>
-
-  <section id="about" class="slab">
-    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,72px) clamp(16px,4vw,40px)">
-      <div style="max-width:820px;margin:0 auto;border:1px solid #2f3437;background:#222222">
-        <div style="height:3px;background:#29abe2"></div>
-        <div style="padding:clamp(26px,3.6vw,44px) clamp(20px,3.4vw,48px);text-align:center">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:16px">What it is</div>
-          <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:500;font-size:clamp(17px,2.2vw,22px);line-height:1.5;color:#e9edef;text-wrap:pretty">ABLE Activator offers an exclusive 6-weekend entrepreneurship program that provides 30 ambitious self-starters with the knowledge, mentorship and network necessary to propel an idea to fruition.</p>
+      <div class="hero-media">
+        <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" width="100%" aria-label="ABLE Activator program video" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none" oncanplay="this.muted=true;this.loop=true;this.play()"><source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"></video>
+        <div class="hero-scrim" style="position:absolute;inset:0;background:linear-gradient(to right,rgba(19,19,19,.86),rgba(19,19,19,.45) 55%,rgba(41,171,226,.16));pointer-events:none"></div>
+        <div class="hero-badge">
+          <div style="font-family:Poppins;font-weight:800;font-size:clamp(20px,3.4vw,36px);line-height:1.1;letter-spacing:.02em;text-transform:uppercase;color:#fff">30 places</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="fit" class="scene quiz-scene" style="border-top:1px solid #262626">
+  <section id="fit" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">Who can apply</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Students or young professionals</h2>
+      <p style="margin:14px 0 clamp(22px,3vw,32px);font-size:16px;line-height:1.55;color:#a8b1b5;max-width:58ch;text-wrap:pretty">You need to be between 20 and 35. You do not need an idea or a team.</p>
+      <div class="fit-rules">
+        <sc-for list="{{ fitRules }}" as="r" hint-placeholder-count="3">
+          <div style="background:#1c1c1c;padding:clamp(20px,2.6vw,28px);min-width:0">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#29abe2;margin-bottom:10px">{{ r.tag }}</div>
+            <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.2vw,23px);line-height:1.2;color:#fff;margin-bottom:10px">{{ r.title }}</div>
+            <div style="font-size:15px;line-height:1.5;color:#8d979b;text-wrap:pretty">{{ r.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">What we look for</div>
+      <h3 style="margin:0 0 clamp(18px,2.4vw,26px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(20px,3vw,28px);line-height:1.1;text-transform:uppercase;color:#fff;text-wrap:balance">The people, not the resume</h3>
+      <div class="gains-grid">
+        <sc-for list="{{ candidates }}" as="c" hint-placeholder-count="3">
+          <div style="background:#1c1c1c;padding:clamp(20px,2.6vw,28px);min-width:0">
+            <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:17.5px;line-height:1.3;color:#fff;margin-bottom:8px">{{ c.title }}</div>
+            <div style="font-size:15px;line-height:1.5;color:#8d979b;text-wrap:pretty">{{ c.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">How you apply</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Three steps</h2>
+      <p style="margin:14px 0 clamp(22px,3vw,32px);font-size:16px;line-height:1.55;color:#a8b1b5;max-width:58ch;text-wrap:pretty">The written form comes first. Interviews are only for the top 50.</p>
+      <div class="gains-grid">
+        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+          <div style="background:#1c1c1c;padding:clamp(20px,2.6vw,28px);min-width:0">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#29abe2;margin-bottom:12px">{{ st.n }}</div>
+            <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:17.5px;line-height:1.3;color:#fff;margin-bottom:8px">{{ st.title }}</div>
+            <div style="font-size:15px;line-height:1.5;color:#8d979b;text-wrap:pretty">{{ st.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section class="slab">
+    <dc-import name="landing-3-modules" hint-size="100%,900px"></dc-import>
+  </section>
+
+  <section id="gains" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">What you get</div>
+      <h2 style="margin:0 0 clamp(22px,3vw,34px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Six things</h2>
+      <div class="gains-grid">
+        <sc-for list="{{ gains }}" as="g" hint-placeholder-count="6">
+          <div style="background:#1c1c1c;padding:clamp(20px,2.6vw,28px);min-width:0">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#29abe2;margin-bottom:12px">{{ g.num }}</div>
+            <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:17.5px;line-height:1.3;color:#fff;margin-bottom:8px">{{ g.title }}</div>
+            <div style="font-size:15px;line-height:1.5;color:#8d979b;text-wrap:pretty">{{ g.line }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="wednesdays" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,72px) clamp(16px,4vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">Wednesday sessions</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Guest evenings</h2>
+      <p style="margin:14px 0 0;font-size:16px;line-height:1.55;color:#a8b1b5;max-width:62ch;text-wrap:pretty">Between some of the weekend modules we host an evening with a guest from the Bulgarian start-up scene. They share their story and stay for a conversation with the group.</p>
+    </div>
+  </section>
+
+  <section id="fees" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">Money</div>
+      <h2 style="margin:0 0 clamp(22px,3vw,34px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Fee and scholarships</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:#2b2b2b;border:1px solid #2b2b2b">
+        <sc-for list="{{ fees }}" as="bl" hint-placeholder-count="3">
+          <div style="background:#1c1c1c;padding:clamp(20px,2.6vw,28px);min-width:0">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">{{ bl.tag }}</div>
+            <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:17.5px;line-height:1.3;color:#fff;margin-bottom:8px">{{ bl.title }}</div>
+            <div style="font-size:15px;line-height:1.5;color:#8d979b;text-wrap:pretty">{{ bl.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">Before you apply</div>
+      <h2 style="margin:0 0 clamp(22px,3vw,34px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Questions</h2>
+
+      <div>
+        <sc-for list="{{ faq }}" as="f" hint-placeholder-count="13">
+          <div style="border-bottom:1px solid #2b2b2b;background:{{ f.rowBg }}">
+            <button onClick="{{ f.onToggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;align-items:flex-start;gap:14px;justify-content:space-between;padding:clamp(15px,2vw,19px) clamp(10px,2vw,16px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:58px">
+              <span style="font-family:Poppins,Helvetica,sans-serif;font-weight:500;font-size:clamp(15.5px,1.8vw,17px);line-height:1.4;color:#e9edef;text-wrap:pretty">{{ f.q }}</span>
+              <span style="flex:none;width:30px;height:30px;border:1px solid #3a3f42;border-radius:50%;display:grid;place-items:center;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:{{ f.iconSize }};line-height:1">{{ f.icon }}</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;padding:0 clamp(10px,2vw,16px) clamp(18px,2.2vw,24px);font-size:15.5px;line-height:1.55;color:#a8b1b5;max-width:66ch;text-wrap:pretty">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="apply" class="slab">
+    <div style="max-width:1180px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:20px 36px;align-items:center;justify-content:space-between">
+      <h2 style="margin:0;flex:1 1 340px;min-width:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(27px,5vw,52px);line-height:1.02;text-transform:uppercase;color:#fff;text-wrap:balance">30 places. <span style="color:#29abe2">No idea needed.</span></h2>
+      <a href="#" role="button" onclick="return false" style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:20px 40px;min-height:58px;display:flex;align-items:center">Apply now</a>
+    </div>
+  </section>
+
+  <section id="quiz" class="scene quiz-scene" style="border-top:1px solid #262626">
     <div class="quiz-bg" aria-hidden="true">
-      <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" width="100%" oncanplay="this.muted=true;this.loop=true;this.play()"><source src="https://res.cloudinary.com/alexpeev9/video/upload/v1788735313/Weekend_Activator.mp4"></video>
+      <video autoplay="autoplay" loop="loop" muted="muted" playsinline="playsinline" width="100%" oncanplay="this.muted=true;this.loop=true;this.play()"><source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"></video>
     </div>
     <div class="quiz-in" style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
       <div style="max-width:640px;margin:0 auto;text-align:center">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">30 seconds</div>
         <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Is it for you?</h2>
-        <p style="margin:14px 0 0;font-size:16px;line-height:1.55;color:#c5ced1;text-wrap:pretty">Five questions. No wrong answers — the program takes people at very different stages.</p>
+        <p style="margin:14px 0 0;font-size:16px;line-height:1.55;color:#c5ced1;text-wrap:pretty">Five short questions, and none of them have a wrong answer. The program is built for people who are at very different stages.</p>
       </div>
 
       <div style="max-width:640px;margin:clamp(26px,3.4vw,40px) auto 0;border:1px solid {{ quiz.frame }};background:rgba(18,20,22,.86);transition:border-color .25s ease">
@@ -382,9 +376,11 @@
                   <button onClick="{{ o.onPick }}" style="display:block;width:100%;height:auto;min-height:56px;font-family:Barlow;font-size:16.5px;line-height:1.4;padding:16px 20px;cursor:pointer;text-align:center;background:{{ o.bg }};color:{{ o.color }};border:1px solid {{ o.border }};transition:all .16s ease" style-hover="border-color:#29abe2;color:#fff">{{ o.label }}</button>
                 </sc-for>
               </div>
-              <div style="margin-top:22px;padding-top:18px;border-top:1px solid #2f2f2f;text-align:center">
-                <button onClick="{{ quiz.onBack }}" disabled="{{ quiz.backDisabled }}" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;background:transparent;color:{{ quiz.backColor }};border:1px solid {{ quiz.backBorder }};padding:13px 24px;min-height:46px;cursor:{{ quiz.backCursor }}">Back</button>
-              </div>
+              <sc-if value="{{ quiz.showBack }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:22px;padding-top:18px;border-top:1px solid #2f2f2f;text-align:center">
+                  <button onClick="{{ quiz.onBack }}" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;background:transparent;color:#8d979b;border:1px solid #3a3f42;padding:13px 24px;min-height:46px;cursor:pointer">Back</button>
+                </div>
+              </sc-if>
             </div>
           </sc-if>
 
@@ -405,245 +401,77 @@
     </div>
   </section>
 
-  <section class="slab">
-    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">What you leave with</div>
-      <h2 style="margin:0 0 clamp(22px,3vw,34px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Six things</h2>
-      <div class="gains-grid">
-        <sc-for list="{{ gains }}" as="g" hint-placeholder-count="6">
-          <div style="background:#1c1c1c;padding:clamp(20px,2.6vw,28px);min-width:0">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#29abe2;margin-bottom:12px">{{ g.num }}</div>
-            <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:17.5px;line-height:1.3;color:#fff;margin-bottom:8px">{{ g.title }}</div>
-            <div style="font-size:15px;line-height:1.5;color:#8d979b;text-wrap:pretty">{{ g.line }}</div>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </section>
-
-  <section id="calendar" class="scene" style="border-top:1px solid #262626">
-    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
-
-      <div style="margin-bottom:clamp(22px,3.4vw,36px)">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">The dates</div>
-        <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Program calendar</h2>
-        <p style="margin:16px 0 0;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a8b1b5;max-width:60ch;text-wrap:pretty">Every date you are expected to show up, from the opening evening to the certificate ceremony. Hover a highlighted day or tap it on a phone to see what happens and how long it runs.</p>
-      </div>
-
-      <div style="display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#c5ced1;padding-bottom:16px;border-bottom:1px solid #2b2b2b">
-        <sc-for list="{{ legend }}" as="l" hint-placeholder-count="4">
-          <span style="display:flex;align-items:center;gap:8px">
-            <span style="width:12px;height:12px;flex:none;background:{{ l.swatch }};border:1px solid {{ l.border }}"></span>
-            <span>{{ l.label }}</span>
-          </span>
-        </sc-for>
-      </div>
-
-      <div class="cal-split">
-
-        <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:clamp(22px,3vw,36px);min-width:0;max-width:520px">
-          <sc-for list="{{ months }}" as="m" hint-placeholder-count="3">
-            <div style="min-width:0">
-              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:12px;margin-bottom:10px;border-bottom:1px solid #2b2b2b">
-                <span style="font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.06em;color:#fff">{{ m.name }}</span>
-                <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:#767f83">{{ m.year }}</span>
-              </div>
-              <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px">
-                <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
-                  <div style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#5f686c;padding-bottom:6px">{{ w }}</div>
-                </sc-for>
-                <sc-for list="{{ m.cells }}" as="c" hint-placeholder-count="35">
-                  <div onMouseEnter="{{ c.onEnter }}" onClick="{{ c.onSelect }}" onFocus="{{ c.onEnter }}" tabIndex="{{ c.tabIndex }}" role="{{ c.role }}" aria-label="{{ c.aria }}" style="position:relative;aspect-ratio:1;display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:13px;background:{{ c.bg }};color:{{ c.color }};border:1px solid {{ c.border }};cursor:{{ c.cursor }};outline:none;transition:background .16s ease,border-color .16s ease,transform .16s ease;transform:{{ c.scale }}">{{ c.label }}</div>
-                </sc-for>
-              </div>
-            </div>
-          </sc-for>
-        </div>
-
-        <aside class="cal-aside" style="display:{{ asideDisplay }}">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:12px;border-bottom:1px solid #2f2f2f;margin-bottom:16px">{{ detail.kicker }}</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#29abe2;margin-bottom:8px">{{ detail.dateLine }}</div>
-          <h3 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(19px,2.2vw,23px);line-height:1.28;color:#fff;text-wrap:pretty">{{ detail.title }}</h3>
-          <sc-if value="{{ detail.hasTime }}" hint-placeholder-val="{{ true }}">
-            <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px;padding:12px 0;border-top:1px solid #2f2f2f;border-bottom:1px solid #2f2f2f">
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#fff;letter-spacing:.03em">{{ detail.time }}</span>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8d979b">{{ detail.duration }}</span>
-            </div>
-          </sc-if>
-          <p style="margin:16px 0 0;font-size:15.5px;line-height:1.62;color:#a8b1b5;text-wrap:pretty">{{ detail.purpose }}</p>
-          <sc-if value="{{ detail.hasTopics }}" hint-placeholder-val="{{ false }}">
-            <div style="margin-top:18px;padding-top:16px;border-top:1px solid #2f2f2f">
-              <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;margin-bottom:10px">Part of</div>
-              <div style="font-size:15px;line-height:1.5;color:#d6dcde">{{ detail.parent }}</div>
-            </div>
-          </sc-if>
-        </aside>
-      </div>
-    </div>
-  </section>
-
-  <section id="community" class="slab">
-    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">After the program</div>
-      <h2 style="margin:0 0 clamp(20px,3vw,32px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">ABLE Community</h2>
-      <div style="max-width:68ch">
-        <p style="margin:0;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a8b1b5;text-wrap:pretty">We are a vibrant community of young people who make a difference wherever they go. Our goal is to develop an active civil society, inspire leadership and promote entrepreneurial culture in Bulgaria.</p>
-        <p style="margin:18px 0 0;padding:16px 18px;border:1px solid #2f3437;background:#222222;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#e9edef;text-wrap:pretty">Completing the program gives you the opportunity to join ABLE.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq" class="slab">
-    <div style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px)">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">Before you apply</div>
-      <h2 style="margin:0 0 clamp(22px,3vw,34px);font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Questions</h2>
-
-      <div>
-        <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
-          <div style="border-bottom:1px solid #2b2b2b;background:{{ f.rowBg }}">
-            <button onClick="{{ f.onToggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;align-items:flex-start;gap:14px;justify-content:space-between;padding:clamp(15px,2vw,19px) clamp(10px,2vw,16px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:58px">
-              <span style="font-family:Poppins,Helvetica,sans-serif;font-weight:500;font-size:clamp(15.5px,1.8vw,17px);line-height:1.4;color:#e9edef;text-wrap:pretty">{{ f.q }}</span>
-              <span style="flex:none;width:30px;height:30px;border:1px solid #3a3f42;border-radius:50%;display:grid;place-items:center;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:{{ f.iconSize }};line-height:1">{{ f.icon }}</span>
-            </button>
-            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
-              <p style="margin:0;padding:0 clamp(10px,2vw,16px) clamp(18px,2.2vw,24px);font-size:15.5px;line-height:1.55;color:#a8b1b5;max-width:66ch;text-wrap:pretty">{{ f.a }}</p>
-            </sc-if>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </section>
-
-  <section id="apply" class="slab">
-    <div style="max-width:1180px;margin:0 auto;padding:clamp(40px,6vw,88px) clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:20px 36px;align-items:center;justify-content:space-between">
-      <h2 style="margin:0;flex:1 1 340px;min-width:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(27px,5vw,52px);line-height:1.02;text-transform:uppercase;color:#fff;text-wrap:balance">Thirty places. <span style="color:#29abe2">Take one.</span></h2>
-      <a href="#" role="button" onclick="return false" style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;background:#29abe2;color:#10222b;padding:20px 40px;min-height:58px;display:flex;align-items:center">Apply now</a>
-    </div>
-  </section>
-
   <footer style="position:relative;z-index:1;border-top:1px solid #262626;background:#1a1a1a">
     <div style="max-width:1180px;margin:0 auto;padding:24px clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5f686c">
       <span>ABLE Activator</span>
       <span>Sofia · 2027</span>
     </div>
   </footer>
-
-  <sc-if value="{{ showModal }}" hint-placeholder-val="{{ false }}">
-    <div class="cal-overlay" onClick="{{ closeModal }}">
-      <div class="cal-sheet" data-cal-sheet="1" onClick="{{ stopSheet }}" role="dialog" aria-modal="true" aria-labelledby="cal-sheet-title">
-        <div class="cal-sheet-head">
-          <div class="cal-sheet-grab" aria-hidden="true"></div>
-          <div class="cal-sheet-head-row">
-            <div class="cal-sheet-kicker">{{ detail.kicker }}</div>
-            <button class="cal-close" onClick="{{ closeModal }}" aria-label="Close">✕</button>
-          </div>
-        </div>
-        <div class="cal-sheet-body">
-          <div class="cal-date">{{ detail.dateLine }}</div>
-          <h3 class="cal-title" id="cal-sheet-title">{{ detail.title }}</h3>
-          <div class="cal-meta">
-            <span class="cal-chip">{{ detail.time }}</span>
-            <span class="cal-chip cal-chip-muted">{{ detail.duration }}</span>
-          </div>
-          <p class="cal-copy">{{ detail.purpose }}</p>
-          <sc-if value="{{ detail.hasTopics }}" hint-placeholder-val="{{ false }}">
-            <div class="cal-part">
-              <div class="cal-part-label">Part of</div>
-              <div class="cal-part-name">{{ detail.parent }}</div>
-            </div>
-          </sc-if>
-        </div>
-      </div>
-    </div>
-  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;faqOpenFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;$preview&quot;:{&quot;width&quot;:1180}}">
 const GAINS = [
-  { title: "Entrepreneurial toolkit", line: "How to develop and launch an idea." },
-  { title: "Agile mindset", line: "Pitching and presenting to any audience." },
-  { title: "Innovator's skillset", line: "Competences you use in every project after." },
-  { title: "Expert mentorship", line: "Tailored advice from founders and industry experts." },
-  { title: "Network expansion", line: "Founders, investors and the people around them." },
-  { title: "A community", line: "An invitation to ABLE — friends and partners for life." }
+  { title: "Entrepreneurial toolkit", line: "You learn how to develop an idea and take it toward a launch." },
+  { title: "Agile mindset", line: "You practise pitching and presenting to different kinds of audiences." },
+  { title: "Innovator’s skillset", line: "You build skills you can reuse in any project you take on later." },
+  { title: "Expert mentorship", line: "You work with mentors who have built companies and know the industry." },
+  { title: "Network expansion", line: "You meet founders and investors, and leave with readings and contacts you can use after." },
+  { title: "A community", line: "Completing the program opens the door to the wider ABLE community." }
+];
+
+const CANDIDATES = [
+  { title: "Problem solvers", body: "You look for new and useful ways to solve a real problem." },
+  { title: "Challenge seekers", body: "You stay curious when the work gets difficult, and try to create value anyway." },
+  { title: "Determined self-starters", body: "You want to start something of your own, or drive a new project inside a company." }
+];
+
+const FIT_RULES = [
+  { tag: "One", title: "Students", body: "Still in university, or just finished. The program is the same as for people already working." },
+  { tag: "Two", title: "Young professionals", body: "Already earning, and still under 35. You follow the same six weekends and Demo Day." },
+  { tag: "Age", title: "20–35", body: "The range is the same for both. If you are outside it, wait for a later edition." }
+];
+
+const STEPS = [
+  { n: "01", title: "Written form", body: "Fill in the form. You do not need your own idea, and you can apply on your own." },
+  { n: "02", title: "Interview", body: "An independent team reviews the forms. The top 50 candidates are invited to a face-to-face interview." },
+  { n: "03", title: "Offer", body: "We send instructions for each step by email, including the outcome of your application." }
+];
+
+const FEES = [
+  { tag: "Students", title: "300 EUR", body: "The fee mainly covers accommodation and catering when a module is outside Sofia. You can pay in two parts: the first before the program starts, and the second after the last module if you are satisfied." },
+  { tag: "Young professionals", title: "690 EUR", body: "You follow the same program. Mentors volunteer their time, and partnerships cover venues, Demo Day and lunches." },
+  { tag: "Scholarships", title: "Need-based", body: "Tell us on the form how a scholarship would help you make the most of the program. Recipients still pay a share of the fee." }
 ];
 
 const QUIZ = [
-  { text: "Your idea today?", options: [["A sentence in my notes", 0], ["Sketched, not built", 1], ["People have used it", 2]] },
-  { text: "Talked to a real customer?", options: [["Not yet", 0], ["A few chats", 1], ["Proper interviews", 2]] },
-  { text: "A team?", options: [["No one yet", 0], ["A couple of maybes", 1], ["Already have one", 2]] },
-  { text: "Nine weekends, Feb to Apr?", options: [["I'd miss several", 0], ["Tight, but yes", 1], ["Cleared", 2]] },
-  { text: "What would make it worth it?", options: [["Learning the mindset", 0], ["Getting it out of my head", 1], ["A launch and a network", 2]] }
+  { text: "Where is your idea today?", options: [["A sentence in my notes", 0], ["Sketched, not built", 1], ["People have used it", 2]] },
+  { text: "Have you talked to a real customer?", options: [["Not yet", 0], ["A few conversations", 1], ["Proper interviews", 2]] },
+  { text: "Do you already have a team?", options: [["No one yet", 0], ["A couple of maybes", 1], ["Already have one", 2]] },
+  { text: "Can you keep six weekends free from February to April?", options: [["I would miss several", 0], ["Tight, but yes", 1], ["Already cleared", 2]] },
+  { text: "What would make the program worth it for you?", options: [["Learning the mindset", 0], ["Getting it out of my head", 1], ["A launch and a network", 2]] }
 ];
 
 const PROFILES = [
-  { name: "Explorer", body: "Early is fine. Module 01 turns curiosity into a problem worth testing, and teams form in February — you don't need one now." },
-  { name: "Builder", body: "You've started and stalled before. Three pitching sessions and a hard deadline are exactly what solo work never gives you." },
-  { name: "Ready to launch", body: "You have momentum. What's missing is a room of investors and mentors who take you seriously. That's Demo Day." }
+  { name: "Explorer", body: "Starting early is fine. Module 1 turns curiosity into a problem worth testing, and teams form in February, so you do not need one now." },
+  { name: "Builder", body: "You have started and stalled before. Three pitching sessions and a hard deadline give you the structure that solo work rarely does." },
+  { name: "Ready to launch", body: "You already have momentum. What is missing is a room of investors and mentors who take the work seriously, and that is what Demo Day is for." }
 ];
 
 const FAQ = [
-  { q: "Online or offline?", a: "Offline, in Sofia." },
-  { q: "When are the trainings?", a: "Fridays 7:00 PM – 9:00 PM, Saturdays and Sundays 8:00 AM – 8:00 PM. Wednesday sessions 7:00 PM – 9:00 PM." },
-  { q: "Can I skip a weekend?", a: "The modules build on each other and your team counts on you, so attendance is expected." },
-  { q: "Do I work on my own idea?", a: "You work in a team on one idea chosen in Module 02. It can be yours if the team wants it." },
-  { q: "What is Demo Day?", a: "Your final pitch to a jury of founders and investors, in front of the ABLE community." },
-  { q: "How do I apply?", a: "The form on this page. Shortlisted candidates get a short interview, and everyone hears back." },
-  { q: "Can I apply again next year?", a: "Yes, and second applications are usually stronger." }
+  { q: "Online or offline?", a: "The program is planned entirely offline." },
+  { q: "When are the trainings?", a: "Modules 2, 3 and 5 start on Friday from 7 to 9 PM and continue through the weekend from 8 AM to 8 PM. Modules 1, 4 and 6 include a full Friday. After some weekends we also host a Wednesday evening with a guest from the start-up scene." },
+  { q: "Can I skip a weekend?", a: "The Friday and weekend sessions are the core of the program. If you would miss more than one module, it is better to wait for the next edition." },
+  { q: "Do I need my own idea?", a: "No. Ideas are generated by the participants during the program. At the end of Module 2, everyone forms teams of three to six around one of those ideas." },
+  { q: "Do I need a team?", a: "No. Most people arrive on their own. Teams are formed during Module 2." },
+  { q: "Which mentor will I get?", a: "In Module 3 each team pitches to the mentors, and we match you based on the project and their experience. There is also a wider pool of about 40 experts you can reach out to." },
+  { q: "What is Demo Day?", a: "It is the final event. Each team has five minutes to pitch and five minutes of questions from a jury drawn from the start-up scene. The best-performing team is announced that evening." },
+  { q: "How do I apply?", a: "Fill in the application form if you are a student or young professional under 35. You do not need your own start-up idea." },
+  { q: "How will I know if I got in?", a: "The process has two parts: a written application and a face-to-face interview for the top 50. We send updates for each step by email." },
+  { q: "What does it cost?", a: "The fee is 300 EUR for students and 690 EUR for young professionals." },
+  { q: "Can I get a scholarship?", a: "Full and partial scholarships are available if you have limited income. Ask on the form. You can also pay the fee in two parts." },
+  { q: "Can I apply again?", a: "Yes. Candidates are often accepted on a later edition after a first attempt." },
+  { q: "Can I pay in parts?", a: "Yes. The first part is due before the program starts. The second is due after the last module, and only if you are satisfied with the experience." }
 ];
-
-const WED = "One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&A with the cohort.";
-const EVE = { time: "7:00 PM – 9:00 PM", duration: "2 hours", evening: true };
-const DAY = { time: "8:00 AM – 8:00 PM", duration: "Full day" };
-
-// kind: module (weekend day) | wed | demo | close
-const EVENTS = {
-  "2027-02-19": { kind: "module", parent: "Module 01 • Leadership and Community Ignition", title: "Opening day", ...DAY, purpose: "Meet the cohort, the trainers and the ABLE community, and set your intentions for the edition." },
-  "2027-02-20": { kind: "module", parent: "Module 01 • Leadership and Community Ignition", title: "Thinking like an entrepreneur", ...DAY, purpose: "The entrepreneurial mindset, covering teamwork, leadership and how founders make decisions under uncertainty." },
-  "2027-02-21": { kind: "module", parent: "Module 01 • Leadership and Community Ignition", title: "Ideas and first validation", ...DAY, purpose: "Idea generation, first market research and validating that the problem you picked is real." },
-  "2027-02-24": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
-  "2027-02-26": { kind: "module", parent: "Module 02 • The Path to the Customer", title: "Teams are formed", ...EVE, purpose: "Teams are formed and each team picks the customer need it will chase for the rest of the program." },
-  "2027-02-27": { kind: "module", parent: "Module 02 • The Path to the Customer", title: "Value proposition & traction", ...DAY, purpose: "Value proposition, unfair advantage and the traction channels that could realistically reach that customer." },
-  "2027-02-28": { kind: "module", parent: "Module 02 • The Path to the Customer", title: "Revenue, cost & metrics", ...DAY, purpose: "Revenue streams, cost structure and key metrics, then you plan the customer interviews you run during the week." },
-  "2027-03-10": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
-  "2027-03-12": { kind: "module", parent: "Module 03 • Refining Your Venture", title: "Interview results", ...EVE, purpose: "You bring back what customers actually told you and read the results as a team." },
-  "2027-03-13": { kind: "module", parent: "Module 03 • Refining Your Venture", title: "Design thinking & prototyping", ...DAY, purpose: "Design thinking and a hands-on prototyping session, and the first version of your MVP takes shape." },
-  "2027-03-14": { kind: "module", parent: "Module 03 • Refining Your Venture", title: "Pitching Session #1", ...DAY, purpose: "Your first pitch in front of trainers, then roundtable feedback and Demo Day expectations." },
-  "2027-03-19": { kind: "module", parent: "Module 04 • Market and Business Mastery", title: "Go-to-market", ...EVE, purpose: "How a product reaches its market: go-to-market strategy for your specific idea." },
-  "2027-03-20": { kind: "module", parent: "Module 04 • Market and Business Mastery", title: "Marketing & sales", ...DAY, purpose: "Start-up marketing and sales, including the techniques founders use before they can afford a team." },
-  "2027-03-21": { kind: "module", parent: "Module 04 • Market and Business Mastery", title: "Pitching Session #2", ...DAY, purpose: "Focused work time in teams, then your second pitch and roundtable feedback." },
-  "2027-03-31": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
-  "2027-04-02": { kind: "module", parent: "Module 05 • Financial Mastery & Strategic Scaling", title: "Entrepreneurial finance", ...EVE, purpose: "The numbers a founder has to be able to defend in front of an investor." },
-  "2027-04-03": { kind: "module", parent: "Module 05 • Financial Mastery & Strategic Scaling", title: "Equity & growth", ...DAY, purpose: "Splitting equity from the legal side, plus growth strategies built for early-stage teams." },
-  "2027-04-04": { kind: "module", parent: "Module 05 • Financial Mastery & Strategic Scaling", title: "Pitching Session #3", ...DAY, purpose: "The last full rehearsal before Demo Day, with detailed roundtable feedback." },
-  "2027-04-07": { kind: "wed", title: "Wednesday Session", ...EVE, purpose: WED },
-  "2027-04-14": { kind: "demo", title: "Demo Day • Grand Final Pitch", time: "7:00 PM – 11:00 PM", duration: "4 hours", evening: true, purpose: "Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team." },
-  "2027-04-16": { kind: "close", title: "Reflection & certificate ceremony", time: "5:00 PM – 9:00 PM", duration: "4 hours", evening: true, purpose: "A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni." }
-};
-
-const STYLE = {
-  module: { bg: "#2a4657", border: "#39657a", color: "#e3f3fb", eveColor: "#cfe6f2" },
-  wed:    { bg: "#2a4657", border: "#39657a", color: "#e3f3fb", eveColor: "#cfe6f2" },
-  demo:   { bg: "#29abe2", border: "#29abe2", color: "#0f2733", eveColor: "#9adcfa" },
-  close:  { bg: "#1f3a34", border: "#2f5f53", color: "#dbf3ec", eveColor: "#bfe6db" },
-  empty:  { bg: "rgba(16,18,20,.62)", border: "#2a2f32", color: "#9aa3a7" }
-};
-
-const MONTHS = [
-  { name: "February", year: "2027", m: 2, days: 28, firstDow: 0 },
-  { name: "March", year: "2027", m: 3, days: 31, firstDow: 0 },
-  { name: "April", year: "2027", m: 4, days: 30, firstDow: 3 }
-];
-const MN = { 2: "February", 3: "March", 4: "April" };
-const DOW = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
-const fill = (c, evening, edge) => {
-  if (c.indexOf("rgba") === 0) return c;
-  if (!evening) return c;
-  return "linear-gradient(to top, " + c + " 0 32%, " + edge + " 32% calc(32% + 1px), rgba(255,255,255,.035) calc(32% + 1px) 100%)";
-};
-
-const key = (m, d) => "2027-" + String(m).padStart(2, "0") + "-" + String(d).padStart(2, "0");
 
 class Component extends DCLogic {
   constructor(props) {
@@ -651,100 +479,8 @@ class Component extends DCLogic {
     this.state = {
       step: 0,
       answers: {},
-      faqOpen: (props.faqOpenFirst ?? true) ? { 0: true } : {},
-      active: "2027-02-19",
-      narrow: false,
-      modal: false
+      faqOpen: (props.faqOpenFirst ?? true) ? { 0: true } : {}
     };
-  }
-
-  pinHeader() {
-    const hdr = document.querySelector(".hdr");
-    if (!hdr || this._hdrPinned) return;
-    this._hdrPinned = hdr;
-    hdr.classList.add("cal-hdr-dim");
-  }
-
-  unpinHeader() {
-    const hdr = this._hdrPinned;
-    if (!hdr) return;
-    hdr.classList.remove("cal-hdr-dim");
-    this._hdrPinned = null;
-  }
-
-  lockScroll() {
-    if (this._scrollLocked) return;
-    this._scrollLocked = true;
-    this._scrollY = window.scrollY || window.pageYOffset || 0;
-    const html = document.documentElement;
-    const body = document.body;
-    html.style.overflow = "hidden";
-    html.style.overscrollBehavior = "none";
-    body.style.overflow = "hidden";
-    body.style.overscrollBehavior = "none";
-    body.style.touchAction = "none";
-    this.pinHeader();
-    this._blockTouch = (e) => {
-      if (!e.target || !e.target.closest || !e.target.closest("[data-cal-sheet], .hdr")) {
-        e.preventDefault();
-      }
-    };
-    document.addEventListener("touchmove", this._blockTouch, { passive: false });
-  }
-
-  unlockScroll() {
-    if (!this._scrollLocked) return;
-    this._scrollLocked = false;
-    const html = document.documentElement;
-    const body = document.body;
-    const y = this._scrollY || 0;
-    const prevBehavior = html.style.scrollBehavior;
-    html.style.scrollBehavior = "auto";
-    html.style.overflow = "";
-    html.style.overscrollBehavior = "";
-    body.style.overflow = "";
-    body.style.overscrollBehavior = "";
-    body.style.touchAction = "";
-    this.unpinHeader();
-    if (this._blockTouch) {
-      document.removeEventListener("touchmove", this._blockTouch);
-      this._blockTouch = null;
-    }
-    window.scrollTo({ top: y, left: 0, behavior: "instant" });
-    html.style.scrollBehavior = prevBehavior;
-  }
-
-  componentDidMount() {
-    this.sync = () => {
-      const narrow = window.innerWidth <= 760;
-      this.setState((s) => {
-        if (!narrow && s.modal) this.unlockScroll();
-        if (!narrow) {
-          return { narrow, modal: false, active: s.active || "2027-02-19" };
-        }
-        return { narrow, modal: s.modal, active: s.modal ? s.active : null };
-      });
-    };
-    this.sync();
-    window.addEventListener("resize", this.sync);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.sync);
-    this.unlockScroll();
-  }
-
-  pick(k) {
-    const open = this.state.narrow;
-    this.setState({ active: k, modal: open });
-    if (open) this.lockScroll();
-  }
-
-  closeModal() {
-    const focused = document.activeElement;
-    if (focused && focused.blur) focused.blur();
-    this.unlockScroll();
-    this.setState({ modal: false, active: this.state.narrow ? null : this.state.active });
   }
 
   renderVals() {
@@ -755,15 +491,12 @@ class Component extends DCLogic {
     const score = Object.entries(s.answers).reduce((t, [qi, oi]) => t + QUIZ[qi].options[oi][1], 0);
     const profile = done ? PROFILES[score <= 3 ? 0 : score <= 7 ? 1 : 2] : null;
 
-    const active = s.active;
-    const ev = EVENTS[active] || EVENTS["2027-02-19"];
-    const dateKey = active || "2027-02-19";
-    const [, mm, dd] = dateKey.split("-");
-    const mi = MONTHS.findIndex(x => x.m === +mm);
-    const dow = DOW[(MONTHS[mi].firstDow + (+dd - 1)) % 7];
-
     return {
       gains: GAINS.map((g, i) => ({ ...g, num: String(i + 1).padStart(2, "0") })),
+      candidates: CANDIDATES,
+      fitRules: FIT_RULES,
+      steps: STEPS,
+      fees: FEES,
 
       quiz: {
         asking: !done,
@@ -782,63 +515,11 @@ class Component extends DCLogic {
             onPick: () => this.setState(st => ({ answers: { ...st.answers, [step]: oi }, step: step + 1 }))
           };
         }) : [],
+        showBack: step > 0,
         onBack: () => this.setState(st => ({ step: Math.max(0, st.step - 1) })),
-        backDisabled: step === 0,
-        backColor: step === 0 ? "#4a5154" : "#8d979b",
-        backBorder: step === 0 ? "#2b2b2b" : "#3a3f42",
-        backCursor: step === 0 ? "default" : "pointer",
         name: profile ? profile.name : "",
         body: profile ? profile.body : "",
         onReset: () => this.setState({ step: 0, answers: {} })
-      },
-
-      weekdays: ["M", "T", "W", "T", "F", "S", "S"],
-      legend: [
-        { label: "Full day · 8 AM – 8 PM", swatch: STYLE.module.bg, border: STYLE.module.border },
-        { label: "Evening · 2–4 hours", swatch: fill(STYLE.module.bg, true, STYLE.module.border), border: STYLE.module.border },
-        { label: "Demo Day", swatch: fill(STYLE.demo.bg, true, "#8fd8f6"), border: STYLE.demo.border },
-        { label: "Ceremony", swatch: fill(STYLE.close.bg, true, STYLE.close.border), border: STYLE.close.border }
-      ],
-      months: MONTHS.map(mo => {
-        const cells = [];
-        for (let i = 0; i < mo.firstDow; i++) {
-          cells.push({ label: "", ...STYLE.empty, cursor: "default", scale: "none", tabIndex: -1, role: "presentation", aria: "", onEnter: null, onSelect: null });
-        }
-        for (let d = 1; d <= mo.days; d++) {
-          const k = key(mo.m, d);
-          const e = EVENTS[k];
-          const cs = e ? STYLE[e.kind] : STYLE.empty;
-          const isActive = !!active && k === active;
-          cells.push({
-            label: String(d),
-            bg: fill(isActive ? "#29abe2" : cs.bg, e && e.evening, isActive ? "#8fd8f6" : cs.border),
-            border: isActive ? "#7ad2f2" : cs.border,
-            color: e && e.evening ? (isActive ? "#dff1fa" : cs.eveColor || cs.color) : (isActive ? "#0f2733" : cs.color),
-            cursor: e ? "pointer" : "default",
-            scale: isActive ? "scale(1.06)" : "none",
-            tabIndex: e ? 0 : -1,
-            role: e ? "button" : "presentation",
-            aria: e ? d + " " + mo.name + ", " + e.title : "",
-            onEnter: e && !s.narrow ? () => this.setState({ active: k }) : null,
-            onSelect: e ? () => this.pick(k) : null
-          });
-        }
-        return { ...mo, cells };
-      }),
-      showModal: s.modal,
-      asideDisplay: s.narrow ? "none" : "block",
-      closeModal: () => this.closeModal(),
-      stopSheet: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
-      detail: {
-        kicker: ev.kind === "wed" ? "Guest evening" : ev.kind === "demo" ? "Final event" : ev.kind === "close" ? "Closing" : "Module day",
-        dateLine: dow + " " + (+dd) + " " + MN[+mm] + " 2027",
-        title: ev.title,
-        hasTime: true,
-        time: ev.time,
-        duration: ev.duration,
-        purpose: ev.purpose,
-        hasTopics: !!ev.parent,
-        parent: ev.parent || ""
       },
 
       faq: FAQ.map((f, i) => {
