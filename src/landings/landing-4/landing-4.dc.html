@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --canvas: #F7FBFD;
+    --card: #FFFFFF;
+    --ink: #12242C;
+    --muted: #4A5C64;
+    --label: #5A6E76;
+    --line: #D5E3E8;
+    --cyan: #20C4F4;
+    --cyan-ink: #0A7FA3;
+    --lime: #8EC54A;
+    --lime-ink: #3F6F14;
+  }
+  body { margin: 0; background: var(--canvas); -webkit-font-smoothing: antialiased; }
+  a { color: var(--cyan-ink); text-decoration: none; }
+  a:hover { color: var(--lime-ink); }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { overflow-x: clip; }
+  [id] { scroll-margin-top: 94px; }
+  @media (max-width: 860px) { [id] { scroll-margin-top: 80px; } }
+  @keyframes drift-a { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,-40px) scale(1.15); } }
+  @keyframes drift-b { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-70px,50px) scale(1.1); } }
+  @keyframes star-drift-a { 0%,100% { transform: translate(0,0); } 50% { transform: translate(14px,-11px); } }
+  @keyframes star-drift-b { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-12px,13px); } }
+  @keyframes star-drift-c { 0%,100% { transform: translate(0,0); } 50% { transform: translate(9px,16px); } }
+  @keyframes star-twinkle { 0%,100% { opacity: var(--o,.22); } 45% { opacity: calc(var(--o,.22) * 2.2); } }
+
+  .hdr {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247,251,253,.88);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(32,196,244,.18);
+  }
+  .hdr-in {
+    max-width: 1180px; margin: 0 auto;
+    padding: 0 clamp(16px,3vw,32px);
+    height: 78px; display: flex; align-items: center; gap: clamp(14px,3vw,32px);
+  }
+  .brand { flex: none; display: flex; align-items: center; }
+  .brand svg { display: block; height: 40px; width: auto; }
+  .nav { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+  .nav a {
+    position: relative; color: var(--muted); font-size: 14px; font-weight: 500;
+    padding: 10px 13px; border-radius: 9px;
+    transition: color .18s ease, background .18s ease;
+  }
+  .nav a::after {
+    content: ""; position: absolute; left: 13px; right: 13px; bottom: 5px;
+    height: 2px; background: var(--lime); border-radius: 2px;
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform .22s cubic-bezier(.4,0,.2,1);
+  }
+  .nav a:hover { color: var(--ink); background: rgba(32,196,244,.08); }
+  .nav a:hover::after { transform: scaleX(1); }
+  .hdr .cta {
+    flex: none; background: var(--cyan); color: var(--ink);
+    font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 13.5px;
+    letter-spacing: .04em; text-transform: uppercase;
+    padding: 11px 22px; border-radius: 999px; min-height: 44px;
+    display: inline-flex; align-items: center;
+    transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
+  }
+  .hdr .cta:hover {
+    background: var(--lime); color: var(--ink);
+    box-shadow: 0 8px 24px rgba(142,197,74,.35); transform: translateY(-1px);
+  }
+  .hdr a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-in {
+    position: relative; z-index: 1;
+    max-width: 1180px; margin: 0 auto;
+    padding: clamp(28px,5vw,64px) clamp(16px,4vw,40px) clamp(24px,4vw,48px);
+  }
+  .hero-cards p { min-height: 2.6em; }
+  .flow-arrow {
+    flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(40px, 5.2vw, 56px);
+    line-height: 1;
+    padding: 0 6px;
+  }
+  .flow-arrow::before { content: "\2192"; }
+
+  @media (min-width: 861px) {
+    .hero {
+      min-height: calc(100vh - 79px);
+      display: grid;
+      align-content: center;
+    }
+  }
+  @media (min-width: 861px) and (max-height: 820px) {
+    .hero-in { padding-top: 28px; padding-bottom: 24px; }
+  }
+
+  @media (max-width: 860px) {
+    .nav { display: none; }
+    .hdr-in { height: 66px; justify-content: center; gap: 18px; }
+    .brand svg { height: 32px; }
+    .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
+    .flow-arrow { width: 100%; padding: 4px 0; font-size: 48px; }
+    .flow-arrow::before { content: "\2193"; }
+    .hero-meta { justify-content: center; }
+    .hero-title { text-align: center; margin-left: auto !important; margin-right: auto !important; }
+    .hero-cards { text-align: center; }
+    .hero-actions { justify-content: center; flex-direction: column; align-items: center; }
+    .hero-actions a { width: 100%; max-width: 360px; justify-content: center; }
+    .pillar { flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+    #faq button { justify-content: center; text-align: center; }
+    #faq button > span:first-of-type { text-align: center; }
+    .center-m, .center-m p { text-align: center; margin-left: auto; margin-right: auto; }
+    .center-m [style*="display:flex"] { justify-content: center; }
+    footer .foot-in { justify-content: center; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .nav a::after, .hdr .cta { transition: none; }
+  }
+</style>
+</helmet>
+<div style="background:#F7FBFD;font-family:Barlow,Helvetica,sans-serif;color:#12242C">
+
+  <header class="hdr">
+    <div class="hdr-in">
+      <a class="brand" href="#top" aria-label="ABLE Activator">
+        <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#program" >The program</a>
+        <a href="#fit" >Who</a>
+        <a href="#modules" >Modules</a>
+        <a href="#details" >Fees</a>
+        <a href="#faq" >FAQ</a>
+      </nav>
+      <a class="cta" href="#" role="button" onclick="return false">Apply now</a>
+    </div>
+  </header>
+
+  <section id="top" class="hero">
+    <div class="hero-in">
+      <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:8px 16px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:#5A6E76;margin-bottom:clamp(16px,2.6vw,26px)">
+        <span style="color:#0A7FA3">2027</span><span style="color:#B8CDD4">/</span>
+        <span>30 places</span><span style="color:#B8CDD4">/</span>
+        <span>6 weekends</span><span style="color:#B8CDD4">/</span>
+        <span>Sofia</span>
+      </div>
+
+      <h1 class="hero-title" style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(34px,7.4vw,74px);line-height:.98;letter-spacing:-.02em;text-transform:uppercase;color:#12242C;max-width:16ch;text-wrap:balance">Six weekends. <span style="color:#20C4F4">Then you pitch.</span></h1>
+
+      <div class="hero-cards" style="display:flex;flex-wrap:wrap;align-items:stretch;gap:clamp(12px,2vw,18px);margin-top:clamp(18px,2.8vw,32px)">
+        <div style="flex:1 1 260px;min-width:0;border:1px solid #D5E3E8;background:#FFFFFF;padding:clamp(18px,2.4vw,26px);border-radius:16px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#5A6E76;margin-bottom:12px">Before</div>
+          <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.3vw,25px);line-height:1.3;color:#12242C;text-wrap:pretty">No idea required, and no team of your own yet.</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true"></div>
+        <div style="flex:1 1 260px;min-width:0;border:1px solid #20C4F4;background:rgba(32,196,244,.08);padding:clamp(18px,2.4vw,26px);border-radius:16px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#0A7FA3;margin-bottom:12px">After</div>
+          <p style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(18px,2.3vw,25px);line-height:1.3;color:#12242C;text-wrap:pretty">A team, an MVP, and a five-minute Demo Day pitch.</p>
+        </div>
+      </div>
+
+      <div class="hero-actions" style="display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;margin-top:clamp(22px,3vw,32px)">
+        <a href="#modules" style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;background:#20C4F4;color:#12242C;padding:16px 30px;min-height:52px;display:flex;align-items:center;border-radius:999px" style-hover="background:#8EC54A">Read the program</a>
+        <a href="#" role="button" onclick="return false" style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;background:transparent;color:#3F6F14;border:1.5px solid #8EC54A;padding:16px 30px;min-height:52px;display:flex;align-items:center;border-radius:999px" style-hover="background:#8EC54A;color:#12242C">Apply for 2027</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="center-m" style="padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8">
+    <div style="max-width:1120px;margin:0 auto">
+      <div id="program" style="max-width:720px;margin-bottom:clamp(24px,4vw,40px)">
+        <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#5A6E76;font-weight:600;margin-bottom:14px">The program</div>
+        <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(28px,5vw,48px);line-height:1.05;letter-spacing:-.01em;color:#12242C;text-wrap:balance">What you actually get</h2>
+        <p style="margin:16px 0 0;font-size:16px;line-height:1.55;color:#4A5C64;max-width:58ch;text-wrap:pretty">Thirty self-starters spend six weekends with mentors and a growing network, so one idea can become a working project.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 40px">
+        <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="6">
+          <div class="pillar" style="display:flex;gap:16px;padding:20px 0;border-top:1px solid #D5E3E8">
+            <span style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#0A7FA3;padding-top:3px">{{ p.n }}</span>
+            <div>
+              <h3 style="margin:0 0 6px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;line-height:1.3;color:#12242C">{{ p.title }}</h3>
+              <p style="margin:0;font-size:15.5px;line-height:1.55;color:#4A5C64;text-wrap:pretty">{{ p.body }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="fit" class="center-m" style="padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8;background:#EEF6F8">
+    <div style="max-width:1120px;margin:0 auto">
+      <div style="max-width:720px;margin-bottom:clamp(22px,3vw,36px)">
+        <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#5A6E76;font-weight:600;margin-bottom:14px">Ideal candidates</div>
+        <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;color:#12242C;text-wrap:balance">Students and young professionals, 20–35</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:clamp(22px,3vw,36px)">
+        <sc-for list="{{ candidates }}" as="c" hint-placeholder-count="3">
+          <div style="background:#FFFFFF;border:1px solid #D5E3E8;border-radius:16px;padding:clamp(18px,2.4vw,26px)">
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;color:#12242C">{{ c.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;color:#4A5C64;text-wrap:pretty">{{ c.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
+        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+          <div style="border:1px solid #D5E3E8;border-radius:16px;padding:clamp(18px,2.4vw,26px);background:#F7FBFD">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#0A7FA3;margin-bottom:10px">{{ st.n }}</div>
+            <h3 style="margin:0 0 8px;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:18px;color:#12242C">{{ st.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;color:#4A5C64;text-wrap:pretty">{{ st.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="teams" class="center-m" style="padding:clamp(48px,8vw,88px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8">
+    <div style="max-width:1120px;margin:0 auto">
+      <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#5A6E76;font-weight:600;margin-bottom:12px">Teams and ideas</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(24px,3.6vw,36px);line-height:1.08;color:#12242C;text-wrap:balance">You do not need an idea or a team</h2>
+      <p style="margin:14px 0 0;font-size:16px;line-height:1.55;color:#4A5C64;max-width:62ch;text-wrap:pretty">You do not need to arrive with an idea or a team. Ideas are generated during the program, and at the end of Module 2 everyone forms teams of three to six. Working on someone else’s idea is common, and it is often the better way to learn the method.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 16px;padding:14px 0;margin-top:22px;border-top:1px solid #D5E3E8;border-bottom:1px solid #D5E3E8;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#5A6E76">
+        <span>Arrive alone</span><span style="color:#B8CDD4">/</span>
+        <span>Pick an idea in Module 2</span><span style="color:#B8CDD4">/</span>
+        <span>Mentor match in Module 3</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid #D5E3E8">
+    <dc-import name="landing-4-modules" hint-size="100%,900px"></dc-import>
+  </section>
+
+  <section id="wednesdays" class="center-m" style="padding:clamp(40px,6vw,72px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8">
+    <div style="max-width:1120px;margin:0 auto">
+      <div style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#5A6E76;font-weight:600;margin-bottom:12px">Wednesday sessions</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(24px,3.6vw,36px);line-height:1.08;color:#12242C;text-wrap:balance">Guest evenings after some weekends</h2>
+      <p style="margin:14px 0 0;font-size:16px;line-height:1.55;color:#4A5C64;max-width:62ch;text-wrap:pretty">Between some of the weekend modules we host an evening with a guest from the Bulgarian start-up scene. They share their story and stay for a conversation with the group.</p>
+    </div>
+  </section>
+
+  <section id="details" style="padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8;background:#EEF6F8">
+    <div style="max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:14px">
+      <sc-for list="{{ blocks }}" as="bl" hint-placeholder-count="3">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(16px,3vw,40px);align-items:start;background:#FFFFFF;border:1px solid #D5E3E8;border-radius:18px;padding:clamp(20px,3vw,36px)">
+          <div>
+            <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#0A7FA3;font-weight:600;margin-bottom:10px">{{ bl.tag }}</div>
+            <h3 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(22px,3.4vw,30px);line-height:1.12;color:#12242C;text-wrap:balance">{{ bl.title }}</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <p style="margin:0;font-size:16px;line-height:1.65;color:#4A5C64;max-width:60ch;text-wrap:pretty">{{ bl.body }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ bl.facts }}" as="f" hint-placeholder-count="2">
+                <span style="font-size:14px;font-weight:500;color:#12242C;background:#EEF6F8;border:1px solid #D5E3E8;border-radius:999px;padding:8px 14px">{{ f }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="apply" style="position:relative;padding:clamp(52px,8vw,104px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8;overflow:hidden">
+    <div style="position:absolute;inset:0;pointer-events:none">{{ ctaArt }}</div>
+    <div style="position:relative;max-width:900px;margin:0 auto;text-align:center">
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(30px,6.4vw,60px);line-height:1;text-transform:uppercase;color:#12242C;text-wrap:balance">Are you ready to <span style="color:#8EC54A">activate?</span></h2>
+      <p style="margin:18px auto 0;max-width:48ch;font-size:17px;line-height:1.6;color:#4A5C64">There are 30 places. Apply with a written form and, if you are shortlisted, an interview. You do not need your own idea.</p>
+      <a href="#" role="button" onclick="return false" style="margin-top:28px;background:#20C4F4;color:#12242c;font-family:Poppins;font-weight:600;font-size:16px;letter-spacing:.03em;padding:16px 34px;border-radius:999px;min-height:48px;display:inline-flex;align-items:center" style-hover="background:#8EC54A">Start my application</a>
+    </div>
+  </section>
+
+  <section id="faq" style="padding:clamp(48px,8vw,100px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8">
+    <div style="max-width:880px;margin:0 auto">
+      <h2 style="margin:0 0 clamp(22px,3vw,36px);font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(28px,5vw,44px);line-height:1.05;text-transform:uppercase;color:#0A7FA3;text-align:center">FAQ</h2>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="12">
+          <div style="border:1px solid #D5E3E8;border-radius:14px;background:#FFFFFF;overflow:hidden;transition:border-color .2s ease" style-hover="border-color:#20C4F4">
+            <button sc-camel-on-click="{{ f.onToggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;align-items:center;gap:14px;padding:16px clamp(14px,2.4vw,22px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:56px">
+              <span style="flex:1;min-width:0;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(15px,2.1vw,17px);line-height:1.35;color:#12242C;text-wrap:pretty">{{ f.q }}</span>
+              <span style="flex:none;width:30px;height:30px;border-radius:50%;background:#E3F4FA;color:#0A7FA3;display:grid;place-items:center;font-size:15px;line-height:1;transition:transform .24s ease;transform:{{ f.caret }}">+</span>
+            </button>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;padding:0 clamp(14px,2.4vw,22px) 20px;font-size:16px;line-height:1.65;color:#4A5C64;max-width:70ch;text-wrap:pretty">{{ f.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:clamp(32px,5vw,56px) clamp(16px,4vw,40px);border-top:1px solid #D5E3E8;background:#E8F2F5">
+    <div class="foot-in" style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between;font-size:14px;color:#5A6E76">
+      <div style="display:flex;align-items:center">
+        <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator" style="display:block;flex:none;height:32px;width:auto"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 22px">
+        <a href="#program" style="color:#5A6E76" style-hover="color:#0A7FA3">The program</a>
+        <a href="#fit" style="color:#5A6E76" style-hover="color:#0A7FA3">Who</a>
+        <a href="#modules" style="color:#5A6E76" style-hover="color:#0A7FA3">Modules</a>
+        <a href="#faq" style="color:#5A6E76" style-hover="color:#0A7FA3">FAQ</a>
+      </div>
+      <div>© 2027 ABLE</div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{}">
+const STATS = [
+  { value: "6", label: "weekend modules" },
+  { value: "30", label: "places" },
+  { value: "20–35", label: "years old" },
+  { value: "1", label: "demo day" }
+];
+
+const PILLARS = [
+  { n: "01", title: "Entrepreneurial toolkit", body: "You learn how to develop an idea and take it toward a launch." },
+  { n: "02", title: "Agile mindset", body: "You practise pitching and presenting to different kinds of audiences." },
+  { n: "03", title: "Innovator’s skillset", body: "You build skills you can reuse in any project you take on later." },
+  { n: "04", title: "Expert mentorship", body: "You work with mentors who have built companies and know the industry." },
+  { n: "05", title: "Network expansion", body: "You meet founders and investors, and leave with readings and contacts you can use after." },
+  { n: "06", title: "A community", body: "Completing the program opens the door to the wider ABLE community." }
+];
+
+const CANDIDATES = [
+  { title: "Problem solvers", body: "You look for new and useful ways to solve a real problem." },
+  { title: "Challenge seekers", body: "You stay curious when the work gets difficult, and try to create value anyway." },
+  { title: "Determined self-starters", body: "You want to start something of your own, or drive a new project inside a company." }
+];
+
+const STEPS = [
+  { n: "01", title: "Written form", body: "Apply as a student or young professional under 35. You do not need your own idea." },
+  { n: "02", title: "Interview", body: "An independent team reviews the forms. The top 50 candidates are invited to a face-to-face interview." },
+  { n: "03", title: "Offer", body: "We send instructions for each step by email, including the outcome of your application." }
+];
+
+const BLOCKS = [
+  {
+    tag: "Participation fee", title: "300 EUR students · 690 EUR professionals",
+    body: "Mostly accommodation and catering for modules outside Sofia. Fundraising covers venues, Demo Day, lunches and materials. Mentors volunteer. Pay half before start; the rest after the last module, only if you are satisfied.",
+    facts: ["300 EUR · students", "690 EUR · young professionals", "Two-part payment"]
+  },
+  {
+    tag: "Scholarships", title: "Need-based, still a small share",
+    body: "Say on the form how a scholarship would help you use the program, not a list of bills. Recipients still pay part of the fee.",
+    facts: ["Full or partial", "Mark it on the form"]
+  },
+  {
+    tag: "What the fee does not cover alone", title: "Venues, Demo Day, food, materials",
+    body: "Those extras are covered by partnerships. The fee is your commitment, while mentors give their time for free.",
+    facts: ["Offline", "Sofia + off-site modules"]
+  }
+];
+
+const FAQS = [
+  { q: "Online or offline?", a: "The program is planned entirely offline." },
+  { q: "When are the trainings?", a: "Modules 2, 3 and 5 start on Friday from 7 to 9 PM and continue through the weekend from 8 AM to 8 PM. Modules 1, 4 and 6 include a full Friday. After some weekends we also host a Wednesday evening with a guest from the start-up scene." },
+  { q: "Can I skip a module?", a: "The Friday and weekend sessions are the core of the program. If you would miss more than one module, it is better to wait for the next edition." },
+  { q: "Do I need my own idea?", a: "No. Ideas are generated by the participants during the program. At the end of Module 2, everyone forms teams of three to six around one of those ideas." },
+  { q: "Do I need a team?", a: "No. Most people arrive on their own. Teams are formed during Module 2." },
+  { q: "Which mentor will I get?", a: "In Module 3 each team pitches to the mentors, and we match you based on the project and their experience. There is also a wider pool of about 40 experts you can reach out to." },
+  { q: "What is Demo Day?", a: "It is the final event. Each team has five minutes to pitch and five minutes of questions from a jury drawn from the start-up scene. The best-performing team is announced that evening." },
+  { q: "How do I apply?", a: "Fill in the application form if you are a student or young professional under 35. You do not need your own start-up idea." },
+  { q: "How will I know if I got in?", a: "The process has two parts: a written application and a face-to-face interview for the top 50. We send updates for each step by email." },
+  { q: "What does it cost?", a: "The fee is 300 EUR for students and 690 EUR for young professionals." },
+  { q: "Can I get a scholarship?", a: "Full and partial scholarships are available if you have limited income. Ask on the form. You can also pay the fee in two parts." },
+  { q: "Can I apply again?", a: "Yes. Candidates are often accepted on a later edition after a first attempt." },
+  { q: "Can I pay in parts?", a: "Yes. The first part is due before the program starts. The second is due after the last module, and only if you are satisfied with the experience." }
+];
+
+class Component extends DCLogic {
+  state = { faq: {} };
+
+  componentDidMount() {
+    this.setState({ ready: true });
+  }
+
+  art(id, opts) {
+    if (!this._art) this._art = {};
+    if (this._art[id]) return this._art[id];
+    const h = React.createElement;
+    const blob = (cx, cy, r, anim, dur, op) => h("circle", {
+      key: "b" + cx + cy, cx, cy, r, fill: id === "cta" ? "#8EC54A" : "#20C4F4", opacity: op,
+      style: { filter: "blur(70px)", animation: anim + " " + dur + "s ease-in-out infinite", transformOrigin: cx + "px " + cy + "px" }
+    });
+    let seed = id === "hero" ? 17 : 41;
+    const rnd = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+    const drifts = ["star-drift-a", "star-drift-b", "star-drift-c"];
+    const gauss = () => {
+      const u = Math.max(rnd(), 1e-6);
+      const v = rnd();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(6.283185 * v);
+    };
+    const clusters = [
+      { x: 210, y: 120, sx: 210, sy: 130, n: 34 },
+      { x: 980, y: 430, sx: 230, sy: 140, n: 36 },
+      { x: 600, y: 250, sx: 420, sy: 220, n: 28 }
+    ];
+    const dots = [];
+    let i = 0;
+    clusters.forEach((c) => {
+      for (let k = 0; k < c.n; k++, i++) {
+        const cx = Math.min(1188, Math.max(12, c.x + gauss() * c.sx));
+        const cy = Math.min(548, Math.max(12, c.y + gauss() * c.sy));
+        const rad = 0.45 + rnd() * rnd() * 2.8;
+        const op = 0.16 + rnd() * 0.52;
+        const dur = 10 + rnd() * 16;
+        const tw = 2.2 + rnd() * 4.8;
+        const delay = -(rnd() * 14);
+        const fill = rnd() > 0.45 ? "#20C4F4" : "#8EC54A";
+        dots.push(h("circle", {
+          key: "d" + i, cx, cy, r: rad, fill,
+          style: {
+            "--o": String(op),
+            transformOrigin: cx + "px " + cy + "px",
+            animation: drifts[i % 3] + " " + dur + "s ease-in-out " + delay + "s infinite, star-twinkle " + tw + "s ease-in-out " + delay + "s infinite"
+          }
+        }));
+      }
+    });
+    const el = h("svg", {
+      viewBox: "0 0 1200 560", preserveAspectRatio: "xMidYMid slice",
+      style: { width: "100%", height: "100%", display: "block" }, "aria-hidden": "true"
+    },
+      h("g", null, blob(160, 80, 150, "drift-a", 18, opts.blob), blob(1060, 480, 180, "drift-b", 22, opts.blob)),
+      h("g", null, dots)
+    );
+    this._art[id] = el;
+    return el;
+  }
+
+  renderVals() {
+    const faq = this.state.faq;
+    return {
+      stats: STATS,
+      pillars: PILLARS,
+      candidates: CANDIDATES,
+      steps: STEPS,
+      blocks: BLOCKS,
+      ctaArt: this.art("cta", { blob: 0.16 }),
+      faqs: FAQS.map((f, i) => ({
+        ...f,
+        open: !!faq[i],
+        caret: faq[i] ? "rotate(45deg)" : "rotate(0deg)",
+        onToggle: () => this.setState(s => ({ faq: { ...s.faq, [i]: !s.faq[i] } }))
+      }))
+    };
+  }
+}
+</script>
+
+
+</body></html>
