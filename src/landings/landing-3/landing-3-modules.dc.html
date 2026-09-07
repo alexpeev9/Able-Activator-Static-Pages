@@ -8,127 +8,176 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-  body { margin: 0; background: #131313; -webkit-font-smoothing: antialiased; }
-  a { color: #29abe2; }
-  a:hover { color: #bfe9f8; }
-  * { box-sizing: border-box; }
-  .mod-head {
-    display: grid;
-    grid-template-columns: 200px minmax(0, 1fr) 26px;
-    column-gap: 28px;
-    align-items: start;
-    width: 100%;
+  @keyframes panelIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes panelHeadIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+  @keyframes rowIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    [style*="animation"] { animation: none !important; }
   }
-  .mod-rail {
-    padding-top: 3px;
-    white-space: nowrap;
-  }
-  .mod-body { padding-left: 228px; }
   .mod-day {
     display: grid;
     grid-template-columns: 200px minmax(0, 1fr);
     column-gap: 28px;
     align-items: baseline;
   }
-  .mod-toolbar {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 14px; padding: 0 clamp(12px,2vw,20px) 14px; border-bottom: 1px solid #262626;
-  }
   @media (max-width: 760px) {
-    .mod-head {
-      grid-template-columns: minmax(0, 1fr) 26px;
-      row-gap: 8px;
-      column-gap: 12px;
-    }
-    .mod-rail { grid-column: 1 / -1; padding-top: 0; }
-    .mod-body { padding-left: 0; }
     .mod-day { grid-template-columns: 1fr; row-gap: 6px; }
-    .mod-toolbar { padding-left: 0; padding-right: 0; }
-    .mod-toolbar button { width: 100%; justify-content: center; display: inline-flex; align-items: center; }
-    .sec-head { flex-direction: column; align-items: flex-start; gap: 8px; }
   }
 </style>
 </helmet>
-<div style="background:#131313;padding:clamp(40px,7vw,96px) clamp(20px,3vw,28px);font-family:Barlow,Helvetica,sans-serif;color:#eceff0">
-  <div style="max-width:1240px;margin:0 auto">
+<div id="modules" style="max-width:1180px;margin:0 auto;padding:clamp(36px,5.4vw,78px) clamp(16px,4vw,40px);font-family:Barlow,Helvetica,sans-serif;color:#e9edef">
 
-    <div class="sec-head" style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between;margin-bottom:14px">
-      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:800;font-size:clamp(26px,4.6vw,44px);line-height:1.05;color:#fff">Program modules</h2>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8b9296">02 / Modules</span>
-    </div>
-    <p style="margin:0 0 clamp(24px,4vw,40px);font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a9b1b4;max-width:62ch;text-wrap:pretty">Modules 2, 3 and 5 open Friday evening (7:00 PM – 9:00 PM) and run full days on Saturday and Sunday (8:00 AM – 8:00 PM). Modules 1, 4 and 6 include a full Friday. Between some weekends, Wednesday evenings host a guest from the Bulgarian start-up scene. Open a module to see the topics and what each day is for.</p>
-
-    <div class="mod-toolbar">
-      <div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8b9296">
-        <span>7 modules</span><span style="color:#3d4245">/</span>
-        <span>4 Wednesdays</span><span style="color:#3d4245">/</span>
-        <span>Demo Day</span><span style="color:#3d4245">/</span>
-        <span>19 Feb to 16 Apr 2027</span>
-      </div>
-      <button onClick="{{ toggleAll }}" style="flex:none;background:transparent;border:1px solid #33393c;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px;cursor:pointer;transition:all .18s ease;min-height:44px" style-hover="border-color:#29abe2;background:rgba(41,171,226,.1)">{{ toggleLabel }}</button>
+    <div style="margin-bottom:clamp(22px,3.4vw,36px)">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#29abe2;margin-bottom:12px">The curriculum</div>
+      <h2 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(25px,4vw,40px);line-height:1.08;text-transform:uppercase;color:#fff;text-wrap:balance">Program modules</h2>
+      <p style="margin:16px 0 0;font-size:clamp(15px,1.8vw,17px);line-height:1.6;color:#a8b1b5;max-width:62ch;text-wrap:pretty">Nine weeks, seven modules and a Demo Day. Weekend modules open Friday evening and run full days Saturday and Sunday; Wednesday evenings host a founder from the Bulgarian start-up ecosystem. Pick a step to see what it covers.</p>
     </div>
 
-    <div style="display:flex;flex-direction:column">
-      <sc-for list="{{ items }}" as="it" hint-placeholder-count="12">
-        <section data-screen-label="{{ it.label }}" style="border-bottom:1px solid #262626;background:{{ it.rowBg }};transition:background .2s ease">
-          <button class="mod-head" onClick="{{ it.onToggle }}" aria-expanded="{{ it.open }}" style="padding:clamp(18px,2.4vw,26px) clamp(12px,2vw,20px);background:transparent;border:0;cursor:pointer;text-align:left;font-family:Barlow;color:inherit;min-height:64px;transition:opacity .18s ease" style-hover="opacity:.82">
-            <span class="mod-rail" style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#29abe2;line-height:1.35">{{ it.railLabel }}</span>
-            <span style="min-width:0">
-              <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#8b9296;margin-bottom:7px">{{ it.dateRange }}</span>
-              <span style="display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(17px,2.5vw,23px);line-height:1.28;color:#fff;text-wrap:pretty">{{ it.title }}</span>
-              <span style="display:block;font-size:14px;color:#8b9296;margin-top:8px">{{ it.meta }}</span>
-            </span>
-            <span style="width:26px;height:26px;display:grid;place-items:center;color:#29abe2;font-size:16px;line-height:1;transition:transform .24s ease;transform:{{ it.caret }}">{{ it.icon }}</span>
-          </button>
+    <sc-if value="{{ isWide }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(24px,4vw,68px);align-items:stretch">
 
-          <sc-if value="{{ it.open }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:0 clamp(12px,2vw,20px) clamp(22px,3vw,32px)">
-              <div class="mod-body" style="min-width:0;display:grid;gap:clamp(22px,2.6vw,30px)">
-                <sc-if value="{{ it.hasTopics }}" hint-placeholder-val="{{ false }}">
-                  <div>
-                    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #262626;margin-bottom:14px">Topics covered</div>
-                    <ul style="margin:0;padding:0;list-style:none;display:grid;gap:8px 24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
-                      <sc-for list="{{ it.topics }}" as="t" hint-placeholder-count="6">
-                        <li style="display:flex;align-items:baseline;gap:10px;font-size:15.5px;line-height:1.5;color:#d6dcde">
-                          <span style="flex:none;color:#29abe2;font-family:'IBM Plex Mono',monospace;font-size:12px">•</span>
-                          <span>{{ t }}</span>
-                        </li>
-                      </sc-for>
-                    </ul>
-                  </div>
-                </sc-if>
+        <div style="flex:1 1 210px;max-width:330px;min-width:0;display:flex;flex-direction:column">
+          <sc-for list="{{ rail }}" as="r" hint-placeholder-count="11">
+            <button onClick="{{ r.onSelect }}" data-screen-label="{{ r.num }}" aria-current="{{ r.active }}" aria-label="{{ r.short }}" style="display:grid;grid-template-columns:26px minmax(0,1fr) 22px;align-items:baseline;column-gap:12px;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid {{ r.line }};padding:clamp(14px,1.7vw,20px) 2px;cursor:pointer;font-family:Barlow;min-height:52px;transition:border-color .3s ease" style-hover="border-color:#4a5054">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;color:{{ r.numColor }};transition:color .3s ease">{{ r.num }}</span>
+              <span style="min-width:0;display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:clamp(14px,1.7vw,17px);line-height:1.3;color:{{ r.titleColor }};transition:color .3s ease,transform .3s ease;transform:{{ r.shift }};text-wrap:pretty">{{ r.short }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;line-height:1;color:#29abe2;opacity:{{ r.arrow }};transform:{{ r.arrowShift }};transition:opacity .3s ease,transform .3s ease">&#8594;</span>
+            </button>
+          </sc-for>
+        </div>
 
-                <div>
-                  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #262626;margin-bottom:4px">{{ it.scheduleLabel }}</div>
-                  <sc-for list="{{ it.days }}" as="d" hint-placeholder-count="3">
-                    <div class="mod-day" style="padding:14px 0;border-bottom:1px solid #222">
-                      <div>
-                        <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:15px;color:#fff">{{ d.day }}</div>
-                        <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#29abe2;margin-top:4px;letter-spacing:.04em">{{ d.time }}</div>
-                      </div>
-                      <p style="margin:0;font-size:15px;line-height:1.6;color:#a9b1b4;text-wrap:pretty">{{ d.purpose }}</p>
-                    </div>
-                  </sc-for>
-                  <sc-for list="{{ it.paras }}" as="p" hint-placeholder-count="0">
-                    <p style="margin:14px 0 0;font-size:15px;line-height:1.65;color:#a9b1b4;max-width:70ch;text-wrap:pretty">{{ p }}</p>
+        <div style="flex:3 1 320px;min-width:0;display:flex;flex-direction:column;min-height:560px">
+          <sc-if value="{{ shown }}" hint-placeholder-val="{{ true }}">
+            <div style="min-width:0;flex:1;display:flex;flex-direction:column;animation:panelIn .42s cubic-bezier(.2,.7,.3,1) both">
+              <div style="animation:panelHeadIn .5s cubic-bezier(.2,.7,.3,1) both">
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#8d979b;margin-bottom:14px">
+                  <span style="color:#29abe2">{{ cur.kindLabel }}</span>
+                  <span style="color:#3d4245">/</span>
+                  <span>{{ cur.dateRange }}</span>
+                  <span style="color:#3d4245">/</span>
+                  <span>{{ cur.hours }}</span>
+                </div>
+                <h3 style="margin:0;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:clamp(24px,3.6vw,40px);line-height:1.12;color:#fff;text-wrap:balance">{{ cur.title }}</h3>
+              </div>
+
+              <sc-if value="{{ cur.hasTopics }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:clamp(24px,3vw,34px)">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #2b2b2b;margin-bottom:16px">Topics covered</div>
+                  <ul style="margin:0;padding:0;list-style:none;display:grid;gap:11px 30px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+                    <sc-for list="{{ cur.topics }}" as="t" hint-placeholder-count="6">
+                      <li style="display:grid;grid-template-columns:14px minmax(0,1fr);gap:10px;align-items:start;font-size:clamp(14.5px,1.7vw,16.5px);line-height:1.5;color:#cfd6d9;animation:rowIn .45s cubic-bezier(.2,.7,.3,1) both;animation-delay:{{ t.delay }}">
+                        <span style="width:7px;height:7px;margin-top:.55em;background:#29abe2;transform:rotate(45deg)"></span>
+                        <span style="min-width:0;text-wrap:pretty">{{ t.text }}</span>
+                      </li>
+                    </sc-for>
+                  </ul>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ cur.hasBody }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:clamp(22px,2.6vw,30px);display:grid;gap:14px;max-width:72ch">
+                  <sc-for list="{{ cur.body }}" as="p" hint-placeholder-count="2">
+                    <p style="margin:0;font-size:clamp(14.5px,1.7vw,16.5px);line-height:1.66;color:#a8b1b5;text-wrap:pretty;animation:rowIn .5s cubic-bezier(.2,.7,.3,1) both;animation-delay:{{ p.delay }}">{{ p.text }}</p>
                   </sc-for>
                 </div>
+              </sc-if>
+
+              <sc-if value="{{ cur.hasSchedule }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top:clamp(24px,3vw,34px)">
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #2b2b2b;margin-bottom:4px">{{ cur.scheduleLabel }}</div>
+                  <sc-for list="{{ cur.days }}" as="d" hint-placeholder-count="3">
+                    <div class="mod-day" style="padding:14px 0;border-bottom:1px solid #2f2f2f">
+                      <div>
+                        <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:15px;color:#fff">{{ d.day }}</div>
+                        <div style="font-size:13px;color:#29abe2;margin-top:4px;font-weight:600">{{ d.time }}</div>
+                      </div>
+                      <p style="margin:0;font-size:15px;line-height:1.6;color:#a8b1b5;text-wrap:pretty">{{ d.purpose }}</p>
+                    </div>
+                  </sc-for>
+                  <sc-for list="{{ cur.paras }}" as="p" hint-placeholder-count="0">
+                    <p style="margin:14px 0 0;font-size:15.5px;line-height:1.68;color:#b6bec2;max-width:70ch;text-wrap:pretty">{{ p.text }}</p>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <div style="flex:none;margin-top:auto;padding-top:clamp(24px,3vw,34px);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:12px">
+                <sc-if value="{{ showPrev }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ onPrev }}" aria-label="Previous module" style="background:transparent;border:1px solid #3a3f42;color:#e9edef;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:13px 20px;cursor:pointer;min-height:44px;transition:all .2s ease" style-hover="border-color:#29abe2;color:#29abe2">&#8592; Prev</button>
+                </sc-if>
+                <sc-if value="{{ showNext }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ onNext }}" aria-label="Next module" style="background:#29abe2;border:1px solid #29abe2;color:#0f2833;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:13px 20px;cursor:pointer;min-height:44px;transition:all .2s ease" style-hover="background:#7ad2f2;border-color:#7ad2f2">Next &#8594;</button>
+                </sc-if>
               </div>
             </div>
           </sc-if>
-        </section>
-      </sc-for>
-    </div>
-  </div>
+        </div>
+
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isNarrow }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ acc }}" as="a" hint-placeholder-count="11">
+          <section data-screen-label="{{ a.num }}" style="border-bottom:1px solid {{ a.line }};transition:border-color .3s ease">
+            <button onClick="{{ a.onToggle }}" aria-expanded="{{ a.open }}" style="display:grid;grid-template-columns:26px minmax(0,1fr) 24px;align-items:start;column-gap:12px;width:100%;text-align:left;background:transparent;border:0;padding:18px 2px;cursor:pointer;font-family:Barlow;min-height:56px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:{{ a.numColor }};line-height:1.5;transition:color .3s ease">{{ a.num }}</span>
+              <span style="min-width:0;display:block">
+                <span style="display:block;font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:16.5px;line-height:1.3;color:{{ a.titleColor }};transition:color .3s ease">{{ a.short }}</span>
+                <span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#767f83;margin-top:7px">{{ a.dateRange }}</span>
+              </span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:16px;line-height:1.3;color:#29abe2;transition:transform .3s ease;transform:{{ a.caret }}">&#43;</span>
+            </button>
+            <sc-if value="{{ a.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 2px 26px;animation:panelIn .36s cubic-bezier(.2,.7,.3,1) both">
+                <h3 style="margin:0 0 4px;font-family:Poppins,Helvetica,sans-serif;font-weight:700;font-size:20px;line-height:1.2;color:#fff;text-wrap:pretty">{{ a.title }}</h3>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8d979b;margin-bottom:18px">{{ a.hours }}</div>
+                <sc-if value="{{ a.hasTopics }}" hint-placeholder-val="{{ true }}">
+                  <ul style="margin:0;padding:0;list-style:none;display:grid;gap:10px">
+                    <sc-for list="{{ a.topics }}" as="t" hint-placeholder-count="5">
+                      <li style="display:grid;grid-template-columns:14px minmax(0,1fr);gap:10px;align-items:start;font-size:15px;line-height:1.5;color:#cfd6d9">
+                        <span style="width:7px;height:7px;margin-top:.55em;background:#29abe2;transform:rotate(45deg)"></span>
+                        <span style="min-width:0;text-wrap:pretty">{{ t.text }}</span>
+                      </li>
+                    </sc-for>
+                  </ul>
+                </sc-if>
+                <sc-if value="{{ a.hasBody }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:16px;display:grid;gap:12px">
+                    <sc-for list="{{ a.body }}" as="p" hint-placeholder-count="2">
+                      <p style="margin:0;font-size:15px;line-height:1.62;color:#a8b1b5;text-wrap:pretty">{{ p.text }}</p>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ a.hasSchedule }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:18px">
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#767f83;padding-bottom:10px;border-bottom:1px solid #2b2b2b;margin-bottom:4px">{{ a.scheduleLabel }}</div>
+                    <sc-for list="{{ a.days }}" as="d" hint-placeholder-count="3">
+                      <div class="mod-day" style="padding:14px 0;border-bottom:1px solid #2f2f2f">
+                        <div>
+                          <div style="font-family:Poppins,Helvetica,sans-serif;font-weight:600;font-size:15px;color:#fff">{{ d.day }}</div>
+                          <div style="font-size:13px;color:#29abe2;margin-top:4px;font-weight:600">{{ d.time }}</div>
+                        </div>
+                        <p style="margin:0;font-size:15px;line-height:1.6;color:#a8b1b5;text-wrap:pretty">{{ d.purpose }}</p>
+                      </div>
+                    </sc-for>
+                    <sc-for list="{{ a.paras }}" as="p" hint-placeholder-count="0">
+                      <p style="margin:14px 0 0;font-size:15px;line-height:1.62;color:#a8b1b5;text-wrap:pretty">{{ p.text }}</p>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </section>
+        </sc-for>
+      </div>
+    </sc-if>
+
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;expandFirst&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showTopics&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;yearLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;ABLE Activator 2027&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
-const wknd = (dates, purposes, fridayTime) => [
-  { day: "Friday " + dates[0], time: fridayTime || "7:00 PM – 9:00 PM", purpose: purposes[0] },
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#29abe2&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#29abe2&quot;,&quot;#7ad2f2&quot;,&quot;#f5a623&quot;,&quot;#5bd6a0&quot;]},&quot;hideWednesdays&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;staggerItems&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const wknd = (dates, purposes) => [
+  { day: "Friday " + dates[0], time: "7:00 PM – 9:00 PM", purpose: purposes[0] },
   { day: "Saturday " + dates[1], time: "8:00 AM – 8:00 PM", purpose: purposes[1] },
   { day: "Sunday " + dates[2], time: "8:00 AM – 8:00 PM", purpose: purposes[2] }
 ];
@@ -136,153 +185,171 @@ const wknd = (dates, purposes, fridayTime) => [
 const WED_PURPOSE = "One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&A with the cohort.";
 
 const DATA = [
-  {
-    id: "m1", label: "Module 1",
-    railTop: "Module", railBottom: "01", dateRange: "19 – 21 Feb 2027",
-    title: "Leadership and Community Ignition: Thinking Like an Entrepreneur",
+  { kind: "module", short: "Module 1", kindLabel: "Module 1", title: "Leadership and Community Ignition: Thinking Like an Entrepreneur", dateRange: "19 – 21 Feb 2027", hours: "7AM Fri – 8PM Sun",
     topics: ["Motivation & Inspiration", "Introduction to Entrepreneurship", "Teamwork & Leadership", "Idea Generation & Market Research", "Connecting with Entrepreneurs", "Problem Validation"],
     days: wknd(["19 Feb", "20 Feb", "21 Feb"], [
-      "Opening day: meet the cohort, the trainers and the ABLE community, and set your intentions for the edition.",
+      "Opening evening: meet the cohort, the trainers and the ABLE community, and set your intentions for the edition.",
       "The entrepreneurial mindset, covering teamwork, leadership and how founders make decisions under uncertainty.",
       "Idea generation, first market research and validating that the problem you picked is real."
-    ], "7:00 AM – 8:00 PM")
-  },
-  {
-    id: "w1", label: "Wednesday 24 Feb",
-    railTop: "Wednesday", railBottom: "Session", dateRange: "24 Feb 2027",
-    title: "Founder story & live Q&A",
-    topics: [],
-    days: [{ day: "Wednesday 24 Feb", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
-  },
-  {
-    id: "m2", label: "Module 2",
-    railTop: "Module", railBottom: "02", dateRange: "26 – 28 Feb 2027",
-    title: "The Path to the Customer: Startup Launchpad",
+    ]) },
+  { kind: "wed", short: "Wednesday session", kindLabel: "Wednesday session", title: "Founders from the Bulgarian ecosystem", dateRange: "24 Feb 2027", hours: "7PM Wed",
+    body: ["Apart from the weekend and Friday evening activities, we hold additional Wednesday events during the program, some of which are exclusive to participants of ABLE Activator. They familiarise you with the stories behind successful Bulgarian start-ups, expand your network, and deepen your understanding of leadership and entrepreneurship.",
+      "Each Wednesday we host a different guest and give you the chance to get to know their story in a dedicated Q&A session."],
+    days: [{ day: "Wednesday 24 Feb", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }] },
+  { kind: "module", short: "Module 2", kindLabel: "Module 2", title: "The Path to the Customer: Startup Launchpad", dateRange: "26 – 28 Feb 2027", hours: "7PM Fri – 8PM Sun",
     topics: ["Team Formation", "Understanding Customer Needs", "Defining Value Proposition", "Building Unfair Advantage", "Identifying Traction Channels", "Crafting Revenue Streams", "Managing Cost Structure", "Establishing Key Metrics", "Testing Hypotheses through Customer Interviews", "Motivation on Pivoting Strategies"],
     days: wknd(["26 Feb", "27 Feb", "28 Feb"], [
       "Teams are formed and each team picks the customer need it will chase for the rest of the program.",
       "Value proposition, unfair advantage and the traction channels that could realistically reach that customer.",
       "Revenue streams, cost structure and key metrics, then you plan the customer interviews you run during the week."
-    ])
-  },
-  {
-    id: "w2", label: "Wednesday 10 Mar",
-    railTop: "Wednesday", railBottom: "Session", dateRange: "10 Mar 2027",
-    title: "Founder story & live Q&A",
-    topics: [],
-    days: [{ day: "Wednesday 10 Mar", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
-  },
-  {
-    id: "m3", label: "Module 3",
-    railTop: "Module", railBottom: "03", dateRange: "12 – 14 Mar 2027",
-    title: "Refining Your Venture: Innovate & Collaborate",
-    topics: ["Analyzing Customer Interview Results", "Setting Expectations for Demo Day Presentations", "Exploring Design Thinking", "Facilitating Team Synergy", "Hands-on Session: Building a Minimum Viable Product (MVP) through Prototyping", "Pitching Session #1: Presenting Initial Ideas", "Roundtable Discussions"],
+    ]) },
+  { kind: "wed", short: "Wednesday session", kindLabel: "Wednesday session", title: "Founders from the Bulgarian ecosystem", dateRange: "10 Mar 2027", hours: "7PM Wed",
+    body: ["A guest founder joins the cohort for a story and a dedicated Q&A session."],
+    days: [{ day: "Wednesday 10 Mar", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }] },
+  { kind: "module", short: "Module 3", kindLabel: "Module 3", title: "Refining Your Venture: Innovate & Collaborate", dateRange: "12 – 14 Mar 2027", hours: "7PM Fri – 8PM Sun",
+    topics: ["Analyzing Customer Interview Results", "Setting Expectations for Demo Day Presentations", "Exploring Design Thinking", "Facilitating Team Synergy", "Hands-on Session: Building an MVP through Prototyping", "Pitching Session #1: Presenting Initial Ideas", "Roundtable Discussions"],
     days: wknd(["12 Mar", "13 Mar", "14 Mar"], [
       "You bring back what customers actually told you and read the results as a team.",
       "Design thinking and a hands-on prototyping session, and the first version of your MVP takes shape.",
       "Pitching Session #1 in front of trainers, then roundtable feedback and Demo Day expectations."
-    ])
-  },
-  {
-    id: "m4", label: "Module 4",
-    railTop: "Module", railBottom: "04", dateRange: "19 – 21 Mar 2027",
-    title: "Market and Business Mastery",
-    topics: ["Go-to-Market Strategies", "Startup Marketing", "Sales Techniques and Strategies", "Motivational Panel with Entrepreneurs", "Hands-on Work Time in Teams", "Pitching Session #2", "Roundtable Discussions"],
+    ]) },
+  { kind: "module", short: "Module 4", kindLabel: "Module 4", title: "Market and Business Mastery", dateRange: "19 – 21 Mar 2027", hours: "8AM Fri – 8PM Sun",
+    topics: ["Exploring Go-to-Market Strategies", "Insights into Startup Marketing", "Motivational Panel with Successful Entrepreneurs", "Mastering Sales Techniques and Strategies", "Hands-on Work Time in Teams", "Pitching Session #2: Refining Presentation Skills", "Roundtable Discussions"],
     days: wknd(["19 Mar", "20 Mar", "21 Mar"], [
       "How a product reaches its market: go-to-market strategy for your specific idea.",
       "Start-up marketing and sales, including the techniques founders use before they can afford a team.",
       "Focused work time in teams, then Pitching Session #2 and roundtable feedback."
-    ], "8:00 AM – 8:00 PM")
-  },
-  {
-    id: "w3", label: "Wednesday 31 Mar",
-    railTop: "Wednesday", railBottom: "Session", dateRange: "31 Mar 2027",
-    title: "Founder story & live Q&A",
-    topics: [],
-    days: [{ day: "Wednesday 31 Mar", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
-  },
-  {
-    id: "m5", label: "Module 5",
-    railTop: "Module", railBottom: "05", dateRange: "2 – 4 Apr 2027",
-    title: "Financial Mastery & Strategic Scaling",
-    topics: ["Entrepreneurial Finance", "Splitting Equity: The Legal Perspective", "Growth Strategies for Startups", "Motivational Panel with Entrepreneurs", "In-depth Work Time in Teams", "Pitching Session #3", "Roundtable Discussions"],
+    ]) },
+  { kind: "wed", short: "Wednesday sessions", kindLabel: "Wednesday sessions", title: "Two guest evenings between modules", dateRange: "31 Mar & 7 Apr 2027", hours: "7PM Wed",
+    body: ["Two more Wednesday evenings with guests from the ecosystem, each followed by an open Q&A with the cohort."],
+    days: [
+      { day: "Wednesday 31 Mar", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE },
+      { day: "Wednesday 7 Apr", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }
+    ] },
+  { kind: "module", short: "Module 5", kindLabel: "Module 5", title: "Financial Mastery & Strategic Scaling", dateRange: "2 – 4 Apr 2027", hours: "7PM Fri – 8PM Sun",
+    topics: ["Navigating Entrepreneurial Finance", "Teamwork & Collaboration", "Insights into Splitting Equity: The Legal Perspective", "Growth Strategies Tailored for Startups", "Motivational Panel with Successful Entrepreneurs", "In-depth Work Time in Teams", "Pitching Session #3: Showcasing Growth Plans", "Roundtable Discussions: Comprehensive Feedback on Pitches"],
     days: wknd(["2 Apr", "3 Apr", "4 Apr"], [
       "Entrepreneurial finance: the numbers a founder has to be able to defend.",
       "Splitting equity from the legal side, plus growth strategies built for early-stage teams.",
       "Pitching Session #3, the last full rehearsal before Demo Day, and detailed roundtable feedback."
-    ])
-  },
-  {
-    id: "w4", label: "Wednesday 7 Apr",
-    railTop: "Wednesday", railBottom: "Session", dateRange: "7 Apr 2027",
-    title: "Founder story & live Q&A",
-    topics: [],
-    days: [{ day: "Wednesday 7 Apr", time: "7:00 PM – 9:00 PM", purpose: WED_PURPOSE }]
-  },
-  {
-    id: "demo", label: "Demo Day",
-    railTop: "Demo", railBottom: "Day",     dateRange: "15 Apr 2027",
-    title: "Grand Final Pitch Event",
-    topics: ["Grand Final Pitch Event", "Hand-picked jury from the start-up ecosystem", "ABLE community, sponsors & partners in the room", "Announcement of the best-performing team"],
-    days: [{ day: "Wednesday 15 Apr", time: "7:00 PM – 11:00 PM", purpose: "Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team of the edition." }]
-  },
-  {
-    id: "m51", label: "Module 5.1",
-    railTop: "Module", railBottom: "05.1", dateRange: "16 Apr 2027",
-    title: "Reflection & certificate ceremony",
-    topics: ["Reflection and key takeaways from the Activator journey", "Official certificate ceremony", "Celebration with ABLE alumni"],
-    days: [{ day: "Friday 16 Apr", time: "5:00 PM – 9:00 PM", purpose: "A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni." }]
-  },
-  {
-    id: "m6", label: "Module 6",
-    railTop: "Module", railBottom: "06", dateRange: "Dates to be confirmed",
-    title: "Welcome to the community",
+    ]) },
+  { kind: "demo", short: "Demo Day", kindLabel: "Demo Day", title: "Grand Final Pitch Event", dateRange: "15 Apr 2027", hours: "7PM – 11PM Wed",
+    topics: ["Grand Final Pitch Event", "Hand-picked Jury from the Start-up Ecosystem", "Representatives of the ABLE Community, Sponsors & Partners", "Announcement of the Best-performing Team"],
+    body: ["Demo Day is the culmination of ABLE Activator. Teams deliver their final pitches in front of a specially selected jury of industry leaders and representatives of the Bulgarian start-up ecosystem with a proven track record.",
+      "Each team has 5 minutes to showcase their product or service, followed by a 5-minute Q&A with the jury. Each project's potential, progress and impact is measured, and the best-performing team of the edition is announced.",
+      "The day is a celebration of everything the teams accomplish: self-exploration, team formation and the hard work behind first milestones such as an MVP, first customers or revenue — the grit and determination to build something new with the right product-market fit."],
+    days: [{ day: "Wednesday 15 Apr", time: "7:00 PM – 11:00 PM", purpose: "Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team of the edition." }] },
+  { kind: "module", short: "Module 5.1 (Closing)", kindLabel: "Module 5.1 — Closing", title: "Reflection and certificate ceremony", dateRange: "16 Apr 2027", hours: "5PM – 9PM Fri",
+    topics: ["Reflection and key takeaways from the Activator journey", "Official certificate ceremony and celebration with ABLE alumni"],
+    days: [{ day: "Friday 16 Apr", time: "5:00 PM – 9:00 PM", purpose: "A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni." }] },
+  { kind: "module", short: "Module 6 (Retreat)", kindLabel: "Module 6 — Retreat", title: "Welcome to the Community", dateRange: "TBC", hours: "7PM Fri – 1PM Sun",
     topics: ["Team building activities", "Interactive sessions", "Celebrations and a warm welcome to ABLE"],
     days: [],
-    paras: ["A weekend retreat outside Sofia that welcomes the new cohort into the ABLE community. Dates are confirmed with the participants after Demo Day."]
-  }
+    paras: ["A weekend retreat outside Sofia that welcomes the new cohort into the ABLE community. Dates are confirmed with the participants after Demo Day."] }
 ];
 
+const scheduleOf = (d) => {
+  const days = d.days || [];
+  const paras = (d.paras || []).map(t => ({ text: t }));
+  return {
+    days,
+    paras,
+    hasSchedule: days.length > 0 || paras.length > 0,
+    scheduleLabel: days.length >= 2 ? "What each day is for" : days.length ? "The evening" : "Good to know"
+  };
+};
+
 class Component extends DCLogic {
-  constructor(props) {
-    super(props);
-    const expand = props.expandFirst ?? true;
-    this.state = { open: expand ? { m1: true } : {} };
+  state = {
+    active: 0,
+    shown: true,
+    open: 0,
+    wide: typeof window === "undefined" ? true : window.innerWidth >= 880
+  };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const w = window.innerWidth >= 880;
+      if (w !== this.state.wide) this.setState({ wide: w });
+    };
+    window.addEventListener("resize", this._onResize);
+    this._onResize();
   }
 
-  toggle(id) {
-    this.setState(s => ({ open: { ...s.open, [id]: !s.open[id] } }));
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._onResize);
+    clearTimeout(this._t);
+  }
+
+  select(i) {
+    if (i === this.state.active) return;
+    this.setState({ active: i, shown: false });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ shown: true }), 30);
   }
 
   renderVals() {
-    const open = this.state.open;
-    const showTopics = this.props.showTopics ?? true;
-    const allOpen = DATA.every(d => open[d.id]);
+    const accent = this.props.accentColor ?? "#29abe2";
+    const hideWed = this.props.hideWednesdays ?? false;
+    const list = DATA.filter(d => !(hideWed && d.kind === "wed"));
+    const active = Math.min(this.state.active, list.length - 1);
+    const cur = list[active] || list[0];
+    const stagger = this.props.staggerItems ?? true;
+    const num = i => String(i + 1).padStart(2, "0");
+
     return {
-      yearLabel: this.props.yearLabel ?? "ABLE Activator 2027",
-      toggleLabel: allOpen ? "Collapse all" : "Expand all",
-      toggleAll: () => {
-        const next = {};
-        if (!allOpen) DATA.forEach(d => { next[d.id] = true; });
-        this.setState({ open: next });
-      },
-      items: DATA.map((d, i) => {
-        const isOpen = !!open[d.id];
-        const isWeekend = d.days && d.days.length === 3;
+      isWide: this.state.wide,
+      isNarrow: !this.state.wide,
+      shown: this.state.shown,
+      rail: list.map((d, i) => ({
+        num: num(i),
+        short: d.short,
+        active: i === active,
+        numColor: i === active ? accent : "#6c7478",
+        titleColor: i === active ? "#ffffff" : "#8d979b",
+        line: i === active ? accent : "#2b2b2b",
+        arrow: i === active ? 1 : 0,
+        arrowShift: i === active ? "none" : "translateX(-8px)",
+        shift: i === active ? "translateX(2px)" : "none",
+        onSelect: () => this.select(i)
+      })),
+      acc: list.map((d, i) => {
+        const open = this.state.open === i;
+        const sched = scheduleOf(d);
         return {
-          ...d,
-          paras: d.paras || [],
-          meta: d.topics.length ? d.topics.length + " topics" : "Guest founder + open Q&A",
-          open: isOpen,
-          rowBg: i % 2 ? "#131313" : "#171717",
-          railLabel: (d.railTop + " " + d.railBottom).trim(),
-          icon: "+",
-          caret: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-          hasTopics: showTopics && d.topics.length > 0,
-          scheduleLabel: d.days.length ? (isWeekend ? "What each day is for" : "The evening") : "Good to know",
-          onToggle: () => this.toggle(d.id)
+          num: num(i),
+          short: d.short,
+          title: d.title,
+          dateRange: d.dateRange,
+          hours: d.hours,
+          open,
+          caret: open ? "rotate(45deg)" : "none",
+          numColor: open ? accent : "#6c7478",
+          titleColor: open ? "#ffffff" : "#c2cacd",
+          line: open ? accent : "#2b2b2b",
+          hasTopics: !!(d.topics && d.topics.length),
+          hasBody: !!(d.body && d.body.length),
+          topics: (d.topics || []).map(t => ({ text: t })),
+          body: (d.body || []).map(t => ({ text: t })),
+          ...sched,
+          onToggle: () => this.setState(s => ({ open: s.open === i ? -1 : i }))
         };
-      })
+      }),
+      cur: {
+        kindLabel: cur.kindLabel,
+        title: cur.title,
+        dateRange: cur.dateRange,
+        hours: cur.hours,
+        hasTopics: !!(cur.topics && cur.topics.length),
+        hasBody: !!(cur.body && cur.body.length),
+        topics: (cur.topics || []).map((t, i) => ({ text: t, delay: stagger ? (0.1 + i * 0.045).toFixed(3) + "s" : "0s" })),
+        body: (cur.body || []).map((t, i) => ({ text: t, delay: stagger ? (0.16 + i * 0.08).toFixed(3) + "s" : "0s" })),
+        ...scheduleOf(cur)
+      },
+      showPrev: active > 0,
+      showNext: active < list.length - 1,
+      onPrev: () => this.select(Math.max(0, active - 1)),
+      onNext: () => this.select(Math.min(list.length - 1, active + 1))
     };
   }
 }
