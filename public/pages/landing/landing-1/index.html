@@ -1158,12 +1158,19 @@ a:hover { color: var(--accent-soft); }
 /* --------------------------------------------------------------------------
    14b. Home hero
 
-   The program pages split the hero in two. The home page instead runs one
-   video across the whole band with the headline over it, so .hero--home
-   overrides the grid rather than defining a second hero from scratch.
+   The home hero splits one shared video into two panels — the 6-month
+   program and the 48-hour weekend. On pointer devices hovering a panel
+   tints it and lifts its CTA; on touch/mobile the panels stack and both
+   stay fully open. .hero--home overrides the base .hero grid rather than
+   defining a second hero from scratch.
    -------------------------------------------------------------------------- */
 
-.hero--home { background: #101112; }
+.hero--home {
+  background: #101112;
+  display: grid;
+  min-height: calc(100vh - 79px);
+  min-height: calc(100dvh - 79px);
+}
 .hero--home .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero--home .hero-bg video {
   width: 100%;
@@ -1176,28 +1183,105 @@ a:hover { color: var(--accent-soft); }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(10, 12, 13, .9) 0%, rgba(10, 12, 13, .6) 55%, rgba(10, 12, 13, .78) 100%),
-    linear-gradient(180deg, rgba(10, 12, 13, .72), rgba(10, 12, 13, .45) 45%, rgba(10, 12, 13, .8));
+    linear-gradient(90deg, rgba(10, 12, 13, .82) 0%, rgba(10, 12, 13, .5) 50%, rgba(10, 12, 13, .82) 100%),
+    linear-gradient(180deg, rgba(10, 12, 13, .5), rgba(10, 12, 13, .35) 40%, rgba(10, 12, 13, .88));
 }
+
+/* The split: two panels share one video, divided by a hairline. Hovering a
+   side tints it and lifts its call to action into view. */
 .hero--home .hero-grid {
   position: relative;
   z-index: 1;
-  grid-template-columns: minmax(0, 1fr);
+  max-width: none;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  height: 100%;
 }
-.hero--home .hero-copy { padding: clamp(56px, 10vw, 150px) clamp(20px, 3vw, 28px); }
-.hero--home .hero-copy h1 {
-  font-size: clamp(34px, 6.6vw, 74px);
-  line-height: 1.02;
+.hero-panel {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(32px, 4.4vw, 72px) clamp(22px, 3.4vw, 56px);
+  color: inherit;
+  isolation: isolate;
+  transition: background .34s ease;
+}
+.hero-panel + .hero-panel { border-left: 1px solid rgba(255, 255, 255, .16); }
+.hero-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: var(--panel-tint);
+  transition: opacity .34s ease;
+}
+.hero-panel--program { --panel-tint: linear-gradient(180deg, rgba(41, 171, 226, .05), rgba(41, 171, 226, .26)); --panel-accent: var(--accent); }
+.hero-panel--weekend { --panel-tint: linear-gradient(180deg, rgba(141, 198, 63, .05), rgba(141, 198, 63, .26)); --panel-accent: #8ec54a; }
+.hero-panel:hover::before,
+.hero-panel:focus-visible::before { opacity: 1; }
+
+.hero-panel-in { max-width: min(100%, 520px); }
+.hero-panel-kicker {
+  font-family: var(--font-mono, var(--font-display));
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--panel-accent);
+  margin-bottom: clamp(12px, 1.6vw, 18px);
+}
+.hero-panel-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 44px);
+  line-height: 1.06;
   letter-spacing: .005em;
   text-transform: uppercase;
-  max-width: 15ch;
+  font-weight: 300;
+  color: #9aa3a7;
 }
-/* The headline reads as three stacked lines: dim, bright, dim. */
-.hero--home .hero-copy h1 span { display: block; color: #9aa3a7; font-weight: 500; }
-.hero--home .hero-copy h1 span.is-lead { color: var(--text-bright); font-weight: 800; }
-.hero--home .hero-ctas { margin-top: clamp(26px, 3.4vw, 40px); }
-/* The outlined blue button. Used in the hero and in every scene band, so
-   it is not scoped to .hero--home. */
+.hero-panel-title span { display: block; }
+.hero-panel-title .is-lead { color: var(--text-bright); font-weight: 800; }
+.hero-panel--weekend .hero-panel-title {
+  font-weight: 800;
+  color: var(--text-bright);
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.18;
+  max-width: 14ch;
+  text-wrap: balance;
+}
+.hero-panel-cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: clamp(20px, 2.4vw, 30px);
+  border: 1px solid var(--panel-accent);
+  color: var(--panel-accent);
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 14px 28px;
+  transition: background .2s ease, color .2s ease, opacity .34s ease, transform .34s ease;
+}
+
+/* Pointer devices only: the CTA rests hidden and rises on hover. Anything
+   without hover (touch) keeps both calls to action permanently visible. */
+@media (hover: hover) and (pointer: fine) and (min-width: 861px) {
+  .hero-panel-cta { opacity: 0; transform: translateY(12px); }
+  .hero-panel:hover .hero-panel-cta,
+  .hero-panel:focus-visible .hero-panel-cta { opacity: 1; transform: none; }
+}
+.hero-panel:hover .hero-panel-cta {
+  background: var(--panel-accent);
+  color: var(--accent-ink);
+}
+
+/* The outlined blue button. Used in every scene band, so it is not scoped
+   to .hero--home. */
 .btn-hero {
   background: transparent;
   border: 1px solid var(--accent);
@@ -1212,21 +1296,36 @@ a:hover { color: var(--accent-soft); }
 }
 .btn-hero:hover { background: var(--accent); color: var(--accent-ink); }
 
-@media (min-width: 861px) {
-  .hero--home { min-height: calc(100vh - 79px); }
-}
 @media (max-width: 860px) {
-  /* The base .hero-copy mobile rule already centres; the home hero only
-     needs its own type scale and a hero-height floor so the headline is
-     not stranded at the top of a tall video. */
-  .hero--home { min-height: 78vh; display: grid; align-items: center; }
-  .hero--home .hero-copy h1 {
-    font-size: clamp(28px, 8vw, 40px);
-    line-height: 1.08;
-    max-width: none;
-    margin-inline: auto;
+  /* Same idea stacked: two full-bleed panels, both open, no accordion. */
+  .hero--home {
+    min-height: calc(100vh - 67px);
+    min-height: calc(100dvh - 67px);
   }
-  .hero--home .hero-ctas { max-width: 260px; margin-inline: auto; }
+  .hero--home .hero-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .hero-panel {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(26px, 6vw, 40px) 20px;
+  }
+  .hero-panel + .hero-panel { border-left: none; border-top: 1px solid rgba(255, 255, 255, .16); }
+  .hero-panel::before { opacity: 1; }
+  .hero-panel-in { max-width: none; margin-inline: auto; }
+  .hero-panel--weekend .hero-panel-title { max-width: none; }
+  .hero-panel-kicker { font-size: 10.5px; letter-spacing: .14em; }
+  .hero-panel-title { font-size: clamp(23px, 6.4vw, 34px); }
+  .hero-panel--weekend .hero-panel-title { font-size: clamp(19px, 5.4vw, 28px); }
+  .hero-panel-cta { margin-top: 18px; padding: 13px 22px; min-height: 44px; font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+  .hero-panel { padding: 22px 16px; }
+  .hero-panel-title { font-size: clamp(21px, 6.2vw, 28px); }
+  .hero-panel--weekend .hero-panel-title { font-size: clamp(17px, 5.2vw, 23px); }
 }
 
 /* --------------------------------------------------------------------------
@@ -1297,17 +1396,19 @@ a:hover { color: var(--accent-soft); }
 }
 .link-more:hover { color: var(--accent); }
 .link-more::after {
-  content: "\2192";
-  display: grid;
-  place-items: center;
+  /* An inline SVG arrow rather than the arrow glyph: the glyph's weight and
+     optical centring drift with whatever font resolves it, which reads as a
+     lopsided badge. Drawn on a 24px grid with round caps so it stays crisp. */
+  content: "";
   flex: none;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: 12px;
-  line-height: 1;
+  background-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310222b' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 12h12'/%3E%3Cpath d='m12.5 7 5 5-5 5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 17px 17px;
   transition: transform .2s ease;
 }
 .link-more:hover::after { transform: translateX(3px); }
@@ -1814,16 +1915,24 @@ a:hover { color: var(--accent-soft); }
     </video>
   </div>
   <div class="hero-grid">
-    <div class="hero-copy">
-      <h1>
-        <span>The ultimate</span>
-        <span class="is-lead">Entrepreneurship</span>
-        <span>Program</span>
-      </h1>
-      <div class="hero-ctas">
-        <a class="btn btn-hero" href="https://activator.bg/program/">Learn more</a>
+    <a class="hero-panel hero-panel--program" href="https://activator.bg/program/">
+      <div class="hero-panel-in">
+        <div class="hero-panel-kicker">6-month program</div>
+        <h1 class="hero-panel-title">
+          <span>The ultimate</span>
+          <span class="is-lead">Entrepreneurship</span>
+          <span>Program</span>
+        </h1>
+        <span class="hero-panel-cta">Learn more</span>
       </div>
-    </div>
+    </a>
+    <a class="hero-panel hero-panel--weekend" href="https://activator.bg/able-weekend-activator-overviewold/">
+      <div class="hero-panel-in">
+        <div class="hero-panel-kicker">48-hour weekend</div>
+        <h2 class="hero-panel-title">От идея до реален проект за 48 часа</h2>
+        <span class="hero-panel-cta">Научи повече</span>
+      </div>
+    </a>
   </div>
 </section>
 
