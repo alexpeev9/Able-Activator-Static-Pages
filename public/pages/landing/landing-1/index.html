@@ -1165,11 +1165,16 @@ a:hover { color: var(--accent-soft); }
    defining a second hero from scratch.
    -------------------------------------------------------------------------- */
 
+/* --hero-vh is written once by the script (see "3. Hero height lock") and
+   only re-measured on a real viewport change, so iOS hiding or showing its
+   toolbars mid-scroll cannot resize the hero. The dvh value is the fallback
+   before the script runs and for scripting-off. */
 .hero--home {
   background: #101112;
   display: grid;
   min-height: calc(100vh - 79px);
   min-height: calc(100dvh - 79px);
+  min-height: calc(var(--hero-vh, 100dvh) - 79px);
 }
 .hero--home .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero--home .hero-bg video {
@@ -1301,6 +1306,7 @@ a:hover { color: var(--accent-soft); }
   .hero--home {
     min-height: calc(100vh - 67px);
     min-height: calc(100dvh - 67px);
+    min-height: calc(var(--hero-vh, 100dvh) - 67px);
   }
   .hero--home .hero-grid {
     grid-template-columns: 1fr;
@@ -1630,13 +1636,26 @@ a:hover { color: var(--accent-soft); }
   gap: clamp(10px, 2vw, 26px);
   margin-top: clamp(24px, 3.4vw, 38px);
 }
-.tst-slides { display: grid; place-items: start center; }
+/* touch-action keeps vertical page scrolling native while the script reads
+   horizontal swipes; see "4. Testimonial swipe". */
+.tst-slides { display: grid; place-items: start center; touch-action: pan-y; }
 .tst-slide { display: none; text-align: center; max-width: 62ch; }
-.tst-slide.is-shown { display: block; animation: rowIn .4s cubic-bezier(.2, .7, .3, 1) both; }
+/* The figure keeps its natural source order - quote, then figcaption, which
+   is what a <figure> has to be - and the speaker is lifted above the quote
+   with order instead, so the attribution is read first on screen. */
+.tst-slide.is-shown {
+  display: flex;
+  flex-direction: column;
+  animation: rowIn .4s cubic-bezier(.2, .7, .3, 1) both;
+}
+.tst-slide .tst-who { order: -1; }
 
-/* The quote area is a fixed box, sized to the longest quote, with the text
-   centred inside it. Without this the name and the dots jump every time the
-   slide changes, because the quotes differ by several lines. */
+/* On desktop the quote area is a fixed box, sized to the longest quote, with
+   the text centred inside it. Without this the dots jump every time the
+   slide changes, because the quotes differ by several lines. Below 861px the
+   box is dropped entirely - see the mobile block at the end of section 17 -
+   because at that width the tallest quote is so much taller than the typical
+   one that the reserved space reads as a hole. */
 .tst-quote {
   margin: 0;
   height: var(--tst-quote-h);
@@ -1650,7 +1669,8 @@ a:hover { color: var(--accent-soft); }
 }
 .tst-quote::before { content: "\201C"; color: var(--accent); }
 .tst-quote::after { content: "\201D"; color: var(--accent); }
-.tst-who { margin-top: clamp(18px, 2.4vw, 26px); }
+/* The speaker now leads the slide, so its breathing room goes underneath. */
+.tst-who { margin-bottom: clamp(18px, 2.4vw, 26px); }
 .tst-avatar {
   display: block;
   width: 64px;
@@ -1710,15 +1730,22 @@ a:hover { color: var(--accent-soft); }
 .tst-foot { margin-top: clamp(18px, 2.4vw, 26px); text-align: center; }
 .tst-foot .link-more { margin-top: 0; }
 
-@media (max-width: 860px) { :root { --tst-quote-h: 264px; } }  /* tallest is 248px at 621px */
-
 @media (max-width: 620px) {
   .tst-stage { grid-template-columns: minmax(0, 1fr); }
   .tst-arrow { display: none; }
 }
 
-@media (max-width: 480px) { :root { --tst-quote-h: 312px; } }   /* tallest is 297px at 401px */
-@media (max-width: 400px) { :root { --tst-quote-h: 440px; } }   /* tallest is 421px at 320px */
+/* Mobile: no reserved box. The quotes range from three lines to a dozen at
+   this width, so a height sized to the longest one leaves most slides
+   floating in the middle of a large gap. Each quote is its own height and
+   starts at the top instead; the dots move with it, which is the trade the
+   fixed box was avoiding. --tst-quote-h is desktop-only for this reason. */
+@media (max-width: 860px) {
+  .tst-quote {
+    height: auto;
+    align-content: start;
+  }
+}
 
 /* --------------------------------------------------------------------------
    18. Project wordmarks
@@ -1817,8 +1844,16 @@ a:hover { color: var(--accent-soft); }
 
   /* Mentors & Speakers: one column, centred, with the bullet list kept as a
      left-aligned block so its markers still line up under each other. */
-  .duo { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  /* Stacked, the two columns need a lot more air than the side-by-side gap:
+     without it "The Speakers" reads as a continuation of the mentors list.
+     A hairline above the second column makes the break explicit. */
+  .duo { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .duo-col { text-align: center; }
+  .duo-col + .duo-col {
+    margin-top: 52px;
+    padding-top: 52px;
+    border-top: 1px solid var(--line);
+  }
   .bullets {
     width: fit-content;
     max-width: 100%;
@@ -2465,7 +2500,76 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("tst-next").addEventListener("click", function () { show(current + 1); });
 
     show(0);
+
+    /* ----------------------------------------------------------------------
+       4. Testimonial swipe (touch)
+
+       The arrows are hidden below 620px, so touch users navigate by swiping
+       the quote. A gesture only counts when it is clearly horizontal and
+       long enough; anything steeper is left alone so the page still scrolls.
+       show() takes the index modulo the slide count, so swiping right on the
+       first quote lands on the last one and vice versa.
+       -------------------------------------------------------------------- */
+
+    var SWIPE_MIN = 45;     /* px of horizontal travel before it counts */
+    var SWIPE_SLOPE = 1.2;  /* how much more horizontal than vertical it must be */
+    var sx = 0, sy = 0, tracking = false;
+
+    slidesRoot.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) { tracking = false; return; }
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+      tracking = true;
+    }, { passive: true });
+
+    slidesRoot.addEventListener("touchend", function (e) {
+      if (!tracking) return;
+      tracking = false;
+
+      var touch = e.changedTouches[0];
+      var dx = touch.clientX - sx;
+      var dy = touch.clientY - sy;
+
+      if (Math.abs(dx) < SWIPE_MIN) return;
+      if (Math.abs(dx) < Math.abs(dy) * SWIPE_SLOPE) return;
+
+      show(dx < 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    slidesRoot.addEventListener("touchcancel", function () { tracking = false; }, { passive: true });
   }
+
+  /* ------------------------------------------------------------------------
+     3. Hero height lock
+
+     The home hero is one viewport tall. On iOS the visual viewport grows and
+     shrinks as Safari's toolbars collapse during a scroll, and with a plain
+     vh/dvh height the hero resizes underneath the reader. So the height is
+     measured once into --hero-vh and only re-measured when the viewport
+     really changes: a width change or an orientation change. Pure height
+     changes - which is all a toolbar collapse is - are ignored.
+     ---------------------------------------------------------------------- */
+
+  (function () {
+    var root = document.documentElement;
+    var lastWidth = null;
+
+    function lock() {
+      root.style.setProperty("--hero-vh", window.innerHeight + "px");
+      lastWidth = window.innerWidth;
+    }
+
+    lock();
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth !== lastWidth) lock();
+    });
+
+    window.addEventListener("orientationchange", function () {
+      /* iOS reports the old dimensions during the event itself. */
+      setTimeout(lock, 250);
+    });
+  })();
 })();
 
 });
