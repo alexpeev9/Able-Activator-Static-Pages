@@ -1,4 +1,4 @@
-import { landingCatalog } from './landings/catalog.ts'
+import  landingCatalog from './landings.json'
 
 export function Landings() {
   return (
