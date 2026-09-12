@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABLE Activator — The ultimate entrepreneurship program</title>
+<meta name="description" content="Our mission is to promote entrepreneurship and leadership in Bulgaria by empowering ambitious self-starters to bring meaningful ideas to life. An exclusive 6-weekend program for 30 ambitious young professionals.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&amp;family=Barlow:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ABLE Activator - landing-3
+   Plain CSS. No build step, no framework.
+
+   Sections, in order:
+     1. Tokens & base
+     2. Layout primitives (slab, container, headings, cards, buttons)
+     3. Site header
+     4. Page background (fixed video)
+     5. Hero
+     6. Modules (rail on desktop, accordion on mobile)
+     7. FAQ
+     8. Closing CTA band
+     9. Quiz
+    10. Footer
+    11. Reduced motion
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens & base
+   -------------------------------------------------------------------------- */
+
+:root {
+  --accent: #29abe2;
+  --accent-soft: #7ad2f2;
+  --accent-ink: #10222b;
+
+  --bg: #1c1c1c;
+  --bg-slab: #1f1f1f;
+  --bg-hero: #131313;
+  --bg-card: #1c1c1c;
+  --bg-footer: #1a1a1a;
+
+  --line: #2b2b2b;
+  --line-soft: #262626;
+  --line-strong: #3a3f42;
+
+  --text: #e9edef;
+  --text-bright: #ffffff;
+  --text-muted: #a8b1b5;
+  --text-dim: #8d979b;
+  --text-faint: #767f83;
+
+  --font-body: Barlow, Helvetica, sans-serif;
+  --font-display: Poppins, Helvetica, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --container: 1180px;
+  --slab-pad-y: clamp(36px, 5.4vw, 78px);
+  --slab-pad-x: clamp(16px, 4vw, 40px);
+}
+
+* { box-sizing: border-box; }
+
+html, body { overflow-x: clip; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-soft); }
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+[id] { scroll-margin-top: 94px; }
+@media (max-width: 860px) { [id] { scroll-margin-top: 80px; } }
+
+/* --------------------------------------------------------------------------
+   2. Layout primitives
+   -------------------------------------------------------------------------- */
+
+/* A full-bleed horizontal band. Sits above the fixed video background. */
+.slab {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-slab);
+  border-top: 1px solid var(--line-soft);
+}
+
+/* A band that lets the fixed video background show through. */
+.scene {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--slab-pad-y) var(--slab-pad-x);
+}
+
+/* Small blue monospace label above a heading. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.sec-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(25px, 4vw, 40px);
+  line-height: 1.08;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+
+.sec-title + .card-grid,
+.sec-title + .faq-list { margin-top: clamp(22px, 3vw, 34px); }
+
+.sec-subtitle {
+  margin: 0 0 clamp(18px, 2.4vw, 26px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+
+.sec-lede {
+  margin: 14px 0 clamp(22px, 3vw, 32px);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.sec-lede--last { margin-bottom: 0; max-width: 62ch; }
+
+/* Hairline card grid: the 1px gap over a grey backdrop draws the rules. */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.card-grid--auto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card-grid--spaced { margin-bottom: clamp(28px, 4vw, 44px); }
+
+@media (max-width: 820px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .card-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.card {
+  background: var(--bg-card);
+  padding: clamp(20px, 2.6vw, 28px);
+  min-width: 0;
+}
+.card-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17.5px;
+  line-height: 1.3;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+.card-title--lg {
+  font-size: clamp(18px, 2.2vw, 23px);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.card-body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  text-wrap: pretty;
+}
+
+/* Buttons and button-styled links. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 16px 28px;
+  min-height: 48px;
+  border: 0;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+.btn-primary { background: var(--accent); color: #0f1c22; }
+.btn-primary:hover { background: #bfe9f8; color: #0f1c22; }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #33393c;
+  color: #eceff0;
+  font-weight: 600;
+  padding: 16px 26px;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* --------------------------------------------------------------------------
+   3. Site header
+   -------------------------------------------------------------------------- */
+
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(28, 28, 28, .9);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+}
+.hdr-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 clamp(14px, 3vw, 32px);
+  height: 78px;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 32px);
+}
+.brand {
+  flex: none;
+  display: flex;
+  align-items: center;
+  opacity: .96;
+  transition: opacity .18s ease;
+}
+.brand:hover { opacity: 1; }
+.brand svg { display: block; height: 40px; width: auto; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+.nav a {
+  position: relative;
+  color: #b6bec2;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 13px;
+  border-radius: 9px;
+  transition: color .18s ease, background .18s ease;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: 5px;
+  height: 1.5px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .22s cubic-bezier(.4, 0, .2, 1);
+}
+.nav a:hover { color: var(--text-bright); }
+.nav a:hover::after { transform: scaleX(1); }
+
+.hdr-cta {
+  flex: none;
+  background: var(--accent);
+  color: #12242c;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+  border-radius: 999px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.hdr-cta:hover {
+  background: var(--accent-soft);
+  color: #0f1e24;
+  box-shadow: 0 6px 22px rgba(41, 171, 226, .3);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 860px) {
+  .nav { display: none; }
+  .hdr-in { height: 66px; justify-content: space-between; }
+  .brand svg { height: 34px; }
+  .hdr-cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Page background
+   -------------------------------------------------------------------------- */
+
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: #111314;
+}
+.page-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.36) saturate(.7) contrast(1.08);
+}
+.page-bg-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 10, 12, .74) 0%, rgba(8, 10, 12, .68) 42%, rgba(8, 10, 12, .84) 100%),
+    linear-gradient(90deg, rgba(8, 10, 12, .4), transparent 38%, rgba(8, 10, 12, .4));
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--bg-hero);
+  border-bottom: 1px solid var(--line-soft);
+}
+.hero-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(36px, 6vw, 84px) clamp(20px, 3vw, 28px);
+}
+.hero-copy h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(40px, 8vw, 78px);
+  line-height: .94;
+  letter-spacing: -.02em;
+  color: var(--text-bright);
+  text-wrap: pretty;
+}
+.hero-copy h1 em { font-style: normal; color: var(--accent); }
+.hero-copy p {
+  margin: 20px 0 0;
+  font-size: clamp(16px, 2vw, 18.5px);
+  line-height: 1.6;
+  color: #a9b1b4;
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+.hero-kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(16px, 3vw, 32px);
+}
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+.hero-media {
+  position: relative;
+  min-height: clamp(300px, 52vw, 560px);
+  background: #171717;
+  border-left: 1px solid var(--line-soft);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.hero-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(19, 19, 19, .86), rgba(19, 19, 19, .45) 55%, rgba(41, 171, 226, .16));
+}
+.hero-badge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 16px 20px;
+  text-align: center;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(19, 19, 19, .88));
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(20px, 3.4vw, 36px);
+  line-height: 1.1;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+}
+
+@media (min-width: 861px) {
+  .hero { min-height: calc(100vh - 79px); display: grid; align-items: stretch; }
+  .hero-grid { height: 100%; }
+}
+
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-copy { text-align: center; align-items: center; padding: 28px 20px 22px; }
+  .hero-kicker { font-size: 11px; letter-spacing: .12em; margin-bottom: 14px; white-space: nowrap; }
+  .hero-copy h1 { font-size: clamp(28px, 7.6vw, 38px); line-height: 1.12; }
+  .hero-copy p { margin-left: auto; margin-right: auto; padding: 0 4px; }
+  .hero-ctas { width: 100%; max-width: 360px; flex-direction: column; align-items: stretch; gap: 12px; }
+  .hero-ctas .btn { width: 100%; }
+  .hero-media { min-height: 260px; border-left: none; border-top: 1px solid var(--line-soft); }
+  .hero-scrim { background: linear-gradient(180deg, rgba(19, 19, 19, .2), rgba(19, 19, 19, .15) 40%, rgba(19, 19, 19, .82)); }
+  .hero-badge { padding: 28px 16px 18px; }
+}
+
+@media (max-width: 480px) {
+  .hero-copy { padding: 20px 16px 16px; }
+  .hero-kicker { font-size: 10px; letter-spacing: .1em; }
+  .hero-copy h1 { font-size: clamp(24px, 7.4vw, 30px); }
+  .hero-ctas { margin-top: 18px; gap: 10px; }
+  .hero-ctas .btn { padding: 13px 18px; min-height: 44px; }
+  .hero-media { min-height: 220px; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Modules
+
+   One list of items in the markup, two layouts:
+     >= 880px  grid - headings form a left rail, panels overlap in the right
+               column and only the selected one is shown.
+     <  880px  block flow - each panel sits under its own heading (accordion).
+   -------------------------------------------------------------------------- */
+
+#modules { scroll-margin-top: 110px; }
+
+.mods-intro { margin-bottom: clamp(22px, 3.4vw, 36px); }
+.mods-intro .sec-lede {
+  margin: 16px 0 0;
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.mod-item { display: contents; }
+
+.mod-head {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 22px;
+  align-items: baseline;
+  column-gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: clamp(14px, 1.7vw, 20px) 2px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: inherit;
+  min-height: 52px;
+  transition: border-color .3s ease;
+}
+.mod-head:hover { border-color: #4a5054; }
+
+.mod-head-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: #6c7478;
+  transition: color .3s ease;
+}
+.mod-head-title {
+  min-width: 0;
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(14px, 1.7vw, 17px);
+  line-height: 1.3;
+  color: var(--text-dim);
+  transition: color .3s ease, transform .3s ease;
+  text-wrap: pretty;
+}
+.mod-head-dates {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 7px;
+}
+/* Arrow on desktop, plus sign on mobile - see the two blocks at the end of
+   this section. The span in the markup is intentionally empty. */
+.mod-head-mark {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.mod-panel { display: none; }
+.mod-panel-head { animation: panelHeadIn .5s cubic-bezier(.2, .7, .3, 1) both; }
+.mod-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.mod-meta-kind { color: var(--accent); }
+.mod-meta-sep { color: #3d4245; }
+.mod-panel-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 3.6vw, 40px);
+  line-height: 1.12;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+
+.mod-block { margin-top: clamp(24px, 3vw, 34px); }
+.mod-block-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.mod-block-label--tight { margin-bottom: 4px; }
+
+.mod-topics {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 11px 30px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.mod-topics li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: clamp(14.5px, 1.7vw, 16.5px);
+  line-height: 1.5;
+  color: #cfd6d9;
+  animation: rowIn .45s cubic-bezier(.2, .7, .3, 1) both;
+}
+.mod-topics li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: .55em;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.mod-topics li span { min-width: 0; text-wrap: pretty; }
+
+.mod-body {
+  margin-top: clamp(22px, 2.6vw, 30px);
+  display: grid;
+  gap: 14px;
+  max-width: 72ch;
+}
+.mod-body p {
+  margin: 0;
+  font-size: clamp(14.5px, 1.7vw, 16.5px);
+  line-height: 1.66;
+  color: var(--text-muted);
+  text-wrap: pretty;
+  animation: rowIn .5s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+.mod-day {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  column-gap: 28px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid #2f2f2f;
+}
+@media (max-width: 760px) { .mod-day { grid-template-columns: 1fr; row-gap: 6px; } }
+.mod-day-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-bright);
+}
+.mod-day-time { font-size: 13px; color: var(--accent); margin-top: 4px; font-weight: 600; }
+.mod-day-purpose { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-muted); text-wrap: pretty; }
+
+.mod-note {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: #b6bec2;
+  max-width: 70ch;
+  text-wrap: pretty;
+}
+
+.mod-nav {
+  flex: none;
+  margin-top: auto;
+  padding-top: clamp(24px, 3vw, 34px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.mod-nav button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 13px 20px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.mod-prev { background: transparent; border: 1px solid var(--line-strong); color: var(--text); }
+.mod-prev:hover { border-color: var(--accent); color: var(--accent); }
+.mod-next { background: var(--accent); border: 1px solid var(--accent); color: #0f2833; }
+.mod-next:hover { background: var(--accent-soft); border-color: var(--accent-soft); }
+.mod-nav button[hidden] { display: none; }
+
+/* -- Desktop: rail + panel ------------------------------------------------- */
+@media (min-width: 880px) {
+  .mods {
+    display: grid;
+    grid-template-columns: minmax(210px, 330px) minmax(0, 3fr);
+    column-gap: clamp(24px, 4vw, 68px);
+    align-items: start;
+    align-content: start;
+
+    /* The panel below spans "1 / -1", and -1 counts against the EXPLICIT grid.
+       Without these rows it would resolve to row 1 only, and the rail headings
+       would be pushed apart by the panel's height. The headings fill the first
+       rows, unused ones collapse to 0, and the final row absorbs a panel that
+       is taller than the rail. Raise 40 if there are ever more modules. */
+    grid-template-rows: repeat(40, min-content) auto;
+  }
+  .mod-head { grid-column: 1; }
+  .mod-head-mark::before { content: "\2192"; } /* → */
+  .mod-panel {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    min-width: 0;
+    min-height: 560px;
+    flex-direction: column;
+  }
+  .mod-item.is-active .mod-head-num { color: var(--accent); }
+  .mod-item.is-active .mod-head-title { color: var(--text-bright); transform: translateX(2px); }
+  .mod-item.is-active .mod-head { border-bottom-color: var(--accent); }
+  .mod-item.is-active .mod-head-mark { opacity: 1; transform: none; }
+  .mod-item.is-active .mod-panel {
+    display: flex;
+    animation: panelIn .42s cubic-bezier(.2, .7, .3, 1) both;
+  }
+}
+
+/* -- Mobile: accordion ----------------------------------------------------- */
+@media (max-width: 879px) {
+  .mod-head { align-items: start; grid-template-columns: 26px minmax(0, 1fr) 24px; padding: 18px 2px; min-height: 56px; }
+  .mod-head-num { line-height: 1.5; }
+  .mod-head-title { font-size: 16.5px; }
+  .mod-head-dates { display: block; }
+  .mod-head-mark { opacity: 1; transform: none; font-size: 16px; line-height: 1.3; transition: transform .3s ease; }
+  .mod-head-mark::before { content: "+"; }
+  .mod-panel { padding: 0 2px 26px; }
+  .mod-panel-title { font-size: 20px; line-height: 1.2; margin-bottom: 4px; }
+  .mod-topics { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .mod-nav { display: none; }
+
+  .mod-item.is-open .mod-head-num { color: var(--accent); }
+  .mod-item.is-open .mod-head-title { color: var(--text-bright); }
+  .mod-item.is-open .mod-head { border-bottom-color: var(--accent); }
+  .mod-item.is-open .mod-head-mark { transform: rotate(45deg); }
+  .mod-item.is-open .mod-panel {
+    display: block;
+    animation: panelIn .36s cubic-bezier(.2, .7, .3, 1) both;
+  }
+}
+
+@keyframes panelIn     { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes panelHeadIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes rowIn       { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* --------------------------------------------------------------------------
+   7. FAQ
+   -------------------------------------------------------------------------- */
+
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:nth-child(odd) { background: rgba(255, 255, 255, .016); }
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  justify-content: space-between;
+  padding: clamp(15px, 2vw, 19px) clamp(10px, 2vw, 16px);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  color: inherit;
+  min-height: 58px;
+}
+.faq-q-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(15.5px, 1.8vw, 17px);
+  line-height: 1.4;
+  color: var(--text);
+  text-wrap: pretty;
+}
+.faq-icon {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 19px;
+  line-height: 1;
+}
+.faq-icon::before { content: "+"; }
+.faq-q[aria-expanded="true"] .faq-icon { font-size: 13px; }
+.faq-q[aria-expanded="true"] .faq-icon::before { content: "\2715"; }
+
+.faq-a {
+  margin: 0;
+  padding: 0 clamp(10px, 2vw, 16px) clamp(18px, 2.2vw, 24px);
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 66ch;
+  text-wrap: pretty;
+}
+.faq-a[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   8. Closing CTA band
+   -------------------------------------------------------------------------- */
+
+.cta-band {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 88px) var(--slab-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 36px;
+  align-items: center;
+  justify-content: space-between;
+}
+.cta-band h2 {
+  margin: 0;
+  flex: 1 1 340px;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(27px, 5vw, 52px);
+  line-height: 1.02;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+.cta-band h2 em { font-style: normal; color: var(--accent); }
+.cta-band .btn {
+  flex: none;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 20px 40px;
+  min-height: 58px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Quiz
+   -------------------------------------------------------------------------- */
+
+.quiz-scene { overflow: hidden; border-top: 1px solid var(--line-soft); }
+.quiz-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: #111314;
+  overflow: hidden;
+}
+.quiz-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.42) saturate(.75) contrast(1.06);
+}
+.quiz-in { position: relative; z-index: 1; }
+
+.quiz-head { max-width: 640px; margin: 0 auto; text-align: center; }
+.quiz-head p { margin: 14px 0 0; font-size: 16px; line-height: 1.55; color: #c5ced1; text-wrap: pretty; }
+
+.quiz-card {
+  max-width: 640px;
+  margin: clamp(26px, 3.4vw, 40px) auto 0;
+  border: 1px solid #2f3437;
+  background: rgba(18, 20, 22, .86);
+  transition: border-color .25s ease;
+}
+.quiz-card.is-done { border-color: var(--accent); }
+.quiz-card::before { content: ""; display: block; height: 3px; background: var(--accent); }
+
+.quiz-body { padding: clamp(24px, 3.6vw, 40px) clamp(20px, 3.2vw, 38px); }
+
+.quiz-progress {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #767f83;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.quiz-pips { display: flex; gap: 4px; margin-bottom: clamp(22px, 3vw, 30px); }
+.quiz-pip { flex: 1 1 0; height: 2px; background: #2f3437; transition: background .25s ease; }
+.quiz-pip.is-past { background: var(--accent); }
+.quiz-pip.is-current { background: #5f686c; }
+
+.quiz-stage {
+  min-height: clamp(351px, 52vw, 396px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.quiz-stage > [hidden] { display: none; }
+
+.quiz-question {
+  margin: 0 0 clamp(20px, 2.6vw, 26px);
+  min-height: 2.52em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(21px, 2.8vw, 28px);
+  line-height: 1.26;
+  color: var(--text-bright);
+  text-align: center;
+  text-wrap: balance;
+}
+.quiz-options { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+.quiz-opt {
+  display: block;
+  width: 100%;
+  min-height: 56px;
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.4;
+  padding: 16px 20px;
+  cursor: pointer;
+  text-align: center;
+  background: transparent;
+  color: #c3cacd;
+  border: 1px solid var(--line-strong);
+  transition: all .16s ease;
+}
+.quiz-opt:hover { border-color: var(--accent); color: var(--text-bright); }
+.quiz-opt.is-picked { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+.quiz-back {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #2f2f2f;
+  text-align: center;
+}
+.quiz-back[hidden] { display: none; }
+.quiz-back button {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--line-strong);
+  padding: 13px 24px;
+  min-height: 46px;
+  cursor: pointer;
+}
+.quiz-back button:hover { border-color: var(--accent); color: var(--accent); }
+
+.quiz-result { text-align: center; }
+.quiz-result-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.quiz-result h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(27px, 3.8vw, 40px);
+  line-height: 1.06;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+.quiz-result p {
+  margin: 16px auto 0;
+  max-width: 46ch;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+.quiz-result-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+  justify-content: center;
+}
+.quiz-result-ctas .btn {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  min-height: 48px;
+}
+.quiz-result-ctas .btn-quiet {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--line-strong);
+}
+.quiz-result-ctas .btn-quiet:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   10. Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line-soft);
+  background: var(--bg-footer);
+}
+.site-footer-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 24px var(--slab-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #5f686c;
+}
+
+/* --------------------------------------------------------------------------
+   11. Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; }
+  .nav a::after, .hdr-cta, .mod-head, .quiz-opt { transition: none; }
+  .page-bg video, .quiz-bg video, .hero-media video { display: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   12. Landing-only tokens
+
+   The wordmark carries a second, green accent. The program pages never use
+   it; on the home page it marks the section titles and the words the copy
+   emphasises, so it gets a token here rather than in the shared block.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --accent-2: #8ec54a;
+  --accent-2-soft: #a9d972;
+  --weekend-yellow: #f2e14b;
+
+  /* Height of the testimonial quote box - see section 17. Each value is the
+     tallest quote measured at the narrow end of that breakpoint, plus a
+     little headroom. Re-measure if the quotes are edited. */
+  --tst-quote-h: 232px;
+}
+
+/* --------------------------------------------------------------------------
+   13. Scene band (full-bleed video band with centred copy)
+
+   Used three times: the Weekend Activator promo, the graduated-projects
+   band and the supporter band. Each owns its own video, so .scene-band
+   covers the fixed page wallpaper instead of letting it through.
+   -------------------------------------------------------------------------- */
+
+.scene-band {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  background: #111314;
+}
+.scene-band-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.scene-band-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.4) saturate(.72) contrast(1.08);
+}
+.scene-band-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 11, 13, .72), rgba(9, 11, 13, .5) 45%, rgba(9, 11, 13, .8));
+}
+.scene-band-in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(52px, 9vw, 130px) var(--slab-pad-x);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 2.6vw, 28px);
+}
+.scene-band-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: clamp(23px, 4.2vw, 44px);
+  line-height: 1.14;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+  max-width: 22ch;
+}
+.scene-band-title em { font-style: italic; color: var(--accent-2); }
+.scene-band-rule { width: 46px; height: 2px; background: var(--accent); opacity: .85; }
+
+/* The Weekend Activator lock-up: the wordmark plus its yellow "Weekend" tag. */
+.weekend-mark {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.weekend-mark svg { height: clamp(34px, 4.4vw, 48px); width: auto; display: block; }
+.weekend-tag {
+  background: var(--weekend-yellow);
+  color: #18202a;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: .02em;
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   14b. Home hero
+
+   The program pages split the hero in two. The home page instead runs one
+   video across the whole band with the headline over it, so .hero--home
+   overrides the grid rather than defining a second hero from scratch.
+   -------------------------------------------------------------------------- */
+
+.hero--home { background: #101112; }
+.hero--home .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.hero--home .hero-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.34) saturate(.7) contrast(1.1);
+}
+.hero--home .hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 12, 13, .9) 0%, rgba(10, 12, 13, .6) 55%, rgba(10, 12, 13, .78) 100%),
+    linear-gradient(180deg, rgba(10, 12, 13, .72), rgba(10, 12, 13, .45) 45%, rgba(10, 12, 13, .8));
+}
+.hero--home .hero-grid {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: minmax(0, 1fr);
+}
+.hero--home .hero-copy { padding: clamp(56px, 10vw, 150px) clamp(20px, 3vw, 28px); }
+.hero--home .hero-copy h1 {
+  font-size: clamp(34px, 6.6vw, 74px);
+  line-height: 1.02;
+  letter-spacing: .005em;
+  text-transform: uppercase;
+  max-width: 15ch;
+}
+/* The headline reads as three stacked lines: dim, bright, dim. */
+.hero--home .hero-copy h1 span { display: block; color: #9aa3a7; font-weight: 500; }
+.hero--home .hero-copy h1 span.is-lead { color: var(--text-bright); font-weight: 800; }
+.hero--home .hero-ctas { margin-top: clamp(26px, 3.4vw, 40px); }
+/* The outlined blue button. Used in the hero and in every scene band, so
+   it is not scoped to .hero--home. */
+.btn-hero {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 15px 30px;
+}
+.btn-hero:hover { background: var(--accent); color: var(--accent-ink); }
+
+@media (min-width: 861px) {
+  .hero--home { min-height: calc(100vh - 79px); }
+}
+@media (max-width: 860px) {
+  /* The base .hero-copy mobile rule already centres; the home hero only
+     needs its own type scale and a hero-height floor so the headline is
+     not stranded at the top of a tall video. */
+  .hero--home { min-height: 78vh; display: grid; align-items: center; }
+  .hero--home .hero-copy h1 {
+    font-size: clamp(28px, 8vw, 40px);
+    line-height: 1.08;
+    max-width: none;
+    margin-inline: auto;
+  }
+  .hero--home .hero-ctas { max-width: 260px; margin-inline: auto; }
+}
+
+/* --------------------------------------------------------------------------
+   14. Mission strip
+   -------------------------------------------------------------------------- */
+
+.mission {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(15px, 1.9vw, 18.5px);
+  line-height: 1.55;
+  color: var(--text-bright);
+  text-wrap: pretty;
+}
+.mission em { font-style: normal; color: var(--accent-2); }
+
+/* --------------------------------------------------------------------------
+   15. Feature split
+
+   Copy on one side, a pair of icon tiles (or a media panel) on the other.
+   .split--flip puts the tiles first on desktop; mobile always stacks the
+   copy on top.
+   -------------------------------------------------------------------------- */
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: clamp(26px, 4vw, 60px);
+  align-items: center;
+}
+.split--flip .split-copy { order: 2; }
+.split--media { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: stretch; }
+.split--media .split-copy { align-self: center; }
+
+@media (max-width: 860px) {
+  .split, .split--media { grid-template-columns: minmax(0, 1fr); }
+  .split--flip .split-copy { order: 0; }
+}
+
+.split-copy .sec-title { color: var(--accent-2); }
+.split-copy--right { text-align: right; }
+.split-copy--right p, .split-copy--right .sec-lede { margin-left: auto; }
+
+
+.split-copy p {
+  margin: 16px 0 0;
+  font-size: clamp(15px, 1.8vw, 16.5px);
+  line-height: 1.62;
+  color: var(--text-muted);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+.split-copy p strong { color: var(--text-bright); font-weight: 600; }
+
+/* "What are the full benefits? ->" - a quiet link with a round arrow. */
+.link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(20px, 2.6vw, 28px);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15.5px;
+  color: var(--text-bright);
+}
+.link-more:hover { color: var(--accent); }
+.link-more::after {
+  content: "\2192";
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12px;
+  line-height: 1;
+  transition: transform .2s ease;
+}
+.link-more:hover::after { transform: translateX(3px); }
+
+/* Icon tiles sitting beside a split. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 34px);
+}
+.stat { text-align: center; display: flex; flex-direction: column; align-items: center; }
+
+/* One icon treatment everywhere: a fixed 64px ring holding a 26px glyph.
+   Every glyph is drawn on the same 24x24 grid with a 1.5 stroke and no
+   fills, so none of them optically outweighs the others. */
+.stat-icon {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  background: rgba(41, 171, 226, .05);
+}
+.stat-icon svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.stat-label {
+  margin: 0 auto;
+  max-width: 19ch;
+  font-size: 14px;
+  line-height: 1.42;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+.stat-label strong { display: block; color: var(--text-bright); font-weight: 600; }
+
+/* Community panel - a looping video stands in for the group photo. */
+.split-media {
+  position: relative;
+  min-height: clamp(240px, 34vw, 400px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #171717;
+}
+.split-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.split-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(17, 19, 20, .2), rgba(17, 19, 20, .62));
+}
+
+/* A button and the quiet "read more" link sharing one row under the copy. */
+.copy-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 26px;
+  margin-top: clamp(22px, 2.8vw, 30px);
+}
+.copy-ctas .link-more { margin-top: 0; }
+
+/* --------------------------------------------------------------------------
+   15b. Mentors & Speakers
+
+   Two bullet columns over one four-up icon row. The hairline between the
+   columns is the same device the card grid uses elsewhere on the site.
+   -------------------------------------------------------------------------- */
+
+.sec-title--alt { color: var(--accent-2); }
+
+.duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(26px, 4vw, 56px);
+  margin: clamp(24px, 3.4vw, 38px) 0 clamp(30px, 4.6vw, 54px);
+}
+.duo-col { min-width: 0; }
+@media (min-width: 861px) {
+  .duo-col + .duo-col {
+    padding-left: clamp(26px, 4vw, 56px);
+    border-left: 1px solid var(--line);
+  }
+}
+
+.duo-title {
+  margin: 0 0 clamp(14px, 1.8vw, 18px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--text-bright);
+}
+
+/* Same rotated-square marker the program pages use for module topics. */
+.bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 11px;
+}
+.bullets li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: clamp(14.5px, 1.7vw, 16px);
+  line-height: 1.5;
+  color: #cfd6d9;
+}
+.bullets li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: .52em;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.bullets li span { min-width: 0; text-wrap: pretty; }
+
+.stats--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 860px) { .stats--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* --------------------------------------------------------------------------
+   16. Countdown
+   -------------------------------------------------------------------------- */
+
+.countdown {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 30px) var(--slab-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 32px);
+}
+.countdown-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+}
+.countdown-cells { display: flex; gap: clamp(8px, 1.6vw, 16px); }
+.countdown-cell {
+  min-width: clamp(58px, 8vw, 76px);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, .022);
+  padding: 10px 6px 9px;
+  text-align: center;
+}
+.countdown-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 3.4vw, 32px);
+  line-height: 1;
+  color: var(--text-bright);
+  font-variant-numeric: tabular-nums;
+}
+.countdown-unit {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* --------------------------------------------------------------------------
+   17. Testimonials
+
+   Every quote is in the markup. The script only moves .is-shown between
+   slides, so with scripting off the first quote is still readable.
+   -------------------------------------------------------------------------- */
+
+.tst { position: relative; }
+.tst-quotemark {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(80px, 12vw, 150px);
+  line-height: .7;
+  color: rgba(41, 171, 226, .13);
+  pointer-events: none;
+  user-select: none;
+}
+.tst-stage {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: clamp(10px, 2vw, 26px);
+  margin-top: clamp(24px, 3.4vw, 38px);
+}
+.tst-slides { display: grid; place-items: start center; }
+.tst-slide { display: none; text-align: center; max-width: 62ch; }
+.tst-slide.is-shown { display: block; animation: rowIn .4s cubic-bezier(.2, .7, .3, 1) both; }
+
+/* The quote area is a fixed box, sized to the longest quote, with the text
+   centred inside it. Without this the name and the dots jump every time the
+   slide changes, because the quotes differ by several lines. */
+.tst-quote {
+  margin: 0;
+  height: var(--tst-quote-h);
+  display: grid;
+  align-content: center;
+  font-size: clamp(15px, 1.9vw, 17px);
+  line-height: 1.65;
+  font-style: italic;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+.tst-quote::before { content: "\201C"; color: var(--accent); }
+.tst-quote::after { content: "\201D"; color: var(--accent); }
+.tst-who { margin-top: clamp(18px, 2.4vw, 26px); }
+.tst-avatar {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #232628;
+  border: 1px solid var(--line-strong);
+}
+.tst-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.tst-role { margin-top: 4px; font-size: 13px; color: var(--text-faint); }
+
+.tst-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color .18s ease, color .18s ease;
+}
+.tst-arrow:hover { border-color: var(--accent); color: var(--accent); }
+
+.tst-dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  margin-top: clamp(18px, 2.4vw, 24px);
+}
+.tst-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #3a3f42;
+  cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+.tst-dot:hover { background: #5c6467; }
+.tst-dot.is-current { background: var(--accent); transform: scale(1.35); }
+
+.tst-foot { margin-top: clamp(18px, 2.4vw, 26px); text-align: center; }
+.tst-foot .link-more { margin-top: 0; }
+
+@media (max-width: 860px) { :root { --tst-quote-h: 264px; } }  /* tallest is 248px at 621px */
+
+@media (max-width: 620px) {
+  .tst-stage { grid-template-columns: minmax(0, 1fr); }
+  .tst-arrow { display: none; }
+}
+
+@media (max-width: 480px) { :root { --tst-quote-h: 312px; } }   /* tallest is 297px at 401px */
+@media (max-width: 400px) { :root { --tst-quote-h: 440px; } }   /* tallest is 421px at 320px */
+
+/* --------------------------------------------------------------------------
+   18. Project wordmarks
+   -------------------------------------------------------------------------- */
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 18px);
+}
+.logo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 21px;
+  border-radius: 999px;
+  background: rgba(246, 248, 249, .94);
+  color: #1b1f22;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.logo-chip:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, .38); color: #1b1f22; }
+.logo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+.logo-dot--green { background: var(--accent-2); }
+.logo-dot--violet { background: #8a5cf6; }
+
+/* --------------------------------------------------------------------------
+   19. Site footer (full version)
+   -------------------------------------------------------------------------- */
+
+.foot-grid {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(30px, 4vw, 46px) var(--slab-pad-x) 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  align-items: center;
+  justify-content: space-between;
+}
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.foot-links a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #8d979b;
+}
+.foot-links a:hover { color: var(--accent); }
+.foot-social { display: flex; gap: 10px; }
+.foot-social a {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #a8b1b5;
+  transition: border-color .18s ease, color .18s ease;
+}
+.foot-social a:hover { border-color: var(--accent); color: var(--accent); }
+.foot-social svg { width: 15px; height: 15px; display: block; fill: currentColor; }
+
+/* --------------------------------------------------------------------------
+   20. Mobile
+
+   The desktop layout alternates left- and right-aligned columns against the
+   splits. Once the splits stack there is no column to align against, so
+   every section on this page centres on one axis instead.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  /* Splits: copy centres, and the measure is capped so the ragged edge does
+     not fight the centring. */
+  .split-copy,
+  .split-copy--right { text-align: center; }
+  .split-copy p,
+  .split-copy--right p {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 46ch;
+  }
+  .split-copy .sec-title { text-wrap: balance; }
+  .split { gap: clamp(26px, 6vw, 40px); }
+
+  /* A section heading that is not inside a split still centres. */
+  .container > .eyebrow,
+  .container > .sec-title { text-align: center; }
+
+  /* Mentors & Speakers: one column, centred, with the bullet list kept as a
+     left-aligned block so its markers still line up under each other. */
+  .duo { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .duo-col { text-align: center; }
+  .bullets {
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    text-align: left;
+  }
+
+  /* The Program's button and link centre as a pair. */
+  .copy-ctas { justify-content: center; }
+
+  /* Icon pairs stay side by side - at two columns they are still legible
+     and a single column would strand a lot of empty space. */
+  .stats { gap: 22px 16px; max-width: 420px; margin-inline: auto; }
+  .stat-icon { width: 58px; height: 58px; }
+  .stat-icon svg { width: 24px; height: 24px; }
+  .stat-label { max-width: 16ch; font-size: 13.5px; }
+
+  .split-media { min-height: 220px; }
+
+  /* Countdown: label on its own line above the cells. */
+  .countdown { flex-direction: column; gap: 16px; }
+  .countdown-label { max-width: 26ch; line-height: 1.5; }
+  .countdown-cells { width: 100%; max-width: 340px; justify-content: center; }
+  .countdown-cell { flex: 1 1 0; min-width: 0; }
+
+  /* Testimonials. */
+  .tst { text-align: center; }
+  .tst-quotemark { top: -4px; right: 50%; transform: translateX(50%); opacity: .55; }
+  .tst-slide { padding: 4px 2px; }
+  .tst-quote { font-size: 15px; }
+
+  /* Closing CTA: heading over a full-width button rather than a wrapped row. */
+  .cta-band { flex-direction: column; text-align: center; gap: 24px; }
+  .cta-band h2 { flex: none; }
+  .cta-band .btn { width: 100%; max-width: 320px; }
+
+  /* Scene bands. */
+  .scene-band-in { padding-inline: 20px; }
+  .scene-band-title { max-width: 18ch; }
+  .btn-hero { width: 100%; max-width: 300px; }
+
+  /* Footer stacks centred. */
+  .foot-grid { flex-direction: column; justify-content: center; gap: 18px; }
+  .foot-links { justify-content: center; gap: 8px 16px; }
+  .site-footer-in { justify-content: center; text-align: center; gap: 6px; }
+}
+
+@media (max-width: 480px) {
+  .mission { font-size: 15px; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 10px; }
+  .stat-label { max-width: 14ch; font-size: 13px; }
+  .countdown-cell { padding: 9px 4px 8px; }
+  .countdown-num { font-size: 21px; }
+  .logo-chip { padding: 10px 17px; font-size: 13.5px; }
+}
+
+/* --------------------------------------------------------------------------
+   21. Reduced motion - the media introduced on this page
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-band-bg video, .split-media video { display: none; }
+  .tst-slide.is-shown { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Fixed video wallpaper. Sections with .slab cover it; .scene sections let it through. -->
+<div class="page-bg" aria-hidden="true">
+  <video autoplay loop muted playsinline>
+    <source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4" type="video/mp4">
+  </video>
+  <div class="page-bg-veil"></div>
+</div>
+
+<!-- ========================================================================
+     Header
+     ===================================================================== -->
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="https://activator.bg/" aria-label="ABLE Activator">
+      <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="https://activator.bg/program/">ABLE Activator</a>
+      <a href="https://activator.bg/able-weekend-activator-overviewold/">Weekend Activator</a>
+      <a href="https://activator.bg/mentors-and-speakers/">Network</a>
+      <a href="https://activator.bg/mentors-and-speakers/">Mentors &amp; Speakers</a>
+      <a href="https://activator.bg/alumni-and-testimonials/">Testimonials</a>
+    </nav>
+    <a class="hdr-cta" href="https://activator.bg/admissions/">Apply now</a>
+  </div>
+</header>
+
+<!-- ========================================================================
+     Hero
+     ===================================================================== -->
+<section id="top" class="hero hero--home">
+  <div class="hero-bg" aria-hidden="true">
+    <video autoplay loop muted playsinline>
+      <source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1>
+        <span>The ultimate</span>
+        <span class="is-lead">Entrepreneurship</span>
+        <span>Program</span>
+      </h1>
+      <div class="hero-ctas">
+        <a class="btn btn-hero" href="https://activator.bg/program/">Learn more</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Weekend Activator promo
+     ===================================================================== -->
+<section id="weekend" class="scene-band">
+  <div class="scene-band-bg" aria-hidden="true">
+    <video autoplay loop muted playsinline>
+      <source src="https://res.cloudinary.com/alexpeev9/video/upload/v1788735313/Weekend_Activator.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="scene-band-in">
+    <div class="weekend-mark">
+      <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Weekend Activator"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+      <span class="weekend-tag">Weekend</span>
+    </div>
+    <h2 class="scene-band-title">&#1054;&#1090; &#1080;&#1076;&#1077;&#1103; &#1076;&#1086; &#1088;&#1077;&#1072;&#1083;&#1077;&#1085; &#1087;&#1088;&#1086;&#1077;&#1082;&#1090; &#1079;&#1072; <em>48 &#1095;&#1072;&#1089;&#1072;</em></h2>
+    <a class="btn btn-primary" href="https://activator.bg/able-weekend-activator-overviewold/">&#1053;&#1072;&#1091;&#1095;&#1080; &#1087;&#1086;&#1074;&#1077;&#1095;&#1077;</a>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Mission
+     ===================================================================== -->
+<section class="slab">
+  <div class="container">
+    <p class="mission">Our mission is to promote <em>entrepreneurship and leadership</em> in Bulgaria by empowering ambitious self-starters bring meaningful ideas to life.</p>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Applications countdown
+
+     The deadline lives in one data attribute; app.js reads it and ticks.
+     ===================================================================== -->
+<section class="slab">
+  <div class="countdown" id="countdown" data-deadline="2027-01-31T23:59:59+02:00">
+    <div class="countdown-label">ABLE Activator applications close in</div>
+    <div class="countdown-cells">
+      <div class="countdown-cell"><div class="countdown-num" data-cd="days">00</div><div class="countdown-unit">Days</div></div>
+      <div class="countdown-cell"><div class="countdown-num" data-cd="hours">00</div><div class="countdown-unit">Hours</div></div>
+      <div class="countdown-cell"><div class="countdown-num" data-cd="minutes">00</div><div class="countdown-unit">Minutes</div></div>
+      <div class="countdown-cell"><div class="countdown-num" data-cd="seconds">00</div><div class="countdown-unit">Seconds</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     The Program
+     ===================================================================== -->
+<section id="program" class="slab">
+  <div class="container">
+    <div class="split">
+      <div class="split-copy">
+        <h2 class="sec-title">The Program</h2>
+        <p>An exclusive 6-weekend entrepreneurship program that provides <strong>30 ambitious young professionals</strong> residing in Bulgaria with the <strong>knowledge</strong>, <strong>network</strong> and <strong>mentorship</strong> to generate breakthrough ideas and develop them to a ready-to-launch version.</p>
+        <div class="copy-ctas">
+          <a class="btn btn-primary" href="https://activator.bg/admissions/">Apply now</a>
+          <a class="link-more" href="https://activator.bg/program/">What are the full benefits?</a>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="15.5" rx="2.5"/><path d="M3 10.5h18M8 3v4.5M16 3v4.5"/><path d="M7.5 14.5h2M11 14.5h2M14.5 14.5h2M7.5 17.8h2M11 17.8h2"/></svg>
+          </div>
+          <p class="stat-label"><strong>6</strong> jam-packed weekends</p>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9.5" cy="8" r="3.5"/><path d="M3 20.5c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16.2 5.1a3.5 3.5 0 0 1 0 6.6M17.8 15.2c2.1.6 3.7 2.4 3.7 5.3"/></svg>
+          </div>
+          <p class="stat-label"><strong>30</strong> ambitious self-starters</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     ABLE Community
+     ===================================================================== -->
+<section id="community" class="slab">
+  <div class="container">
+    <div class="split split--media split--flip">
+      <div class="split-copy split-copy--right">
+        <h2 class="sec-title">ABLE Community</h2>
+        <p>We are a vibrant community of <strong>young people who make a difference</strong> wherever they go. Our goal is to develop an active civil society, inspire leadership and <strong>promote entrepreneurial culture in Bulgaria</strong>.</p>
+        <p>Completing the program gives you the opportunity to join ABLE.</p>
+        <a class="link-more" href="https://activator.bg/team/">Who are the team?</a>
+      </div>
+      <div class="split-media">
+        <video autoplay loop muted playsinline aria-label="The ABLE community">
+          <source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Mentors and speakers
+
+     One slab: two bullet columns over a single four-up icon row. The icons
+     carry the headline facts, so the bullets deliberately say other things.
+     ===================================================================== -->
+<section id="mentors" class="slab">
+  <div class="container">
+    <div class="eyebrow">Who you learn from</div>
+    <h2 class="sec-title sec-title--alt">Mentors &amp; Speakers</h2>
+
+    <div class="duo">
+      <div class="duo-col">
+        <h3 class="duo-title">The Mentors</h3>
+        <ul class="bullets">
+          <li><span>Founders and experts who have built companies</span></li>
+          <li><span>They ask the hard questions</span></li>
+          <li><span>Advice tailored to your project</span></li>
+        </ul>
+        <a class="link-more" href="https://activator.bg/mentors/">Who are the mentors?</a>
+      </div>
+
+      <div class="duo-col">
+        <h3 class="duo-title">The Speakers</h3>
+        <ul class="bullets">
+          <li><span>Innovators, experts and industry leaders</span></li>
+          <li><span>Workshops, content and contacts</span></li>
+          <li><span>Market validation, modeling and prototyping</span></li>
+        </ul>
+        <a class="link-more" href="https://activator.bg/mentors-and-speakers/">Who are the speakers?</a>
+      </div>
+    </div>
+
+    <div class="stats stats--4">
+      <div class="stat">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="7" r="3.2"/><path d="M2.5 20.5c0-3.2 2.2-5.5 5-5.5s5 2.3 5 5.5"/><path d="M14.5 4.5h6a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5h-2.2L15.5 15v-2.5h-1a1.5 1.5 0 0 1-1.5-1.5V6a1.5 1.5 0 0 1 1.5-1.5Z"/></svg>
+        </div>
+        <p class="stat-label">Individual mentorship for each team</p>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5h18a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H3a1.5 1.5 0 0 1-1.5-1.5V10A1.5 1.5 0 0 1 3 8.5Z"/><path d="M8.5 8.5V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2.5"/><path d="M1.5 13h21M10 13v2.2h4V13"/></svg>
+        </div>
+        <p class="stat-label">Industry-specific knowledge &amp; advice</p>
+      </div>
+      <div class="stat" id="speakers">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.2M8.5 21.2h7"/></svg>
+        </div>
+        <p class="stat-label">20+ internationally recognized speakers</p>
+      </div>
+      <div class="stat">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3.5h18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M12 15.5v2.2M8 21.5l4-3.8 4 3.8"/><path d="M6.5 11.5v-2.8M10.5 11.5V6.5M14.5 11.5V9M18 11.5V7.6"/></svg>
+        </div>
+        <p class="stat-label">Weekly workshops that move the needle</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Graduate testimonials
+
+     Every quote is in the markup; app.js only moves .is-shown between the
+     slides and keeps the dots in sync.
+     ===================================================================== -->
+<section id="testimonials" class="slab">
+  <div class="container tst">
+    <div class="tst-quotemark" aria-hidden="true">&rdquo;</div>
+    <div class="eyebrow">From the alumni</div>
+    <h2 class="sec-title" style="color: var(--accent-2);">Graduate Testimonials</h2>
+
+    <div class="tst-stage">
+      <button class="tst-arrow" type="button" id="tst-prev" aria-label="Previous testimonial">&#8249;</button>
+
+      <div class="tst-slides" id="tst-slides" aria-live="polite">
+        <figure class="tst-slide is-shown">
+          <blockquote class="tst-quote">My key realization while participating in ABLE Activator was just how important community is to my professional as well as personal success. People are capable of opening countless doors to new and frankly unexpected opportunities. The program provided me with the opportunity to meet and later work with strong role models, which laid the foundations for my future development.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/10/Alex-Gramatikov-scaled-e1698313713465-150x150.jpg" alt="Alexander Gramatikov" width="150" height="150" decoding="async">
+            <div class="tst-name">Alexander Gramatikov</div>
+            <div class="tst-role">Founder of Mentor the Young</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">It was everything I hoped to gain and even more. On our way back from the retreat at the end of the program, I had this eye-opening moment, realizing it was not about the program. It is about me and the bunch of amazing people I met and can call friends now.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/10/georgi-nenov-e1700426037111-150x150.jpg" alt="Georgi Nenov" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Georgi Nenov</div>
+            <div class="tst-role">Founder &amp; Host of The Superhuman Podcast</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">I am glad I went through the program because it gave me access to the right people at the right time. I received a lot of useful feedback from the great mentors who helped me transform Foodobox from an idea to a functional business.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/10/Jane-Dimitrova-e1708184206606-150x150.png" alt="Jane Dimitrova" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Jane Dimitrova</div>
+            <div class="tst-role">Founder of Foodobox</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">ABLE Activator taught me how to create a business in the right, textbook way. MindFit was born as part of the program and is still functioning today with most of the original team members. ABLE Activator literally changes lives. In the best way possible!</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/10/victotia-victorova-150x150.jpg" alt="Victoria Victorova" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Victoria Victorova</div>
+            <div class="tst-role">CEO &amp; Co-Founder of MindFit.Bg, CEO of Press Start</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">ABLE Activator is your best choice for hands-on startup immersion. Prepare to meet amazing people, refine your ideas, and launch a product within 6 weeks.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/10/Hristo-Hristov-e1698329487289-150x150.jpeg" alt="Hristo Hristov" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Hristo Hristov</div>
+            <div class="tst-role">Head of Sales Strategy at DRONAMICS</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">ABLE Activator is the best place to meet like-minded people and taste entrepreneurship. You will experience the real team dynamics of a startup and be constantly challenged by the amazing lectors and mentors. Finally, you will try to raise financing and turn your idea into a promising business in less than three months.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/10/Iordan-Genov-e1698327645439-150x150.jpeg" alt="Iordan Genov" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Iordan Genov</div>
+            <div class="tst-role">Executive Director / Financial Coach at MoitePari Consult</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">The ABLE Activator is community. You get friends, know-how, experience and new opportunities. But the difference between ABLE and other communities is the VALUE of everything. From the Experts to the lunch boxes.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2022/11/ivaylo_madzharov-e1698325549764-150x150.png" alt="Ivaylo Madzharov" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Ivaylo Madzharov</div>
+            <div class="tst-role">Sales Representative</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">My biggest takeaway from the program is that one can achieve great results with the right team and mindset even if given just very short time. The program affected my life by creating a new social circle for me and developing my entrepreneurial mindset.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2022/11/ivan_ivanov-150x150.png" alt="Ivan Ivanov" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Ivan Ivanov</div>
+            <div class="tst-role">Lead Data Scientist</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">After participating in the program, I became a volunteer. Being part of the magic behind the scenes allows me to work with incredibly smart, motivated individuals, learn new skills, get to network with successful founders and mentors but most importantly, contribute to giving others the chance to go through this life-changing experience.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2022/11/iliyana_mircheva-150x150.png" alt="Iliyana Mircheva" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Iliyana Mircheva</div>
+            <div class="tst-role">HRIS Manager</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">ABLE Activator provides all the tools, knowledge and contacts for the participants to transform their idea into a business. Thanks to the program I learned how to talk to customers and investors, and I joined a wonderful community of ambitious entrepreneurs and bright leaders!</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2022/11/anna_sarambelieva-e1698402603350-150x150.png" alt="Anna Sarambelieva" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Anna Sarambelieva</div>
+            <div class="tst-role">Software Developer</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">This was a dream coming true for me! The ABLE Activator program gave me the opportunity to meet like-minded and passionate individuals who turned into friends and team members beyond the boundaries of the sessions.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2022/11/boryana_petrova-e1698325412903-150x150.png" alt="Boryana Petrova" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Boryana Petrova</div>
+            <div class="tst-role">Business Strategy Manager</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">The program is enriching and challenging on many levels as it developed entrepreneurial, communicative and personal skills. A key takeaway is that the more you want to do the more you can see you are able to!</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2022/11/elena_mena-e1700424299534-150x150.png" alt="Elena Mena" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Elena Mena</div>
+            <div class="tst-role">Marketing Manager</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">ABLE Activator will challenge you and teach you an exorbitant amount in just over two months, but the network you gain and the friends you make will stay with you forever.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/10/Bhushan-e1698495827938-150x150.png" alt="Bhushan Trivedi" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Bhushan Trivedi</div>
+            <div class="tst-role">Team Lead, Social Impact &mdash; ClimatePartner Impact</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">The biggest takeaways from ABLE Activator for me were the gain of the entrepreneurial mindset, the supportive community, and the toolkit of how to turn any idea into business.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/Tani-150x150.jpg" alt="Taniyana Biserova" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Taniyana Biserova</div>
+            <div class="tst-role">Executive Board Member at ABLE, Life Coach</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">After the program, I felt ready to take on the world. I just feel ready to start and this motivation is still in me.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/Milko-e1698325790756-150x150.jpg" alt="Milko Penev" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Milko Penev</div>
+            <div class="tst-role">Business Development Consultant at Vivafarma</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">The most valuable thing I got from the program is the social network.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/Plamen-Tenev-e1698325747356-150x150.jpg" alt="Plamen Tenev" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Plamen Tenev</div>
+            <div class="tst-role">SAP Certified Hybris Professional</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">The practical tasks and the questions we were encouraged to ask brought us as close to real-life entrepreneurship as possible. I still keep all my notes, ready to consult them whenever I need to.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/ralitsa-e1698325599362-150x150.jpg" alt="Ralitsa Dimitrova" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Ralitsa Dimitrova</div>
+            <div class="tst-role">Junior Business Consultant, Brightive</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">I think it was during the first weekend of the program when I met all the other participants that I realized that I was going to be able to get out of my comfort zone. And that I don&rsquo;t have to worry about it.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2023/09/va-Viktoria-e1698394890895-150x150.jpeg" alt="Viktoria Popova" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Viktoria Popova</div>
+            <div class="tst-role">Co-founder of OurLoveBooks</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">ABLE Activator had a great impact on my life and I&rsquo;m really grateful that it happened early on in my life. I got more self-confident that I&rsquo;ll be able to achieve my goals and my dreams and it made me more professional than I was.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/Daniel-Tuechki-1-e1698310664890-150x150.png" alt="Daniel Tuechki" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Daniel Tuechki</div>
+            <div class="tst-role">Co-founder at Nauchi.bg</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">Don&rsquo;t be afraid to sign up for ABLE Activator, take advantage of every opportunity that comes your way, because you never know what might happen tomorrow.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/aleksiya-150x150.jpg" alt="Aleksiya Kokolios" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Aleksiya Kokolios</div>
+            <div class="tst-role">Employer Branding Strategist, BICA Services</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">I definitely gained a lot of knowledge about starting a lean startup and how to set up my plan of action properly, and all those things really helped me gain a new perspective on how I think about my profession and about my work.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/lulcho-scaled-e1698325330155-150x150.jpg" alt="Lulcho Georgiev" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Lulcho Georgiev</div>
+            <div class="tst-role">Research and Business Development, DRONAMICS</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">ABLE Activator really opened my eyes as to how many different ways to start a business and to succeed there are.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/Mihail-Djurev-e1698310890717-150x150.jpg" alt="Mihail Djurev" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Mihail Djurev</div>
+            <div class="tst-role">Team Lead at Chaosgroup</div>
+          </figcaption>
+        </figure>
+        <figure class="tst-slide">
+          <blockquote class="tst-quote">The BEST thing I took from ABLE Activator is the access to the entrepreneurial ecosystem in Bulgaria.</blockquote>
+          <figcaption class="tst-who">
+            <img class="tst-avatar" src="https://activator.bg/wp-content/uploads/2021/02/Albert-e1698495863875-150x150.jpg" alt="Albert Pashov" width="150" height="150" loading="lazy" decoding="async">
+            <div class="tst-name">Albert Pashov</div>
+            <div class="tst-role">Business Consultant</div>
+          </figcaption>
+        </figure>
+      </div>
+
+      <button class="tst-arrow" type="button" id="tst-next" aria-label="Next testimonial">&#8250;</button>
+    </div>
+
+    <div class="tst-dots" id="tst-dots"></div>
+
+    <div class="tst-foot">
+      <a class="link-more" href="https://activator.bg/alumni-and-testimonials/">Check-out all Testimonials</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Graduated projects
+     ===================================================================== -->
+<section id="projects" class="scene-band">
+  <div class="scene-band-bg" aria-hidden="true">
+    <video autoplay loop muted playsinline>
+      <source src="https://res.cloudinary.com/alexpeev9/video/upload/v1788735313/Weekend_Activator.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="scene-band-in">
+    <h2 class="scene-band-title">Get to know the <em>projects</em> that came out of the program</h2>
+    <div class="scene-band-rule" aria-hidden="true"></div>
+    <a class="btn btn-hero" href="https://activator.bg/alumni-and-testimonials/">Graduated projects</a>
+    <div class="logos">
+      <a class="logo-chip" href="https://mindfit.bg/" target="_blank" rel="noopener"><span class="logo-dot logo-dot--violet"></span>MindFit</a>
+      <a class="logo-chip" href="https://foodobox.com/bg/" target="_blank" rel="noopener"><span class="logo-dot logo-dot--green"></span>Foodobox</a>
+      <a class="logo-chip" href="https://labsi.eu/" target="_blank" rel="noopener"><span class="logo-dot"></span>Labsi</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Closing CTA
+     ===================================================================== -->
+<section id="apply" class="slab">
+  <div class="cta-band">
+    <h2>Are you ready to <em>activate?</em></h2>
+    <a class="btn" href="https://activator.bg/admissions/">Apply now</a>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Supporter band
+     ===================================================================== -->
+<section id="support" class="scene-band">
+  <div class="scene-band-bg" aria-hidden="true">
+    <video autoplay loop muted playsinline>
+      <source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="scene-band-in">
+    <h2 class="scene-band-title">Want to <em>promote</em> entrepreneurship and leadership in Bulgaria?</h2>
+    <a class="btn btn-hero" href="https://activator.bg/become-a-supporter-partner/">Become a supporter</a>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Footer
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="foot-grid">
+    <nav class="foot-links" aria-label="Footer">
+      <a href="https://activator.bg/newsletter/">Newsletter</a>
+      <a href="https://activator.bg/media-spotlight/">Media Spotlight</a>
+      <a href="https://activator.bg/press-kit/">Press Kit</a>
+      <a href="https://activator.bg/partners/">Partners</a>
+      <a href="https://activator.bg/privacy-policy/">Privacy Policy</a>
+      <a href="https://activator.bg/contacts/">Contacts</a>
+    </nav>
+    <div class="foot-social">
+      <a href="https://www.facebook.com/ABLEActivator/" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.3 0-1.3-.1-2.45-.1-2.4 0-4.05 1.5-4.05 4.2v2.2H7.5V13h2.7v8z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/able-activator/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="site-footer-in">
+    <span>&copy; 2022 ABLE Activator, All Rights Reserved</span>
+    <span>Sofia &middot; Bulgaria</span>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+/* ==========================================================================
+   ABLE Activator - landing-1 (home)
+
+   Two independent behaviours, no framework and no build step:
+     1. Applications countdown
+     2. Testimonials carousel
+
+   Everything else on the page is static HTML in index.html.
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------------
+     1. Countdown
+
+     The deadline is a data-deadline attribute on #countdown, so changing it
+     is a markup edit. Once the deadline passes every cell reads 00.
+     ---------------------------------------------------------------------- */
+
+  var cdRoot = document.getElementById("countdown");
+
+  if (cdRoot) {
+    var deadline = Date.parse(cdRoot.getAttribute("data-deadline"));
+    var cells = {
+      days:    cdRoot.querySelector('[data-cd="days"]'),
+      hours:   cdRoot.querySelector('[data-cd="hours"]'),
+      minutes: cdRoot.querySelector('[data-cd="minutes"]'),
+      seconds: cdRoot.querySelector('[data-cd="seconds"]')
+    };
+
+    function pad(n) { return n < 10 ? "0" + n : String(n); }
+
+    function tick() {
+      var left = Math.max(0, deadline - Date.now());
+      var total = Math.floor(left / 1000);
+
+      cells.days.textContent    = pad(Math.floor(total / 86400));
+      cells.hours.textContent   = pad(Math.floor(total / 3600) % 24);
+      cells.minutes.textContent = pad(Math.floor(total / 60) % 60);
+      cells.seconds.textContent = pad(total % 60);
+
+      return left > 0;
+    }
+
+    if (!isNaN(deadline) && tick()) {
+      var timer = setInterval(function () {
+        if (!tick()) clearInterval(timer);
+      }, 1000);
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     2. Testimonials
+
+     All quotes are already in the markup. This only moves .is-shown and
+     builds the dot row, so with scripting off the first quote still reads.
+     Arrows and dots wrap around; the carousel does not auto-advance.
+     ---------------------------------------------------------------------- */
+
+  var slidesRoot = document.getElementById("tst-slides");
+
+  if (slidesRoot) {
+    var slides = Array.prototype.slice.call(slidesRoot.querySelectorAll(".tst-slide"));
+    var dotsRoot = document.getElementById("tst-dots");
+    var current = 0;
+
+    var dots = slides.map(function (slide, i) {
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "tst-dot";
+      dot.setAttribute("aria-label", "Testimonial " + (i + 1) + " of " + slides.length);
+      dot.addEventListener("click", function () { show(i); });
+      dotsRoot.appendChild(dot);
+      return dot;
+    });
+
+    function show(i) {
+      current = (i + slides.length) % slides.length;
+      slides.forEach(function (slide, n) { slide.classList.toggle("is-shown", n === current); });
+      dots.forEach(function (dot, n) {
+        dot.classList.toggle("is-current", n === current);
+        dot.setAttribute("aria-current", n === current ? "true" : "false");
+      });
+    }
+
+    document.getElementById("tst-prev").addEventListener("click", function () { show(current - 1); });
+    document.getElementById("tst-next").addEventListener("click", function () { show(current + 1); });
+
+    show(0);
+  }
+})();
+
+});
+</script>
+</body>
+</html>

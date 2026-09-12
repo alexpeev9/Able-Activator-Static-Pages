@@ -3,16 +3,30 @@
     "id": "landing",
     "title": "Landing Pages",
     "blurb": "Short campaign entry points.",
-    "pages": []
+    "pages": [
+      {
+        "slug": "landing-1",
+        "title": "Landing Page 1"
+      }
+    ]
   },
   {
     "id": "program",
     "title": "Program Pages",
     "blurb": "Full programme detail pages — modules, schedule, FAQ.",
     "pages": [
-      { "slug": "program-1", "title": "Program Page 1" },
-      { "slug": "program-2", "title": "Program Page 2" },
-      { "slug": "program-3", "title": "Program Page 3" }
+      {
+        "slug": "program-1",
+        "title": "Program Page 1"
+      },
+      {
+        "slug": "program-2",
+        "title": "Program Page 2"
+      },
+      {
+        "slug": "program-3",
+        "title": "Program Page 3"
+      }
     ]
   }
 ]

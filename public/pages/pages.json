@@ -2,7 +2,12 @@
   {
     "id": "landing",
     "title": "Landing Pages",
-    "pages": []
+    "pages": [
+      {
+        "slug": "landing-1",
+        "title": "Landing Page 1"
+      }
+    ]
   },
   {
     "id": "program",
