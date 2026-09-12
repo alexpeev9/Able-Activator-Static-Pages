@@ -1,4 +1,4 @@
-import { Landings } from './Landings'
+import { Sections } from './Pages'
 import './App.css'
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
         <h1>Able Activator Designs</h1>
       </header>
 
-      <Landings />
+      <Sections />
     </main>
   )
 }
