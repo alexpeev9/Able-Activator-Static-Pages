@@ -1073,6 +1073,68 @@ a:hover { color: var(--accent-soft); }
   --tst-quote-h: 232px;
 }
 
+/* --------------------------------------------------------------------------
+   13. Scene band (full-bleed video band with centred copy)
+
+   Used by the graduated-projects band and the supporter band. Each owns its
+   own video, so .scene-band covers the fixed page wallpaper instead of
+   letting it through.
+   -------------------------------------------------------------------------- */
+
+.scene-band {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  background: #111314;
+}
+.scene-band-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.scene-band-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.4) saturate(.72) contrast(1.08);
+}
+.scene-band-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 11, 13, .72), rgba(9, 11, 13, .5) 45%, rgba(9, 11, 13, .8));
+}
+.scene-band-in {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(52px, 9vw, 130px) var(--slab-pad-x);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 2.6vw, 28px);
+}
+.scene-band-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: clamp(23px, 4.2vw, 44px);
+  line-height: 1.14;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+  max-width: 22ch;
+}
+.scene-band-title em { font-style: italic; color: var(--accent-2); }
+.scene-band-rule { width: 46px; height: 2px; background: var(--accent); opacity: .85; }
+
 /* The Weekend Activator lock-up: the wordmark plus its yellow "Weekend" tag. */
 .weekend-mark {
   display: inline-flex;
@@ -1307,8 +1369,13 @@ a:hover { color: var(--accent-soft); }
 }
 
 .split-copy .sec-title { color: var(--accent-2); }
-.split-copy--right { text-align: right; }
-.split-copy--right p, .split-copy--right .sec-lede { margin-left: auto; }
+/* Right-hand copy column: the block sits flush to the right edge, but the
+   text inside stays flush-left so the ragged edge falls away from the media
+   instead of chewing up the left margin of every line. */
+.split-copy--right { text-align: left; display: flex; flex-direction: column; align-items: flex-end; }
+.split-copy--right > * { max-width: 52ch; width: 100%; }
+.split-copy--right .sec-title,
+.split-copy--right .link-more { align-self: flex-end; width: auto; }
 
 
 .split-copy p {
@@ -1731,6 +1798,10 @@ a:hover { color: var(--accent-soft); }
      not fight the centring. */
   .split-copy,
   .split-copy--right { text-align: center; }
+  .split-copy--right { display: block; }
+  .split-copy--right > *,
+  .split-copy--right .sec-title,
+  .split-copy--right .link-more { max-width: none; width: auto; }
   .split-copy p,
   .split-copy--right p {
     margin-left: auto;
