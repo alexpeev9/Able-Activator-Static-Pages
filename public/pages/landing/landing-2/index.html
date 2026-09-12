@@ -2219,7 +2219,7 @@ html:not(.has-deck) .deck-dots { display: none; }
     white-space: nowrap;
   }
   .tabhero-panels { max-width: none; }
-  .tabhero-title { font-size: clamp(24px, 7.8vw, 42px); }
+  .tabhero-title { font-size: clamp(22px, 7.2vw, 42px); }
   .tabhero-cta { width: 100%; max-width: 340px; justify-content: center; }
 }
 
@@ -2270,6 +2270,10 @@ html:not(.has-deck) .deck-dots { display: none; }
 .railhero-tab--weekend { --rail-on: #8ec54a; }
 
 .railhero-stage { position: relative; overflow: hidden; }
+ /* The two panels are stacked on the same spot and cross-fade. Deliberately
+   no transform: the panels are vertically centred, so anything that offsets
+   one of them offsets its CTA too, and the button appears to jump when you
+   switch. A plain opacity swap cannot move anything. */
 .railhero-panel {
   position: absolute;
   inset: 0;
@@ -2279,14 +2283,12 @@ html:not(.has-deck) .deck-dots { display: none; }
   padding: clamp(30px, 5vw, 72px);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(14px);
-  transition: opacity .45s ease, transform .45s ease, visibility 0s linear .45s;
+  transition: opacity .34s ease, visibility 0s linear .34s;
 }
 .railhero-panel.is-on {
   opacity: 1;
   visibility: visible;
-  transform: none;
-  transition: opacity .45s ease .08s, transform .45s ease .08s, visibility 0s;
+  transition: opacity .34s ease .06s, visibility 0s;
 }
  /* Wide enough that the longest line in either language - ENTREPRENEURSHIP
    and ДО РЕАЛЕН ПРОЕКТ, both 16 characters - stays on one line, so the two
@@ -2344,7 +2346,7 @@ html:not(.has-deck) .deck-dots { display: none; }
   .railhero-tab span { writing-mode: horizontal-tb; transform: none; text-align: center; }
   .railhero-panel { align-items: center; justify-content: center; text-align: center; padding: clamp(24px, 6vw, 40px) 20px 62px; }
   .railhero-in { max-width: none; }
-  .railhero-title { font-size: clamp(24px, 7.4vw, 40px); }
+  .railhero-title { font-size: clamp(22px, 6.8vw, 40px); }
   .railhero-cta { width: 100%; max-width: 340px; justify-content: center; }
 }
 
