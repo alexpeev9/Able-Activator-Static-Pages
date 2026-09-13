@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ABLE Weekend Activator – 2-дневна предприемаческа програма</title>
-<meta name="description" content="ABLE Weekend Activator – 2-дневна интензивна предприемаческа програма. За 2 дни работиш в екип над бизнес идея и я развиваш до работещ прототип.">
+<title>ABLE Weekend Activator. 2-дневна предприемаческа програма</title>
+<meta name="description" content="ABLE Weekend Activator. За 2 дни работиш в екип над идея и стигаш до работещ прототип.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,9 +183,10 @@ a:hover { color: var(--accent-soft); }
 }
 .card-grid--spaced { margin-bottom: clamp(28px, 4vw, 44px); }
 
-@media (max-width: 820px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) {
-  .card-grid { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 820px) {
+  .card-grid,
+  .card-grid--auto,
+  .card-grid--five { grid-template-columns: minmax(0, 1fr); }
   .card-grid--five > .card:last-child { grid-column: auto; }
 }
 
@@ -779,6 +780,8 @@ a:hover { color: var(--accent-soft); }
   .mod-head-mark { opacity: 1; transform: none; font-size: 16px; line-height: 1.3; transition: transform .3s ease; }
   .mod-head-mark::before { content: "+"; }
   .mod-panel { padding: 0 2px 26px; }
+  #steps .mods { padding-top: 8px; }
+  #steps .mod-panel { padding-top: 28px; }
   .mod-panel-title { font-size: 20px; line-height: 1.2; margin-bottom: 4px; }
   .mod-topics { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .mod-nav { display: none; }
@@ -1134,7 +1137,7 @@ a:hover { color: var(--accent-soft); }
     <div class="hero-copy">
       <div class="hero-kicker">2 дни · 36 часа · екипи от ~5 души</div>
       <h1>ABLE Weekend <em>Activator.</em></h1>
-      <p>2-дневна интензивна предприемаческа програма. Ултимативната предприемаческа програма ABLE Activator сега с ново уикенд предизвикателство – от идея до работещ прототип за един уикенд.</p>
+      <p>За 2 дни работиш в екип над идея и я стигаш до работещ прототип.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="#apply">Кандидатствай</a>
         <a class="btn btn-outline" href="#schedule">Виж графика</a>
@@ -1156,20 +1159,20 @@ a:hover { color: var(--accent-soft); }
 <section id="about" class="slab">
   <div class="container">
     <div class="eyebrow">Накратко</div>
-    <h2 class="sec-title">Какво представлява ABLE Weekend Activator?</h2>
-    <p class="sec-lede">Нашата цел е да помогнем на повече млади и амбициозни хора да добият умения за генериране на иновативни идеи и да ги развиват до реални бизнеси.</p>
-    <p class="sec-lede">Следвайки тази пътеводна звезда, организираме предприемаческия курс ABLE Weekend Activator, чрез който искаме, посредством серия от специализирани теоретични и практически сесии, да разширим познанията и уменията на участниците и да ги предизвикаме в рамките на 2 дни да работят в екипи над избрана от тях бизнес идея, която да развият до функциониращ работещ прототип.</p>
+    <h2 class="sec-title">Какво е ABLE Weekend Activator?</h2>
+    <p class="sec-lede">Помагаме на млади хора да измислят идеи и да ги превърнат в бизнес.</p>
+    <p class="sec-lede">За 2 дни учиш и работиш в екип. Взимате идея и я правите работещ прототип.</p>
 
     <div class="card-grid card-grid--auto">
       <div class="card">
         <div class="card-tag">Важно</div>
         <div class="card-title card-title--lg">Не ти трябва готова идея</div>
-        <div class="card-body">Към момента на регистрация за курса не е нужно да имаш конкретна бизнес идея. За повече информация погледни секцията <a href="#faq">Често задавани въпроси</a>.</div>
+        <div class="card-body">При регистрация не ти трябва идея. Повече в секцията <a href="#faq">Често задавани въпроси</a>.</div>
       </div>
       <div class="card">
         <div class="card-tag">Език</div>
-        <div class="card-title card-title--lg">Курсът е изцяло на български</div>
-        <div class="card-body">ABLE Activator – нашата 2-месечна интензивна предприемаческа програма – се провежда изцяло на английски език.</div>
+        <div class="card-title card-title--lg">Курсът е на български</div>
+        <div class="card-body">Пълният курс ABLE Activator е 2 месеца и е на английски.</div>
       </div>
     </div>
   </div>
@@ -1181,29 +1184,29 @@ a:hover { color: var(--accent-soft); }
 <section id="fit" class="slab">
   <div class="container">
     <div class="eyebrow">За кого</div>
-    <h2 class="sec-title">За кого е подходящо обучението</h2>
-    <p class="sec-lede">Ако на някакъв етап от живота си си имал бизнес идея, но не си направил стъпка към нейната реализация, защото по пътя си срещна пречки или не си знаел към кого да се обърнеш за съвет – ABLE Weekend Activator е обучението за теб.</p>
+    <h2 class="sec-title">За кого е</h2>
+    <p class="sec-lede">Имаш идея, но не знаеш как да я започнеш? Това обучение е за теб.</p>
 
     <div class="card-grid card-grid--five">
       <div class="card">
-        <div class="card-title">Хора с иновативни идеи</div>
-        <div class="card-body">Които не са сигурни как да предприемат първите стъпки към осъществяване на желания проект.</div>
+        <div class="card-title">Хора с идеи</div>
+        <div class="card-body">Не си сигурен как да направиш първата стъпка.</div>
       </div>
       <div class="card">
-        <div class="card-title">Целеустремени личности</div>
-        <div class="card-body">Които издирват съмишленици и ментори за съвет в бъдещите си начинания.</div>
+        <div class="card-title">Целеустремени хора</div>
+        <div class="card-body">Търсиш съмишленици и ментори.</div>
       </div>
       <div class="card">
-        <div class="card-title">Предприемчиви личности</div>
-        <div class="card-body">Които искат успоредно с настоящата си работа да стартират собствен бизнес или социално начинание.</div>
+        <div class="card-title">Предприемчиви хора</div>
+        <div class="card-body">Искаш да започнеш бизнес успоредно с работата.</div>
       </div>
       <div class="card">
         <div class="card-title">Студенти</div>
-        <div class="card-body">Които искат да се развиват в сферата на предприемачеството и да се учат от първа ръка какви са стъпките при стартиране на успешен бизнес.</div>
+        <div class="card-body">Искаш да научиш как се стартира бизнес.</div>
       </div>
       <div class="card">
         <div class="card-title">Млади професионалисти</div>
-        <div class="card-body">Които търсят препоръки и знания за прилагане и развиване на идеите си в проекти, които вече са започнали.</div>
+        <div class="card-body">Искаш съвет как да развиеш вече започнат проект.</div>
       </div>
     </div>
   </div>
@@ -1214,46 +1217,46 @@ a:hover { color: var(--accent-soft); }
      ===================================================================== -->
 <section id="gains" class="slab">
   <div class="container">
-    <div class="eyebrow">Какво ще спечелиш</div>
+    <div class="eyebrow">Какво печелиш</div>
     <h2 class="sec-title">Четири неща за два дни</h2>
 
     <div class="card-grid card-grid--auto card-grid--spaced">
       <div class="card">
         <div class="card-num">01</div>
         <div class="card-title">Инструменти</div>
-        <div class="card-body">Достъп до материали, ноу-хау и инструменти, които да ти служат вярно във всяко бъдещо начинание.</div>
+        <div class="card-body">Материали и инструменти, които ще ползваш и след курса.</div>
       </div>
       <div class="card">
         <div class="card-num">02</div>
         <div class="card-title">Знание</div>
-        <div class="card-body">Ще придобиеш ключови умения, които ще развият професионалното ти портфолио и ще отворят пред теб нови възможности.</div>
+        <div class="card-body">Умения, които помагат в работата и отварят нови врати.</div>
       </div>
       <div class="card">
         <div class="card-num">03</div>
         <div class="card-title">Ментори</div>
-        <div class="card-body">Работа с ментор, който да насочва и помага на екипа ти по пътя на разработване на избраната идея до нейното финално оформяне в бизнес план.</div>
+        <div class="card-body">Ментор води екипа ти от идея до бизнес план.</div>
       </div>
       <div class="card">
         <div class="card-num">04</div>
         <div class="card-title">Възможности</div>
-        <div class="card-body">Ще се запознаеш с други талантливи, проактивни и развиващи се млади хора от цяла България.</div>
+        <div class="card-body">Срещаш активни млади хора от цяла България.</div>
       </div>
     </div>
 
     <div class="eyebrow">И още</div>
     <h3 class="sec-subtitle">Пътят към пълния курс ABLE Activator</h3>
-    <p class="sec-lede">По време на ABLE Weekend Activator ще имаш възможност да разбереш повече за пълния ни предприемачески курс ABLE Activator. Уникалната ни 2-месечна програма ти дава много повече от знания и умения, а именно:</p>
+    <p class="sec-lede">На уикенда ще научиш и за пълния 2-месечен курс ABLE Activator. Там получаваш повече:</p>
 
     <div class="card-grid card-grid--auto">
       <div class="card">
         <div class="card-tag">Мрежа</div>
         <div class="card-title">Екосистема</div>
-        <div class="card-body">Ще се присъединиш към мрежа от проактивни и амбициозни млади хора, които работят за положителна промяна в средата си, независимо къде се намират.</div>
+        <div class="card-body">Присъединяваш се към мрежа от амбициозни млади хора.</div>
       </div>
       <div class="card">
         <div class="card-tag">Достъп</div>
         <div class="card-title">ABLE общност</div>
-        <div class="card-body">Покана до ексклузивни събития на ABLE и партньорски организации и възможност за разширяване на мрежата ти от контакти с хора от българската старт-ъп екосистема.</div>
+        <div class="card-body">Покана за събития на ABLE и нови контакти в стартъп средата.</div>
       </div>
     </div>
   </div>
@@ -1270,14 +1273,14 @@ a:hover { color: var(--accent-soft); }
     <div class="mods-intro">
       <div class="eyebrow">Как се кандидатства</div>
       <h2 class="sec-title">Стъпки при кандидатстване</h2>
-      <p class="sec-lede sec-lede--last">Шест стъпки делят формата за кандидатстване от Демо деня. Избери стъпка, за да видиш какво иска тя от теб.</p>
+      <p class="sec-lede sec-lede--last">Шест стъпки от формата до Демо деня. Избери стъпка, за да видиш какво следва.</p>
     </div>
 
     <div class="mods">
       <div class="mod-item" data-index="0">
         <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-01">
           <span class="mod-head-num">01</span>
-          <span class="mod-head-title">Попълване на апликация<span class="mod-head-dates">Онлайн форма</span></span>
+          <span class="mod-head-title">Попълваш формата<span class="mod-head-dates">Онлайн форма</span></span>
           <span class="mod-head-mark" aria-hidden="true"></span>
         </button>
 
@@ -1288,12 +1291,12 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>Онлайн форма</span>
             </div>
-            <h3 class="mod-panel-title">За участие в програмата е нужно да попълниш формата за кандидатстване</h3>
+            <h3 class="mod-panel-title">Попълни формата за кандидатстване</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">Финалните участници се избират от вътрешно жури. Не забравяй да споделиш с нас каква е твоята мотивация за участие &ndash; това е частта от формата, която тежи най-много.</p>
-            <p style="animation-delay:0.240s">Не ти е нужна конкретна бизнес идея, за да кандидатстваш.</p>
+            <p style="animation-delay:0.160s">Журито избира участниците. Най-важна е мотивацията ти.</p>
+            <p style="animation-delay:0.240s">Не ти трябва идея, за да кандидатстваш.</p>
           </div>
 
           <div class="mod-nav">
@@ -1306,7 +1309,7 @@ a:hover { color: var(--accent-soft); }
       <div class="mod-item" data-index="1">
         <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-02">
           <span class="mod-head-num">02</span>
-          <span class="mod-head-title">Обявяване на резултатите<span class="mod-head-dates">Топ 25&ndash;39 участници</span></span>
+          <span class="mod-head-title">Резултатите<span class="mod-head-dates">Топ 25-39 участници</span></span>
           <span class="mod-head-mark" aria-hidden="true"></span>
         </button>
 
@@ -1315,20 +1318,20 @@ a:hover { color: var(--accent-soft); }
             <div class="mod-meta">
               <span class="mod-meta-kind">Стъпка 02</span>
               <span class="mod-meta-sep" aria-hidden="true">/</span>
-              <span>Топ 25&ndash;39 участници</span>
+              <span>Топ 25-39 участници</span>
             </div>
-            <h3 class="mod-panel-title">Ще се свържем с всеки кандидатствал, за да споделим резултатите от подбора</h3>
+            <h3 class="mod-panel-title">Пишем на всеки с резултата</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">От тук продължаваме със селектираните топ 25&ndash;39 участници. На селектираните даваме срок от 2 работни дни за заплащане на таксата за участие, след което изпращаме потвърждение и допълнителна информация.</p>
+            <p style="animation-delay:0.160s">Продължават 25-39 души. Имаш 2 работни дни да платиш таксата. После пращаме потвърждение и детайли.</p>
           </div>
 
           <div class="mod-block">
             <div class="mod-block-label mod-block-label--tight">Важно за идеите</div>
-            <p class="mod-note">В рамките на програмата всички участници ще се разделят на точен брой екипи и ще се работи с ограничен брой идеи, като всеки формиран екип ще има индивидуален бизнес ментор.</p>
-            <p class="mod-note">Това означава, че приемът ви в програмата не гарантира, че задължително ще бъде развита вашата идея. Участниците на всяко издание номинират, вътрешно гласуват и избират финалните 4&ndash;6 идеи. И обратното &ndash; да имате идея не е задължително условие за кандидатстване и участие.</p>
-            <p class="mod-note">Имайте предвид, че избирането на първоначална идея е една съвсем малка част от това 48-часово предприемаческо предизвикателство. Ползите и знанията, които ще натрупате като част от екип, който извървява пътя на разработване на бизнес от нулата, са безценни, независимо кой е бил изначалният източник на вдъхновение.</p>
+            <p class="mod-note">Всички се разделят на екипи. Работите по малко идеи. Всеки екип има ментор.</p>
+            <p class="mod-note">Място в програмата не значи, че ще се развива твоята идея. Участниците гласуват и избират 4-6 идеи. Идея не е нужна, за да кандидатстваш.</p>
+            <p class="mod-note">Изборът на идея е малка част от уикенда. Важното е да минеш пътя в екип.</p>
           </div>
 
           <div class="mod-nav">
@@ -1341,7 +1344,7 @@ a:hover { color: var(--accent-soft); }
       <div class="mod-item" data-index="2">
         <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-03">
           <span class="mod-head-num">03</span>
-          <span class="mod-head-title">Получаване на ресурси<span class="mod-head-dates">Самоподготовка</span></span>
+          <span class="mod-head-title">Получаваш ресурси<span class="mod-head-dates">Самоподготовка</span></span>
           <span class="mod-head-mark" aria-hidden="true"></span>
         </button>
 
@@ -1352,12 +1355,12 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>Самоподготовка</span>
             </div>
-            <h3 class="mod-panel-title">Наръчник за генериране на старт-ъп идеи и затворена група</h3>
+            <h3 class="mod-panel-title">Наръчник за идеи и затворена група</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">Одобрените кандидати получават специализиран наръчник за генериране на старт-ъп идеи и се добавят в затворена група.</p>
-            <p style="animation-delay:0.240s">С наръчника започва и твоето предприемаческо предизвикателство &ndash; имаш около седмица да помислиш каква идея би искал да разработиш и да ни изпратиш кратко нейно описание.</p>
+            <p style="animation-delay:0.160s">Одобрените получават наръчник и влизат в затворена група.</p>
+            <p style="animation-delay:0.240s">Имаш около седмица да помислиш за идея и да ни пратиш кратко описание.</p>
           </div>
 
           <div class="mod-nav">
@@ -1383,17 +1386,17 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>Петък вечер</span>
             </div>
-            <h3 class="mod-panel-title">Неформална среща и познавателни игри</h3>
+            <h3 class="mod-panel-title">Неформална среща и игри</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">Неформална среща и познавателни игри за участници, лектори, ментори и приятели от мрежата на ABLE.</p>
-            <p style="animation-delay:0.240s">Ела, запознай се с екипа и част от участниците и се настрой за един уикенд, който ще промени начина, по който гледаш на всяка следваща бизнес идея.</p>
+            <p style="animation-delay:0.160s">Среща с участници, лектори, ментори и хора от ABLE.</p>
+            <p style="animation-delay:0.240s">Ела, запознай се с екипа и се настрой за уикенда.</p>
           </div>
 
           <div class="mod-block">
             <div class="mod-block-label mod-block-label--tight">Задължително ли е</div>
-            <p class="mod-note">Не. Срещата в петък е изцяло незадължителна и по никакъв начин няма да се отрази на по-нататъшното ти участие в програмата.</p>
+            <p class="mod-note">Не. Петък вечер е по желание и не влияе на участието ти.</p>
           </div>
 
           <div class="mod-nav">
@@ -1419,11 +1422,11 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>12 часа на ден</span>
             </div>
-            <h3 class="mod-panel-title">Безценни интерактивни сесии, лекции и дискусии</h3>
+            <h3 class="mod-panel-title">Сесии, лекции и дискусии</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">Обща продължителност от 12 часа на ден, както в събота, така и в неделя.</p>
+            <p style="animation-delay:0.160s">По 12 часа в събота и в неделя.</p>
           </div>
 
           <div class="mod-block">
@@ -1433,14 +1436,14 @@ a:hover { color: var(--accent-soft); }
                 <div class="mod-day-name">Събота</div>
                 <div class="mod-day-time">12 часа</div>
               </div>
-              <p class="mod-day-purpose">Основната част от обучителните модули: формиране на екипи, работа с бизнес менторите и първа работеща версия на прототипа.</p>
+              <p class="mod-day-purpose">Екипи, ментори и първа версия на прототипа.</p>
             </div>
             <div class="mod-day">
               <div>
                 <div class="mod-day-name">Неделя</div>
                 <div class="mod-day-time">12 часа</div>
               </div>
-              <p class="mod-day-purpose">Бизнес моделиране, финална версия на прототипа, уъркшоп за ефективно презентиране и подготовка за сцената.</p>
+              <p class="mod-day-purpose">Бизнес модел, финален прототип и подготовка за презентация.</p>
             </div>
           </div>
 
@@ -1467,12 +1470,12 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>Неделя, ~19:00 ч.</span>
             </div>
-            <h3 class="mod-panel-title">Гласуване на живо за Фаворит на публиката и Победител от журито</h3>
+            <h3 class="mod-panel-title">Гласуване за фаворит на публиката и победител от журито</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">Победителят се избира от специализиран панел от успешни предприемачи и представители на публичния сектор.</p>
-            <p style="animation-delay:0.240s">Официално програмата завършва около 19:00 ч. с края на презентациите, на които всички екипи представят под формата на pitch плода на екипните усилия, положени през уикенда.</p>
+            <p style="animation-delay:0.160s">Победителят се избира от предприемачи и хора от публичния сектор.</p>
+            <p style="animation-delay:0.240s">Програмата свършва около 19:00. Всеки екип прави pitch на сцената.</p>
           </div>
 
           <div class="mod-nav">
@@ -1496,7 +1499,7 @@ a:hover { color: var(--accent-soft); }
     <div class="mods-intro">
       <div class="eyebrow">Как протича</div>
       <h2 class="sec-title">График на обучението</h2>
-      <p class="sec-lede sec-lede--last">От кандидатстването до Демо деня &ndash; шест етапа, два от които са самият уикенд. Избери етап, за да видиш какво се случва в него.</p>
+      <p class="sec-lede sec-lede--last">От кандидатстването до Демо деня. Шест етапа. Два от тях са самият уикенд.</p>
     </div>
 
     <div class="mods">
@@ -1514,12 +1517,12 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>Форма за кандидатстване</span>
             </div>
-            <h3 class="mod-panel-title">Попълваш формата и споделяш мотивацията си</h3>
+            <h3 class="mod-panel-title">Попълваш формата и казваш защо искаш да участваш</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">За участие в програмата е нужно да попълниш формата за кандидатстване.</p>
-            <p style="animation-delay:0.240s">Не забравяй да споделиш с нас каква е твоята мотивация за участие.</p>
+            <p style="animation-delay:0.160s">Попълни формата за кандидатстване.</p>
+            <p style="animation-delay:0.240s">Напиши каква е мотивацията ти.</p>
           </div>
 
           <div class="mod-nav">
@@ -1543,13 +1546,13 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>След затваряне на формата</span>
             </div>
-            <h3 class="mod-panel-title">Подбираме най-мотивираните кандидати</h3>
+            <h3 class="mod-panel-title">Избираме най-мотивираните</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">След затваряне на формата за кандидатстване ще подберем най-мотивираните кандидати и ще обявим на всички кои са избраните участници за програмата.</p>
-            <p style="animation-delay:0.240s">На селектираните участници ще дадем срок от 2 работни дни за заплащане на такса за участие.</p>
-            <p style="animation-delay:0.320s">След получаване на сумата ще ти изпратим потвърждение и допълнителна информация.</p>
+            <p style="animation-delay:0.160s">След като формата се затвори, казваме кой е приет.</p>
+            <p style="animation-delay:0.240s">Приетите имат 2 работни дни да платят таксата.</p>
+            <p style="animation-delay:0.320s">След плащането пращаме потвърждение и още информация.</p>
           </div>
 
           <div class="mod-nav">
@@ -1573,12 +1576,12 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>Около седмица преди началото</span>
             </div>
-            <h3 class="mod-panel-title">Наръчникът пристига и предизвикателството започва</h3>
+            <h3 class="mod-panel-title">Наръчникът пристига</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">Ако си сред селектираните за участие и си заплатил своята такса, ще ти изпратим специализиран наръчник за генериране на старт-ъп идеи, с което започва и твоето предприемаческо предизвикателство.</p>
-            <p style="animation-delay:0.240s">Успоредно с това ще те запознаем с останалите участници: предварително всеки от вас ще попълни изготвена от нас бланка за личен профил, след което ще те представим на останалите в затворена група, за да имате възможност да се опознаете преди началото на програмата.</p>
+            <p style="animation-delay:0.160s">Ако си приет и си платил, получаваш наръчник за стартъп идеи.</p>
+            <p style="animation-delay:0.240s">Попълваш кратък профил. После ви събираме в затворена група, за да се опознаете.</p>
           </div>
 
           <div class="mod-nav">
@@ -1591,7 +1594,7 @@ a:hover { color: var(--accent-soft); }
       <div class="mod-item" data-index="3">
         <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-04">
           <span class="mod-head-num">04</span>
-          <span class="mod-head-title">Неформална среща за всички подранили<span class="mod-head-dates">Ден преди началото</span></span>
+          <span class="mod-head-title">Неформална среща<span class="mod-head-dates">Ден преди началото</span></span>
           <span class="mod-head-mark" aria-hidden="true"></span>
         </button>
 
@@ -1602,12 +1605,12 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>Петък вечер</span>
             </div>
-            <h3 class="mod-panel-title">Среща на избрана от нас локация</h3>
+            <h3 class="mod-panel-title">Среща на място, което ще ти кажем</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">За всички пристигнали ден по-рано ще организираме неформална среща на избрана от нас локация.</p>
-            <p style="animation-delay:0.240s">Ела, запознай се с екипа и част от участниците и се настрой за един уикенд, който ще промени начина, по който гледаш на всяка следваща бизнес идея.</p>
+            <p style="animation-delay:0.160s">Ако си в града от петък, има неформална среща.</p>
+            <p style="animation-delay:0.240s">Ела, запознай се с екипа и се настрой за уикенда.</p>
           </div>
 
           <div class="mod-nav">
@@ -1620,7 +1623,7 @@ a:hover { color: var(--accent-soft); }
       <div class="mod-item" data-index="4">
         <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-05">
           <span class="mod-head-num">05</span>
-          <span class="mod-head-title">Модул 1 &ndash; Основи<span class="mod-head-dates">Ден 1 &middot; събота</span></span>
+          <span class="mod-head-title">Модул 1. Основи<span class="mod-head-dates">Ден 1 &middot; събота</span></span>
           <span class="mod-head-mark" aria-hidden="true"></span>
         </button>
 
@@ -1637,8 +1640,8 @@ a:hover { color: var(--accent-soft); }
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">В ден 1 ще се разделите по екипи и ще се запознаете с бизнес менторите, които ще ви насочват по пътя към успешно разработване на вашия проект.</p>
-            <p style="animation-delay:0.240s">Ще ви научим как да търсите обективна обратна връзка за вашите бизнес идеи и чрез редица инструменти, работилници и експерименти ще започнете процеса по развиване на нейна първа работеща версия (прототип).</p>
+            <p style="animation-delay:0.160s">В събота се разделяте на екипи и се запознавате с менторите.</p>
+            <p style="animation-delay:0.240s">Учиш как да търсиш обратна връзка. С работилници правите първа версия на прототипа.</p>
           </div>
 
           <div class="mod-block">
@@ -1662,7 +1665,7 @@ a:hover { color: var(--accent-soft); }
       <div class="mod-item" data-index="5">
         <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-06">
           <span class="mod-head-num">06</span>
-          <span class="mod-head-title">Модул 2 &ndash; Демо ден<span class="mod-head-dates">Ден 2 &middot; неделя</span></span>
+          <span class="mod-head-title">Модул 2. Демо ден<span class="mod-head-dates">Ден 2 &middot; неделя</span></span>
           <span class="mod-head-mark" aria-hidden="true"></span>
         </button>
 
@@ -1675,18 +1678,18 @@ a:hover { color: var(--accent-soft); }
               <span class="mod-meta-sep" aria-hidden="true">/</span>
               <span>до ~19:00 ч.</span>
             </div>
-            <h3 class="mod-panel-title">Бизнес моделиране, презентиране и сцената</h3>
+            <h3 class="mod-panel-title">Бизнес модел, презентация и сцена</h3>
           </div>
 
           <div class="mod-body">
-            <p style="animation-delay:0.160s">В ден 2 ще преминем към бизнес моделиране и оформяне на финална версия на прототипа на вашия проект. След уъркшоп, посветен на ефективното презентиране, ще се насочим към сцената на финалните презентации.</p>
-            <p style="animation-delay:0.240s">На финалите всички екипи ще имат възможност да представят резултатите от 2-дневната си работа и на място ще получат обратна връзка за положените усилия от специално селектирано жури от успешни предприемачи, инвеститори и бизнес специалисти.</p>
+            <p style="animation-delay:0.160s">В неделя оформяте бизнес модела и финалния прототип. После има уъркшоп за презентиране и излизате на сцената.</p>
+            <p style="animation-delay:0.240s">Всеки екип показва работата си. Жури от предприемачи и инвеститори дава обратна връзка.</p>
           </div>
 
           <div class="mod-block">
             <div class="mod-block-label mod-block-label--tight">За избора на идеи</div>
-            <p class="mod-note">След получаването на наръчника &bdquo;Генериране на старт-ъп идеи&ldquo; ще имаш около седмица да помислиш каква идея би искал да разработиш в рамките на курса и да ни предоставиш кратко нейно описание. Още на първата сутрин от предприемаческия уикенд в рамките на 60 секунди всеки участник ще сподели своята идея и накрая всички ще се обединят в екипи от по около 5 души около предложените идеи.</p>
-            <p class="mod-note">Това означава, че в рамките на програмата ще се работи над ограничен брой идеи и твоята може да не е една от тях. Това по никакъв начин не бива да те обезкуражава &ndash; избирането на идея е една съвсем малка част от това 36-часово предприемаческо предизвикателство. Ползите и знанията, които ще натрупаш като част от екип, който извървява пътя на разработване на бизнес от нулата, са безценни, независимо откъде е изначалният източник на вдъхновение. Повярвай, и ние сме били на твоето място!</p>
+            <p class="mod-note">След наръчника имаш около седмица да пратиш кратко описание на идея. В събота сутрин всеки има 60 секунди да я представи. После се събирате в екипи от около 5 души.</p>
+            <p class="mod-note">Ще работите по малко идеи. Твоята може да не влезе. Това е ок. Важното е да минеш пътя в екип.</p>
           </div>
 
           <div class="mod-nav">
@@ -1706,18 +1709,18 @@ a:hover { color: var(--accent-soft); }
   <div class="container">
     <div class="eyebrow">Цена и условия</div>
     <h2 class="sec-title">Такса за участие</h2>
-    <p class="sec-lede">Ако си на възраст между 19 и 35 г. и си готов да стартираш предприемаческото си пътуване, можеш да запазиш своето място през формата за кандидатстване.</p>
+    <p class="sec-lede">Ако си между 19 и 35 години, запази място през формата.</p>
 
     <div class="card-grid card-grid--auto card-grid--spaced">
       <div class="card">
         <div class="card-tag">Студенти</div>
         <div class="card-title">25 &euro;</div>
-        <div class="card-body">48.90 лв. Същата програма, същият достъп до ментори и материали.</div>
+        <div class="card-body">48.90 лв. Същата програма и същият достъп до ментори.</div>
       </div>
       <div class="card">
         <div class="card-tag">Млади професионалисти</div>
         <div class="card-title">76 &euro;</div>
-        <div class="card-body">148.64 лв. Същата програма, същият достъп до ментори и материали.</div>
+        <div class="card-body">148.64 лв. Същата програма и същият достъп до ментори.</div>
       </div>
     </div>
 
@@ -1727,22 +1730,22 @@ a:hover { color: var(--accent-soft); }
       <div class="card">
         <div class="card-num">01</div>
         <div class="card-title">Работилници и материали</div>
-        <div class="card-body">Достъп до всички работилници и материали, необходими за генериране, разработване и реализиране на първоначален прототип на твоята идея и успешното завършване на обучението.</div>
+        <div class="card-body">Всички работилници и материали за прототипа.</div>
       </div>
       <div class="card">
         <div class="card-num">02</div>
         <div class="card-title">Бизнес ментор</div>
-        <div class="card-body">Работа с ментор, който ще ви насочва и помага в процеса на разработване на идеята на твоя екип.</div>
+        <div class="card-body">Ментор, който помага на екипа ти.</div>
       </div>
       <div class="card">
         <div class="card-num">03</div>
         <div class="card-title">Храна и напитки</div>
-        <div class="card-body">Подсилващ обяд в събота и неделя, както и освежаващи храни и напитки по време на кафе паузите.</div>
+        <div class="card-body">Обяд в събота и неделя, плюс кафе паузи.</div>
       </div>
       <div class="card">
         <div class="card-num">04</div>
         <div class="card-title">Изненади на място</div>
-        <div class="card-body">Допълнителни изненади, за които няма да ти кажем предварително.</div>
+        <div class="card-body">Малки изненади на място.</div>
       </div>
     </div>
   </div>
@@ -1755,18 +1758,18 @@ a:hover { color: var(--accent-soft); }
   <div class="container">
     <div class="eyebrow">Последни издания</div>
     <h2 class="sec-title">Пловдив и София</h2>
-    <p class="sec-lede">Разгледай снимки, прочети отзиви и виж видео от финалното събитие на минали издания на ABLE Weekend Activator.</p>
+    <p class="sec-lede">Снимки, отзиви и видео от минали издания.</p>
 
     <div class="card-grid card-grid--auto">
       <div class="card">
-        <div class="card-tag">10 &ndash; 12 октомври</div>
+        <div class="card-tag">10-12 октомври</div>
         <div class="card-title card-title--lg">Пловдив</div>
-        <div class="card-body">36 часа, екипи от по около 5 души и Демо ден пред жури от предприемачи и инвеститори.</div>
+        <div class="card-body">36 часа, екипи от около 5 души и Демо ден пред жури.</div>
       </div>
       <div class="card">
-        <div class="card-tag">14 &ndash; 16 ноември</div>
+        <div class="card-tag">14-16 ноември</div>
         <div class="card-title card-title--lg">София</div>
-        <div class="card-body">Същият формат, ново издание &ndash; нетуъркинг коктейл в петък, два пълни дни работа и финални презентации.</div>
+        <div class="card-body">Същият формат. Коктейл в петък, два дни работа и финални презентации.</div>
       </div>
     </div>
   </div>
@@ -1777,24 +1780,24 @@ a:hover { color: var(--accent-soft); }
      ===================================================================== -->
 <section id="testimonials" class="slab">
   <div class="container">
-    <div class="eyebrow">Предишните участници вярват в нас</div>
-    <h2 class="sec-title">Ето какво споделят</h2>
+    <div class="eyebrow">От участници</div>
+    <h2 class="sec-title">Какво казват</h2>
 
     <div class="card-grid card-grid--auto">
       <div class="card card--quote">
-        <div class="card-body">&bdquo;Много трудно ще намеря думи за тази публикация. Това, което преживях през този уикенд, е неописуемо. Не съм предполагала, че ще видя 30 души, които са толкова целеустремени, надъхани, забавни, обичливи, вдъхновяващи. Научих толкова много неща в рамките на два дни. Главният урок, който си извлякох от тези два дни, е че ако съумееш да пребориш емоционалната си бариера и ограничения, после се чувстваш непобедим.&ldquo;</div>
+        <div class="card-body">&bdquo;Този уикенд беше неописуем. Трийсет целеустремени и вдъхновяващи хора. За два дни научих много. Главният урок: ако пребориш страха, после се чувстваш непобедим.&ldquo;</div>
         <div class="card-cite">Венцислава Славова &middot; предприемач</div>
       </div>
       <div class="card card--quote">
-        <div class="card-body">&bdquo;Теорията беше поднесена по приятен и лек начин. Практическите предизвикателства бяха изключително полезни, а средата от будни хора ме мотивираше изключително много.&ldquo;</div>
+        <div class="card-body">&bdquo;Теорията беше лека и ясна. Практическите задачи бяха полезни. Хората около мен ме мотивираха.&ldquo;</div>
         <div class="card-cite">Мирослав Николов &middot; предприемач</div>
       </div>
       <div class="card card--quote">
-        <div class="card-body">&bdquo;Един уикенд. 14&ndash;15 часа интензивна работа. Много търпение. Трудности. Успехи. Освен работата в екип, ще се сблъскате и с това някой да критикува идеята ви, да я подложи под съмнение, да трябва да го убедите, че си струва. Така е и в реалния живот. Беше безценно да работим с ментор, много по-опитен от нас, който да е фокусиран върху идеята и да ни насочва, без да върши работата вместо нас.&ldquo;</div>
+        <div class="card-body">&bdquo;Един уикенд. Много работа, търпение и успехи. Ще чуеш критика по идеята си и ще трябва да я защитиш. Така е и в реалния живот. Менторът ни насочваше, без да върши работата вместо нас.&ldquo;</div>
         <div class="card-cite">Дилян Димитров &middot; дигитален маркетинг</div>
       </div>
       <div class="card card--quote">
-        <div class="card-body">&bdquo;Определено работата не беше лека, даде ни се възможност да мислим над доста теми, имахме индивидуалност в проекта си. Хареса ми свободата в работата, която ни се даде, понеже покрай нея научихме и какви трябва да са постижимите идеи за определено време.&ldquo;</div>
+        <div class="card-body">&bdquo;Работата не беше лека, но имахме свобода. Научихме какви идеи са реалистични за това време.&ldquo;</div>
         <div class="card-cite">Иван Иванов &middot; финансов и инвестиционен консултант</div>
       </div>
     </div>
@@ -1815,66 +1818,66 @@ a:hover { color: var(--accent-soft); }
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="true" aria-controls="faq-a-1">
-          <span class="faq-q-text">Задължително ли е да кандидатствам с конкретна бизнес идея?</span>
+          <span class="faq-q-text">Трябва ли идея, за да кандидатствам?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-1">Накратко &ndash; не. Към момента на регистрация за курса не е нужно да имаш конкретна бизнес идея. След затваряне на регистрациите изпращаме до всички записали се наръчник за генериране на старт-ъп идеи и имаш около седмица да помислиш каква идея би искал да разработиш.</p>
+        <p class="faq-a" id="faq-a-1">Не. При регистрация не ти трябва идея. После пращаме наръчник и имаш около седмица да помислиш.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-2">
-          <span class="faq-q-text">Каква е цената и какви са условията за участие?</span>
+          <span class="faq-q-text">Каква е цената?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-2" hidden>Ако си на възраст между 19 и 35 г., таксата е 25 &euro; (48.90 лв.) за студенти и 76 &euro; (148.64 лв.) за млади професионалисти. Тя включва достъп до всички работилници и материали, работа с бизнес ментор, подсилващ обяд в събота и неделя, кафе паузи и допълнителни изненади на място.</p>
+        <p class="faq-a" id="faq-a-2" hidden>Ако си между 19 и 35 години: 25 &euro; (48.90 лв.) за студенти и 76 &euro; (148.64 лв.) за млади професионалисти. Включва работилници, материали, ментор, обяд, кафе паузи и изненади.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-3">
-          <span class="faq-q-text">Мога ли да пропусна срещата в петък?</span>
+          <span class="faq-q-text">Мога ли да пропусна петък?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-3" hidden>Срещата в петък е изцяло незадължителна и абсолютно неформална. По никакъв начин няма да се отрази на по-нататъшното ти участие в програмата.</p>
+        <p class="faq-a" id="faq-a-3" hidden>Да. Срещата в петък е по желание и не влияе на участието ти.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-4">
-          <span class="faq-q-text">Мога ли да се присъединя в неделя, ако не мога да присъствам в събота?</span>
+          <span class="faq-q-text">Мога ли да дойда само в неделя?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-4" hidden>В събота се провежда основната част от обучителните модули. Препоръката ни е, ако се окаже, че няма как да присъстваш в събота, да преотстъпиш своето място на приятел и да дадеш възможност на другиго да стане част от 36-часовото предизвикателство.</p>
+        <p class="faq-a" id="faq-a-4" hidden>В събота е основното обучение. Ако не можеш в събота, по-добре отстъпи мястото си на някой друг.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-5">
           <span class="faq-q-text">Кога ще приключим в неделя?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-5" hidden>Официално програмата ще завърши около 19:00 ч. с края на презентациите, на които всички екипи представят под формата на pitch пред специалното ни жури плода на екипните усилия, положени през уикенда.</p>
+        <p class="faq-a" id="faq-a-5" hidden>Около 19:00, след финалните презентации.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-6">
-          <span class="faq-q-text">Над моята идея ли ще работя по време на курса?</span>
+          <span class="faq-q-text">Над моята идея ли ще работя?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-6" hidden>Краткият отговор е &ndash; не задължително, но нека това не те обезкуражава. Още на първата сутрин в рамките на 60 секунди всеки участник споделя своята идея и всички гласуват кои са идеите, върху които искат да работят. Ползите и знанията, които ще натрупаш като част от екип, който извървява пътя на разработване на бизнес от нулата, са безценни, независимо кой е изначалният източник на вдъхновение.</p>
+        <p class="faq-a" id="faq-a-6" hidden>Не задължително. В събота сутрин всеки представя идея за 60 секунди и всички гласуват. Важното е да работиш в екип от нулата.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-7">
-          <span class="faq-q-text">Предлагате ли опция за настаняване?</span>
+          <span class="faq-q-text">Има ли настаняване?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-7" hidden>Благодарение на партньорството ни можем да ти асистираме &ndash; предварително ще ти изпратим опцията, с която разполагаме, за потвърждаване на твоето желание.</p>
+        <p class="faq-a" id="faq-a-7" hidden>Можем да помогнем. Ще ти пратим опцията предварително.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-8">
-          <span class="faq-q-text">На какъв език се провежда курсът?</span>
+          <span class="faq-q-text">На какъв език е курсът?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-8" hidden>ABLE Weekend Activator се провежда изцяло на български език. ABLE Activator &ndash; нашата 2-месечна интензивна предприемаческа програма &ndash; се провежда изцяло на английски.</p>
+        <p class="faq-a" id="faq-a-8" hidden>Weekend Activator е на български. Пълният 2-месечен ABLE Activator е на английски.</p>
       </div>
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-9">
           <span class="faq-q-text">Как да се свържа с вас?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
-        <p class="faq-a" id="faq-a-9" hidden>При въпроси или нужда от допълнителна информация можеш да се свържеш с нас на <a href="mailto:team@activator.bg">team@activator.bg</a>.</p>
+        <p class="faq-a" id="faq-a-9" hidden>Пиши на <a href="mailto:team@activator.bg">team@activator.bg</a>.</p>
       </div>
     </div>
   </div>
