@@ -11,6 +11,10 @@
       {
         "slug": "landing-2",
         "title": "Hero Section Examples"
+      },
+      {
+        "slug": "landing-3",
+        "title": "Landing Page 3 (fullscreen)"
       }
     ]
   },
@@ -20,16 +24,27 @@
     "blurb": "Full programme detail pages — modules, schedule, FAQ.",
     "pages": [
       {
+        "slug": "program-3",
+        "title": "Program Page 3 (main)"
+      },
+      {
         "slug": "program-1",
         "title": "Program Page 1"
       },
       {
         "slug": "program-2",
         "title": "Program Page 2"
-      },
+      }
+    ]
+  },
+  {
+    "id": "weekend",
+    "title": "Weekend Activator",
+    "blurb": "ABLE Weekend Activator — 2-day intensive.",
+    "pages": [
       {
-        "slug": "program-3",
-        "title": "Program Page 3"
+        "slug": "weekend-activator",
+        "title": "Weekend Activator (BG)"
       }
     ]
   }

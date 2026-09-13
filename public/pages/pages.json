@@ -10,6 +10,10 @@
       {
         "slug": "landing-2",
         "title": "Hero Section Examples"
+      },
+      {
+        "slug": "landing-3",
+        "title": "Landing Page 2"
       }
     ]
   },
@@ -18,16 +22,26 @@
     "title": "Program Pages",
     "pages": [
       {
+        "slug": "program-3",
+        "title": "Program Page 3 (main)"
+      },
+      {
         "slug": "program-1",
         "title": "Program Page 1"
       },
       {
         "slug": "program-2",
         "title": "Program Page 2"
-      },
+      }
+    ]
+  },
+  {
+    "id": "weekend",
+    "title": "Weekend Activator",
+    "pages": [
       {
-        "slug": "program-3",
-        "title": "Program Page 3"
+        "slug": "weekend-activator",
+        "title": "Weekend Activator (BG)"
       }
     ]
   }

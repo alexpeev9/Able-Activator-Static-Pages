@@ -165,10 +165,20 @@ a:hover { color: var(--accent-soft); }
   border: 1px solid var(--line);
 }
 .card-grid--auto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+/* Five items in one row; a 3+2 wrap would leave a hole in the hairline grid. */
+.card-grid--five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 1100px) {
+  .card-grid--five { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* 5 cards never divide evenly once wrapped, so the last one fills the gap. */
+  .card-grid--five > .card:last-child { grid-column: span 2; }
+}
 .card-grid--spaced { margin-bottom: clamp(28px, 4vw, 44px); }
 
 @media (max-width: 820px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .card-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) {
+  .card-grid { grid-template-columns: minmax(0, 1fr); }
+  .card-grid--five > .card:last-child { grid-column: auto; }
+}
 
 .card {
   background: var(--bg-card);
@@ -490,7 +500,8 @@ a:hover { color: var(--accent-soft); }
      <  880px  block flow - each panel sits under its own heading (accordion).
    -------------------------------------------------------------------------- */
 
-#modules { scroll-margin-top: 110px; }
+#modules,
+#timeline { scroll-margin-top: 110px; }
 
 .mods-intro { margin-bottom: clamp(22px, 3.4vw, 36px); }
 .mods-intro .sec-lede {
@@ -727,6 +738,12 @@ a:hover { color: var(--accent-soft); }
     display: flex;
     animation: panelIn .42s cubic-bezier(.2, .7, .3, 1) both;
   }
+}
+
+/* The timeline has fewer, shorter panels than the curriculum, so it does not
+   need the tall reserved panel height that keeps the modules from jumping. */
+@media (min-width: 880px) {
+  #timeline .mod-panel { min-height: 360px; }
 }
 
 /* -- Mobile: accordion ----------------------------------------------------- */
@@ -1075,6 +1092,7 @@ a:hover { color: var(--accent-soft); }
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="#fit">Who</a>
+      <a href="#timeline">Timeline</a>
       <a href="#modules">Modules</a>
       <a href="#fees">Fees</a>
       <a href="#faq">FAQ</a>
@@ -1117,7 +1135,7 @@ a:hover { color: var(--accent-soft); }
     <h2 class="sec-title">Students or young professionals</h2>
     <p class="sec-lede">You need to be between 20 and 35. You do not need an idea or a team.</p>
 
-    <div class="card-grid card-grid--spaced">
+    <div class="card-grid card-grid--auto card-grid--spaced">
       <div class="card">
         <div class="card-tag">One</div>
         <div class="card-title card-title--lg">Students</div>
@@ -1128,24 +1146,54 @@ a:hover { color: var(--accent-soft); }
         <div class="card-title card-title--lg">Young professionals</div>
         <div class="card-body">Already earning, and still under 35. You follow the same six weekends and Demo Day.</div>
       </div>
+    </div>
+
+    <div class="eyebrow">Candidate eligibility</div>
+    <h3 class="sec-subtitle">Four things you have to meet</h3>
+
+    <div class="card-grid card-grid--auto card-grid--spaced">
       <div class="card">
         <div class="card-tag">Age</div>
-        <div class="card-title card-title--lg">20&ndash;35</div>
-        <div class="card-body">The range is the same for both. If you are outside it, wait for a later edition.</div>
+        <div class="card-title">20&ndash;35</div>
+        <div class="card-body">University students and young professionals above 20 and under 35 years of age.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">Language</div>
+        <div class="card-title">Fluency in English</div>
+        <div class="card-body">All lectures, workshops and program-related activities will be held in English.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">Attendance</div>
+        <div class="card-title">Ability to attend</div>
+        <div class="card-body">All events will be conducted in person. You will need to attend at least 5 out of 6 modules.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">Selection</div>
+        <div class="card-title">Application process</div>
+        <div class="card-body">A 2-step selection process &mdash; pre-selection (application form, incl. Statement of Purpose) and final interviews for the top 50.</div>
       </div>
     </div>
 
     <div class="eyebrow">What we look for</div>
-    <h3 class="sec-subtitle">The people, not the resume</h3>
+    <h3 class="sec-subtitle">The ideal candidates</h3>
+    <p class="sec-lede">We want to enable top achievers to develop their full potential, chase after their dreams, and turn their ideas into working projects.</p>
 
-    <div class="card-grid">
+    <div class="card-grid card-grid--five">
       <div class="card">
         <div class="card-title">Problem solvers</div>
         <div class="card-body">You look for new and useful ways to solve a real problem.</div>
       </div>
       <div class="card">
+        <div class="card-title">Proactive achievers</div>
+        <div class="card-body">You do not wait to be told what to do. You pick something up and carry it to the end.</div>
+      </div>
+      <div class="card">
         <div class="card-title">Challenge seekers</div>
         <div class="card-body">You stay curious when the work gets difficult, and try to create value anyway.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Change-makers</div>
+        <div class="card-body">You want your work to change something for other people, not only for yourself.</div>
       </div>
       <div class="card">
         <div class="card-title">Determined self-starters</div>
@@ -1180,6 +1228,233 @@ a:hover { color: var(--accent-soft); }
         <div class="card-title">Offer</div>
         <div class="card-body">We send instructions for each step by email, including the outcome of your application.</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Application timeline
+
+     Same component as the curriculum above: one .mods group of .mod-item,
+     rail + panel on desktop, accordion on mobile. app.js wires each .mods
+     group independently.
+     ===================================================================== -->
+<section class="slab" id="timeline">
+  <div class="container">
+    <div class="mods-intro">
+      <div class="eyebrow">When it happens</div>
+      <h2 class="sec-title">Timeline for the application process</h2>
+      <p class="sec-lede sec-lede--last">The applications for the 9th edition of ABLE Activator open this autumn. Five dates stand between the form and the first Friday evening in Sofia &mdash; pick one to see what it asks of you.</p>
+    </div>
+
+    <div class="mods">
+      <div class="mod-item" data-index="0">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="tl-panel-01">
+          <span class="mod-head-num">01</span>
+          <span class="mod-head-title">Application deadline<span class="mod-head-dates">7 Dec 2026</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="tl-panel-01">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Step 01</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7 Dec 2026</span>
+            </div>
+            <h3 class="mod-panel-title">Get the form in before the cut-off</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Make sure you fill in, double check and submit your application by the above deadline. Incomplete applications will not be considered.</p>
+            <p style="animation-delay:0.240s">The form includes a Statement of Purpose, so leave yourself more than one evening for it.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What the date means</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Monday 7 Dec 2026</div>
+                <div class="mod-day-time">23:59 EET</div>
+              </div>
+              <p class="mod-day-purpose">The form closes. Nothing submitted after this point enters the evaluation.</p>
+            </div>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous step">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next step">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="1">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="tl-panel-02">
+          <span class="mod-head-num">02</span>
+          <span class="mod-head-title">Written applications evaluation<span class="mod-head-dates">23 Dec 2026</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="tl-panel-02">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Step 02</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>23 Dec 2026</span>
+            </div>
+            <h3 class="mod-panel-title">Two independent evaluators read every form</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Each application will be carefully evaluated by a minimum of two independent evaluators. Only the top 50 applicants will be invited for a face-to-face interview.</p>
+            <p style="animation-delay:0.240s">We advise each applicant to plan to be available for the interview weekend before the results are out.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What the date means</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Wednesday 23 Dec 2026</div>
+                <div class="mod-day-time">By end of day</div>
+              </div>
+              <p class="mod-day-purpose">The top 50 are notified by email. Everyone else receives an outcome for their application as well.</p>
+            </div>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous step">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next step">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="2">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="tl-panel-03">
+          <span class="mod-head-num">03</span>
+          <span class="mod-head-title">Interview weekend<span class="mod-head-dates">9 &ndash; 10 Jan 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="tl-panel-03">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Step 03</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>9 &ndash; 10 Jan 2027</span>
+            </div>
+            <h3 class="mod-panel-title">A short face-to-face interview in Sofia</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">The top 50 applicants will be invited for a short face-to-face interview with a specially selected 5-member jury, which will take place on 9 and 10 January 2027 in Sofia.</p>
+            <p style="animation-delay:0.240s">The goal is to get to know the candidates a little bit better and give them the opportunity to showcase their strengths in a more personal environment.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What the date means</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Saturday 9 Jan 2027</div>
+                <div class="mod-day-time">Sofia</div>
+              </div>
+              <p class="mod-day-purpose">First interview day. You are assigned one slot and it takes around 20 minutes.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Sunday 10 Jan 2027</div>
+                <div class="mod-day-time">Sofia</div>
+              </div>
+              <p class="mod-day-purpose">Second interview day for the remaining candidates. Final 30 are picked after both days.</p>
+            </div>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous step">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next step">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="3">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="tl-panel-04">
+          <span class="mod-head-num">04</span>
+          <span class="mod-head-title">Participation confirmation<span class="mod-head-dates">15 Jan 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="tl-panel-04">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Step 04</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>15 Jan 2027</span>
+            </div>
+            <h3 class="mod-panel-title">Contracts signed and fees settled</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">All participation contracts must be signed and fees duly paid by 15 January 2027.</p>
+            <p style="animation-delay:0.240s">If you applied for a scholarship or for paying the fee in two parts, this is when the arrangement is confirmed in writing.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What the date means</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 15 Jan 2027</div>
+                <div class="mod-day-time">23:59 EET</div>
+              </div>
+              <p class="mod-day-purpose">Your place in the cohort of 30 is confirmed once the contract and the first payment are in.</p>
+            </div>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous step">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next step">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="4">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="tl-panel-05">
+          <span class="mod-head-num">05</span>
+          <span class="mod-head-title">ABLE Activator kick-off<span class="mod-head-dates">19 Feb 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="tl-panel-05">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Step 05</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>19 Feb 2027</span>
+            </div>
+            <h3 class="mod-panel-title">The program starts</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">February marks the official start of the program and the beginning of 2 amazing months which will forever change the way each participant views their career path and professional life.</p>
+            <p style="animation-delay:0.240s">The kick-off is the Friday evening of Module 1, and from there the six weekends run through to Demo Day in April.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What the date means</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 19 Feb 2027</div>
+                <div class="mod-day-time">7:00 PM &ndash; 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Opening evening of Module 1: meet the cohort, the trainers and the ABLE community.</p>
+            </div>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous step">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next step">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2100,7 +2375,12 @@ document.addEventListener("DOMContentLoaded", function () {
      ---------------------------------------------------------------------- */
 
   var WIDE = window.matchMedia("(min-width: 880px)");
-  var items = Array.prototype.slice.call(document.querySelectorAll(".mod-item"));
+
+  /* There is more than one .mods group on the page (the curriculum and the
+     application timeline). Each one keeps its own active/open index, so
+     wire them up separately instead of over one flat .mod-item list. */
+  Array.prototype.forEach.call(document.querySelectorAll(".mods"), function (group) {
+  var items = Array.prototype.slice.call(group.querySelectorAll(".mod-item"));
 
   if (items.length) {
     var active = 0;   // desktop: always one selected
@@ -2152,6 +2432,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderModules();
   }
+  });
 
   /* ------------------------------------------------------------------------
      3. Quiz

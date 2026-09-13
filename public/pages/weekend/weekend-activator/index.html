@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABLE Weekend Activator – 2-дневна предприемаческа програма</title>
+<meta name="description" content="ABLE Weekend Activator – 2-дневна интензивна предприемаческа програма. За 2 дни работиш в екип над бизнес идея и я развиваш до работещ прототип.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Cyrillic-capable stand-ins for the Poppins/Barlow pairing used on the program pages. -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   ABLE Weekend Activator - weekend page
+   Plain CSS. No build step, no framework.
+
+   Sections, in order:
+     1. Tokens & base
+     2. Layout primitives (slab, container, headings, cards, buttons)
+     3. Site header
+     4. Page background (fixed video)
+     5. Hero
+     6. Modules (rail on desktop, accordion on mobile)
+     7. FAQ
+     8. Closing CTA band
+     9. Quiz
+    10. Footer
+    11. Reduced motion
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens & base
+   -------------------------------------------------------------------------- */
+
+:root {
+  --accent: #29abe2;
+  --accent-soft: #7ad2f2;
+  --accent-ink: #10222b;
+
+  --bg: #1c1c1c;
+  --bg-slab: #1f1f1f;
+  --bg-hero: #131313;
+  --bg-card: #1c1c1c;
+  --bg-footer: #1a1a1a;
+
+  --line: #2b2b2b;
+  --line-soft: #262626;
+  --line-strong: #3a3f42;
+
+  --text: #e9edef;
+  --text-bright: #ffffff;
+  --text-muted: #a8b1b5;
+  --text-dim: #8d979b;
+  --text-faint: #767f83;
+
+  --font-body: "IBM Plex Sans", Helvetica, sans-serif;
+  --font-display: Manrope, Helvetica, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --container: 1180px;
+  --slab-pad-y: clamp(36px, 5.4vw, 78px);
+  --slab-pad-x: clamp(16px, 4vw, 40px);
+}
+
+* { box-sizing: border-box; }
+
+html, body { overflow-x: clip; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The fonts ship Bulgarian localised Cyrillic alternates and lang="bg"
+   switches them on. Turn them off to keep the standard letterforms the rest
+   of the ABLE site uses. Form controls need it spelled out: the UA `font`
+   shorthand on button/input resets font-feature-settings. */
+body, button, input, select, textarea {
+  font-feature-settings: "locl" 0;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-soft); }
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+[id] { scroll-margin-top: 94px; }
+@media (max-width: 860px) { [id] { scroll-margin-top: 80px; } }
+
+/* --------------------------------------------------------------------------
+   2. Layout primitives
+   -------------------------------------------------------------------------- */
+
+/* A full-bleed horizontal band. Sits above the fixed video background. */
+.slab {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-slab);
+  border-top: 1px solid var(--line-soft);
+}
+
+/* A band that lets the fixed video background show through. */
+.scene {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--slab-pad-y) var(--slab-pad-x);
+}
+
+/* Small blue monospace label above a heading. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.sec-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(25px, 4vw, 40px);
+  line-height: 1.08;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+
+.sec-title + .card-grid,
+.sec-title + .faq-list { margin-top: clamp(22px, 3vw, 34px); }
+
+.sec-subtitle {
+  margin: 0 0 clamp(18px, 2.4vw, 26px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+
+.sec-lede {
+  margin: 14px 0 clamp(22px, 3vw, 32px);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.sec-lede--last { margin-bottom: 0; max-width: 62ch; }
+
+/* Hairline card grid: the 1px gap over a grey backdrop draws the rules. */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.card-grid--auto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+/* Five items in one row; a 3+2 wrap would leave a hole in the hairline grid. */
+.card-grid--five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 1100px) {
+  .card-grid--five { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* 5 cards never divide evenly once wrapped, so the last one fills the gap. */
+  .card-grid--five > .card:last-child { grid-column: span 2; }
+}
+.card-grid--spaced { margin-bottom: clamp(28px, 4vw, 44px); }
+
+@media (max-width: 820px) { .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) {
+  .card-grid { grid-template-columns: minmax(0, 1fr); }
+  .card-grid--five > .card:last-child { grid-column: auto; }
+}
+
+.card {
+  background: var(--bg-card);
+  padding: clamp(20px, 2.6vw, 28px);
+  min-width: 0;
+}
+.card-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+/* Testimonials reuse .card, but the attribution sits under the quote instead
+   of above a title, so it needs its spacing the other way round and is pushed
+   to the card foot to line up across the row. */
+.card--quote { display: flex; flex-direction: column; }
+.card-cite {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1.6;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17.5px;
+  line-height: 1.3;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+.card-title--lg {
+  font-size: clamp(18px, 2.2vw, 23px);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.card-body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  text-wrap: pretty;
+}
+
+/* Buttons and button-styled links. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 16px 28px;
+  min-height: 48px;
+  border: 0;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+.btn-primary { background: var(--accent); color: #0f1c22; }
+.btn-primary:hover { background: #bfe9f8; color: #0f1c22; }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #33393c;
+  color: #eceff0;
+  font-weight: 600;
+  padding: 16px 26px;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* --------------------------------------------------------------------------
+   3. Site header
+   -------------------------------------------------------------------------- */
+
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(28, 28, 28, .9);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+}
+.hdr-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 clamp(14px, 3vw, 32px);
+  height: 78px;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 32px);
+}
+.brand {
+  flex: none;
+  display: flex;
+  align-items: center;
+  opacity: .96;
+  transition: opacity .18s ease;
+}
+.brand:hover { opacity: 1; }
+.brand svg { display: block; height: 40px; width: auto; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+.nav a {
+  position: relative;
+  color: #b6bec2;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 13px;
+  border-radius: 9px;
+  transition: color .18s ease, background .18s ease;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: 5px;
+  height: 1.5px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .22s cubic-bezier(.4, 0, .2, 1);
+}
+.nav a:hover { color: var(--text-bright); }
+.nav a:hover::after { transform: scaleX(1); }
+
+.hdr-cta {
+  flex: none;
+  background: var(--accent);
+  color: #12242c;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+  border-radius: 999px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.hdr-cta:hover {
+  background: var(--accent-soft);
+  color: #0f1e24;
+  box-shadow: 0 6px 22px rgba(41, 171, 226, .3);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 860px) {
+  .nav { display: none; }
+  .hdr-in { height: 66px; justify-content: space-between; }
+  .brand svg { height: 34px; }
+  .hdr-cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Page background
+   -------------------------------------------------------------------------- */
+
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: #111314;
+}
+.page-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.36) saturate(.7) contrast(1.08);
+}
+.page-bg-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8, 10, 12, .74) 0%, rgba(8, 10, 12, .68) 42%, rgba(8, 10, 12, .84) 100%),
+    linear-gradient(90deg, rgba(8, 10, 12, .4), transparent 38%, rgba(8, 10, 12, .4));
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--bg-hero);
+  border-bottom: 1px solid var(--line-soft);
+}
+.hero-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(36px, 6vw, 84px) clamp(20px, 3vw, 28px);
+}
+.hero-copy h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(40px, 8vw, 78px);
+  line-height: .94;
+  letter-spacing: -.02em;
+  color: var(--text-bright);
+  text-wrap: pretty;
+}
+.hero-copy h1 em { font-style: normal; color: var(--accent); }
+.hero-copy p {
+  margin: 20px 0 0;
+  font-size: clamp(16px, 2vw, 18.5px);
+  line-height: 1.6;
+  color: #a9b1b4;
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+.hero-kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(16px, 3vw, 32px);
+}
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+.hero-media {
+  position: relative;
+  min-height: clamp(300px, 52vw, 560px);
+  background: #171717;
+  border-left: 1px solid var(--line-soft);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.hero-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(19, 19, 19, .86), rgba(19, 19, 19, .45) 55%, rgba(41, 171, 226, .16));
+}
+.hero-badge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 16px 20px;
+  text-align: center;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(19, 19, 19, .88));
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(20px, 3.4vw, 36px);
+  line-height: 1.1;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--text-bright);
+}
+
+@media (min-width: 861px) {
+  .hero { min-height: calc(100vh - 79px); display: grid; align-items: stretch; }
+  .hero-grid { height: 100%; }
+}
+
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-copy { text-align: center; align-items: center; padding: 28px 20px 22px; }
+  .hero-kicker { font-size: 11px; letter-spacing: .12em; margin-bottom: 14px; white-space: nowrap; }
+  .hero-copy h1 { font-size: clamp(28px, 7.6vw, 38px); line-height: 1.12; }
+  .hero-copy p { margin-left: auto; margin-right: auto; padding: 0 4px; }
+  .hero-ctas { width: 100%; max-width: 360px; flex-direction: column; align-items: stretch; gap: 12px; }
+  .hero-ctas .btn { width: 100%; }
+  .hero-media { min-height: 260px; border-left: none; border-top: 1px solid var(--line-soft); }
+  .hero-scrim { background: linear-gradient(180deg, rgba(19, 19, 19, .2), rgba(19, 19, 19, .15) 40%, rgba(19, 19, 19, .82)); }
+  .hero-badge { padding: 28px 16px 18px; }
+}
+
+@media (max-width: 480px) {
+  .hero-copy { padding: 20px 16px 16px; }
+  .hero-kicker { font-size: 10px; letter-spacing: .1em; }
+  .hero-copy h1 { font-size: clamp(24px, 7.4vw, 30px); }
+  .hero-ctas { margin-top: 18px; gap: 10px; }
+  .hero-ctas .btn { padding: 13px 18px; min-height: 44px; }
+  .hero-media { min-height: 220px; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Modules
+
+   One list of items in the markup, two layouts:
+     >= 880px  grid - headings form a left rail, panels overlap in the right
+               column and only the selected one is shown.
+     <  880px  block flow - each panel sits under its own heading (accordion).
+   -------------------------------------------------------------------------- */
+
+#modules,
+#steps, #schedule { scroll-margin-top: 110px; }
+
+.mods-intro { margin-bottom: clamp(22px, 3.4vw, 36px); }
+.mods-intro .sec-lede {
+  margin: 16px 0 0;
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.mod-item { display: contents; }
+
+.mod-head {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 22px;
+  align-items: baseline;
+  column-gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: clamp(14px, 1.7vw, 20px) 2px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: inherit;
+  min-height: 52px;
+  transition: border-color .3s ease;
+}
+.mod-head:hover { border-color: #4a5054; }
+
+.mod-head-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: #6c7478;
+  transition: color .3s ease;
+}
+.mod-head-title {
+  min-width: 0;
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(14px, 1.7vw, 17px);
+  line-height: 1.3;
+  color: var(--text-dim);
+  transition: color .3s ease, transform .3s ease;
+  text-wrap: pretty;
+}
+.mod-head-dates {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 7px;
+}
+/* Arrow on desktop, plus sign on mobile - see the two blocks at the end of
+   this section. The span in the markup is intentionally empty. */
+.mod-head-mark {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.mod-panel { display: none; }
+.mod-panel-head { animation: panelHeadIn .5s cubic-bezier(.2, .7, .3, 1) both; }
+.mod-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.mod-meta-kind { color: var(--accent); }
+.mod-meta-sep { color: #3d4245; }
+.mod-panel-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 3.6vw, 40px);
+  line-height: 1.12;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+
+.mod-block { margin-top: clamp(24px, 3vw, 34px); }
+.mod-block-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.mod-block-label--tight { margin-bottom: 4px; }
+
+.mod-topics {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 11px 30px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.mod-topics li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: clamp(14.5px, 1.7vw, 16.5px);
+  line-height: 1.5;
+  color: #cfd6d9;
+  animation: rowIn .45s cubic-bezier(.2, .7, .3, 1) both;
+}
+.mod-topics li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: .55em;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.mod-topics li span { min-width: 0; text-wrap: pretty; }
+
+.mod-body {
+  margin-top: clamp(22px, 2.6vw, 30px);
+  display: grid;
+  gap: 14px;
+  max-width: 72ch;
+}
+.mod-body p {
+  margin: 0;
+  font-size: clamp(14.5px, 1.7vw, 16.5px);
+  line-height: 1.66;
+  color: var(--text-muted);
+  text-wrap: pretty;
+  animation: rowIn .5s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+.mod-day {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  column-gap: 28px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid #2f2f2f;
+}
+@media (max-width: 760px) { .mod-day { grid-template-columns: 1fr; row-gap: 6px; } }
+.mod-day-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-bright);
+}
+.mod-day-time { font-size: 13px; color: var(--accent); margin-top: 4px; font-weight: 600; }
+.mod-day-purpose { margin: 0; font-size: 15px; line-height: 1.6; color: var(--text-muted); text-wrap: pretty; }
+
+.mod-note {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: #b6bec2;
+  max-width: 70ch;
+  text-wrap: pretty;
+}
+
+.mod-nav {
+  flex: none;
+  margin-top: auto;
+  padding-top: clamp(24px, 3vw, 34px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.mod-nav button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 13px 20px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.mod-prev { background: transparent; border: 1px solid var(--line-strong); color: var(--text); }
+.mod-prev:hover { border-color: var(--accent); color: var(--accent); }
+.mod-next { background: var(--accent); border: 1px solid var(--accent); color: #0f2833; }
+.mod-next:hover { background: var(--accent-soft); border-color: var(--accent-soft); }
+.mod-nav button[hidden] { display: none; }
+
+/* -- Desktop: rail + panel ------------------------------------------------- */
+@media (min-width: 880px) {
+  .mods {
+    display: grid;
+    grid-template-columns: minmax(210px, 330px) minmax(0, 3fr);
+    column-gap: clamp(24px, 4vw, 68px);
+    align-items: start;
+    align-content: start;
+
+    /* The panel below spans "1 / -1", and -1 counts against the EXPLICIT grid.
+       Without these rows it would resolve to row 1 only, and the rail headings
+       would be pushed apart by the panel's height. The headings fill the first
+       rows, unused ones collapse to 0, and the final row absorbs a panel that
+       is taller than the rail. Raise 40 if there are ever more modules. */
+    grid-template-rows: repeat(40, min-content) auto;
+  }
+  .mod-head { grid-column: 1; }
+  .mod-head-mark::before { content: "\2192"; } /* → */
+  .mod-panel {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    min-width: 0;
+    min-height: 560px;
+    flex-direction: column;
+  }
+  .mod-item.is-active .mod-head-num { color: var(--accent); }
+  .mod-item.is-active .mod-head-title { color: var(--text-bright); transform: translateX(2px); }
+  .mod-item.is-active .mod-head { border-bottom-color: var(--accent); }
+  .mod-item.is-active .mod-head-mark { opacity: 1; transform: none; }
+  .mod-item.is-active .mod-panel {
+    display: flex;
+    animation: panelIn .42s cubic-bezier(.2, .7, .3, 1) both;
+  }
+}
+
+/* The timeline has fewer, shorter panels than the curriculum, so it does not
+   need the tall reserved panel height that keeps the modules from jumping. */
+@media (min-width: 880px) {
+  #timeline .mod-panel { min-height: 360px; }
+}
+
+/* -- Mobile: accordion ----------------------------------------------------- */
+@media (max-width: 879px) {
+  .mod-head { align-items: start; grid-template-columns: 26px minmax(0, 1fr) 24px; padding: 18px 2px; min-height: 56px; }
+  .mod-head-num { line-height: 1.5; }
+  .mod-head-title { font-size: 16.5px; }
+  .mod-head-dates { display: block; }
+  .mod-head-mark { opacity: 1; transform: none; font-size: 16px; line-height: 1.3; transition: transform .3s ease; }
+  .mod-head-mark::before { content: "+"; }
+  .mod-panel { padding: 0 2px 26px; }
+  .mod-panel-title { font-size: 20px; line-height: 1.2; margin-bottom: 4px; }
+  .mod-topics { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .mod-nav { display: none; }
+
+  .mod-item.is-open .mod-head-num { color: var(--accent); }
+  .mod-item.is-open .mod-head-title { color: var(--text-bright); }
+  .mod-item.is-open .mod-head { border-bottom-color: var(--accent); }
+  .mod-item.is-open .mod-head-mark { transform: rotate(45deg); }
+  .mod-item.is-open .mod-panel {
+    display: block;
+    animation: panelIn .36s cubic-bezier(.2, .7, .3, 1) both;
+  }
+}
+
+@keyframes panelIn     { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes panelHeadIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes rowIn       { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* --------------------------------------------------------------------------
+   7. FAQ
+   -------------------------------------------------------------------------- */
+
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:nth-child(odd) { background: rgba(255, 255, 255, .016); }
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  justify-content: space-between;
+  padding: clamp(15px, 2vw, 19px) clamp(10px, 2vw, 16px);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  color: inherit;
+  min-height: 58px;
+}
+.faq-q-text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(15.5px, 1.8vw, 17px);
+  line-height: 1.4;
+  color: var(--text);
+  text-wrap: pretty;
+}
+.faq-icon {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 19px;
+  line-height: 1;
+}
+.faq-icon::before { content: "+"; }
+.faq-q[aria-expanded="true"] .faq-icon { font-size: 13px; }
+.faq-q[aria-expanded="true"] .faq-icon::before { content: "\2715"; }
+
+.faq-a {
+  margin: 0;
+  padding: 0 clamp(10px, 2vw, 16px) clamp(18px, 2.2vw, 24px);
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 66ch;
+  text-wrap: pretty;
+}
+.faq-a[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   8. Closing CTA band
+   -------------------------------------------------------------------------- */
+
+.cta-band {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 88px) var(--slab-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 36px;
+  align-items: center;
+  justify-content: space-between;
+}
+.cta-band h2 {
+  margin: 0;
+  flex: 1 1 340px;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(27px, 5vw, 52px);
+  line-height: 1.02;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+.cta-band h2 em { font-style: normal; color: var(--accent); }
+.cta-band .btn {
+  flex: none;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 20px 40px;
+  min-height: 58px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Quiz
+   -------------------------------------------------------------------------- */
+
+.quiz-scene { overflow: hidden; border-top: 1px solid var(--line-soft); }
+.quiz-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: #111314;
+  overflow: hidden;
+}
+.quiz-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.42) saturate(.75) contrast(1.06);
+}
+.quiz-in { position: relative; z-index: 1; }
+
+.quiz-head { max-width: 640px; margin: 0 auto; text-align: center; }
+.quiz-head p { margin: 14px 0 0; font-size: 16px; line-height: 1.55; color: #c5ced1; text-wrap: pretty; }
+
+.quiz-card {
+  max-width: 640px;
+  margin: clamp(26px, 3.4vw, 40px) auto 0;
+  border: 1px solid #2f3437;
+  background: rgba(18, 20, 22, .86);
+  transition: border-color .25s ease;
+}
+.quiz-card.is-done { border-color: var(--accent); }
+.quiz-card::before { content: ""; display: block; height: 3px; background: var(--accent); }
+
+.quiz-body { padding: clamp(24px, 3.6vw, 40px) clamp(20px, 3.2vw, 38px); }
+
+.quiz-progress {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #767f83;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.quiz-pips { display: flex; gap: 4px; margin-bottom: clamp(22px, 3vw, 30px); }
+.quiz-pip { flex: 1 1 0; height: 2px; background: #2f3437; transition: background .25s ease; }
+.quiz-pip.is-past { background: var(--accent); }
+.quiz-pip.is-current { background: #5f686c; }
+
+.quiz-stage {
+  min-height: clamp(351px, 52vw, 396px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.quiz-stage > [hidden] { display: none; }
+
+.quiz-question {
+  margin: 0 0 clamp(20px, 2.6vw, 26px);
+  min-height: 2.52em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(21px, 2.8vw, 28px);
+  line-height: 1.26;
+  color: var(--text-bright);
+  text-align: center;
+  text-wrap: balance;
+}
+.quiz-options { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+.quiz-opt {
+  display: block;
+  width: 100%;
+  min-height: 56px;
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.4;
+  padding: 16px 20px;
+  cursor: pointer;
+  text-align: center;
+  background: transparent;
+  color: #c3cacd;
+  border: 1px solid var(--line-strong);
+  transition: all .16s ease;
+}
+.quiz-opt:hover { border-color: var(--accent); color: var(--text-bright); }
+.quiz-opt.is-picked { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+.quiz-back {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #2f2f2f;
+  text-align: center;
+}
+.quiz-back[hidden] { display: none; }
+.quiz-back button {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--line-strong);
+  padding: 13px 24px;
+  min-height: 46px;
+  cursor: pointer;
+}
+.quiz-back button:hover { border-color: var(--accent); color: var(--accent); }
+
+.quiz-result { text-align: center; }
+.quiz-result-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.quiz-result h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(27px, 3.8vw, 40px);
+  line-height: 1.06;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+.quiz-result p {
+  margin: 16px auto 0;
+  max-width: 46ch;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+.quiz-result-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+  justify-content: center;
+}
+.quiz-result-ctas .btn {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  min-height: 48px;
+}
+.quiz-result-ctas .btn-quiet {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--line-strong);
+}
+.quiz-result-ctas .btn-quiet:hover { border-color: var(--accent); color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   10. Footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line-soft);
+  background: var(--bg-footer);
+}
+.site-footer-in {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 24px var(--slab-pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #5f686c;
+}
+
+/* --------------------------------------------------------------------------
+   11. Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; }
+  .nav a::after, .hdr-cta, .mod-head, .quiz-opt { transition: none; }
+  .page-bg video, .quiz-bg video, .hero-media video { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Fixed video wallpaper. Sections with .slab cover it; .scene sections let it through. -->
+<div class="page-bg" aria-hidden="true">
+  <video autoplay loop muted playsinline>
+    <source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4" type="video/mp4">
+  </video>
+  <div class="page-bg-veil"></div>
+</div>
+
+<!-- ========================================================================
+     Header
+     ===================================================================== -->
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="#top" aria-label="ABLE Weekend Activator">
+      <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#about">За курса</a>
+      <a href="#fit">За кого</a>
+      <a href="#steps">Кандидатстване</a>
+      <a href="#schedule">График</a>
+      <a href="#fees">Цена</a>
+      <a href="#faq">Въпроси</a>
+    </nav>
+    <a class="hdr-cta" href="#apply">Кандидатствай</a>
+  </div>
+</header>
+
+<!-- ========================================================================
+     Hero
+     ===================================================================== -->
+<section id="top" class="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="hero-kicker">2 дни · 36 часа · екипи от ~5 души</div>
+      <h1>ABLE Weekend <em>Activator.</em></h1>
+      <p>2-дневна интензивна предприемаческа програма. Ултимативната предприемаческа програма ABLE Activator сега с ново уикенд предизвикателство – от идея до работещ прототип за един уикенд.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#apply">Кандидатствай</a>
+        <a class="btn btn-outline" href="#schedule">Виж графика</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <video autoplay loop muted playsinline aria-label="ABLE Weekend Activator видео">
+        <source src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4" type="video/mp4">
+      </video>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="hero-badge">36 часа</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     What it is
+     ===================================================================== -->
+<section id="about" class="slab">
+  <div class="container">
+    <div class="eyebrow">Накратко</div>
+    <h2 class="sec-title">Какво представлява ABLE Weekend Activator?</h2>
+    <p class="sec-lede">Нашата цел е да помогнем на повече млади и амбициозни хора да добият умения за генериране на иновативни идеи и да ги развиват до реални бизнеси.</p>
+    <p class="sec-lede">Следвайки тази пътеводна звезда, организираме предприемаческия курс ABLE Weekend Activator, чрез който искаме, посредством серия от специализирани теоретични и практически сесии, да разширим познанията и уменията на участниците и да ги предизвикаме в рамките на 2 дни да работят в екипи над избрана от тях бизнес идея, която да развият до функциониращ работещ прототип.</p>
+
+    <div class="card-grid card-grid--auto">
+      <div class="card">
+        <div class="card-tag">Важно</div>
+        <div class="card-title card-title--lg">Не ти трябва готова идея</div>
+        <div class="card-body">Към момента на регистрация за курса не е нужно да имаш конкретна бизнес идея. За повече информация погледни секцията <a href="#faq">Често задавани въпроси</a>.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">Език</div>
+        <div class="card-title card-title--lg">Курсът е изцяло на български</div>
+        <div class="card-body">ABLE Activator – нашата 2-месечна интензивна предприемаческа програма – се провежда изцяло на английски език.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Who it is for  (from the application page)
+     ===================================================================== -->
+<section id="fit" class="slab">
+  <div class="container">
+    <div class="eyebrow">За кого</div>
+    <h2 class="sec-title">За кого е подходящо обучението</h2>
+    <p class="sec-lede">Ако на някакъв етап от живота си си имал бизнес идея, но не си направил стъпка към нейната реализация, защото по пътя си срещна пречки или не си знаел към кого да се обърнеш за съвет – ABLE Weekend Activator е обучението за теб.</p>
+
+    <div class="card-grid card-grid--five">
+      <div class="card">
+        <div class="card-title">Хора с иновативни идеи</div>
+        <div class="card-body">Които не са сигурни как да предприемат първите стъпки към осъществяване на желания проект.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Целеустремени личности</div>
+        <div class="card-body">Които издирват съмишленици и ментори за съвет в бъдещите си начинания.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Предприемчиви личности</div>
+        <div class="card-body">Които искат успоредно с настоящата си работа да стартират собствен бизнес или социално начинание.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Студенти</div>
+        <div class="card-body">Които искат да се развиват в сферата на предприемачеството и да се учат от първа ръка какви са стъпките при стартиране на успешен бизнес.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Млади професионалисти</div>
+        <div class="card-body">Които търсят препоръки и знания за прилагане и развиване на идеите си в проекти, които вече са започнали.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     What you gain
+     ===================================================================== -->
+<section id="gains" class="slab">
+  <div class="container">
+    <div class="eyebrow">Какво ще спечелиш</div>
+    <h2 class="sec-title">Четири неща за два дни</h2>
+
+    <div class="card-grid card-grid--auto card-grid--spaced">
+      <div class="card">
+        <div class="card-num">01</div>
+        <div class="card-title">Инструменти</div>
+        <div class="card-body">Достъп до материали, ноу-хау и инструменти, които да ти служат вярно във всяко бъдещо начинание.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">02</div>
+        <div class="card-title">Знание</div>
+        <div class="card-body">Ще придобиеш ключови умения, които ще развият професионалното ти портфолио и ще отворят пред теб нови възможности.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">03</div>
+        <div class="card-title">Ментори</div>
+        <div class="card-body">Работа с ментор, който да насочва и помага на екипа ти по пътя на разработване на избраната идея до нейното финално оформяне в бизнес план.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">04</div>
+        <div class="card-title">Възможности</div>
+        <div class="card-body">Ще се запознаеш с други талантливи, проактивни и развиващи се млади хора от цяла България.</div>
+      </div>
+    </div>
+
+    <div class="eyebrow">И още</div>
+    <h3 class="sec-subtitle">Пътят към пълния курс ABLE Activator</h3>
+    <p class="sec-lede">По време на ABLE Weekend Activator ще имаш възможност да разбереш повече за пълния ни предприемачески курс ABLE Activator. Уникалната ни 2-месечна програма ти дава много повече от знания и умения, а именно:</p>
+
+    <div class="card-grid card-grid--auto">
+      <div class="card">
+        <div class="card-tag">Мрежа</div>
+        <div class="card-title">Екосистема</div>
+        <div class="card-body">Ще се присъединиш към мрежа от проактивни и амбициозни млади хора, които работят за положителна промяна в средата си, независимо къде се намират.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">Достъп</div>
+        <div class="card-title">ABLE общност</div>
+        <div class="card-body">Покана до ексклузивни събития на ABLE и партньорски организации и възможност за разширяване на мрежата ти от контакти с хора от българската старт-ъп екосистема.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Application steps
+
+     Same component as the schedule below: one .mods group of .mod-item,
+     rail + panel on desktop, accordion on mobile.
+     ===================================================================== -->
+<section class="slab" id="steps">
+  <div class="container">
+    <div class="mods-intro">
+      <div class="eyebrow">Как се кандидатства</div>
+      <h2 class="sec-title">Стъпки при кандидатстване</h2>
+      <p class="sec-lede sec-lede--last">Шест стъпки делят формата за кандидатстване от Демо деня. Избери стъпка, за да видиш какво иска тя от теб.</p>
+    </div>
+
+    <div class="mods">
+      <div class="mod-item" data-index="0">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-01">
+          <span class="mod-head-num">01</span>
+          <span class="mod-head-title">Попълване на апликация<span class="mod-head-dates">Онлайн форма</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="st-panel-01">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Стъпка 01</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Онлайн форма</span>
+            </div>
+            <h3 class="mod-panel-title">За участие в програмата е нужно да попълниш формата за кандидатстване</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Финалните участници се избират от вътрешно жури. Не забравяй да споделиш с нас каква е твоята мотивация за участие &ndash; това е частта от формата, която тежи най-много.</p>
+            <p style="animation-delay:0.240s">Не ти е нужна конкретна бизнес идея, за да кандидатстваш.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишна стъпка">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следваща стъпка">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="1">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-02">
+          <span class="mod-head-num">02</span>
+          <span class="mod-head-title">Обявяване на резултатите<span class="mod-head-dates">Топ 25&ndash;39 участници</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="st-panel-02">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Стъпка 02</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Топ 25&ndash;39 участници</span>
+            </div>
+            <h3 class="mod-panel-title">Ще се свържем с всеки кандидатствал, за да споделим резултатите от подбора</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">От тук продължаваме със селектираните топ 25&ndash;39 участници. На селектираните даваме срок от 2 работни дни за заплащане на таксата за участие, след което изпращаме потвърждение и допълнителна информация.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">Важно за идеите</div>
+            <p class="mod-note">В рамките на програмата всички участници ще се разделят на точен брой екипи и ще се работи с ограничен брой идеи, като всеки формиран екип ще има индивидуален бизнес ментор.</p>
+            <p class="mod-note">Това означава, че приемът ви в програмата не гарантира, че задължително ще бъде развита вашата идея. Участниците на всяко издание номинират, вътрешно гласуват и избират финалните 4&ndash;6 идеи. И обратното &ndash; да имате идея не е задължително условие за кандидатстване и участие.</p>
+            <p class="mod-note">Имайте предвид, че избирането на първоначална идея е една съвсем малка част от това 48-часово предприемаческо предизвикателство. Ползите и знанията, които ще натрупате като част от екип, който извървява пътя на разработване на бизнес от нулата, са безценни, независимо кой е бил изначалният източник на вдъхновение.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишна стъпка">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следваща стъпка">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="2">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-03">
+          <span class="mod-head-num">03</span>
+          <span class="mod-head-title">Получаване на ресурси<span class="mod-head-dates">Самоподготовка</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="st-panel-03">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Стъпка 03</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Самоподготовка</span>
+            </div>
+            <h3 class="mod-panel-title">Наръчник за генериране на старт-ъп идеи и затворена група</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Одобрените кандидати получават специализиран наръчник за генериране на старт-ъп идеи и се добавят в затворена група.</p>
+            <p style="animation-delay:0.240s">С наръчника започва и твоето предприемаческо предизвикателство &ndash; имаш около седмица да помислиш каква идея би искал да разработиш и да ни изпратиш кратко нейно описание.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишна стъпка">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следваща стъпка">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="3">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-04">
+          <span class="mod-head-num">04</span>
+          <span class="mod-head-title">Нетуъркинг коктейл<span class="mod-head-dates">Ден преди началото</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="st-panel-04">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Стъпка 04</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Ден преди началото</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Петък вечер</span>
+            </div>
+            <h3 class="mod-panel-title">Неформална среща и познавателни игри</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Неформална среща и познавателни игри за участници, лектори, ментори и приятели от мрежата на ABLE.</p>
+            <p style="animation-delay:0.240s">Ела, запознай се с екипа и част от участниците и се настрой за един уикенд, който ще промени начина, по който гледаш на всяка следваща бизнес идея.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">Задължително ли е</div>
+            <p class="mod-note">Не. Срещата в петък е изцяло незадължителна и по никакъв начин няма да се отрази на по-нататъшното ти участие в програмата.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишна стъпка">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следваща стъпка">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="4">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-05">
+          <span class="mod-head-num">05</span>
+          <span class="mod-head-title">ABLE Weekend Activator<span class="mod-head-dates">Събота и неделя</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="st-panel-05">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Стъпка 05</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>По време на обучението</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>12 часа на ден</span>
+            </div>
+            <h3 class="mod-panel-title">Безценни интерактивни сесии, лекции и дискусии</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Обща продължителност от 12 часа на ден, както в събота, така и в неделя.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">Как минават двата дни</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Събота</div>
+                <div class="mod-day-time">12 часа</div>
+              </div>
+              <p class="mod-day-purpose">Основната част от обучителните модули: формиране на екипи, работа с бизнес менторите и първа работеща версия на прототипа.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Неделя</div>
+                <div class="mod-day-time">12 часа</div>
+              </div>
+              <p class="mod-day-purpose">Бизнес моделиране, финална версия на прототипа, уъркшоп за ефективно презентиране и подготовка за сцената.</p>
+            </div>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишна стъпка">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следваща стъпка">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="5">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="st-panel-06">
+          <span class="mod-head-num">06</span>
+          <span class="mod-head-title">Демо ден и коктейл<span class="mod-head-dates">Финално събитие</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="st-panel-06">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Стъпка 06</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Финално събитие</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Неделя, ~19:00 ч.</span>
+            </div>
+            <h3 class="mod-panel-title">Гласуване на живо за Фаворит на публиката и Победител от журито</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Победителят се избира от специализиран панел от успешни предприемачи и представители на публичния сектор.</p>
+            <p style="animation-delay:0.240s">Официално програмата завършва около 19:00 ч. с края на презентациите, на които всички екипи представят под формата на pitch плода на екипните усилия, положени през уикенда.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишна стъпка">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следваща стъпка">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Training schedule
+
+     Same .mods component as the application steps above; app.js wires each
+     .mods group independently.
+     ===================================================================== -->
+<section class="slab" id="schedule">
+  <div class="container">
+    <div class="mods-intro">
+      <div class="eyebrow">Как протича</div>
+      <h2 class="sec-title">График на обучението</h2>
+      <p class="sec-lede sec-lede--last">От кандидатстването до Демо деня &ndash; шест етапа, два от които са самият уикенд. Избери етап, за да видиш какво се случва в него.</p>
+    </div>
+
+    <div class="mods">
+      <div class="mod-item" data-index="0">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-01">
+          <span class="mod-head-num">01</span>
+          <span class="mod-head-title">Кандидатстване за програмата<span class="mod-head-dates">Етап 1</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="sc-panel-01">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Етап 1</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Форма за кандидатстване</span>
+            </div>
+            <h3 class="mod-panel-title">Попълваш формата и споделяш мотивацията си</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">За участие в програмата е нужно да попълниш формата за кандидатстване.</p>
+            <p style="animation-delay:0.240s">Не забравяй да споделиш с нас каква е твоята мотивация за участие.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишен етап">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следващ етап">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="1">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-02">
+          <span class="mod-head-num">02</span>
+          <span class="mod-head-title">Обявяване на резултатите<span class="mod-head-dates">Етап 2</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="sc-panel-02">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Етап 2</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>След затваряне на формата</span>
+            </div>
+            <h3 class="mod-panel-title">Подбираме най-мотивираните кандидати</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">След затваряне на формата за кандидатстване ще подберем най-мотивираните кандидати и ще обявим на всички кои са избраните участници за програмата.</p>
+            <p style="animation-delay:0.240s">На селектираните участници ще дадем срок от 2 работни дни за заплащане на такса за участие.</p>
+            <p style="animation-delay:0.320s">След получаване на сумата ще ти изпратим потвърждение и допълнителна информация.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишен етап">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следващ етап">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="2">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-03">
+          <span class="mod-head-num">03</span>
+          <span class="mod-head-title">Получаване на ресурси<span class="mod-head-dates">Етап 3</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="sc-panel-03">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Етап 3</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Около седмица преди началото</span>
+            </div>
+            <h3 class="mod-panel-title">Наръчникът пристига и предизвикателството започва</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Ако си сред селектираните за участие и си заплатил своята такса, ще ти изпратим специализиран наръчник за генериране на старт-ъп идеи, с което започва и твоето предприемаческо предизвикателство.</p>
+            <p style="animation-delay:0.240s">Успоредно с това ще те запознаем с останалите участници: предварително всеки от вас ще попълни изготвена от нас бланка за личен профил, след което ще те представим на останалите в затворена група, за да имате възможност да се опознаете преди началото на програмата.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишен етап">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следващ етап">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="3">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-04">
+          <span class="mod-head-num">04</span>
+          <span class="mod-head-title">Неформална среща за всички подранили<span class="mod-head-dates">Ден преди началото</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="sc-panel-04">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Ден преди началото</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Петък вечер</span>
+            </div>
+            <h3 class="mod-panel-title">Среща на избрана от нас локация</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">За всички пристигнали ден по-рано ще организираме неформална среща на избрана от нас локация.</p>
+            <p style="animation-delay:0.240s">Ела, запознай се с екипа и част от участниците и се настрой за един уикенд, който ще промени начина, по който гледаш на всяка следваща бизнес идея.</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишен етап">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следващ етап">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="4">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-05">
+          <span class="mod-head-num">05</span>
+          <span class="mod-head-title">Модул 1 &ndash; Основи<span class="mod-head-dates">Ден 1 &middot; събота</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="sc-panel-05">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Модул 1</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Ден 1 &middot; събота</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>12 часа</span>
+            </div>
+            <h3 class="mod-panel-title">Екипи, ментори и първи прототип</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">В ден 1 ще се разделите по екипи и ще се запознаете с бизнес менторите, които ще ви насочват по пътя към успешно разработване на вашия проект.</p>
+            <p style="animation-delay:0.240s">Ще ви научим как да търсите обективна обратна връзка за вашите бизнес идеи и чрез редица инструменти, работилници и експерименти ще започнете процеса по развиване на нейна първа работеща версия (прототип).</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label">Какво се покрива</div>
+            <ul class="mod-topics">
+            <li style="animation-delay:0.100s"><span>Формиране на екипи</span></li>
+            <li style="animation-delay:0.145s"><span>Работа с бизнес ментор</span></li>
+            <li style="animation-delay:0.190s"><span>Обективна обратна връзка</span></li>
+            <li style="animation-delay:0.235s"><span>Инструменти и работилници</span></li>
+            <li style="animation-delay:0.280s"><span>Първа версия на прототипа</span></li>
+            </ul>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишен етап">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следващ етап">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="5">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="sc-panel-06">
+          <span class="mod-head-num">06</span>
+          <span class="mod-head-title">Модул 2 &ndash; Демо ден<span class="mod-head-dates">Ден 2 &middot; неделя</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+
+        <article class="mod-panel" id="sc-panel-06">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Модул 2</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>Ден 2 &middot; неделя</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>до ~19:00 ч.</span>
+            </div>
+            <h3 class="mod-panel-title">Бизнес моделиране, презентиране и сцената</h3>
+          </div>
+
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">В ден 2 ще преминем към бизнес моделиране и оформяне на финална версия на прототипа на вашия проект. След уъркшоп, посветен на ефективното презентиране, ще се насочим към сцената на финалните презентации.</p>
+            <p style="animation-delay:0.240s">На финалите всички екипи ще имат възможност да представят резултатите от 2-дневната си работа и на място ще получат обратна връзка за положените усилия от специално селектирано жури от успешни предприемачи, инвеститори и бизнес специалисти.</p>
+          </div>
+
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">За избора на идеи</div>
+            <p class="mod-note">След получаването на наръчника &bdquo;Генериране на старт-ъп идеи&ldquo; ще имаш около седмица да помислиш каква идея би искал да разработиш в рамките на курса и да ни предоставиш кратко нейно описание. Още на първата сутрин от предприемаческия уикенд в рамките на 60 секунди всеки участник ще сподели своята идея и накрая всички ще се обединят в екипи от по около 5 души около предложените идеи.</p>
+            <p class="mod-note">Това означава, че в рамките на програмата ще се работи над ограничен брой идеи и твоята може да не е една от тях. Това по никакъв начин не бива да те обезкуражава &ndash; избирането на идея е една съвсем малка част от това 36-часово предприемаческо предизвикателство. Ползите и знанията, които ще натрупаш като част от екип, който извървява пътя на разработване на бизнес от нулата, са безценни, независимо откъде е изначалният източник на вдъхновение. Повярвай, и ние сме били на твоето място!</p>
+          </div>
+
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Предишен етап">&#8592; Назад</button>
+            <button class="mod-next" type="button" aria-label="Следващ етап">Напред &#8594;</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Fees
+     ===================================================================== -->
+<section id="fees" class="slab">
+  <div class="container">
+    <div class="eyebrow">Цена и условия</div>
+    <h2 class="sec-title">Такса за участие</h2>
+    <p class="sec-lede">Ако си на възраст между 19 и 35 г. и си готов да стартираш предприемаческото си пътуване, можеш да запазиш своето място през формата за кандидатстване.</p>
+
+    <div class="card-grid card-grid--auto card-grid--spaced">
+      <div class="card">
+        <div class="card-tag">Студенти</div>
+        <div class="card-title">25 &euro;</div>
+        <div class="card-body">48.90 лв. Същата програма, същият достъп до ментори и материали.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">Млади професионалисти</div>
+        <div class="card-title">76 &euro;</div>
+        <div class="card-body">148.64 лв. Същата програма, същият достъп до ментори и материали.</div>
+      </div>
+    </div>
+
+    <h3 class="sec-subtitle">Какво включва таксата</h3>
+
+    <div class="card-grid card-grid--auto">
+      <div class="card">
+        <div class="card-num">01</div>
+        <div class="card-title">Работилници и материали</div>
+        <div class="card-body">Достъп до всички работилници и материали, необходими за генериране, разработване и реализиране на първоначален прототип на твоята идея и успешното завършване на обучението.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">02</div>
+        <div class="card-title">Бизнес ментор</div>
+        <div class="card-body">Работа с ментор, който ще ви насочва и помага в процеса на разработване на идеята на твоя екип.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">03</div>
+        <div class="card-title">Храна и напитки</div>
+        <div class="card-body">Подсилващ обяд в събота и неделя, както и освежаващи храни и напитки по време на кафе паузите.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">04</div>
+        <div class="card-title">Изненади на място</div>
+        <div class="card-body">Допълнителни изненади, за които няма да ти кажем предварително.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Past editions
+     ===================================================================== -->
+<section id="editions" class="slab">
+  <div class="container">
+    <div class="eyebrow">Последни издания</div>
+    <h2 class="sec-title">Пловдив и София</h2>
+    <p class="sec-lede">Разгледай снимки, прочети отзиви и виж видео от финалното събитие на минали издания на ABLE Weekend Activator.</p>
+
+    <div class="card-grid card-grid--auto">
+      <div class="card">
+        <div class="card-tag">10 &ndash; 12 октомври</div>
+        <div class="card-title card-title--lg">Пловдив</div>
+        <div class="card-body">36 часа, екипи от по около 5 души и Демо ден пред жури от предприемачи и инвеститори.</div>
+      </div>
+      <div class="card">
+        <div class="card-tag">14 &ndash; 16 ноември</div>
+        <div class="card-title card-title--lg">София</div>
+        <div class="card-body">Същият формат, ново издание &ndash; нетуъркинг коктейл в петък, два пълни дни работа и финални презентации.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Testimonials
+     ===================================================================== -->
+<section id="testimonials" class="slab">
+  <div class="container">
+    <div class="eyebrow">Предишните участници вярват в нас</div>
+    <h2 class="sec-title">Ето какво споделят</h2>
+
+    <div class="card-grid card-grid--auto">
+      <div class="card card--quote">
+        <div class="card-body">&bdquo;Много трудно ще намеря думи за тази публикация. Това, което преживях през този уикенд, е неописуемо. Не съм предполагала, че ще видя 30 души, които са толкова целеустремени, надъхани, забавни, обичливи, вдъхновяващи. Научих толкова много неща в рамките на два дни. Главният урок, който си извлякох от тези два дни, е че ако съумееш да пребориш емоционалната си бариера и ограничения, после се чувстваш непобедим.&ldquo;</div>
+        <div class="card-cite">Венцислава Славова &middot; предприемач</div>
+      </div>
+      <div class="card card--quote">
+        <div class="card-body">&bdquo;Теорията беше поднесена по приятен и лек начин. Практическите предизвикателства бяха изключително полезни, а средата от будни хора ме мотивираше изключително много.&ldquo;</div>
+        <div class="card-cite">Мирослав Николов &middot; предприемач</div>
+      </div>
+      <div class="card card--quote">
+        <div class="card-body">&bdquo;Един уикенд. 14&ndash;15 часа интензивна работа. Много търпение. Трудности. Успехи. Освен работата в екип, ще се сблъскате и с това някой да критикува идеята ви, да я подложи под съмнение, да трябва да го убедите, че си струва. Така е и в реалния живот. Беше безценно да работим с ментор, много по-опитен от нас, който да е фокусиран върху идеята и да ни насочва, без да върши работата вместо нас.&ldquo;</div>
+        <div class="card-cite">Дилян Димитров &middot; дигитален маркетинг</div>
+      </div>
+      <div class="card card--quote">
+        <div class="card-body">&bdquo;Определено работата не беше лека, даде ни се възможност да мислим над доста теми, имахме индивидуалност в проекта си. Хареса ми свободата в работата, която ни се даде, понеже покрай нея научихме и какви трябва да са постижимите идеи за определено време.&ldquo;</div>
+        <div class="card-cite">Иван Иванов &middot; финансов и инвестиционен консултант</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     FAQ
+
+     Each question is a button + a paragraph. The [hidden] attribute on the
+     answer is the whole state; the script toggles it and aria-expanded.
+     ===================================================================== -->
+<section id="faq" class="slab">
+  <div class="container">
+    <div class="eyebrow">Преди да кандидатстваш</div>
+    <h2 class="sec-title">Често задавани въпроси</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="true" aria-controls="faq-a-1">
+          <span class="faq-q-text">Задължително ли е да кандидатствам с конкретна бизнес идея?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-1">Накратко &ndash; не. Към момента на регистрация за курса не е нужно да имаш конкретна бизнес идея. След затваряне на регистрациите изпращаме до всички записали се наръчник за генериране на старт-ъп идеи и имаш около седмица да помислиш каква идея би искал да разработиш.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-2">
+          <span class="faq-q-text">Каква е цената и какви са условията за участие?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-2" hidden>Ако си на възраст между 19 и 35 г., таксата е 25 &euro; (48.90 лв.) за студенти и 76 &euro; (148.64 лв.) за млади професионалисти. Тя включва достъп до всички работилници и материали, работа с бизнес ментор, подсилващ обяд в събота и неделя, кафе паузи и допълнителни изненади на място.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-3">
+          <span class="faq-q-text">Мога ли да пропусна срещата в петък?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-3" hidden>Срещата в петък е изцяло незадължителна и абсолютно неформална. По никакъв начин няма да се отрази на по-нататъшното ти участие в програмата.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-4">
+          <span class="faq-q-text">Мога ли да се присъединя в неделя, ако не мога да присъствам в събота?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-4" hidden>В събота се провежда основната част от обучителните модули. Препоръката ни е, ако се окаже, че няма как да присъстваш в събота, да преотстъпиш своето място на приятел и да дадеш възможност на другиго да стане част от 36-часовото предизвикателство.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-5">
+          <span class="faq-q-text">Кога ще приключим в неделя?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-5" hidden>Официално програмата ще завърши около 19:00 ч. с края на презентациите, на които всички екипи представят под формата на pitch пред специалното ни жури плода на екипните усилия, положени през уикенда.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-6">
+          <span class="faq-q-text">Над моята идея ли ще работя по време на курса?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-6" hidden>Краткият отговор е &ndash; не задължително, но нека това не те обезкуражава. Още на първата сутрин в рамките на 60 секунди всеки участник споделя своята идея и всички гласуват кои са идеите, върху които искат да работят. Ползите и знанията, които ще натрупаш като част от екип, който извървява пътя на разработване на бизнес от нулата, са безценни, независимо кой е изначалният източник на вдъхновение.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-7">
+          <span class="faq-q-text">Предлагате ли опция за настаняване?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-7" hidden>Благодарение на партньорството ни можем да ти асистираме &ndash; предварително ще ти изпратим опцията, с която разполагаме, за потвърждаване на твоето желание.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-8">
+          <span class="faq-q-text">На какъв език се провежда курсът?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-8" hidden>ABLE Weekend Activator се провежда изцяло на български език. ABLE Activator &ndash; нашата 2-месечна интензивна предприемаческа програма &ndash; се провежда изцяло на английски.</p>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-9">
+          <span class="faq-q-text">Как да се свържа с вас?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <p class="faq-a" id="faq-a-9" hidden>При въпроси или нужда от допълнителна информация можеш да се свържеш с нас на <a href="mailto:team@activator.bg">team@activator.bg</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Closing CTA
+     ===================================================================== -->
+<section id="apply" class="slab">
+  <div class="cta-band">
+    <h2>Предизвикай се. <em>Времето е сега.</em></h2>
+    <a class="btn" href="#">Кандидатствай</a>
+  </div>
+</section>
+
+<!-- ========================================================================
+     Footer
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="site-footer-in">
+    <span>ABLE Weekend Activator</span>
+    <span>team@activator.bg</span>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+/* ==========================================================================
+   ABLE Weekend Activator - weekend page
+
+   Three independent behaviours, no framework and no build step:
+     1. FAQ accordion
+     2. Modules  (left rail on desktop, accordion on mobile)
+     3. Quiz     (the only part of the page whose copy lives in JS)
+
+   Everything else on the page is static HTML in index.html.
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------------
+     1. FAQ
+     Each answer's `hidden` attribute is the state. The +/x icon and the
+     open/closed styling are driven from aria-expanded in styles.css.
+     ---------------------------------------------------------------------- */
+
+  document.querySelectorAll(".faq-q").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") === "true";
+      var answer = document.getElementById(btn.getAttribute("aria-controls"));
+      btn.setAttribute("aria-expanded", String(!open));
+      if (answer) answer.hidden = open;
+    });
+  });
+
+  /* ------------------------------------------------------------------------
+     2. Modules
+
+     One list of .mod-item in the HTML, two layouts in CSS:
+
+       desktop (>= 880px)  headings form a rail, panels are stacked in the
+                           right column; .is-active picks the visible one.
+       mobile  (<  880px)  each panel sits under its own heading;
+                           .is-open expands one at a time.
+
+     This script keeps a single index for each mode and lets a media query
+     decide which class it writes.
+     ---------------------------------------------------------------------- */
+
+  var WIDE = window.matchMedia("(min-width: 880px)");
+
+  /* There is more than one .mods group on the page (the curriculum and the
+     application timeline). Each one keeps its own active/open index, so
+     wire them up separately instead of over one flat .mod-item list. */
+  Array.prototype.forEach.call(document.querySelectorAll(".mods"), function (group) {
+  var items = Array.prototype.slice.call(group.querySelectorAll(".mod-item"));
+
+  if (items.length) {
+    var active = 0;   // desktop: always one selected
+    var open = 0;     // mobile: -1 means all collapsed
+
+    function renderModules() {
+      var wide = WIDE.matches;
+
+      items.forEach(function (item, i) {
+        var isActive = wide ? i === active : i === open;
+        item.classList.toggle("is-active", wide && i === active);
+        item.classList.toggle("is-open", !wide && i === open);
+        item.querySelector(".mod-head").setAttribute("aria-expanded", String(isActive));
+
+        var prev = item.querySelector(".mod-prev");
+        var next = item.querySelector(".mod-next");
+        if (prev) prev.hidden = i === 0;
+        if (next) next.hidden = i === items.length - 1;
+      });
+    }
+
+    function select(i) {
+      active = Math.max(0, Math.min(items.length - 1, i));
+      renderModules();
+    }
+
+    items.forEach(function (item, i) {
+      item.querySelector(".mod-head").addEventListener("click", function () {
+        if (WIDE.matches) {
+          select(i);
+        } else {
+          open = open === i ? -1 : i;
+          renderModules();
+        }
+      });
+
+      var prev = item.querySelector(".mod-prev");
+      var next = item.querySelector(".mod-next");
+      if (prev) prev.addEventListener("click", function () { select(active - 1); });
+      if (next) next.addEventListener("click", function () { select(active + 1); });
+    });
+
+    // Crossing the breakpoint swaps which class matters; re-render either way.
+    if (WIDE.addEventListener) {
+      WIDE.addEventListener("change", renderModules);
+    } else {
+      WIDE.addListener(renderModules); // Safari < 14
+    }
+
+    renderModules();
+  }
+  });
+})();
+
+});
+</script>
+</body>
+</html>

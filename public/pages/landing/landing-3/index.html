@@ -1,0 +1,2474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ABLE Activator — The ultimate entrepreneurship program</title>
+    <meta
+      name="description"
+      content="Our mission is to promote entrepreneurship and leadership in Bulgaria by empowering ambitious self-starters to bring meaningful ideas to life. An exclusive 6-weekend program for 30 ambitious young professionals."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&amp;family=Barlow:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================================================
+   ABLE Activator - landing-3 (fullscreen)
+   Plain CSS. No build step, no framework.
+
+   The page is a stack of full-viewport panels joined by CSS scroll snapping.
+   Each panel is a .screen; the header floats over all of them, so every
+   .screen reserves --hdr-h of top padding for it.
+
+   Sections, in order:
+     1. Tokens & base
+     2. Layout primitives (screen, container, headings, buttons, scroll cue)
+     3. Site header
+     4. Hero
+     5. Mission & countdown
+     6. The Program
+     7. Community
+     8. Mentors & Speakers
+     9. Testimonials
+    10. Graduated projects
+    11. Closing CTA
+    12. Footer
+    13. Mobile
+    14. Reduced motion
+   ========================================================================== */
+
+      /* --------------------------------------------------------------------------
+   1. Tokens & base
+   -------------------------------------------------------------------------- */
+
+      :root {
+        --accent: #29abe2;
+        --accent-soft: #7ad2f2;
+        --accent-ink: #10222b;
+
+        /* The wordmark carries a second, green accent. On this page it marks the
+     alternate section titles and the words the copy emphasises. */
+        --accent-2: #8ec54a;
+        --accent-2-soft: #a9d972;
+
+        --bg: #121212;
+        --bg-screen: #161616;
+        --bg-screen-alt: #141414;
+        --bg-scene: #0b0b0b;
+        --bg-footer: #0d0d0d;
+
+        --line: #2b2b2b;
+        --line-soft: rgba(255, 255, 255, 0.07);
+        --line-hair: rgba(255, 255, 255, 0.09);
+        --line-strong: #3a3f42;
+
+        --text: #e7e9ea;
+        --text-bright: #ffffff;
+        --text-muted: #a8b1b5;
+        --text-dim: #8d979b;
+        --text-faint: #767f83;
+
+        --font-body: Barlow, Helvetica, sans-serif;
+        --font-display: Poppins, Helvetica, sans-serif;
+        --font-mono: "IBM Plex Mono", monospace;
+
+        --container: 1280px;
+        --screen-pad-x: clamp(16px, 4vw, 40px);
+
+        /* Height of the floating header. Every .screen pads past it. */
+        --hdr-h: 74px;
+
+        /* One viewport of height, locked by the script so iOS toolbar collapses
+     do not resize the panels mid-scroll. See "3. Screen height lock". */
+        --screen-vh: 100vh;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        overflow-x: clip;
+      }
+      html {
+        scroll-behavior: smooth;
+        /* The panels snap; the footer is the one short panel and ends the run. */
+        scroll-snap-type: y mandatory;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--accent-soft);
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      /* --------------------------------------------------------------------------
+   2. Layout primitives
+   -------------------------------------------------------------------------- */
+
+      /* One full-viewport panel. The top padding clears the floating header. */
+      .screen {
+        position: relative;
+        z-index: 1;
+        min-height: var(--screen-vh);
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-screen);
+        border-bottom: 1px solid var(--line-soft);
+        padding-top: var(--hdr-h);
+      }
+
+      /* A panel that owns a video and sits it behind the copy. */
+      .screen--scene {
+        overflow: hidden;
+        background: var(--bg-scene);
+      }
+
+      .screen-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .screen-bg video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.38) saturate(0.7) contrast(1.08);
+      }
+      .screen-bg-veil {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(8, 9, 10, 0.68) 0%,
+          rgba(8, 9, 10, 0.42) 45%,
+          rgba(8, 9, 10, 0.88) 100%
+        );
+      }
+
+      /* The copy column inside a panel. Grows to fill the panel and centres. */
+      .screen-in {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: clamp(48px, 8vh, 100px) var(--screen-pad-x)
+          clamp(64px, 9vh, 96px);
+      }
+      .screen-in--center {
+        align-items: center;
+        text-align: center;
+      }
+      .screen-in--bottom {
+        justify-content: flex-end;
+      }
+
+      /* Small monospace label above a heading. */
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 14px;
+      }
+      .eyebrow--green {
+        color: var(--accent-2);
+      }
+      .eyebrow--lg {
+        font-size: 12px;
+        letter-spacing: 0.3em;
+        margin-bottom: clamp(20px, 3vw, 32px);
+      }
+
+      .sec-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(26px, 4vw, 42px);
+        line-height: 1.08;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        text-wrap: balance;
+      }
+      .sec-title--green {
+        color: var(--accent-2);
+      }
+      .sec-title em {
+        font-style: normal;
+        color: var(--accent-2);
+      }
+
+      .sec-lede {
+        margin: 20px 0 0;
+        font-size: clamp(15px, 1.8vw, 17px);
+        line-height: 1.62;
+        color: var(--text-muted);
+        max-width: 58ch;
+        text-wrap: pretty;
+      }
+      .sec-lede strong {
+        color: var(--text-bright);
+        font-weight: 600;
+      }
+
+      /* Buttons and button-styled links. */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        font-size: 12.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 16px 28px;
+        min-height: 48px;
+        border: 0;
+        cursor: pointer;
+        transition:
+          background 0.18s ease,
+          border-color 0.18s ease,
+          color 0.18s ease;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+      .btn-primary:hover {
+        background: var(--accent-soft);
+        color: var(--accent-ink);
+      }
+      .btn-outline {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        color: #eceff0;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .btn-ghost {
+        background: transparent;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+      }
+      .btn-ghost:hover {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+      .btn--lg {
+        font-size: 13px;
+        letter-spacing: 0.16em;
+        padding: 20px 44px;
+      }
+
+      /* An underlined text link that reads as a next step. */
+      .link-more {
+        display: inline-block;
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 15px;
+        color: var(--text-bright);
+        border-bottom: 1px solid var(--accent);
+        padding-bottom: 3px;
+        transition: color 0.18s ease;
+      }
+      .link-more:hover {
+        color: var(--accent);
+      }
+      .link-more--green {
+        border-bottom-color: var(--accent-2);
+      }
+      .link-more--green:hover {
+        color: var(--accent-2);
+      }
+
+      .copy-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px 26px;
+        margin-top: 32px;
+      }
+
+      /* The chevron that hints the next panel. */
+      .scroll-cue {
+        position: absolute;
+        left: 50%;
+        bottom: 14px;
+        z-index: 2;
+        transform: translateX(-50%);
+        font-size: 20px;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.32);
+        pointer-events: none;
+        animation: bounceDown 1.8s ease-in-out infinite;
+      }
+      .scroll-cue--bright {
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      @keyframes bounceDown {
+        0%,
+        100% {
+          transform: translate(-50%, 0);
+          opacity: 0.45;
+        }
+        50% {
+          transform: translate(-50%, 8px);
+          opacity: 1;
+        }
+      }
+
+      /* --------------------------------------------------------------------------
+   3. Site header
+
+   Fixed rather than sticky: every panel is exactly one viewport tall, so a
+   sticky header would push the first panel past the fold and snapping would
+   hide each panel's first rows behind it.
+   -------------------------------------------------------------------------- */
+
+      .hdr {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background: rgba(13, 13, 13, 0.86);
+        backdrop-filter: blur(16px) saturate(140%);
+        -webkit-backdrop-filter: blur(16px) saturate(140%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .hdr-in {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 0 var(--screen-pad-x);
+        height: var(--hdr-h);
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 3vw, 32px);
+      }
+      .brand {
+        flex: none;
+        display: flex;
+        align-items: center;
+        opacity: 0.96;
+        transition: opacity 0.18s ease;
+      }
+      .brand:hover {
+        opacity: 1;
+      }
+      .brand svg {
+        display: block;
+        height: 38px;
+        width: auto;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(4px, 1vw, 10px);
+        margin-left: auto;
+        flex-wrap: wrap;
+      }
+      .nav a {
+        position: relative;
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 8px 12px;
+        transition: color 0.18s ease;
+      }
+      .nav a::after {
+        content: "";
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 2px;
+        height: 1.5px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .nav a:hover {
+        color: var(--text-bright);
+      }
+      .nav a:hover::after {
+        transform: scaleX(1);
+      }
+
+      .hdr-cta {
+        flex: none;
+        background: var(--accent);
+        color: var(--accent-ink);
+        font-family: var(--font-mono);
+        font-weight: 500;
+        font-size: 11.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 12px 22px;
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        transition: background 0.18s ease;
+      }
+      .hdr-cta:hover {
+        background: var(--accent-soft);
+        color: var(--accent-ink);
+      }
+
+      /* The hamburger. Hidden above the mobile breakpoint - see section 13. */
+      .hdr-burger {
+        display: none;
+        margin-left: auto;
+        flex: none;
+        width: 40px;
+        height: 40px;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 5px;
+        padding: 0;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+      .hdr-burger span {
+        display: block;
+        width: 24px;
+        height: 1.5px;
+        background: var(--text);
+        transition: width 0.18s ease;
+      }
+      .hdr-burger span:last-child {
+        width: 16px;
+        background: var(--accent);
+      }
+      .hdr-burger[aria-expanded="true"] span:last-child {
+        width: 24px;
+      }
+
+      /* The drop-down panel. Closed is the default so it stays shut with
+   scripting off, where the hamburger is never shown either. */
+      .hdr-menu {
+        display: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--bg-footer);
+        padding: 8px var(--screen-pad-x) 22px;
+        flex-direction: column;
+      }
+      .hdr-menu.is-open {
+        display: flex;
+      }
+      .hdr-menu a {
+        color: #d6dadc;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 14px 2px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .hdr-menu .hdr-cta {
+        justify-content: center;
+        margin-top: 16px;
+        border-bottom: 0;
+        font-size: 12px;
+        padding: 15px;
+      }
+
+      /* --------------------------------------------------------------------------
+   4. Hero
+   -------------------------------------------------------------------------- */
+
+      .hero-title {
+        margin: 0;
+        max-width: 17ch;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(34px, 7.6vw, 92px);
+        line-height: 0.94;
+        letter-spacing: -0.02em;
+        color: var(--text-bright);
+      }
+      .hero-lede {
+        margin: clamp(24px, 3vw, 36px) 0 0;
+        font-size: clamp(16px, 1.8vw, 19px);
+        line-height: 1.6;
+        color: #a9b1b4;
+        max-width: 48ch;
+        text-wrap: pretty;
+      }
+      .hero-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: clamp(28px, 4vw, 40px);
+      }
+      .hero-ctas .btn {
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        padding: 18px 32px;
+      }
+
+      /* The Weekend Activator strip pinned to the foot of the hero. */
+      .hero-strip {
+        position: relative;
+        z-index: 1;
+        flex: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(10, 10, 10, 0.92);
+      }
+      .hero-strip-in {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: clamp(18px, 2.6vw, 26px) var(--screen-pad-x);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px 28px;
+      }
+      .hero-strip-copy {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px 16px;
+      }
+      .hero-strip-kicker {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+      }
+      .hero-strip-title {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(14px, 1.8vw, 17px);
+        color: var(--text-bright);
+      }
+      .hero-strip-link {
+        flex: none;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+        border-bottom: 1px solid var(--accent-2);
+        padding-bottom: 3px;
+      }
+      .hero-strip-link:hover {
+        color: var(--accent-2-soft);
+        border-bottom-color: var(--accent-2-soft);
+      }
+
+      /* The hero owns its own bottom strip, so its copy column stops short. */
+      .hero .screen-in {
+        padding-bottom: clamp(48px, 8vh, 100px);
+      }
+
+      /* --------------------------------------------------------------------------
+   5. Mission & countdown
+   -------------------------------------------------------------------------- */
+
+      .mission-screen .screen-in {
+        gap: clamp(56px, 9vh, 96px);
+      }
+
+      .mission {
+        position: relative;
+        max-width: 840px;
+      }
+      .mission-quotemark {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(90px, 16vw, 180px);
+        line-height: 0.5;
+        color: rgba(41, 171, 226, 0.12);
+        user-select: none;
+      }
+      .mission p {
+        margin: 0 auto;
+        max-width: 24ch;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(22px, 3.4vw, 38px);
+        line-height: 1.36;
+        color: var(--text-bright);
+        text-wrap: balance;
+      }
+      .mission em {
+        font-style: normal;
+        color: var(--accent);
+      }
+
+      /* The deadline lives in one data attribute; the script reads it and ticks. */
+      .countdown {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 14px clamp(24px, 4vw, 48px);
+      }
+      .countdown-label {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+      }
+      .countdown-cells {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(28px, 4vw, 42px);
+        color: var(--text-bright);
+        font-variant-numeric: tabular-nums;
+      }
+      .countdown-unit {
+        margin-left: 6px;
+        font-family: var(--font-mono);
+        font-weight: 400;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: var(--text-faint);
+      }
+      .countdown-sep {
+        color: var(--accent);
+        font-weight: 400;
+      }
+
+      /* --------------------------------------------------------------------------
+   6. The Program
+   -------------------------------------------------------------------------- */
+
+      .program-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: clamp(24px, 4vw, 48px);
+        align-items: start;
+      }
+      /* The oversized panel number. Decorative, so it is hidden from readers. */
+      .program-num {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(90px, 14vw, 170px);
+        line-height: 0.8;
+        color: var(--accent);
+      }
+      .program-copy {
+        grid-column: span 2;
+        min-width: 0;
+      }
+
+      .stat-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px 28px;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid var(--line-hair);
+      }
+      .stat-num {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 22px;
+        color: var(--text-bright);
+      }
+      .stat-label {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+      .stat-sep {
+        color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* --------------------------------------------------------------------------
+   7. Community
+   -------------------------------------------------------------------------- */
+
+      .community-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: clamp(20px, 3vw, 32px);
+        align-items: end;
+      }
+      .community-title {
+        max-width: 16ch;
+        font-size: clamp(24px, 3.4vw, 36px);
+        line-height: 1.12;
+      }
+      .community-copy {
+        margin: 0;
+        font-size: clamp(15px, 1.8vw, 16.5px);
+        line-height: 1.62;
+        color: #c7ced1;
+        max-width: 52ch;
+        text-wrap: pretty;
+      }
+      .community-grid .link-more {
+        margin-top: 18px;
+      }
+
+      /* --------------------------------------------------------------------------
+   8. Mentors & Speakers
+   -------------------------------------------------------------------------- */
+
+      .roles {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        margin-top: clamp(32px, 4vw, 48px);
+      }
+      .role {
+        padding: 0 clamp(0px, 3vw, 40px) clamp(28px, 4vw, 40px) 0;
+        border-bottom: 1px solid var(--line-hair);
+      }
+      .role + .role {
+        padding: clamp(28px, 4vw, 40px) 0 clamp(28px, 4vw, 40px)
+          clamp(0px, 3vw, 40px);
+      }
+      .role-title {
+        margin: 0 0 18px;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 19px;
+        text-transform: uppercase;
+        color: var(--text-bright);
+      }
+      .role-list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .role-list li {
+        display: flex;
+        gap: 12px;
+        font-size: 15.5px;
+        line-height: 1.5;
+        color: #cfd6d9;
+      }
+      /* The dash is drawn rather than typed so it never gets selected or read. */
+      .role-list li::before {
+        content: "\2014";
+        flex: none;
+        color: var(--accent);
+      }
+      .role .link-more {
+        margin-top: 18px;
+      }
+
+      .facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px clamp(20px, 3vw, 36px);
+        margin: clamp(32px, 4vw, 40px) 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .facts li {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        font-size: 14.5px;
+        color: #cfd6d9;
+      }
+      .facts li::before {
+        content: "\00B7";
+        color: var(--accent-2);
+      }
+
+      /* --------------------------------------------------------------------------
+   9. Testimonials
+
+   Every quote is in the markup. The script only moves .is-shown between
+   slides, so with scripting off the first quote is still readable.
+   -------------------------------------------------------------------------- */
+
+      .tst-progress {
+        position: relative;
+        z-index: 1;
+        flex: none;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .tst-progress-bar {
+        height: 100%;
+        width: 0;
+        background: var(--accent);
+        transition: width 0.3s ease;
+      }
+
+      .tst-screen .screen-in {
+        max-width: 880px;
+      }
+
+      /* Every slide sits in the same grid cell, so the stage is always as tall
+   as the longest quote and the controls underneath never jump when the
+   slide changes. The hidden slides keep their height but visibility:hidden
+   takes them out of the accessibility tree.
+
+   touch-action keeps vertical page scrolling native while the script reads
+   horizontal swipes; see "4. Testimonial swipe". */
+      .tst-slides {
+        display: grid;
+        align-items: center;
+        margin-top: clamp(24px, 3.4vw, 38px);
+        touch-action: pan-y;
+      }
+      .tst-slide {
+        grid-area: 1 / 1;
+        margin: 0;
+        visibility: hidden;
+      }
+      .tst-slide.is-shown {
+        visibility: visible;
+        animation: slideIn 0.4s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* The size is held down deliberately: the panel is one viewport tall and
+   the stage is sized by the longest of 23 quotes, so display sizes that
+   look right on the shortest quote push the longest one off-screen. */
+      .tst-quote {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-style: italic;
+        font-size: clamp(17px, 1.9vw, 22px);
+        line-height: 1.44;
+        color: #f0f2f3;
+        max-width: 42ch;
+        margin-inline: auto;
+        text-wrap: pretty;
+      }
+      .tst-quote::before {
+        content: "\201C";
+        color: var(--accent);
+      }
+      .tst-quote::after {
+        content: "\201D";
+        color: var(--accent);
+      }
+
+      .tst-who {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 32px;
+      }
+      .tst-avatar {
+        display: block;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #232628;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .tst-id {
+        text-align: left;
+      }
+      .tst-name {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--text-bright);
+      }
+      .tst-role {
+        font-size: 12.5px;
+        color: var(--text-faint);
+      }
+
+      .tst-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        margin-top: 36px;
+      }
+      .tst-arrow {
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        padding: 6px 2px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        transition: color 0.18s ease;
+      }
+      .tst-arrow:hover {
+        color: var(--text-bright);
+      }
+      .tst-counter {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-faint);
+        font-variant-numeric: tabular-nums;
+      }
+      .tst-screen .link-more {
+        margin-top: 32px;
+        font-size: 14px;
+      }
+
+      /* --------------------------------------------------------------------------
+   10. Graduated projects
+   -------------------------------------------------------------------------- */
+
+      .projects-screen .screen-in {
+        max-width: 900px;
+      }
+      .projects-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(24px, 4.4vw, 44px);
+        line-height: 1.14;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        text-wrap: balance;
+      }
+      .projects-title em {
+        font-style: normal;
+        color: var(--accent-2);
+      }
+      .projects-screen .btn {
+        margin-top: 28px;
+      }
+      .logos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        gap: 10px 18px;
+        margin-top: 36px;
+      }
+      .logos a {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--text-bright);
+      }
+      .logos a:hover {
+        color: var(--accent-2);
+      }
+      .logos-sep {
+        color: rgba(255, 255, 255, 0.25);
+      }
+
+      /* --------------------------------------------------------------------------
+   11. Closing CTA
+   -------------------------------------------------------------------------- */
+
+      .apply-screen .screen-in {
+        gap: clamp(56px, 9vh, 96px);
+      }
+      .apply-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(32px, 6.4vw, 66px);
+        line-height: 1;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        text-wrap: balance;
+      }
+      .apply-title em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .apply-screen .btn--lg {
+        margin-top: 36px;
+      }
+      .apply-rule {
+        width: 64px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .support {
+        max-width: 640px;
+      }
+      .support h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(19px, 3vw, 28px);
+        line-height: 1.24;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        text-wrap: balance;
+      }
+      .support h3 em {
+        font-style: normal;
+        color: var(--accent-2);
+      }
+      .support .btn {
+        margin-top: 22px;
+      }
+
+      /* --------------------------------------------------------------------------
+   12. Footer
+
+   The one panel shorter than a viewport. It still snaps, so the last panel
+   and the footer settle together at the end of the run.
+   -------------------------------------------------------------------------- */
+
+      .site-footer {
+        position: relative;
+        z-index: 1;
+        scroll-snap-align: end;
+        background: var(--bg-footer);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .foot-grid {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: clamp(28px, 4vw, 40px) var(--screen-pad-x);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px 24px;
+      }
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 6px 14px;
+      }
+      .foot-links a {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+      .foot-links a:hover {
+        color: var(--text-bright);
+      }
+      .foot-sep {
+        color: rgba(255, 255, 255, 0.15);
+      }
+      .foot-social {
+        display: flex;
+        gap: 16px;
+      }
+      .foot-social a {
+        display: block;
+        color: var(--text-muted);
+      }
+      .foot-social a:hover {
+        color: var(--accent);
+      }
+      .foot-social svg {
+        display: block;
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+      .site-footer-in {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 0 var(--screen-pad-x) 28px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px 20px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #5f686c;
+      }
+
+      /* --------------------------------------------------------------------------
+   13. Mobile
+   -------------------------------------------------------------------------- */
+
+      @media (max-width: 880px) {
+        :root {
+          --hdr-h: 66px;
+        }
+        .nav,
+        .hdr-in > .hdr-cta {
+          display: none;
+        }
+        .hdr-burger {
+          display: flex;
+        }
+        .brand svg {
+          height: 32px;
+        }
+
+        /* The panels still fill the viewport and still snap, but on a phone the
+     denser ones outgrow it - min-height lets them. Snapping drops to
+     proximity so a panel taller than the screen can be scrolled through
+     instead of being yanked back to its own top. */
+        html {
+          scroll-snap-type: y proximity;
+        }
+        .scroll-cue {
+          display: none;
+        }
+
+        .program-copy {
+          grid-column: auto;
+        }
+        .role + .role {
+          padding-left: 0;
+          padding-right: 0;
+        }
+        .role {
+          padding-right: 0;
+        }
+      }
+
+      @media (max-width: 860px) {
+        /* The stage stops reserving room for the longest quote - see section 9.
+     The panels are auto-height here, so nothing below it jumps, and at this
+     width the tallest quote is so much taller than the typical one that the
+     reserved space would read as a hole. */
+        .tst-slide {
+          display: none;
+        }
+        .tst-slide.is-shown {
+          display: block;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .tst-controls {
+          gap: 18px;
+        }
+        .hero-strip-in {
+          gap: 12px;
+        }
+      }
+
+      /* --------------------------------------------------------------------------
+   14. Reduced motion
+   -------------------------------------------------------------------------- */
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+          scroll-snap-type: none;
+        }
+        * {
+          animation: none !important;
+        }
+        .nav a::after,
+        .hdr-cta,
+        .btn,
+        .link-more,
+        .tst-progress-bar {
+          transition: none;
+        }
+        .screen-bg video {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ========================================================================
+     Header
+     ===================================================================== -->
+    <header class="hdr">
+      <div class="hdr-in">
+        <a
+          class="brand"
+          href="https://activator.bg/"
+          aria-label="ABLE Activator"
+        >
+          <svg
+            viewBox="1.5 28.5 252.5 59.6"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="ABLE Activator"
+          >
+            <path
+              d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z"
+              fill="#20C4F4"
+            />
+          </svg>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="https://activator.bg/program/">ABLE Activator</a>
+          <a href="https://activator.bg/able-weekend-activator-overviewold/"
+            >Weekend Activator</a
+          >
+          <a href="https://activator.bg/mentors-and-speakers/">Network</a>
+          <a href="https://activator.bg/mentors-and-speakers/"
+            >Mentors &amp; Speakers</a
+          >
+          <a href="https://activator.bg/alumni-and-testimonials/"
+            >Testimonials</a
+          >
+        </nav>
+        <a class="hdr-cta" href="https://activator.bg/admissions/">Apply now</a>
+        <button
+          class="hdr-burger"
+          id="menu-toggle"
+          type="button"
+          aria-label="Menu"
+          aria-expanded="false"
+          aria-controls="menu"
+        >
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <div class="hdr-menu" id="menu">
+        <a href="https://activator.bg/program/">ABLE Activator</a>
+        <a href="https://activator.bg/able-weekend-activator-overviewold/"
+          >Weekend Activator</a
+        >
+        <a href="https://activator.bg/mentors-and-speakers/">Network</a>
+        <a href="https://activator.bg/mentors-and-speakers/"
+          >Mentors &amp; Speakers</a
+        >
+        <a href="https://activator.bg/alumni-and-testimonials/">Testimonials</a>
+        <a class="hdr-cta" href="https://activator.bg/admissions/">Apply now</a>
+      </div>
+    </header>
+
+    <!-- ========================================================================
+     Hero
+     ===================================================================== -->
+    <section id="top" class="screen screen--scene hero">
+      <div class="screen-bg" aria-hidden="true">
+        <video autoplay loop muted playsinline>
+          <source
+            src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="screen-bg-veil"></div>
+      </div>
+      <div class="screen-in">
+        <div class="eyebrow eyebrow--lg">00 &mdash; ABLE Activator</div>
+        <h1 class="hero-title">The ultimate entrepreneurship program.</h1>
+        <p class="hero-lede">
+          Our mission is to promote entrepreneurship and leadership in Bulgaria
+          by empowering ambitious self-starters to bring meaningful ideas to
+          life.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://activator.bg/admissions/"
+            >Apply now</a
+          >
+          <a class="btn btn-outline" href="https://activator.bg/program/"
+            >Learn more</a
+          >
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <div class="hero-strip-in">
+          <div class="hero-strip-copy">
+            <span class="hero-strip-kicker">48-hour weekend</span>
+            <span class="hero-strip-title"
+              >От идея до реален проект за 48 часа</span
+            >
+          </div>
+          <a
+            class="hero-strip-link"
+            href="https://activator.bg/able-weekend-activator-overviewold/"
+            >Научи повече &rarr;</a
+          >
+        </div>
+      </div>
+      <div class="scroll-cue scroll-cue--bright" aria-hidden="true">
+        &#8964;
+      </div>
+    </section>
+
+    <!-- ========================================================================
+     Mission & countdown
+
+     The deadline lives in one data attribute; the script reads it and ticks.
+     ===================================================================== -->
+    <section class="screen mission-screen">
+      <div class="screen-in screen-in--center">
+        <div class="mission">
+          <div class="mission-quotemark" aria-hidden="true">&ldquo;</div>
+          <p>
+            Our mission is to promote
+            <em>entrepreneurship and leadership</em> in Bulgaria by empowering
+            ambitious self-starters bring meaningful ideas to life.
+          </p>
+        </div>
+
+        <div
+          class="countdown"
+          id="countdown"
+          data-deadline="2027-01-31T23:59:59+02:00"
+        >
+          <div class="countdown-label">Applications close in</div>
+          <div class="countdown-cells">
+            <span
+              ><span data-cd="days">00</span
+              ><span class="countdown-unit">D</span></span
+            >
+            <span class="countdown-sep" aria-hidden="true">:</span>
+            <span
+              ><span data-cd="hours">00</span
+              ><span class="countdown-unit">H</span></span
+            >
+            <span class="countdown-sep" aria-hidden="true">:</span>
+            <span
+              ><span data-cd="minutes">00</span
+              ><span class="countdown-unit">M</span></span
+            >
+            <span class="countdown-sep" aria-hidden="true">:</span>
+            <span
+              ><span data-cd="seconds">00</span
+              ><span class="countdown-unit">S</span></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">&#8964;</div>
+    </section>
+
+    <!-- ========================================================================
+     The Program
+     ===================================================================== -->
+    <section id="program" class="screen">
+      <div class="screen-in">
+        <div class="program-grid">
+          <div class="program-num" aria-hidden="true">01</div>
+          <div class="program-copy">
+            <h2 class="sec-title">The Program</h2>
+            <p class="sec-lede">
+              An exclusive 6-weekend entrepreneurship program that provides
+              <strong>30 ambitious young professionals</strong> residing in
+              Bulgaria with the <strong>knowledge</strong>,
+              <strong>network</strong> and <strong>mentorship</strong> to
+              generate breakthrough ideas and develop them to a ready-to-launch
+              version.
+            </p>
+
+            <div class="stat-row">
+              <span class="stat-num">6</span>
+              <span class="stat-label">jam-packed weekends</span>
+              <span class="stat-sep" aria-hidden="true">/</span>
+              <span class="stat-num">30</span>
+              <span class="stat-label">ambitious self-starters</span>
+            </div>
+
+            <div class="copy-ctas">
+              <a class="btn btn-primary" href="https://activator.bg/admissions/"
+                >Apply now</a
+              >
+              <a class="link-more" href="https://activator.bg/program/"
+                >What are the full benefits?</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">&#8964;</div>
+    </section>
+
+    <!-- ========================================================================
+     Community
+     ===================================================================== -->
+    <section id="community" class="screen screen--scene">
+      <div class="screen-bg" aria-hidden="true">
+        <video autoplay loop muted playsinline>
+          <source
+            src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="screen-bg-veil"></div>
+      </div>
+      <div class="screen-in screen-in--bottom">
+        <div class="community-grid">
+          <div>
+            <div class="eyebrow eyebrow--green">02 &mdash; ABLE Community</div>
+            <h2 class="sec-title community-title">
+              We are a vibrant community that makes a difference.
+            </h2>
+          </div>
+          <div>
+            <p class="community-copy">
+              Our goal is to develop an active civil society, inspire leadership
+              and promote entrepreneurial culture in Bulgaria. Completing the
+              program gives you the opportunity to join ABLE.
+            </p>
+            <a
+              class="link-more link-more--green"
+              href="https://activator.bg/team/"
+              >Who are the team?</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="scroll-cue scroll-cue--bright" aria-hidden="true">
+        &#8964;
+      </div>
+    </section>
+
+    <!-- ========================================================================
+     Mentors & Speakers
+     ===================================================================== -->
+    <section id="mentors" class="screen">
+      <div class="screen-in">
+        <div class="eyebrow eyebrow--green">03 &mdash; Who you learn from</div>
+        <h2 class="sec-title sec-title--green">Mentors &amp; Speakers</h2>
+
+        <div class="roles">
+          <div class="role">
+            <h3 class="role-title">The Mentors</h3>
+            <ul class="role-list">
+              <li>Founders and experts who have built companies</li>
+              <li>They ask the hard questions</li>
+              <li>Advice tailored to your project</li>
+            </ul>
+            <a class="link-more" href="https://activator.bg/mentors/"
+              >Who are the mentors?</a
+            >
+          </div>
+          <div class="role">
+            <h3 class="role-title">The Speakers</h3>
+            <ul class="role-list">
+              <li>Innovators, experts and industry leaders</li>
+              <li>Workshops, content and contacts</li>
+              <li>Market validation, modeling and prototyping</li>
+            </ul>
+            <a
+              class="link-more"
+              href="https://activator.bg/mentors-and-speakers/"
+              >Who are the speakers?</a
+            >
+          </div>
+        </div>
+
+        <ul class="facts">
+          <li>Individual mentorship for each team</li>
+          <li>Industry-specific knowledge &amp; advice</li>
+          <li>20+ internationally recognized speakers</li>
+          <li>Weekly workshops that move the needle</li>
+        </ul>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">&#8964;</div>
+    </section>
+
+    <!-- ========================================================================
+     Testimonials
+     ===================================================================== -->
+    <section id="testimonials" class="screen tst-screen">
+      <div class="tst-progress" aria-hidden="true">
+        <div class="tst-progress-bar" id="tst-progress"></div>
+      </div>
+      <div class="screen-in screen-in--center">
+        <div class="eyebrow eyebrow--green">04 &mdash; From the alumni</div>
+        <h2 class="sec-title sec-title--green">Graduate Testimonials</h2>
+
+        <div class="tst-slides" id="tst-slides">
+          <figure class="tst-slide is-shown">
+            <blockquote class="tst-quote">
+              My key realization while participating in ABLE Activator was just
+              how important community is to my professional as well as personal
+              success. People are capable of opening countless doors to new and
+              frankly unexpected opportunities. The program provided me with the
+              opportunity to meet and later work with strong role models, which
+              laid the foundations for my future development.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/10/Alex-Gramatikov-scaled-e1698313713465-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Alexander Gramatikov</div>
+                <div class="tst-role">Founder of Mentor the Young</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              It was everything I hoped to gain and even more. On our way back
+              from the retreat at the end of the program, I had this eye-opening
+              moment, realizing it was not about the program. It is about me and
+              the bunch of amazing people I met and can call friends now.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/10/georgi-nenov-e1700426037111-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Georgi Nenov</div>
+                <div class="tst-role">
+                  Founder &amp; Host of The Superhuman Podcast
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              I am glad I went through the program because it gave me access to
+              the right people at the right time. I received a lot of useful
+              feedback from the great mentors who helped me transform Foodobox
+              from an idea to a functional business.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/10/Jane-Dimitrova-e1708184206606-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Jane Dimitrova</div>
+                <div class="tst-role">Founder of Foodobox</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              ABLE Activator taught me how to create a business in the right,
+              textbook way. MindFit was born as part of the program and is still
+              functioning today with most of the original team members. ABLE
+              Activator literally changes lives. In the best way possible!
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/10/victotia-victorova-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Victoria Victorova</div>
+                <div class="tst-role">
+                  CEO &amp; Co-Founder of MindFit.Bg, CEO of Press Start
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              ABLE Activator is your best choice for hands-on startup immersion.
+              Prepare to meet amazing people, refine your ideas, and launch a
+              product within 6 weeks.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/10/Hristo-Hristov-e1698329487289-150x150.jpeg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Hristo Hristov</div>
+                <div class="tst-role">Head of Sales Strategy at DRONAMICS</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              ABLE Activator is the best place to meet like-minded people and
+              taste entrepreneurship. You will experience the real team dynamics
+              of a startup and be constantly challenged by the amazing lectors
+              and mentors. Finally, you will try to raise financing and turn
+              your idea into a promising business in less than three months.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/10/Iordan-Genov-e1698327645439-150x150.jpeg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Iordan Genov</div>
+                <div class="tst-role">
+                  Executive Director / Financial Coach at MoitePari Consult
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              The ABLE Activator is community. You get friends, know-how,
+              experience and new opportunities. But the difference between ABLE
+              and other communities is the VALUE of everything. From the Experts
+              to the lunch boxes.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2022/11/ivaylo_madzharov-e1698325549764-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Ivaylo Madzharov</div>
+                <div class="tst-role">Sales Representative</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              My biggest takeaway from the program is that one can achieve great
+              results with the right team and mindset even if given just very
+              short time. The program affected my life by creating a new social
+              circle for me and developing my entrepreneurial mindset.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2022/11/ivan_ivanov-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Ivan Ivanov</div>
+                <div class="tst-role">Lead Data Scientist</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              After participating in the program, I became a volunteer. Being
+              part of the magic behind the scenes allows me to work with
+              incredibly smart, motivated individuals, learn new skills, get to
+              network with successful founders and mentors but most importantly,
+              contribute to giving others the chance to go through this
+              life-changing experience.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2022/11/iliyana_mircheva-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Iliyana Mircheva</div>
+                <div class="tst-role">HRIS Manager</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              ABLE Activator provides all the tools, knowledge and contacts for
+              the participants to transform their idea into a business. Thanks
+              to the program I learned how to talk to customers and investors,
+              and I joined a wonderful community of ambitious entrepreneurs and
+              bright leaders!
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2022/11/anna_sarambelieva-e1698402603350-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Anna Sarambelieva</div>
+                <div class="tst-role">Software Developer</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              This was a dream coming true for me! The ABLE Activator program
+              gave me the opportunity to meet like-minded and passionate
+              individuals who turned into friends and team members beyond the
+              boundaries of the sessions.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2022/11/boryana_petrova-e1698325412903-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Boryana Petrova</div>
+                <div class="tst-role">Business Strategy Manager</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              The program is enriching and challenging on many levels as it
+              developed entrepreneurial, communicative and personal skills. A
+              key takeaway is that the more you want to do the more you can see
+              you are able to!
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2022/11/elena_mena-e1700424299534-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Elena Mena</div>
+                <div class="tst-role">Marketing Manager</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              ABLE Activator will challenge you and teach you an exorbitant
+              amount in just over two months, but the network you gain and the
+              friends you make will stay with you forever.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/10/Bhushan-e1698495827938-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Bhushan Trivedi</div>
+                <div class="tst-role">
+                  Team Lead, Social Impact — ClimatePartner Impact
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              The biggest takeaways from ABLE Activator for me were the gain of
+              the entrepreneurial mindset, the supportive community, and the
+              toolkit of how to turn any idea into business.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/Tani-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Taniyana Biserova</div>
+                <div class="tst-role">
+                  Executive Board Member at ABLE, Life Coach
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              After the program, I felt ready to take on the world. I just feel
+              ready to start and this motivation is still in me.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/Milko-e1698325790756-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Milko Penev</div>
+                <div class="tst-role">
+                  Business Development Consultant at Vivafarma
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              The most valuable thing I got from the program is the social
+              network.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/Plamen-Tenev-e1698325747356-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Plamen Tenev</div>
+                <div class="tst-role">SAP Certified Hybris Professional</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              The practical tasks and the questions we were encouraged to ask
+              brought us as close to real-life entrepreneurship as possible. I
+              still keep all my notes, ready to consult them whenever I need to.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/ralitsa-e1698325599362-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Ralitsa Dimitrova</div>
+                <div class="tst-role">
+                  Junior Business Consultant, Brightive
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              I think it was during the first weekend of the program when I met
+              all the other participants that I realized that I was going to be
+              able to get out of my comfort zone. And that I don't have to worry
+              about it.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2023/09/va-Viktoria-e1698394890895-150x150.jpeg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Viktoria Popova</div>
+                <div class="tst-role">Co-founder of OurLoveBooks</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              ABLE Activator had a great impact on my life and I'm really
+              grateful that it happened early on in my life. I got more
+              self-confident that I'll be able to achieve my goals and my dreams
+              and it made me more professional than I was.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/Daniel-Tuechki-1-e1698310664890-150x150.png"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Daniel Tuechki</div>
+                <div class="tst-role">Co-founder at Nauchi.bg</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              Don't be afraid to sign up for ABLE Activator, take advantage of
+              every opportunity that comes your way, because you never know what
+              might happen tomorrow.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/aleksiya-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Aleksiya Kokolios</div>
+                <div class="tst-role">
+                  Employer Branding Strategist, BICA Services
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              I definitely gained a lot of knowledge about starting a lean
+              startup and how to set up my plan of action properly, and all
+              those things really helped me gain a new perspective on how I
+              think about my profession and about my work.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/lulcho-scaled-e1698325330155-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Lulcho Georgiev</div>
+                <div class="tst-role">
+                  Research and Business Development, DRONAMICS
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              ABLE Activator really opened my eyes as to how many different ways
+              to start a business and to succeed there are.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/Mihail-Djurev-e1698310890717-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Mihail Djurev</div>
+                <div class="tst-role">Team Lead at Chaosgroup</div>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="tst-slide">
+            <blockquote class="tst-quote">
+              The BEST thing I took from ABLE Activator is the access to the
+              entrepreneurial ecosystem in Bulgaria.
+            </blockquote>
+            <figcaption class="tst-who">
+              <img
+                class="tst-avatar"
+                src="https://activator.bg/wp-content/uploads/2021/02/Albert-e1698495863875-150x150.jpg"
+                alt=""
+                loading="lazy"
+                width="44"
+                height="44"
+              />
+              <div class="tst-id">
+                <div class="tst-name">Albert Pashov</div>
+                <div class="tst-role">Business Consultant</div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="tst-controls">
+          <button
+            class="tst-arrow"
+            id="tst-prev"
+            type="button"
+            aria-label="Previous testimonial"
+          >
+            &larr; Prev
+          </button>
+          <span class="tst-counter" id="tst-counter">01</span>
+          <button
+            class="tst-arrow"
+            id="tst-next"
+            type="button"
+            aria-label="Next testimonial"
+          >
+            Next &rarr;
+          </button>
+        </div>
+
+        <a
+          class="link-more"
+          href="https://activator.bg/alumni-and-testimonials/"
+          >Check-out all Testimonials</a
+        >
+      </div>
+      <div class="scroll-cue" aria-hidden="true">&#8964;</div>
+    </section>
+
+    <!-- ========================================================================
+     Graduated projects
+     ===================================================================== -->
+    <section id="projects" class="screen screen--scene projects-screen">
+      <div class="screen-bg" aria-hidden="true">
+        <video autoplay loop muted playsinline>
+          <source
+            src="https://res.cloudinary.com/alexpeev9/video/upload/v1788735313/Weekend_Activator.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="screen-bg-veil"></div>
+      </div>
+      <div class="screen-in screen-in--center">
+        <div class="eyebrow">05 &mdash; Alumni network</div>
+        <h2 class="projects-title">
+          Get to know the <em>projects</em> that came out of the program
+        </h2>
+        <a
+          class="btn btn-ghost"
+          href="https://activator.bg/alumni-and-testimonials/"
+          >Graduated projects</a
+        >
+        <div class="logos">
+          <a href="https://mindfit.bg/" target="_blank" rel="noopener"
+            >MindFit</a
+          >
+          <span class="logos-sep" aria-hidden="true">/</span>
+          <a href="https://foodobox.com/bg/" target="_blank" rel="noopener"
+            >Foodobox</a
+          >
+          <span class="logos-sep" aria-hidden="true">/</span>
+          <a href="https://labsi.eu/" target="_blank" rel="noopener">Labsi</a>
+        </div>
+      </div>
+      <div class="scroll-cue scroll-cue--bright" aria-hidden="true">
+        &#8964;
+      </div>
+    </section>
+
+    <!-- ========================================================================
+     Closing CTA
+     ===================================================================== -->
+    <section id="apply" class="screen apply-screen">
+      <div class="screen-in screen-in--center">
+        <div>
+          <h2 class="apply-title">Are you ready to <em>activate?</em></h2>
+          <a
+            class="btn btn-primary btn--lg"
+            href="https://activator.bg/admissions/"
+            >Apply now</a
+          >
+        </div>
+        <div class="apply-rule" aria-hidden="true"></div>
+        <div class="support">
+          <h3>
+            Want to <em>promote</em> entrepreneurship and leadership in
+            Bulgaria?
+          </h3>
+          <a
+            class="btn btn-ghost"
+            href="https://activator.bg/become-a-supporter-partner/"
+            >Become a supporter</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+     Footer
+     ===================================================================== -->
+    <footer class="site-footer">
+      <div class="foot-grid">
+        <nav class="foot-links" aria-label="Footer">
+          <a href="https://activator.bg/newsletter/">Newsletter</a>
+          <span class="foot-sep" aria-hidden="true">/</span>
+          <a href="https://activator.bg/media-spotlight/">Media Spotlight</a>
+          <span class="foot-sep" aria-hidden="true">/</span>
+          <a href="https://activator.bg/press-kit/">Press Kit</a>
+          <span class="foot-sep" aria-hidden="true">/</span>
+          <a href="https://activator.bg/partners/">Partners</a>
+          <span class="foot-sep" aria-hidden="true">/</span>
+          <a href="https://activator.bg/privacy-policy/">Privacy Policy</a>
+          <span class="foot-sep" aria-hidden="true">/</span>
+          <a href="https://activator.bg/contacts/">Contacts</a>
+        </nav>
+        <div class="foot-social">
+          <a
+            href="https://www.facebook.com/ABLEActivator/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.3 0-1.3-.1-2.45-.1-2.4 0-4.05 1.5-4.05 4.2v2.2H7.5V13h2.7v8z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.linkedin.com/company/able-activator/"
+            target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="site-footer-in">
+        <span>&copy; 2022 ABLE Activator, All Rights Reserved</span>
+        <span>Sofia &middot; Bulgaria</span>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        /* ==========================================================================
+   ABLE Activator - landing-3 (fullscreen)
+
+   Four independent behaviours, no framework and no build step:
+     1. Mobile menu
+     2. Applications countdown
+     3. Screen height lock
+     4. Testimonials (+ swipe)
+
+   Everything else on the page is static HTML in index.html.
+   ========================================================================== */
+
+        (function () {
+          "use strict";
+
+          /* ------------------------------------------------------------------------
+     1. Mobile menu
+
+     The drop-down is closed in the markup and the hamburger only appears
+     below 880px, so with scripting off the header degrades to the logo and
+     nothing that cannot be opened.
+     ---------------------------------------------------------------------- */
+
+          var toggle = document.getElementById("menu-toggle");
+          var menu = document.getElementById("menu");
+
+          if (toggle && menu) {
+            toggle.addEventListener("click", function () {
+              var open = menu.classList.toggle("is-open");
+              toggle.setAttribute("aria-expanded", open ? "true" : "false");
+            });
+
+            /* Following a link leaves the panel open behind the new page on a
+       back-navigation, so close it on the way out. */
+            menu.addEventListener("click", function (e) {
+              if (e.target.closest("a")) {
+                menu.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+              }
+            });
+          }
+
+          /* ------------------------------------------------------------------------
+     2. Countdown
+
+     The deadline is a data-deadline attribute on #countdown, so changing it
+     is a markup edit. Once the deadline passes every cell reads 00.
+     ---------------------------------------------------------------------- */
+
+          var cdRoot = document.getElementById("countdown");
+
+          if (cdRoot) {
+            var deadline = Date.parse(cdRoot.getAttribute("data-deadline"));
+            var cells = {
+              days: cdRoot.querySelector('[data-cd="days"]'),
+              hours: cdRoot.querySelector('[data-cd="hours"]'),
+              minutes: cdRoot.querySelector('[data-cd="minutes"]'),
+              seconds: cdRoot.querySelector('[data-cd="seconds"]'),
+            };
+
+            function pad(n) {
+              return n < 10 ? "0" + n : String(n);
+            }
+
+            function tick() {
+              var left = Math.max(0, deadline - Date.now());
+              var total = Math.floor(left / 1000);
+
+              cells.days.textContent = pad(Math.floor(total / 86400));
+              cells.hours.textContent = pad(Math.floor(total / 3600) % 24);
+              cells.minutes.textContent = pad(Math.floor(total / 60) % 60);
+              cells.seconds.textContent = pad(total % 60);
+
+              return left > 0;
+            }
+
+            if (!isNaN(deadline) && tick()) {
+              var timer = setInterval(function () {
+                if (!tick()) clearInterval(timer);
+              }, 1000);
+            }
+          }
+
+          /* ------------------------------------------------------------------------
+     3. Screen height lock
+
+     Every panel is one viewport tall. On iOS the visual viewport grows and
+     shrinks as Safari's toolbars collapse during a scroll, and with a plain
+     vh/dvh height the panels resize underneath the reader - which, with
+     scroll snapping on, also drags the scroll position. So the height is
+     measured once into --screen-vh and only re-measured when the viewport
+     really changes: a width change or an orientation change. Pure height
+     changes - which is all a toolbar collapse is - are ignored.
+     ---------------------------------------------------------------------- */
+
+          (function () {
+            var root = document.documentElement;
+            var lastWidth = null;
+
+            function lock() {
+              root.style.setProperty("--screen-vh", window.innerHeight + "px");
+              lastWidth = window.innerWidth;
+            }
+
+            lock();
+
+            window.addEventListener("resize", function () {
+              if (window.innerWidth !== lastWidth) lock();
+            });
+
+            window.addEventListener("orientationchange", function () {
+              /* iOS reports the old dimensions during the event itself. */
+              setTimeout(lock, 250);
+            });
+          })();
+
+          /* ------------------------------------------------------------------------
+     4. Testimonials
+
+     All quotes are already in the markup. This only moves .is-shown and
+     updates the counter and the progress bar, so with scripting off the
+     first quote still reads. Arrows wrap around; it does not auto-advance.
+     ---------------------------------------------------------------------- */
+
+          var slidesRoot = document.getElementById("tst-slides");
+
+          if (slidesRoot) {
+            var slides = Array.prototype.slice.call(
+              slidesRoot.querySelectorAll(".tst-slide"),
+            );
+            var counter = document.getElementById("tst-counter");
+            var progress = document.getElementById("tst-progress");
+            var current = 0;
+
+            function pad2(n) {
+              return n < 10 ? "0" + n : String(n);
+            }
+
+            function show(i) {
+              current = (i + slides.length) % slides.length;
+              slides.forEach(function (slide, n) {
+                slide.classList.toggle("is-shown", n === current);
+              });
+              counter.textContent = pad2(current + 1) + " / " + slides.length;
+              progress.style.width =
+                Math.round(((current + 1) / slides.length) * 100) + "%";
+            }
+
+            document
+              .getElementById("tst-prev")
+              .addEventListener("click", function () {
+                show(current - 1);
+              });
+            document
+              .getElementById("tst-next")
+              .addEventListener("click", function () {
+                show(current + 1);
+              });
+
+            show(0);
+
+            /* ----------------------------------------------------------------------
+       Testimonial swipe (touch)
+
+       A gesture only counts when it is clearly horizontal and long enough;
+       anything steeper is left alone so the page still scrolls. show()
+       takes the index modulo the slide count, so swiping right on the first
+       quote lands on the last one and vice versa.
+       -------------------------------------------------------------------- */
+
+            var SWIPE_MIN = 45; /* px of horizontal travel before it counts */
+            var SWIPE_SLOPE = 1.2; /* how much more horizontal than vertical it must be */
+            var sx = 0,
+              sy = 0,
+              tracking = false;
+
+            slidesRoot.addEventListener(
+              "touchstart",
+              function (e) {
+                if (e.touches.length !== 1) {
+                  tracking = false;
+                  return;
+                }
+                sx = e.touches[0].clientX;
+                sy = e.touches[0].clientY;
+                tracking = true;
+              },
+              { passive: true },
+            );
+
+            slidesRoot.addEventListener(
+              "touchend",
+              function (e) {
+                if (!tracking) return;
+                tracking = false;
+
+                var touch = e.changedTouches[0];
+                var dx = touch.clientX - sx;
+                var dy = touch.clientY - sy;
+
+                if (Math.abs(dx) < SWIPE_MIN) return;
+                if (Math.abs(dx) < Math.abs(dy) * SWIPE_SLOPE) return;
+
+                show(dx < 0 ? current + 1 : current - 1);
+              },
+              { passive: true },
+            );
+
+            slidesRoot.addEventListener(
+              "touchcancel",
+              function () {
+                tracking = false;
+              },
+              { passive: true },
+            );
+          }
+        })();
+      });
+    </script>
+  </body>
+</html>
