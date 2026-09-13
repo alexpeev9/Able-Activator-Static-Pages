@@ -240,17 +240,397 @@ x-dc{display:none!important}
   * { box-sizing: border-box; }
   ::selection { background: #29abe2; color: #10222b; }
   html { scroll-behavior: smooth; }
-  [id] { scroll-margin-top: 94px; }
-  @media (max-width: 860px) { [id] { scroll-margin-top: 80px; } }
+  [id] { scroll-margin-top: calc(var(--hdr-h) + 15px); }
 
   /* ---- site header (shared with landing-3) ---- */
-  .hdr {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(28,28,28,.9);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border-bottom: 1px solid #2b2b2b;
+  :root {
+    /* The header is a copy of the activator.bg one and keeps that site's
+       values rather than this page's - see below. --hdr-h is mirrored by
+       the hero and the anchor offsets. */
+    --hdr-bg: #1e1e1e;
+    --nav-ink: #dadada;
+    --accent-2: #8ec54a;
+    --font-nav: Inter, Helvetica, sans-serif;
+    --hdr-h: 89px;
   }
+  @media (max-width: 959px) {
+    :root { --hdr-h: 77px; }
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Site header
+
+     A copy of the activator.bg header, measured off the live site rather than
+     restyled to this page's palette, so the two read as the same site. Hence
+     the values below that do not use this page's tokens: the header keeps
+     Inter at 17.6px on #dadada over a flat #1e1e1e band, its own 1400px
+     container, and the 180px logo. The one token it does share is --accent-2,
+     which is already the same #8ec54a the site hovers with.
+     -------------------------------------------------------------------------- */
+
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--hdr-bg);
+  }
+  .hdr-in {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+    height: var(--hdr-h);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .brand {
+    flex: none;
+    display: flex;
+    align-items: center;
+  }
+  .brand svg {
+    display: block;
+    width: 180px;
+    height: auto;
+  }
+
+  /* The menu. Each entry is a .nav-item; the ones that own a sub-menu also
+     carry .nav-item--has-sub and reveal their panel on hover, on keyboard
+     focus anywhere inside the item, or while the caret button has toggled
+     .is-open. The three routes are equivalent, so a pointer user and a
+     keyboard user see the same panel.
+
+     Spacing follows the original exactly: items are 30px apart (a 15px margin
+     either side, cancelled at the ends by the negative margin on the list) and
+     the row is 25px tall, which is also where the sub-menu hangs from. */
+
+  .nav {
+    margin-left: auto;
+  }
+  .nav-ul,
+  .nav-sub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin: 0 -15px;
+  }
+  .nav-item {
+    position: relative;
+    margin: 0 15px;
+  }
+
+  .nav-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 0 4px;
+  }
+  .nav-wrap > a {
+    display: flex;
+    padding-top: 1px;
+    font-family: var(--font-nav);
+    font-size: 17.6px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+    white-space: nowrap;
+  }
+  /* The underline grows from the left edge of the item over its full width,
+     caret included - it is on the wrap, not on the link. */
+  .nav-wrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-2);
+    transition: width 0.3s ease;
+  }
+  .nav-item:hover > .nav-wrap::after,
+  .nav-item:focus-within > .nav-wrap::after,
+  .nav-item.is-open > .nav-wrap::after {
+    width: 100%;
+  }
+  .nav-item:hover > .nav-wrap > a,
+  .nav-item:focus-within > .nav-wrap > a,
+  .nav-item.is-open > .nav-wrap > a {
+    color: var(--accent-2);
+  }
+
+  /* The caret is a real button so the panel is reachable without a pointer.
+     It never navigates - the label beside it is the link. */
+  .nav-caret {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    margin: 1.2px 0 0 5px;
+    width: 8.8px;
+    color: var(--nav-ink);
+    line-height: 0;
+    cursor: pointer;
+  }
+  .nav-caret svg {
+    display: block;
+    width: 8.8px;
+    height: 8.8px;
+  }
+  .nav-item:hover > .nav-wrap > .nav-caret,
+  .nav-item:focus-within > .nav-wrap > .nav-caret,
+  .nav-item.is-open > .nav-wrap > .nav-caret {
+    color: var(--accent-2);
+  }
+
+  /* The panel hangs off the bottom of the 25px row and is shrink-to-fit,
+     pinned by its right edge so it never runs off the end of the header. The
+     original opens it with no transition at all. */
+  .nav-sub {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 100;
+    background: var(--hdr-bg);
+    box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+    opacity: 0;
+    visibility: hidden;
+  }
+  .nav-item--has-sub:hover > .nav-sub,
+  .nav-item--has-sub:focus-within > .nav-sub,
+  .nav-item--has-sub.is-open > .nav-sub {
+    opacity: 1;
+    visibility: visible;
+  }
+  .nav-sub a {
+    display: block;
+    padding: 10px 20px;
+    font-family: var(--font-nav);
+    font-size: 17.6px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+    white-space: nowrap;
+  }
+  .nav-sub a:hover,
+  .nav-sub a:focus-visible {
+    color: var(--accent-2);
+  }
+
+  /* --------------------------------------------------------------------------
+     3b. Mobile menu
+
+     The original swaps to a 120px logo and a hamburger at 960px, so that is the
+     breakpoint here too. The panel carries its own copy of the links rather
+     than moving the desktop list into it, so neither menu depends on the other
+     existing. Sub-menus there are accordions, closed until their row is
+     pressed.
+     -------------------------------------------------------------------------- */
+
+  .nav-toggle {
+    display: none;
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 10px;
+    margin-right: -10px;
+    margin-left: auto;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    min-height: 44px;
+  }
+  .nav-toggle span {
+    display: block;
+    height: 2px;
+    width: 22px;
+    border-radius: 2px;
+    background: var(--nav-ink);
+    transition:
+      transform 0.22s ease,
+      opacity 0.18s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(8, 10, 12, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.24s ease,
+      visibility 0.24s ease;
+  }
+  .mnav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 61;
+    width: min(340px, 86vw);
+    height: 100%;
+    padding: 18px 20px 32px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--hdr-bg);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+      transform 0.26s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.26s ease;
+  }
+  body.is-menu-open .nav-scrim {
+    opacity: 1;
+    visibility: visible;
+  }
+  body.is-menu-open .mnav {
+    transform: none;
+    visibility: visible;
+  }
+  body.is-menu-open {
+    overflow: hidden;
+  }
+
+  .mnav-close {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 10px;
+    margin: 0 -10px 6px auto;
+    display: block;
+    color: var(--nav-ink);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .mnav-close:hover {
+    color: var(--accent-2);
+  }
+
+  .mnav-ul,
+  .mnav-sub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mnav-item + .mnav-item {
+    border-top: 1px solid rgba(218, 218, 218, 0.12);
+  }
+  /* A row that owns a sub-menu is a button, not a link: on a touch screen
+     the parent entry is the only way to open its accordion, so tapping it must
+     never navigate. Rows without a sub-menu stay plain links inside a div. */
+  .mnav-wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+  }
+  .mnav-wrap > a,
+  .mnav-label {
+    flex: 1;
+    padding: 13px 0;
+    font-family: var(--font-nav);
+    font-size: 17.6px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+  }
+  .mnav-wrap > a:hover,
+  .mnav-wrap--toggle:hover .mnav-label {
+    color: var(--accent-2);
+  }
+  .mnav-caret {
+    color: var(--nav-ink);
+    line-height: 0;
+    flex: none;
+    width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+  .mnav-caret svg {
+    display: block;
+    width: 11px;
+    height: 11px;
+  }
+  .mnav-item.is-open .mnav-caret {
+    transform: rotate(180deg);
+    color: var(--accent-2);
+  }
+  .mnav-sub {
+    display: none;
+    padding: 0 0 10px 14px;
+  }
+  .mnav-item.is-open .mnav-sub {
+    display: block;
+  }
+  .mnav-sub a {
+    display: block;
+    padding: 9px 0;
+    font-family: var(--font-nav);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+  }
+  .mnav-sub a:hover {
+    color: var(--accent-2);
+  }
+
+  @media (max-width: 959px) {
+    .nav {
+      display: none;
+    }
+    .nav-toggle {
+      display: flex;
+    }
+    .hdr-in {
+      height: var(--hdr-h);
+    }
+    .brand svg {
+      width: 120px;
+    }
+  }
+
+  /* Above the breakpoint the mobile panel is never reachable, so it is kept
+     out of the layout and out of the tab order entirely. */
+  @media (min-width: 960px) {
+    .nav-scrim,
+    .mnav {
+      display: none;
+    }
+  }
+
   .hdr.cal-hdr-dim {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -264,41 +644,6 @@ x-dc{display:none!important}
     background: rgba(8,10,12,.72);
     pointer-events: none;
   }
-  .hdr-in {
-    max-width: 1180px; margin: 0 auto;
-    padding: 0 clamp(14px,3vw,32px);
-    height: 78px; display: flex; align-items: center; gap: clamp(14px,3vw,32px);
-  }
-  .brand { flex: none; display: flex; align-items: center; opacity: .96; transition: opacity .18s ease; }
-  .brand:hover { opacity: 1; }
-  .brand svg { display: block; height: 40px; width: auto; }
-  .nav { display: flex; align-items: center; gap: 2px; margin-left: auto; }
-  .nav a {
-    position: relative; color: #b6bec2; font-size: 14px; font-weight: 500;
-    padding: 10px 13px; border-radius: 9px;
-    transition: color .18s ease, background .18s ease;
-  }
-  .nav a::after {
-    content: ""; position: absolute; left: 13px; right: 13px; bottom: 5px;
-    height: 1.5px; background: #29abe2; border-radius: 2px;
-    transform: scaleX(0); transform-origin: left center;
-    transition: transform .22s cubic-bezier(.4,0,.2,1);
-  }
-  .nav a:hover { color: #fff; }
-  .nav a:hover::after { transform: scaleX(1); }
-  .hdr .cta {
-    flex: none; background: #29abe2; color: #12242c;
-    font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 13.5px;
-    letter-spacing: .04em; text-transform: uppercase;
-    padding: 11px 22px; border-radius: 999px; min-height: 44px;
-    display: inline-flex; align-items: center;
-    transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
-  }
-  .hdr .cta:hover {
-    background: #7ad2f2; color: #0f1e24;
-    box-shadow: 0 6px 22px rgba(41,171,226,.3); transform: translateY(-1px);
-  }
-  .hdr a:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
 
   .page-bg {
     position: fixed; inset: 0; z-index: 0;
@@ -349,7 +694,7 @@ x-dc{display:none!important}
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero {
-      min-height: calc(100vh - 79px);
+      min-height: calc(100vh - var(--hdr-h));
       display: grid; align-content: center;
     }
   }
@@ -358,14 +703,10 @@ x-dc{display:none!important}
   }
 
   @media (max-width: 860px) {
-    .nav { display: none; }
-    .hdr-in { height: 66px; justify-content: space-between; }
-    .brand svg { height: 34px; }
-    .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .nav a::after, .hdr .cta { transition: none; }
+    .nav-wrap::after, .nav-toggle span, .mnav, .nav-scrim { transition: none; }
     .page-bg video, .quiz-bg video { display: none; }
   }
   .gains-grid {
@@ -534,22 +875,414 @@ x-dc{display:none!important}
     <div data-dc-tpl="9" class="page-bg-veil"></div>
   </div>
 
-  <header data-dc-tpl="10" class="hdr">
-    <div data-dc-tpl="11" class="hdr-in">
-      <a data-dc-tpl="12" class="brand" href="#top" aria-label="ABLE Activator">
-        <svg data-dc-tpl="13" viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator"><path data-dc-tpl="14" d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"></path><path data-dc-tpl="15" d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"></path><path data-dc-tpl="16" d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"></path><path data-dc-tpl="17" d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"></path><path data-dc-tpl="18" d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"></path><path data-dc-tpl="19" d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"></path><path data-dc-tpl="20" d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"></path><path data-dc-tpl="21" d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"></path><path data-dc-tpl="22" d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"></path><path data-dc-tpl="23" d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"></path><path data-dc-tpl="24" d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"></path><path data-dc-tpl="25" d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"></path><path data-dc-tpl="26" d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"></path><path data-dc-tpl="27" d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"></path><path data-dc-tpl="28" d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"></path></svg>
+  <header class="hdr">
+    <div class="hdr-in">
+      <a
+        class="brand"
+        href="https://activator.bg/"
+        aria-label="ABLE Activator"
+      >
+        <svg
+          viewBox="0 0 255 104"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="ABLE Activator"
+        >
+          <path
+            d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z"
+            fill="#20C4F4"
+          />
+        </svg>
       </a>
-      <nav data-dc-tpl="29" class="nav" aria-label="Primary">
-        <a data-dc-tpl="30" href="#about">The program</a>
-        <a data-dc-tpl="31" href="#fit">Who</a>
-        <a data-dc-tpl="32" href="#calendar">Calendar</a>
-        <a data-dc-tpl="33" href="#fees">Fees</a>
-        <a data-dc-tpl="34" href="#faq">FAQ</a>
-        <a data-dc-tpl="35" href="#quiz">Quiz</a>
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav-ul">
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a href="https://activator.bg/program/">ABLE Activator</a>
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-activator"
+                aria-label="ABLE Activator submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-activator">
+              <li>
+                <a href="https://activator.bg/program/"
+                  >Program &ndash; Sofia</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/mentors-and-speakers/"
+                  >Mentors and Speakers</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/alumni-and-testimonials/"
+                  >Alumni and Testimonials</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a
+                href="https://activator.bg/able-weekend-activator-overviewold/"
+                >Weekend Activator</a
+              >
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-weekend"
+                aria-label="Weekend Activator submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-weekend">
+              <li>
+                <a
+                  href="https://activator.bg/able-weekend-activator-overviewold/"
+                  >&#1055;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1072;</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/able-weekend-activator-apply/"
+                  >&#1050;&#1072;&#1085;&#1076;&#1080;&#1076;&#1072;&#1090;&#1089;&#1090;&#1074;&#1072;&#1081;</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/mentors-and-speakers/"
+                  >&#1052;&#1077;&#1085;&#1090;&#1086;&#1088;&#1080; &#1080;
+                  &#1083;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/team/"
+                  >&#1045;&#1082;&#1080;&#1087;</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://activator.bg/able-weekend-activator-testimonials/"
+                  >&#1054;&#1090;&#1079;&#1080;&#1074;&#1080;</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a href="https://activator.bg/mentors-and-speakers/">Network</a>
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-network"
+                aria-label="Network submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-network">
+              <li><a href="https://activator.bg/team/">Team</a></li>
+              <li>
+                <a href="https://activator.bg/mentors-and-speakers/"
+                  >Mentors and Speakers</a
+                >
+              </li>
+              <li><a href="https://activator.bg/partners/">Partners</a></li>
+              <li>
+                <a href="https://activator.bg/media-spotlight/"
+                  >Media Spotlight</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a href="https://activator.bg/category/blog/">Resources</a>
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-resources"
+                aria-label="Resources submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-resources">
+              <li>
+                <a href="https://activator.bg/newsletter/">Newsletter</a>
+              </li>
+              <li><a href="https://activator.bg/category/blog/">Blog</a></li>
+              <li><a href="https://activator.bg/downloads/">Downloads</a></li>
+            </ul>
+          </li>
+        </ul>
       </nav>
-      <a data-dc-tpl="36" class="cta" href="#" role="button">Apply now</a>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim" data-menu-close></div>
+  <div class="mnav" id="mobile-nav" aria-label="Primary" role="navigation">
+    <button
+      class="mnav-close"
+      type="button"
+      data-menu-close
+      aria-label="Close menu"
+    >
+      &times;
+    </button>
+    <ul class="mnav-ul">
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-activator"
+        >
+          <span class="mnav-label">ABLE Activator</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-activator">
+          <li>
+            <a href="https://activator.bg/program/">Program &ndash; Sofia</a>
+          </li>
+          <li>
+            <a href="https://activator.bg/mentors-and-speakers/"
+              >Mentors and Speakers</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/alumni-and-testimonials/"
+              >Alumni and Testimonials</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-weekend"
+        >
+          <span class="mnav-label">Weekend Activator</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-weekend">
+          <li>
+            <a href="https://activator.bg/able-weekend-activator-overviewold/"
+              >&#1055;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1072;</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/able-weekend-activator-apply/"
+              >&#1050;&#1072;&#1085;&#1076;&#1080;&#1076;&#1072;&#1090;&#1089;&#1090;&#1074;&#1072;&#1081;</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/mentors-and-speakers/"
+              >&#1052;&#1077;&#1085;&#1090;&#1086;&#1088;&#1080; &#1080;
+              &#1083;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/team/"
+              >&#1045;&#1082;&#1080;&#1087;</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://activator.bg/able-weekend-activator-testimonials/"
+              >&#1054;&#1090;&#1079;&#1080;&#1074;&#1080;</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-network"
+        >
+          <span class="mnav-label">Network</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-network">
+          <li><a href="https://activator.bg/team/">Team</a></li>
+          <li>
+            <a href="https://activator.bg/mentors-and-speakers/"
+              >Mentors and Speakers</a
+            >
+          </li>
+          <li><a href="https://activator.bg/partners/">Partners</a></li>
+          <li>
+            <a href="https://activator.bg/media-spotlight/"
+              >Media Spotlight</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-resources"
+        >
+          <span class="mnav-label">Resources</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-resources">
+          <li><a href="https://activator.bg/newsletter/">Newsletter</a></li>
+          <li><a href="https://activator.bg/category/blog/">Blog</a></li>
+          <li><a href="https://activator.bg/downloads/">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 
   <section data-dc-tpl="37" id="top" class="hero scene">
     <div data-dc-tpl="38" class="hero-in">
@@ -1289,7 +2022,7 @@ x-dc{display:none!important}
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500display=swap" rel="stylesheet" />
 <style>
   html, body { overflow-x: clip; }
   body { margin: 0; background: #1c1c1c; -webkit-font-smoothing: antialiased; }
@@ -1298,17 +2031,397 @@ x-dc{display:none!important}
   * { box-sizing: border-box; }
   ::selection { background: #29abe2; color: #10222b; }
   html { scroll-behavior: smooth; }
-  [id] { scroll-margin-top: 94px; }
-  @media (max-width: 860px) { [id] { scroll-margin-top: 80px; } }
+  [id] { scroll-margin-top: calc(var(--hdr-h) + 15px); }
 
   /* ---- site header (shared with landing-3) ---- */
-  .hdr {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(28,28,28,.9);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border-bottom: 1px solid #2b2b2b;
+  :root {
+    /* The header is a copy of the activator.bg one and keeps that site's
+       values rather than this page's - see below. --hdr-h is mirrored by
+       the hero and the anchor offsets. */
+    --hdr-bg: #1e1e1e;
+    --nav-ink: #dadada;
+    --accent-2: #8ec54a;
+    --font-nav: Inter, Helvetica, sans-serif;
+    --hdr-h: 89px;
   }
+  @media (max-width: 959px) {
+    :root { --hdr-h: 77px; }
+  }
+
+  /* --------------------------------------------------------------------------
+     3. Site header
+
+     A copy of the activator.bg header, measured off the live site rather than
+     restyled to this page's palette, so the two read as the same site. Hence
+     the values below that do not use this page's tokens: the header keeps
+     Inter at 17.6px on #dadada over a flat #1e1e1e band, its own 1400px
+     container, and the 180px logo. The one token it does share is --accent-2,
+     which is already the same #8ec54a the site hovers with.
+     -------------------------------------------------------------------------- */
+
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--hdr-bg);
+  }
+  .hdr-in {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+    height: var(--hdr-h);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .brand {
+    flex: none;
+    display: flex;
+    align-items: center;
+  }
+  .brand svg {
+    display: block;
+    width: 180px;
+    height: auto;
+  }
+
+  /* The menu. Each entry is a .nav-item; the ones that own a sub-menu also
+     carry .nav-item--has-sub and reveal their panel on hover, on keyboard
+     focus anywhere inside the item, or while the caret button has toggled
+     .is-open. The three routes are equivalent, so a pointer user and a
+     keyboard user see the same panel.
+
+     Spacing follows the original exactly: items are 30px apart (a 15px margin
+     either side, cancelled at the ends by the negative margin on the list) and
+     the row is 25px tall, which is also where the sub-menu hangs from. */
+
+  .nav {
+    margin-left: auto;
+  }
+  .nav-ul,
+  .nav-sub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin: 0 -15px;
+  }
+  .nav-item {
+    position: relative;
+    margin: 0 15px;
+  }
+
+  .nav-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 25px;
+    padding: 0 4px;
+  }
+  .nav-wrap > a {
+    display: flex;
+    padding-top: 1px;
+    font-family: var(--font-nav);
+    font-size: 17.6px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+    white-space: nowrap;
+  }
+  /* The underline grows from the left edge of the item over its full width,
+     caret included - it is on the wrap, not on the link. */
+  .nav-wrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-2);
+    transition: width 0.3s ease;
+  }
+  .nav-item:hover > .nav-wrap::after,
+  .nav-item:focus-within > .nav-wrap::after,
+  .nav-item.is-open > .nav-wrap::after {
+    width: 100%;
+  }
+  .nav-item:hover > .nav-wrap > a,
+  .nav-item:focus-within > .nav-wrap > a,
+  .nav-item.is-open > .nav-wrap > a {
+    color: var(--accent-2);
+  }
+
+  /* The caret is a real button so the panel is reachable without a pointer.
+     It never navigates - the label beside it is the link. */
+  .nav-caret {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    margin: 1.2px 0 0 5px;
+    width: 8.8px;
+    color: var(--nav-ink);
+    line-height: 0;
+    cursor: pointer;
+  }
+  .nav-caret svg {
+    display: block;
+    width: 8.8px;
+    height: 8.8px;
+  }
+  .nav-item:hover > .nav-wrap > .nav-caret,
+  .nav-item:focus-within > .nav-wrap > .nav-caret,
+  .nav-item.is-open > .nav-wrap > .nav-caret {
+    color: var(--accent-2);
+  }
+
+  /* The panel hangs off the bottom of the 25px row and is shrink-to-fit,
+     pinned by its right edge so it never runs off the end of the header. The
+     original opens it with no transition at all. */
+  .nav-sub {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 100;
+    background: var(--hdr-bg);
+    box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+    opacity: 0;
+    visibility: hidden;
+  }
+  .nav-item--has-sub:hover > .nav-sub,
+  .nav-item--has-sub:focus-within > .nav-sub,
+  .nav-item--has-sub.is-open > .nav-sub {
+    opacity: 1;
+    visibility: visible;
+  }
+  .nav-sub a {
+    display: block;
+    padding: 10px 20px;
+    font-family: var(--font-nav);
+    font-size: 17.6px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+    white-space: nowrap;
+  }
+  .nav-sub a:hover,
+  .nav-sub a:focus-visible {
+    color: var(--accent-2);
+  }
+
+  /* --------------------------------------------------------------------------
+     3b. Mobile menu
+
+     The original swaps to a 120px logo and a hamburger at 960px, so that is the
+     breakpoint here too. The panel carries its own copy of the links rather
+     than moving the desktop list into it, so neither menu depends on the other
+     existing. Sub-menus there are accordions, closed until their row is
+     pressed.
+     -------------------------------------------------------------------------- */
+
+  .nav-toggle {
+    display: none;
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 10px;
+    margin-right: -10px;
+    margin-left: auto;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    min-height: 44px;
+  }
+  .nav-toggle span {
+    display: block;
+    height: 2px;
+    width: 22px;
+    border-radius: 2px;
+    background: var(--nav-ink);
+    transition:
+      transform 0.22s ease,
+      opacity 0.18s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(8, 10, 12, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.24s ease,
+      visibility 0.24s ease;
+  }
+  .mnav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 61;
+    width: min(340px, 86vw);
+    height: 100%;
+    padding: 18px 20px 32px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--hdr-bg);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+      transform 0.26s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.26s ease;
+  }
+  body.is-menu-open .nav-scrim {
+    opacity: 1;
+    visibility: visible;
+  }
+  body.is-menu-open .mnav {
+    transform: none;
+    visibility: visible;
+  }
+  body.is-menu-open {
+    overflow: hidden;
+  }
+
+  .mnav-close {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 10px;
+    margin: 0 -10px 6px auto;
+    display: block;
+    color: var(--nav-ink);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .mnav-close:hover {
+    color: var(--accent-2);
+  }
+
+  .mnav-ul,
+  .mnav-sub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mnav-item + .mnav-item {
+    border-top: 1px solid rgba(218, 218, 218, 0.12);
+  }
+  /* A row that owns a sub-menu is a button, not a link: on a touch screen
+     the parent entry is the only way to open its accordion, so tapping it must
+     never navigate. Rows without a sub-menu stay plain links inside a div. */
+  .mnav-wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+  }
+  .mnav-wrap > a,
+  .mnav-label {
+    flex: 1;
+    padding: 13px 0;
+    font-family: var(--font-nav);
+    font-size: 17.6px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+  }
+  .mnav-wrap > a:hover,
+  .mnav-wrap--toggle:hover .mnav-label {
+    color: var(--accent-2);
+  }
+  .mnav-caret {
+    color: var(--nav-ink);
+    line-height: 0;
+    flex: none;
+    width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+  .mnav-caret svg {
+    display: block;
+    width: 11px;
+    height: 11px;
+  }
+  .mnav-item.is-open .mnav-caret {
+    transform: rotate(180deg);
+    color: var(--accent-2);
+  }
+  .mnav-sub {
+    display: none;
+    padding: 0 0 10px 14px;
+  }
+  .mnav-item.is-open .mnav-sub {
+    display: block;
+  }
+  .mnav-sub a {
+    display: block;
+    padding: 9px 0;
+    font-family: var(--font-nav);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+    color: var(--nav-ink);
+  }
+  .mnav-sub a:hover {
+    color: var(--accent-2);
+  }
+
+  @media (max-width: 959px) {
+    .nav {
+      display: none;
+    }
+    .nav-toggle {
+      display: flex;
+    }
+    .hdr-in {
+      height: var(--hdr-h);
+    }
+    .brand svg {
+      width: 120px;
+    }
+  }
+
+  /* Above the breakpoint the mobile panel is never reachable, so it is kept
+     out of the layout and out of the tab order entirely. */
+  @media (min-width: 960px) {
+    .nav-scrim,
+    .mnav {
+      display: none;
+    }
+  }
+
   .hdr.cal-hdr-dim {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -1322,41 +2435,6 @@ x-dc{display:none!important}
     background: rgba(8,10,12,.72);
     pointer-events: none;
   }
-  .hdr-in {
-    max-width: 1180px; margin: 0 auto;
-    padding: 0 clamp(14px,3vw,32px);
-    height: 78px; display: flex; align-items: center; gap: clamp(14px,3vw,32px);
-  }
-  .brand { flex: none; display: flex; align-items: center; opacity: .96; transition: opacity .18s ease; }
-  .brand:hover { opacity: 1; }
-  .brand svg { display: block; height: 40px; width: auto; }
-  .nav { display: flex; align-items: center; gap: 2px; margin-left: auto; }
-  .nav a {
-    position: relative; color: #b6bec2; font-size: 14px; font-weight: 500;
-    padding: 10px 13px; border-radius: 9px;
-    transition: color .18s ease, background .18s ease;
-  }
-  .nav a::after {
-    content: ""; position: absolute; left: 13px; right: 13px; bottom: 5px;
-    height: 1.5px; background: #29abe2; border-radius: 2px;
-    transform: scaleX(0); transform-origin: left center;
-    transition: transform .22s cubic-bezier(.4,0,.2,1);
-  }
-  .nav a:hover { color: #fff; }
-  .nav a:hover::after { transform: scaleX(1); }
-  .hdr .cta {
-    flex: none; background: #29abe2; color: #12242c;
-    font-family: Poppins, Helvetica, sans-serif; font-weight: 600; font-size: 13.5px;
-    letter-spacing: .04em; text-transform: uppercase;
-    padding: 11px 22px; border-radius: 999px; min-height: 44px;
-    display: inline-flex; align-items: center;
-    transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
-  }
-  .hdr .cta:hover {
-    background: #7ad2f2; color: #0f1e24;
-    box-shadow: 0 6px 22px rgba(41,171,226,.3); transform: translateY(-1px);
-  }
-  .hdr a:focus-visible { outline: 2px solid #29abe2; outline-offset: 3px; }
 
   .page-bg {
     position: fixed; inset: 0; z-index: 0;
@@ -1407,7 +2485,7 @@ x-dc{display:none!important}
   /* desktop: header + hero fill exactly one screen */
   @media (min-width: 861px) {
     .hero {
-      min-height: calc(100vh - 79px);
+      min-height: calc(100vh - var(--hdr-h));
       display: grid; align-content: center;
     }
   }
@@ -1416,14 +2494,10 @@ x-dc{display:none!important}
   }
 
   @media (max-width: 860px) {
-    .nav { display: none; }
-    .hdr-in { height: 66px; justify-content: space-between; }
-    .brand svg { height: 34px; }
-    .hdr .cta { padding: 10px 17px; font-size: 12.5px; min-height: 40px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .nav a::after, .hdr .cta { transition: none; }
+    .nav-wrap::after, .nav-toggle span, .mnav, .nav-scrim { transition: none; }
     .page-bg video, .quiz-bg video { display: none; }
   }
   .gains-grid {
@@ -1590,20 +2664,412 @@ x-dc{display:none!important}
 
   <header class="hdr">
     <div class="hdr-in">
-      <a class="brand" href="#top" aria-label="ABLE Activator">
-        <svg viewBox="1.5 28.5 252.5 59.6" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ABLE Activator"><path d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z" fill="#20C4F4"/><path d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z" fill="#20C4F4"/><path d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z" fill="#8EC54A"/><path d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z" fill="#8EC54A"/><path d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z" fill="#8EC54A"/><path d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z" fill="#8EC54A"/><path d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z" fill="#8EC54A"/><path d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z" fill="#8EC54A"/><path d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z" fill="#8EC54A"/><path d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z" fill="#8EC54A"/><path d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z" fill="#8EC54A"/><path d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z" fill="#20C4F4"/><path d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z" fill="#20C4F4"/><path d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z" fill="#20C4F4"/><path d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z" fill="#20C4F4"/></svg>
+      <a
+        class="brand"
+        href="https://activator.bg/"
+        aria-label="ABLE Activator"
+      >
+        <svg
+          viewBox="0 0 255 104"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="ABLE Activator"
+        >
+          <path
+            d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z"
+            fill="#8EC54A"
+          />
+          <path
+            d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z"
+            fill="#20C4F4"
+          />
+          <path
+            d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z"
+            fill="#20C4F4"
+          />
+        </svg>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="#about">The program</a>
-        <a href="#fit">Who</a>
-        <a href="#calendar">Calendar</a>
-        <a href="#fees">Fees</a>
-        <a href="#faq">FAQ</a>
-        <a href="#quiz">Quiz</a>
+        <ul class="nav-ul">
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a href="https://activator.bg/program/">ABLE Activator</a>
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-activator"
+                aria-label="ABLE Activator submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-activator">
+              <li>
+                <a href="https://activator.bg/program/"
+                  >Program &ndash; Sofia</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/mentors-and-speakers/"
+                  >Mentors and Speakers</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/alumni-and-testimonials/"
+                  >Alumni and Testimonials</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a
+                href="https://activator.bg/able-weekend-activator-overviewold/"
+                >Weekend Activator</a
+              >
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-weekend"
+                aria-label="Weekend Activator submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-weekend">
+              <li>
+                <a
+                  href="https://activator.bg/able-weekend-activator-overviewold/"
+                  >&#1055;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1072;</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/able-weekend-activator-apply/"
+                  >&#1050;&#1072;&#1085;&#1076;&#1080;&#1076;&#1072;&#1090;&#1089;&#1090;&#1074;&#1072;&#1081;</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/mentors-and-speakers/"
+                  >&#1052;&#1077;&#1085;&#1090;&#1086;&#1088;&#1080; &#1080;
+                  &#1083;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;</a
+                >
+              </li>
+              <li>
+                <a href="https://activator.bg/team/"
+                  >&#1045;&#1082;&#1080;&#1087;</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://activator.bg/able-weekend-activator-testimonials/"
+                  >&#1054;&#1090;&#1079;&#1080;&#1074;&#1080;</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a href="https://activator.bg/mentors-and-speakers/">Network</a>
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-network"
+                aria-label="Network submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-network">
+              <li><a href="https://activator.bg/team/">Team</a></li>
+              <li>
+                <a href="https://activator.bg/mentors-and-speakers/"
+                  >Mentors and Speakers</a
+                >
+              </li>
+              <li><a href="https://activator.bg/partners/">Partners</a></li>
+              <li>
+                <a href="https://activator.bg/media-spotlight/"
+                  >Media Spotlight</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item nav-item--has-sub">
+            <div class="nav-wrap">
+              <a href="https://activator.bg/category/blog/">Resources</a>
+              <button
+                class="nav-caret"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-sub-resources"
+                aria-label="Resources submenu"
+              >
+                <svg
+                  viewBox="0 0 448 512"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <ul class="nav-sub" id="nav-sub-resources">
+              <li>
+                <a href="https://activator.bg/newsletter/">Newsletter</a>
+              </li>
+              <li><a href="https://activator.bg/category/blog/">Blog</a></li>
+              <li><a href="https://activator.bg/downloads/">Downloads</a></li>
+            </ul>
+          </li>
+        </ul>
       </nav>
-      <a class="cta" href="#" role="button" onclick="return false">Apply now</a>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim" data-menu-close></div>
+  <div class="mnav" id="mobile-nav" aria-label="Primary" role="navigation">
+    <button
+      class="mnav-close"
+      type="button"
+      data-menu-close
+      aria-label="Close menu"
+    >
+      &times;
+    </button>
+    <ul class="mnav-ul">
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-activator"
+        >
+          <span class="mnav-label">ABLE Activator</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-activator">
+          <li>
+            <a href="https://activator.bg/program/">Program &ndash; Sofia</a>
+          </li>
+          <li>
+            <a href="https://activator.bg/mentors-and-speakers/"
+              >Mentors and Speakers</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/alumni-and-testimonials/"
+              >Alumni and Testimonials</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-weekend"
+        >
+          <span class="mnav-label">Weekend Activator</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-weekend">
+          <li>
+            <a href="https://activator.bg/able-weekend-activator-overviewold/"
+              >&#1055;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1072;</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/able-weekend-activator-apply/"
+              >&#1050;&#1072;&#1085;&#1076;&#1080;&#1076;&#1072;&#1090;&#1089;&#1090;&#1074;&#1072;&#1081;</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/mentors-and-speakers/"
+              >&#1052;&#1077;&#1085;&#1090;&#1086;&#1088;&#1080; &#1080;
+              &#1083;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;</a
+            >
+          </li>
+          <li>
+            <a href="https://activator.bg/team/"
+              >&#1045;&#1082;&#1080;&#1087;</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://activator.bg/able-weekend-activator-testimonials/"
+              >&#1054;&#1090;&#1079;&#1080;&#1074;&#1080;</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-network"
+        >
+          <span class="mnav-label">Network</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-network">
+          <li><a href="https://activator.bg/team/">Team</a></li>
+          <li>
+            <a href="https://activator.bg/mentors-and-speakers/"
+              >Mentors and Speakers</a
+            >
+          </li>
+          <li><a href="https://activator.bg/partners/">Partners</a></li>
+          <li>
+            <a href="https://activator.bg/media-spotlight/"
+              >Media Spotlight</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="mnav-item">
+        <button
+          class="mnav-wrap mnav-wrap--toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mnav-sub-resources"
+        >
+          <span class="mnav-label">Resources</span
+          ><span class="mnav-caret"
+            ><svg
+              viewBox="0 0 448 512"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+              /></svg
+          ></span>
+        </button>
+        <ul class="mnav-sub" id="mnav-sub-resources">
+          <li><a href="https://activator.bg/newsletter/">Newsletter</a></li>
+          <li><a href="https://activator.bg/category/blog/">Blog</a></li>
+          <li><a href="https://activator.bg/downloads/">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 
   <section id="top" class="hero scene">
     <div class="hero-in">
@@ -4176,6 +5642,123 @@ document.addEventListener("click", function (event) {
     }
   }, 50);
 })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    /* ------------------------------------------------------------------------
+         4. Header menus
+
+         The desktop drop-downs open on hover and on focus in CSS alone, so they
+         work with scripting off. What is added here is the pointer-free path:
+         the caret button toggles .is-open on its item, Escape closes it, and a
+         click anywhere else closes whatever is open. The mobile panel is
+         script-only by nature - it toggles .is-menu-open on the body - and its
+         sub-menus are independent accordions.
+
+         Every listener is delegated from document rather than bound to the
+         header's own nodes. The program pages render their body from a template
+         after hydration and throw the pre-rendered header away, and a delegated
+         listener keeps working across that swap.
+         ---------------------------------------------------------------------- */
+
+    (function () {
+      "use strict";
+
+      /* Mirrors the header's mobile breakpoint in section 3. */
+      var BP = 959;
+
+      function closeDropdowns(except) {
+        var open = document.querySelectorAll(
+          ".nav-item--has-sub.is-open",
+        );
+
+        Array.prototype.forEach.call(open, function (item) {
+          if (item === except) return;
+          item.classList.remove("is-open");
+          var caret = item.querySelector(".nav-caret");
+          if (caret) caret.setAttribute("aria-expanded", "false");
+        });
+      }
+
+      function setMenu(open) {
+        document.body.classList.toggle("is-menu-open", open);
+
+        var toggle = document.querySelector(".nav-toggle");
+        if (toggle) {
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          toggle.setAttribute(
+            "aria-label",
+            open ? "Close menu" : "Open menu",
+          );
+        }
+
+        /* Keeps the off-screen panel out of the tab order while closed. */
+        var panel = document.getElementById("mobile-nav");
+        if (panel)
+          panel.setAttribute("aria-hidden", open ? "false" : "true");
+      }
+
+      document.addEventListener("click", function (event) {
+        var target = event.target;
+        if (!target || !target.closest) return;
+
+        var caret = target.closest(".nav-caret");
+        if (caret) {
+          var item = caret.closest(".nav-item");
+          var itemOpen = !item.classList.contains("is-open");
+          closeDropdowns(item);
+          item.classList.toggle("is-open", itemOpen);
+          caret.setAttribute(
+            "aria-expanded",
+            itemOpen ? "true" : "false",
+          );
+          return;
+        }
+
+        if (target.closest(".nav-toggle")) {
+          setMenu(!document.body.classList.contains("is-menu-open"));
+          return;
+        }
+
+        if (target.closest("[data-menu-close]")) {
+          setMenu(false);
+          return;
+        }
+
+        var row = target.closest(".mnav-wrap--toggle");
+        if (row) {
+          var mItem = row.closest(".mnav-item");
+          var rowOpen = !mItem.classList.contains("is-open");
+          mItem.classList.toggle("is-open", rowOpen);
+          row.setAttribute("aria-expanded", rowOpen ? "true" : "false");
+          return;
+        }
+
+        /* A link inside the panel navigates away, but same-page anchors
+             would otherwise leave the panel sitting over the target. */
+        if (target.closest(".mnav") && target.closest("a")) {
+          setMenu(false);
+          return;
+        }
+
+        if (!target.closest(".nav-item--has-sub")) closeDropdowns(null);
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        closeDropdowns(null);
+        setMenu(false);
+      });
+
+      /* Resizing past the breakpoint hides the panel with CSS; the body
+             lock has to be released by hand or the page stays unscrollable. */
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > BP) setMenu(false);
+      });
+
+      setMenu(false);
+    })();
+  });
 </script>
 </body>
 </html>

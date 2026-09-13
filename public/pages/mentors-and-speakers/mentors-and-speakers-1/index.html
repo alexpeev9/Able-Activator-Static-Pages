@@ -1,0 +1,2785 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ABLE Activator — Mentors and Speakers</title>
+    <meta
+      name="description"
+      content="All the speakers at ABLE Activator volunteer their knowledge and experience with the idea of improving the business environment in Bulgaria."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&amp;family=Barlow:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Inter:wght@400;500&amp;display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================================================
+   ABLE Activator - landing-3
+   Plain CSS. No build step, no framework.
+
+   Sections, in order:
+     1. Tokens & base
+     2. Layout primitives (slab, container, headings, cards, buttons)
+     3. Site header (menu, drop-downs, mobile panel)
+     4. Page background (fixed video)
+     5. Hero
+     6. Modules (rail on desktop, accordion on mobile)
+     7. FAQ
+     8. Closing CTA band
+     9. Quiz
+    10. Footer
+    11. Reduced motion
+   ========================================================================== */
+
+      /* --------------------------------------------------------------------------
+   1. Tokens & base
+   -------------------------------------------------------------------------- */
+
+      :root {
+        --accent: #29abe2;
+        --accent-soft: #7ad2f2;
+        --accent-ink: #10222b;
+
+        --bg: #1c1c1c;
+        --bg-slab: #1f1f1f;
+        --bg-hero: #131313;
+        --bg-card: #1c1c1c;
+        --bg-footer: #1a1a1a;
+
+        /* The header is a copy of the activator.bg one and keeps that site
+     values rather than this page - see section 3. */
+        --hdr-bg: #1e1e1e;
+        --nav-ink: #dadada;
+
+        /* Header height, mirrored from section 3 so the hero and the anchor
+     offsets can subtract it. */
+        --hdr-h: 89px;
+
+        --line: #2b2b2b;
+        --line-soft: #262626;
+        --line-strong: #3a3f42;
+
+        --text: #e9edef;
+        --text-bright: #ffffff;
+        --text-muted: #a8b1b5;
+        --text-dim: #8d979b;
+        --text-faint: #767f83;
+
+        --font-body: Barlow, Helvetica, sans-serif;
+        --font-display: Poppins, Helvetica, sans-serif;
+        --font-mono: "IBM Plex Mono", monospace;
+        --font-nav: Inter, Helvetica, sans-serif;
+
+        --container: 1180px;
+        --slab-pad-y: clamp(36px, 5.4vw, 78px);
+        --slab-pad-x: clamp(16px, 4vw, 40px);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        overflow-x: clip;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--accent-soft);
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      [id] {
+        scroll-margin-top: calc(var(--hdr-h) + 15px);
+      }
+      @media (max-width: 959px) {
+        :root {
+          --hdr-h: 77px;
+        }
+      }
+
+      /* --------------------------------------------------------------------------
+   2. Layout primitives
+   -------------------------------------------------------------------------- */
+
+      /* A full-bleed horizontal band. Sits above the fixed video background. */
+      .slab {
+        position: relative;
+        z-index: 1;
+        background: var(--bg-slab);
+        border-top: 1px solid var(--line-soft);
+      }
+
+      /* A band that lets the fixed video background show through. */
+      .scene {
+        position: relative;
+        z-index: 1;
+        background: transparent;
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .container {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--slab-pad-y) var(--slab-pad-x);
+      }
+
+      /* Small blue monospace label above a heading. */
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 12px;
+      }
+
+      .sec-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(25px, 4vw, 40px);
+        line-height: 1.08;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        text-wrap: balance;
+      }
+
+      .sec-title + .card-grid,
+      .sec-title + .faq-list {
+        margin-top: clamp(22px, 3vw, 34px);
+      }
+
+      .sec-subtitle {
+        margin: 0 0 clamp(18px, 2.4vw, 26px);
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(20px, 3vw, 28px);
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--text-bright);
+        text-wrap: balance;
+      }
+
+      .sec-lede {
+        margin: 14px 0 clamp(22px, 3vw, 32px);
+        font-size: 16px;
+        line-height: 1.55;
+        color: var(--text-muted);
+        max-width: 58ch;
+        text-wrap: pretty;
+      }
+
+      .sec-lede--last {
+        margin-bottom: 0;
+        max-width: 62ch;
+      }
+
+      /* Hairline card grid: the 1px gap over a grey backdrop draws the rules. */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+      }
+      .card-grid--auto {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      .card-grid--spaced {
+        margin-bottom: clamp(28px, 4vw, 44px);
+      }
+
+      @media (max-width: 820px) {
+        .card-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 520px) {
+        .card-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .card {
+        background: var(--bg-card);
+        padding: clamp(20px, 2.6vw, 28px);
+        min-width: 0;
+      }
+      .card-tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .card-num {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--accent);
+        margin-bottom: 12px;
+      }
+      .card-title {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 17.5px;
+        line-height: 1.3;
+        color: var(--text-bright);
+        margin-bottom: 8px;
+      }
+      .card-title--lg {
+        font-size: clamp(18px, 2.2vw, 23px);
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+      .card-body {
+        font-size: 15px;
+        line-height: 1.5;
+        color: var(--text-dim);
+        text-wrap: pretty;
+      }
+
+      /* Buttons and button-styled links. */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 15px;
+        padding: 16px 28px;
+        min-height: 48px;
+        border: 0;
+        cursor: pointer;
+        transition:
+          background 0.18s ease,
+          border-color 0.18s ease,
+          color 0.18s ease;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #0f1c22;
+      }
+      .btn-primary:hover {
+        background: #bfe9f8;
+        color: #0f1c22;
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid #33393c;
+        color: #eceff0;
+        font-weight: 600;
+        padding: 16px 26px;
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      /* --------------------------------------------------------------------------
+   3. Site header
+
+   A copy of the activator.bg header, measured off the live site rather than
+   restyled to this page's palette, so the two read as the same site. Hence
+   the values below that do not use this page's tokens: the header keeps
+   Inter at 17.6px on #dadada over a flat #1e1e1e band, its own 1400px
+   container, and the 180px logo. The one token it does share is --accent-2,
+   which is already the same #8ec54a the site hovers with.
+   -------------------------------------------------------------------------- */
+
+      .hdr {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--hdr-bg);
+      }
+      .hdr-in {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 15px;
+        height: 89px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .brand {
+        flex: none;
+        display: flex;
+        align-items: center;
+      }
+      .brand svg {
+        display: block;
+        width: 180px;
+        height: auto;
+      }
+
+      /* The menu. Each entry is a .nav-item; the ones that own a sub-menu also
+   carry .nav-item--has-sub and reveal their panel on hover, on keyboard
+   focus anywhere inside the item, or while the caret button has toggled
+   .is-open. The three routes are equivalent, so a pointer user and a
+   keyboard user see the same panel.
+
+   Spacing follows the original exactly: items are 30px apart (a 15px margin
+   either side, cancelled at the ends by the negative margin on the list) and
+   the row is 25px tall, which is also where the sub-menu hangs from. */
+
+      .nav {
+        margin-left: auto;
+      }
+      .nav-ul,
+      .nav-sub {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        margin: 0 -15px;
+      }
+      .nav-item {
+        position: relative;
+        margin: 0 15px;
+      }
+
+      .nav-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 25px;
+        padding: 0 4px;
+      }
+      .nav-wrap > a {
+        display: flex;
+        padding-top: 1px;
+        font-family: var(--font-nav);
+        font-size: 17.6px;
+        font-weight: 500;
+        line-height: 25px;
+        letter-spacing: -0.3px;
+        text-transform: capitalize;
+        color: var(--nav-ink);
+        white-space: nowrap;
+      }
+      /* The underline grows from the left edge of the item over its full width,
+   caret included - it is on the wrap, not on the link. */
+      .nav-wrap::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-2);
+        transition: width 0.3s ease;
+      }
+      .nav-item:hover > .nav-wrap::after,
+      .nav-item:focus-within > .nav-wrap::after,
+      .nav-item.is-open > .nav-wrap::after {
+        width: 100%;
+      }
+      .nav-item:hover > .nav-wrap > a,
+      .nav-item:focus-within > .nav-wrap > a,
+      .nav-item.is-open > .nav-wrap > a {
+        color: var(--accent-2);
+      }
+
+      /* The caret is a real button so the panel is reachable without a pointer.
+   It never navigates - the label beside it is the link. */
+      .nav-caret {
+        appearance: none;
+        border: 0;
+        background: none;
+        padding: 0;
+        margin: 1.2px 0 0 5px;
+        width: 8.8px;
+        color: var(--nav-ink);
+        line-height: 0;
+        cursor: pointer;
+      }
+      .nav-caret svg {
+        display: block;
+        width: 8.8px;
+        height: 8.8px;
+      }
+      .nav-item:hover > .nav-wrap > .nav-caret,
+      .nav-item:focus-within > .nav-wrap > .nav-caret,
+      .nav-item.is-open > .nav-wrap > .nav-caret {
+        color: var(--accent-2);
+      }
+
+      /* The panel hangs off the bottom of the 25px row and is shrink-to-fit,
+   pinned by its right edge so it never runs off the end of the header. The
+   original opens it with no transition at all. */
+      .nav-sub {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 100;
+        background: var(--hdr-bg);
+        box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+        opacity: 0;
+        visibility: hidden;
+      }
+      .nav-item--has-sub:hover > .nav-sub,
+      .nav-item--has-sub:focus-within > .nav-sub,
+      .nav-item--has-sub.is-open > .nav-sub {
+        opacity: 1;
+        visibility: visible;
+      }
+      .nav-sub a {
+        display: block;
+        padding: 10px 20px;
+        font-family: var(--font-nav);
+        font-size: 17.6px;
+        font-weight: 500;
+        line-height: 25px;
+        letter-spacing: -0.3px;
+        text-transform: capitalize;
+        color: var(--nav-ink);
+        white-space: nowrap;
+      }
+      .nav-sub a:hover,
+      .nav-sub a:focus-visible {
+        color: var(--accent-2);
+      }
+
+      /* --------------------------------------------------------------------------
+   3b. Mobile menu
+
+   The original swaps to a 120px logo and a hamburger at 960px, so that is the
+   breakpoint here too. The panel carries its own copy of the links rather
+   than moving the desktop list into it, so neither menu depends on the other
+   existing. Sub-menus there are accordions, closed until their row is
+   pressed.
+   -------------------------------------------------------------------------- */
+
+      .nav-toggle {
+        display: none;
+        appearance: none;
+        border: 0;
+        background: none;
+        padding: 10px;
+        margin-right: -10px;
+        margin-left: auto;
+        cursor: pointer;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 44px;
+        min-height: 44px;
+      }
+      .nav-toggle span {
+        display: block;
+        height: 2px;
+        width: 22px;
+        border-radius: 2px;
+        background: var(--nav-ink);
+        transition:
+          transform 0.22s ease,
+          opacity 0.18s ease;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      .nav-scrim {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: rgba(8, 10, 12, 0.6);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.24s ease,
+          visibility 0.24s ease;
+      }
+      .mnav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 61;
+        width: min(340px, 86vw);
+        height: 100%;
+        padding: 18px 20px 32px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: var(--hdr-bg);
+        transform: translateX(100%);
+        visibility: hidden;
+        transition:
+          transform 0.26s cubic-bezier(0.4, 0, 0.2, 1),
+          visibility 0.26s ease;
+      }
+      body.is-menu-open .nav-scrim {
+        opacity: 1;
+        visibility: visible;
+      }
+      body.is-menu-open .mnav {
+        transform: none;
+        visibility: visible;
+      }
+      body.is-menu-open {
+        overflow: hidden;
+      }
+
+      .mnav-close {
+        appearance: none;
+        border: 0;
+        background: none;
+        padding: 10px;
+        margin: 0 -10px 6px auto;
+        display: block;
+        color: var(--nav-ink);
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+        min-height: 44px;
+      }
+      .mnav-close:hover {
+        color: var(--accent-2);
+      }
+
+      .mnav-ul,
+      .mnav-sub {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .mnav-item + .mnav-item {
+        border-top: 1px solid rgba(218, 218, 218, 0.12);
+      }
+      /* A row that owns a sub-menu is a button, not a link: on a touch screen
+   the parent entry is the only way to open its accordion, so tapping it must
+   never navigate. Rows without a sub-menu stay plain links inside a div. */
+      .mnav-wrap {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        appearance: none;
+        border: 0;
+        background: none;
+        padding: 0;
+        text-align: left;
+        cursor: pointer;
+      }
+      .mnav-wrap > a,
+      .mnav-label {
+        flex: 1;
+        padding: 13px 0;
+        font-family: var(--font-nav);
+        font-size: 17.6px;
+        font-weight: 500;
+        letter-spacing: -0.3px;
+        text-transform: capitalize;
+        color: var(--nav-ink);
+      }
+      .mnav-wrap > a:hover,
+      .mnav-wrap--toggle:hover .mnav-label {
+        color: var(--accent-2);
+      }
+      .mnav-caret {
+        color: var(--nav-ink);
+        line-height: 0;
+        flex: none;
+        width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease;
+      }
+      .mnav-caret svg {
+        display: block;
+        width: 11px;
+        height: 11px;
+      }
+      .mnav-item.is-open .mnav-caret {
+        transform: rotate(180deg);
+        color: var(--accent-2);
+      }
+      .mnav-sub {
+        display: none;
+        padding: 0 0 10px 14px;
+      }
+      .mnav-item.is-open .mnav-sub {
+        display: block;
+      }
+      .mnav-sub a {
+        display: block;
+        padding: 9px 0;
+        font-family: var(--font-nav);
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: -0.3px;
+        text-transform: capitalize;
+        color: var(--nav-ink);
+      }
+      .mnav-sub a:hover {
+        color: var(--accent-2);
+      }
+
+      @media (max-width: 959px) {
+        .nav {
+          display: none;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .hdr-in {
+          height: 77px;
+        }
+        .brand svg {
+          width: 120px;
+        }
+      }
+
+      /* Above the breakpoint the mobile panel is never reachable, so it is kept
+   out of the layout and out of the tab order entirely. */
+      @media (min-width: 960px) {
+        .nav-scrim,
+        .mnav {
+          display: none;
+        }
+      }
+      /* --------------------------------------------------------------------------
+   4. Page background
+   -------------------------------------------------------------------------- */
+
+      .page-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: #111314;
+      }
+      .page-bg video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.36) saturate(0.7) contrast(1.08);
+      }
+      .page-bg-veil {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(8, 10, 12, 0.74) 0%,
+            rgba(8, 10, 12, 0.68) 42%,
+            rgba(8, 10, 12, 0.84) 100%
+          ),
+          linear-gradient(
+            90deg,
+            rgba(8, 10, 12, 0.4),
+            transparent 38%,
+            rgba(8, 10, 12, 0.4)
+          );
+      }
+
+
+      :root {
+        --accent-2: #8ec54a;
+      }
+
+      .hero {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        background: var(--bg-hero);
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .hero-grid {
+        max-width: 1240px;
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: stretch;
+      }
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(36px, 6vw, 84px) clamp(20px, 3vw, 28px);
+      }
+      .hero-copy h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(40px, 6.4vw, 72px);
+        line-height: 0.94;
+        letter-spacing: -0.02em;
+        color: var(--text-bright);
+        text-wrap: pretty;
+      }
+      .hero-copy h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .hero-copy > p {
+        margin: 20px 0 0;
+        font-size: clamp(16px, 2vw, 18.5px);
+        line-height: 1.55;
+        color: #a9b1b4;
+        max-width: 38ch;
+      }
+      .hero-kicker {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: clamp(16px, 3vw, 32px);
+      }
+      .hero-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: clamp(24px, 3vw, 36px);
+      }
+      .hero-ctas .btn {
+        text-decoration: none;
+      }
+      .hero-ctas .btn-primary {
+        color: #0f1c22;
+      }
+      .hero-media {
+        position: relative;
+        min-height: clamp(300px, 52vw, 560px);
+        background: #171717;
+        border-left: 1px solid var(--line-soft);
+        overflow: hidden;
+      }
+      .hero-mosaic {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 2px;
+      }
+      .hero-mosaic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.2) contrast(1.05);
+      }
+      .hero-scrim {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          to right,
+          rgba(19, 19, 19, 0.28),
+          rgba(19, 19, 19, 0.08) 45%,
+          rgba(41, 171, 226, 0.14)
+        );
+      }
+      .hero-badge {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 22px 16px 20px;
+        text-align: center;
+        pointer-events: none;
+        background: linear-gradient(180deg, transparent, rgba(19, 19, 19, 0.88));
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(18px, 2.8vw, 32px);
+        line-height: 1.1;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-bright);
+      }
+
+      .facts {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(28px, 4vw, 56px);
+      }
+      .facts h2 {
+        margin: 0 0 16px;
+        font-family: var(--font-display);
+        font-size: clamp(18px, 2vw, 22px);
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-bright);
+      }
+      .facts ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .facts li {
+        position: relative;
+        padding: 10px 0 10px 22px;
+        border-top: 1px solid var(--line);
+        font-size: 15.5px;
+        line-height: 1.45;
+        color: var(--text-muted);
+      }
+      .facts li:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .facts li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 1.05em;
+        width: 8px;
+        height: 2px;
+        background: var(--accent);
+      }
+      .facts b {
+        color: var(--text-bright);
+        font-weight: 600;
+      }
+
+      @media (min-width: 960px) {
+        .hero {
+          min-height: calc(100vh - var(--hdr-h));
+          display: grid;
+          align-items: stretch;
+        }
+        .hero-grid {
+          height: 100%;
+        }
+      }
+      @media (max-width: 860px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-copy {
+          text-align: center;
+          align-items: center;
+          padding: 28px 20px 22px;
+        }
+        .hero-copy > p {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .hero-ctas {
+          width: 100%;
+          max-width: 360px;
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .hero-ctas .btn {
+          width: 100%;
+        }
+        .hero-media {
+          min-height: 280px;
+          border-left: none;
+          border-top: 1px solid var(--line-soft);
+        }
+        .hero-scrim {
+          background: linear-gradient(
+            180deg,
+            rgba(19, 19, 19, 0.15),
+            rgba(19, 19, 19, 0.82)
+          );
+        }
+        .facts {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 36px;
+        }
+      }
+
+      .people {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 28px 18px;
+      }
+      .person {
+        min-width: 0;
+      }
+      .person-media {
+        position: relative;
+        aspect-ratio: 1;
+        overflow: hidden;
+        background: #141414;
+        border: 1px solid var(--line);
+      }
+      .person-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.15);
+      }
+      .person-in {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #0a66c2;
+        color: #fff;
+        display: grid;
+        place-items: center;
+      }
+      .person-in:hover {
+        color: #fff;
+        background: #084d92;
+      }
+      .person-in svg {
+        width: 15px;
+        height: 15px;
+        fill: currentColor;
+      }
+      .person-name {
+        display: block;
+        margin: 14px 0 6px;
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.25;
+        color: var(--text-bright);
+      }
+      a.person-name:hover {
+        color: var(--accent);
+      }
+      .person-role {
+        margin: 0;
+        font-size: 13.5px;
+        line-height: 1.45;
+        color: var(--text-dim);
+      }
+
+      .site-footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--line-soft);
+        background: var(--bg-footer);
+      }
+      .site-footer-in {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 24px var(--slab-pad-x);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        align-items: center;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #5f686c;
+      }
+      .foot-grid {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: clamp(30px, 4vw, 46px) var(--slab-pad-x) 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px 28px;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 22px;
+      }
+      .foot-links a {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #8d979b;
+      }
+      .foot-links a:hover {
+        color: var(--accent);
+      }
+      .foot-social {
+        display: flex;
+        gap: 10px;
+      }
+      .foot-social a {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line-strong);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: #a8b1b5;
+      }
+      .foot-social a:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .foot-social svg {
+        width: 15px;
+        height: 15px;
+        display: block;
+        fill: currentColor;
+      }
+
+      @media (max-width: 980px) {
+        .people {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 820px) {
+        .card-grid--highlights {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 720px) {
+        .people {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 860px) {
+        .foot-grid {
+          flex-direction: column;
+          justify-content: center;
+          gap: 18px;
+        }
+        .foot-links {
+          justify-content: center;
+        }
+        .site-footer-in {
+          justify-content: center;
+          text-align: center;
+        }
+      }
+      @media (max-width: 520px) {
+        .people {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .hero-mosaic {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-rows: repeat(3, minmax(0, 1fr));
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          animation: none !important;
+        }
+        .page-bg video {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+  <body>
+    <!-- Fixed video wallpaper. Sections with .slab cover it; .scene sections let it through. -->
+    <div class="page-bg" aria-hidden="true">
+      <video autoplay loop muted playsinline>
+        <source
+          src="https://res.cloudinary.com/alexpeev9/video/upload/able.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div class="page-bg-veil"></div>
+    </div>
+
+    <!-- ========================================================================
+     Header
+     ===================================================================== -->
+    <header class="hdr">
+      <div class="hdr-in">
+        <a
+          class="brand"
+          href="https://activator.bg/"
+          aria-label="ABLE Activator"
+        >
+          <svg
+            viewBox="0 0 255 104"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="ABLE Activator"
+          >
+            <path
+              d="M59.1691 74.55H67.5187L37.244 28.7474H31.8716L1.59717 74.55H10.0188L33.8318 38.4587H35.2838L59.1691 74.55Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M18.5854 74.55H25.7003V87.8845L42.0354 62.8817H34.9206V49.6194L34.848 49.7644L34.9206 49.6194L18.5854 74.55Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M126.574 55.8775H145.547V59.0051H137.714V74.4696H134.233V59.1787L126.574 59.0051V55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M191.327 55.8775H210.3V59.0051H202.642V74.4696H199.16V59.1787L191.327 59.0051V55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M81.4912 74.4696L90.8905 55.8775H94.1981L103.424 74.4696H99.42L97.3316 70.4732H87.2354L85.1464 74.4696H81.4912ZM88.4539 67.5191H96.2871L92.4573 59.5263L88.4539 67.5191Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M172.18 74.4696L181.58 55.8775H184.887L194.112 74.4696H190.109L188.02 70.4732H177.924L175.835 74.4696H172.18ZM179.142 67.5191H186.976L183.146 59.5263L179.142 67.5191Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M107.253 56.5722C107.775 56.2246 108.645 56.0511 109.342 55.8775C113.171 55.8775 117.174 55.8775 121.004 55.8775C121.875 55.8775 122.745 56.2246 123.267 56.7463C123.789 57.2675 124.137 58.1363 124.137 59.0051C124.137 60.0475 124.137 62.3063 124.137 62.3063L120.656 62.828V59.0051H109.69V71.342H120.656V67.3456L124.137 67.8668C124.137 67.8668 124.137 70.2996 124.137 71.342C124.137 72.5584 123.267 73.7744 122.223 74.122C121.7 74.2961 121.352 74.4696 120.83 74.2961H109.342C108.297 74.2961 107.079 73.7743 106.556 72.9055C106.208 72.3844 106.034 71.6896 106.034 70.9944C106.034 66.998 106.034 63.0015 106.034 59.0051C106.034 58.3099 106.382 57.0934 107.253 56.5722Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M231.014 59.1786C231.014 58.3098 230.666 57.441 230.145 56.9198C229.622 56.3987 228.752 56.051 227.882 56.051C224.052 56.051 220.048 56.051 216.219 56.051C215.523 56.051 214.827 56.2246 214.13 56.7463C213.26 57.2675 212.912 58.4839 212.912 59.3527C212.912 63.3491 212.912 67.3456 212.912 71.342C212.912 72.0367 213.086 72.732 213.434 73.2531C213.956 74.296 215.175 74.6431 216.219 74.6431H227.707C228.23 74.6431 228.578 74.4696 229.1 74.4696C230.318 74.122 231.014 72.9055 231.014 71.6896C231.014 70.2996 231.014 60.2215 231.014 59.1786ZM227.359 71.5155H216.393V59.0051H227.359V71.5155Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M148.507 55.8775C149.725 55.8775 150.769 55.8775 151.988 55.8775C151.988 62.1327 151.988 68.2144 151.988 74.4696C150.769 74.4696 149.725 74.4696 148.507 74.4696C148.507 68.3879 148.507 62.1327 148.507 55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M154.773 55.8775H158.777C158.777 55.8775 162.955 65.4339 165.043 70.1256H165.217C167.306 65.4339 171.658 55.8775 171.658 55.8775H175.488L166.436 74.6432H163.477L154.773 55.8775Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M235.019 55.8775H248.77C249.64 55.8775 250.336 55.8775 251.032 56.3987C251.729 56.9199 252.077 57.6151 252.251 58.4839C252.251 58.831 252.251 59.1787 252.251 59.5263C252.251 60.9163 252.251 62.3063 252.251 63.6963C252.251 64.218 252.251 64.9127 252.077 65.4339C251.903 66.1291 251.381 66.6503 250.684 66.998C250.162 67.1715 249.64 67.3456 249.118 67.3456C248.248 67.3456 247.377 67.3456 246.333 67.3456C248.77 69.7779 253.818 74.6432 253.818 74.6432H249.292L241.807 67.3456H238.5V74.6432H235.019V55.8775ZM238.5 59.0051V64.218H247.725C248.074 64.218 248.248 64.218 248.422 64.0439C248.596 63.8703 248.596 63.5227 248.77 63.1751C248.77 62.3063 248.77 61.2639 248.77 60.3951C248.77 60.0475 248.77 59.6998 248.596 59.5263C248.248 59.0051 248.074 59.0051 247.725 59.0051H238.5Z"
+              fill="#8EC54A"
+            />
+            <path
+              d="M90.8905 28.7474H94.1981L103.424 47.3397H99.5941L97.5051 43.517H87.2354L85.3205 47.5135H81.4912L90.8905 28.7474ZM92.4573 32.3963L88.4539 40.563H96.2871L92.4573 32.3963Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M125.878 28.9211H129.36V44.3857H139.107V47.5135H125.878V28.9211Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M141.892 28.9211H156.166V32.0488L145.547 31.875V36.3928H156.166V39.3468H145.547V44.3857H156.166V47.5135H141.892V28.9211Z"
+              fill="#20C4F4"
+            />
+            <path
+              d="M119.96 37.7829C121.004 37.6091 121.875 36.7403 121.875 35.524V31.7013C121.875 30.1375 120.656 28.7474 118.915 28.7474H105.338V47.3397H118.915C120.656 47.3397 122.049 45.9496 122.049 44.212V40.0417C122.049 38.9992 121.178 37.9567 119.96 37.7829ZM108.994 31.875H117.523C117.871 31.875 118.219 32.2226 118.219 32.5701V35.6977C118.219 36.0453 117.871 36.3928 117.523 36.3928H108.994V31.875ZM118.567 43.517C118.567 44.0382 118.219 44.3857 117.697 44.3857H108.82V39.3468H117.697C118.219 39.3468 118.567 39.6943 118.567 40.2156V43.517Z"
+              fill="#20C4F4"
+            />
+          </svg>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <ul class="nav-ul">
+            <li class="nav-item nav-item--has-sub">
+              <div class="nav-wrap">
+                <a href="https://activator.bg/program/">ABLE Activator</a>
+                <button
+                  class="nav-caret"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="nav-sub-activator"
+                  aria-label="ABLE Activator submenu"
+                >
+                  <svg
+                    viewBox="0 0 448 512"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <ul class="nav-sub" id="nav-sub-activator">
+                <li>
+                  <a href="https://activator.bg/program/"
+                    >Program &ndash; Sofia</a
+                  >
+                </li>
+                <li>
+                  <a href="https://activator.bg/mentors-and-speakers/"
+                    >Mentors and Speakers</a
+                  >
+                </li>
+                <li>
+                  <a href="https://activator.bg/alumni-and-testimonials/"
+                    >Alumni and Testimonials</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item--has-sub">
+              <div class="nav-wrap">
+                <a
+                  href="https://activator.bg/able-weekend-activator-overviewold/"
+                  >Weekend Activator</a
+                >
+                <button
+                  class="nav-caret"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="nav-sub-weekend"
+                  aria-label="Weekend Activator submenu"
+                >
+                  <svg
+                    viewBox="0 0 448 512"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <ul class="nav-sub" id="nav-sub-weekend">
+                <li>
+                  <a
+                    href="https://activator.bg/able-weekend-activator-overviewold/"
+                    >&#1055;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1072;</a
+                  >
+                </li>
+                <li>
+                  <a href="https://activator.bg/able-weekend-activator-apply/"
+                    >&#1050;&#1072;&#1085;&#1076;&#1080;&#1076;&#1072;&#1090;&#1089;&#1090;&#1074;&#1072;&#1081;</a
+                  >
+                </li>
+                <li>
+                  <a href="https://activator.bg/mentors-and-speakers/"
+                    >&#1052;&#1077;&#1085;&#1090;&#1086;&#1088;&#1080; &#1080;
+                    &#1083;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;</a
+                  >
+                </li>
+                <li>
+                  <a href="https://activator.bg/team/"
+                    >&#1045;&#1082;&#1080;&#1087;</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://activator.bg/able-weekend-activator-testimonials/"
+                    >&#1054;&#1090;&#1079;&#1080;&#1074;&#1080;</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item--has-sub">
+              <div class="nav-wrap">
+                <a href="https://activator.bg/mentors-and-speakers/">Network</a>
+                <button
+                  class="nav-caret"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="nav-sub-network"
+                  aria-label="Network submenu"
+                >
+                  <svg
+                    viewBox="0 0 448 512"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <ul class="nav-sub" id="nav-sub-network">
+                <li><a href="https://activator.bg/team/">Team</a></li>
+                <li>
+                  <a href="https://activator.bg/mentors-and-speakers/"
+                    >Mentors and Speakers</a
+                  >
+                </li>
+                <li><a href="https://activator.bg/partners/">Partners</a></li>
+                <li>
+                  <a href="https://activator.bg/media-spotlight/"
+                    >Media Spotlight</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item--has-sub">
+              <div class="nav-wrap">
+                <a href="https://activator.bg/category/blog/">Resources</a>
+                <button
+                  class="nav-caret"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="nav-sub-resources"
+                  aria-label="Resources submenu"
+                >
+                  <svg
+                    viewBox="0 0 448 512"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <ul class="nav-sub" id="nav-sub-resources">
+                <li>
+                  <a href="https://activator.bg/newsletter/">Newsletter</a>
+                </li>
+                <li><a href="https://activator.bg/category/blog/">Blog</a></li>
+                <li><a href="https://activator.bg/downloads/">Downloads</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          aria-label="Open menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+    <div class="nav-scrim" data-menu-close></div>
+    <div class="mnav" id="mobile-nav" aria-label="Primary" role="navigation">
+      <button
+        class="mnav-close"
+        type="button"
+        data-menu-close
+        aria-label="Close menu"
+      >
+        &times;
+      </button>
+      <ul class="mnav-ul">
+        <li class="mnav-item">
+          <button
+            class="mnav-wrap mnav-wrap--toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mnav-sub-activator"
+          >
+            <span class="mnav-label">ABLE Activator</span
+            ><span class="mnav-caret"
+              ><svg
+                viewBox="0 0 448 512"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                /></svg
+            ></span>
+          </button>
+          <ul class="mnav-sub" id="mnav-sub-activator">
+            <li>
+              <a href="https://activator.bg/program/">Program &ndash; Sofia</a>
+            </li>
+            <li>
+              <a href="https://activator.bg/mentors-and-speakers/"
+                >Mentors and Speakers</a
+              >
+            </li>
+            <li>
+              <a href="https://activator.bg/alumni-and-testimonials/"
+                >Alumni and Testimonials</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="mnav-item">
+          <button
+            class="mnav-wrap mnav-wrap--toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mnav-sub-weekend"
+          >
+            <span class="mnav-label">Weekend Activator</span
+            ><span class="mnav-caret"
+              ><svg
+                viewBox="0 0 448 512"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                /></svg
+            ></span>
+          </button>
+          <ul class="mnav-sub" id="mnav-sub-weekend">
+            <li>
+              <a href="https://activator.bg/able-weekend-activator-overviewold/"
+                >&#1055;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1072;</a
+              >
+            </li>
+            <li>
+              <a href="https://activator.bg/able-weekend-activator-apply/"
+                >&#1050;&#1072;&#1085;&#1076;&#1080;&#1076;&#1072;&#1090;&#1089;&#1090;&#1074;&#1072;&#1081;</a
+              >
+            </li>
+            <li>
+              <a href="https://activator.bg/mentors-and-speakers/"
+                >&#1052;&#1077;&#1085;&#1090;&#1086;&#1088;&#1080; &#1080;
+                &#1083;&#1077;&#1082;&#1090;&#1086;&#1088;&#1080;</a
+              >
+            </li>
+            <li>
+              <a href="https://activator.bg/team/"
+                >&#1045;&#1082;&#1080;&#1087;</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://activator.bg/able-weekend-activator-testimonials/"
+                >&#1054;&#1090;&#1079;&#1080;&#1074;&#1080;</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="mnav-item">
+          <button
+            class="mnav-wrap mnav-wrap--toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mnav-sub-network"
+          >
+            <span class="mnav-label">Network</span
+            ><span class="mnav-caret"
+              ><svg
+                viewBox="0 0 448 512"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                /></svg
+            ></span>
+          </button>
+          <ul class="mnav-sub" id="mnav-sub-network">
+            <li><a href="https://activator.bg/team/">Team</a></li>
+            <li>
+              <a href="https://activator.bg/mentors-and-speakers/"
+                >Mentors and Speakers</a
+              >
+            </li>
+            <li><a href="https://activator.bg/partners/">Partners</a></li>
+            <li>
+              <a href="https://activator.bg/media-spotlight/"
+                >Media Spotlight</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="mnav-item">
+          <button
+            class="mnav-wrap mnav-wrap--toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mnav-sub-resources"
+          >
+            <span class="mnav-label">Resources</span
+            ><span class="mnav-caret"
+              ><svg
+                viewBox="0 0 448 512"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                /></svg
+            ></span>
+          </button>
+          <ul class="mnav-sub" id="mnav-sub-resources">
+            <li><a href="https://activator.bg/newsletter/">Newsletter</a></li>
+            <li><a href="https://activator.bg/category/blog/">Blog</a></li>
+            <li><a href="https://activator.bg/downloads/">Downloads</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <main>
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="hero-kicker">The volunteer faculty</div>
+            <h1 id="hero-title">Mentors and <em>speakers</em></h1>
+            <p>
+              Founders, investors, and operators who donate their time so
+              participants can learn from the people building Bulgaria.
+            </p>
+            <div class="hero-ctas">
+              <a class="btn btn-primary" href="#people">Meet the roster</a>
+              <a class="btn btn-outline" href="#about">How they help</a>
+            </div>
+          </div>
+          <div class="hero-media" aria-hidden="true">
+            <div class="hero-mosaic">
+              <img
+                src="https://activator.bg/wp-content/uploads/elementor/thumbs/aleksandrina_ikonomova-qsjwefg6f0jr0ls8maq0f6e7g0qjv71aqa0uy8tho8.jpeg"
+                alt=""
+              />
+              <img
+                src="https://activator.bg/wp-content/uploads/elementor/thumbs/alexander-tsvetkov-qsjwlx7uwgt1kowdv1bxssbhxlsw8bs9fd97onpi2g.jpeg"
+                alt=""
+              />
+              <img
+                src="https://activator.bg/wp-content/uploads/elementor/thumbs/Valentina_Milanova-1-qfmuod8amov1y65mcikjmfytlkhg2kmn81hh0b694o.png"
+                alt=""
+              />
+              <img
+                src="https://activator.bg/wp-content/uploads/elementor/thumbs/Vasil_Terziev-qf1ussuf5ya2ngh2s5zy76qzvutx44lhzajy8e18e0.png"
+                alt=""
+              />
+              <img
+                src="https://activator.bg/wp-content/uploads/elementor/thumbs/yavor-gochev-qsl8pwlzwnree93iap2b6q5ur12telmyvvzvxfogxk.jpeg"
+                alt=""
+              />
+              <img
+                src="https://activator.bg/wp-content/uploads/elementor/thumbs/zarko-photo1-p2lvh63w1hditgjm5xvm46whw54jsbqb1rze1wk2pk.jpg"
+                alt=""
+              />
+            </div>
+            <div class="hero-scrim"></div>
+            <div class="hero-badge">Mentors · speakers · panelists</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slab" id="about">
+        <div class="container">
+          <div class="facts">
+            <div>
+              <div class="eyebrow">About the roster</div>
+              <h2>Who they are</h2>
+              <ul>
+                <li>
+                  Speakers, mentors, and panelists <b>volunteer</b> their
+                  time — no fee, no sponsorship pitch.
+                </li>
+                <li>
+                  Shared aim: <b>strengthen Bulgaria’s entrepreneurial
+                  landscape</b> and the people we select.
+                </li>
+                <li>
+                  This is a selection from past editions. The guest list
+                  <b>changes with each curriculum.</b>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div class="eyebrow">In the room</div>
+              <h2>What they bring</h2>
+              <ul>
+                <li>Proven leaders and industry experts</li>
+                <li>Workshops and interactive panels</li>
+                <li>Open Q&amp;A with the country’s best</li>
+                <li>Tailored advice and know-how</li>
+                <li>Industry-specific knowledge</li>
+                <li>Strong personal connections</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slab" id="people">
+        <div class="container">
+          <div class="eyebrow">The roster</div>
+          <h2 class="sec-title">Faces of the program</h2>
+          <p class="sec-lede">People who have volunteered their time with ABLE Activator.</p>
+          <div class="people">
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Alexander-Grozdanov-p2pycdg8k15qfal3lv3tuhfki365lakaz09f2b6188.jpg" alt="Aleksander Grozdanov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/aagrozdanov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Aleksander Grozdanov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Aleksander Grozdanov</h3>
+          <p class="person-role">Escape Rooms Co-Founder and CEO of Dextophobia Rooms</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/aleksandrina_ikonomova-qsjwefg6f0jr0ls8maq0f6e7g0qjv71aqa0uy8tho8.jpeg" alt="Aleksandrina Ikonomova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/aleksandrina-ikonomova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Aleksandrina Ikonomova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Aleksandrina Ikonomova</h3>
+          <p class="person-role">Co-Founder of Stealth Startup &amp; MindFit.Bg</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/alexander-tsvetkov-qsjwlx7uwgt1kowdv1bxssbhxlsw8bs9fd97onpi2g.jpeg" alt="Alexander Tsvetkov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/alexander-tsvetkov111/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Alexander Tsvetkov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Alexander Tsvetkov</h3>
+          <p class="person-role">Founder &amp; CEO at Boleron AD</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/anastas_pushkarov-qflrnjjwclri2mqpj9tj2y2424onzrknet0s0m4cl4.jpeg" alt="Anastas Pushkarov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/anastas-pushkarov-086ba788/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Anastas Pushkarov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Anastas Pushkarov</h3>
+          <p class="person-role">Management consultant at ex-McKinsey</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/unnamed-e1665153409229-pvv8fkvhg2uhz1lh8g1b78bzmosv6y3z0rcgjci7js.jpg" alt="Andrey Davchev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/andrey-davtchev-8693921/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Andrey Davchev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-andrey-davchev/">Andrey Davchev</a>
+          <p class="person-role">CEO of Matrax Ltd</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/100510267_244338100175875_1845509969206575104_n-e1613325298401-p2v2lpfsl3owx9aslnpqf3359abethfpaygm8duwu0.png" alt="Arthur Pantelides" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-arthur-pantelides/">Arthur Pantelides</a>
+          <p class="person-role">Founder &amp; President of NEXCORE Strategic Consulting Services</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/asen_georgiev-qflrzu9vrkljyyvmq36t7cc7um2jp7e83oah1xvx6g.jpeg" alt="Asen Georgiev" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <h3 class="person-name">Asen Georgiev</h3>
+          <p class="person-role">Founder в Batteryland</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Belizar-Marinov_team-1-1-p2lz5hty5uip98c1h50v4sskgwwred1ykq8688curc.jpg" alt="Belizar Marinov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/belizar-marinov-5125758/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Belizar Marinov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Belizar Marinov</h3>
+          <p class="person-role">Venture Capital Investment Associate at Eleven Ventures</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Bilyana_Dimitrova-qf1ss31wgcqihg3ke8fyt1c9hr8on2x1ndooorunqw.png" alt="Bilyana Dimitrova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/bilyana-dimitrova-2580b8132/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Bilyana Dimitrova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Bilyana Dimitrova</h3>
+          <p class="person-role">Partner at DSP Law Office</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/boryana-petrova-qsl6mcd2i4bl2qutj17zqslvlxikmjnrtw0p2npt4o.jpeg" alt="Boryana Petrova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/boryanapetrova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Boryana Petrova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Boryana Petrova</h3>
+          <p class="person-role">Head of Product Operations Experian</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/danail_koev-qflsci5lu7xmduhfs28vanaryhnkeeo1icoyt53zco.jpeg" alt="Danail Koev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/danailkoev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Danail Koev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Danail Koev</h3>
+          <p class="person-role">Co-Founder &amp; CEO VEDA Accounting</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/denis-ivanov-qsl6sbm3z6i8xg65m49k3safn61ml8eazhevz0unjs.jpeg" alt="Denis Ivanov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/denisivanovbg/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Denis Ivanov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Denis Ivanov</h3>
+          <p class="person-role">Founder of VODORASLO</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/dilyana-dobrinova-qsl6wi0aco84j23p7x9v6qc6otgcsszcw5skrannw8.jpeg" alt="Dilyana Dobrinova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/dilyanadobrinova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Dilyana Dobrinova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Dilyana Dobrinova</h3>
+          <p class="person-role">Brand Strategy Consultant</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Dobromir-Ivanov-CEO-of-The-Bulgarian-Startup-Association-BESCO-p1jysre0auacpkaskez6y2oo5mst98cpiqa7q5qlyw.jpeg" alt="Dobromir Ivanov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/dobromir1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Dobromir Ivanov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Dobromir Ivanov</h3>
+          <p class="person-role">Non-Governmental Sector Chairman of The Bulgarian Startup Association</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/image0-e1612955367518-p2nmasm5zzdbl1eov1h4yz84qnv36t84zs6i8l81iw.jpg" alt="Dr. Jamie Williams" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-jamie-williams/">Dr. Jamie Williams</a>
+          <p class="person-role">Professional American Football Player, Leadership Coach &amp; Entrepreneur</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/ekaterina_petkova-qflsy3i4u7hr3d4aow9c2p4z858483e2587ioz3eew.jpeg" alt="Ekaterina Petkova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/ekaterina-petkova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Ekaterina Petkova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Ekaterina Petkova</h3>
+          <p class="person-role">Founder of Box from Bulgaria</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Elena-Nikolova-scaled-qkm7p6rwcd9015gq50yara7yok4afx7pioj3pl24zc.jpeg" alt="Elena Nikolova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/elenakrnikolova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Elena Nikolova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Elena Nikolova</h3>
+          <p class="person-role">Community Manager CEO Angels Club</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Emil-Stavrev--qflteu0oj0ejtet3ymp6yz3g04qea2u042drbca1mg.jpeg" alt="Emil Stavrev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/emil-stavrev-47909817/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Emil Stavrev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Emil Stavrev</h3>
+          <p class="person-role">CEO Founder Cars Central by Avtoikonom LTD</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/estel_2022-scaled-e1700424216883-qfltlmepvxp3o0y4bkc6z9fagb9tvds7po003a7ooo.jpg" alt="Estel Vasileva" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/estel-vasileva-0a233521/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Estel Vasileva">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Estel Vasileva</h3>
+          <p class="person-role">Head of Finance Daye</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Etien-Yanev--qfltwqtyrcx91wshddf9hgdnigg6yfxv8pwuj5pz20.jpeg" alt="Etien Yanev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/etienyanev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Etien Yanev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Etien Yanev</h3>
+          <p class="person-role">Senior Social Media Manager Payhawk</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/galin-stefanov-qsl71ihasv36g6tjy3a8hgsoqsqtuovtkz1swf82pk.jpeg" alt="Galin Stefanov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/galinstefanov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Galin Stefanov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Galin Stefanov</h3>
+          <p class="person-role">Founder &amp; Host Varnapreneurs</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/5326-tl3-p2lutdsx3etb0p3g25qhiozkq4d602au41o1uttq60.jpg" alt="Genoveva Christova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/genoveva-christova-b376268/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Genoveva Christova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-genoveva-christova/">Genoveva Christova</a>
+          <p class="person-role">Managing Director of Ligna Group</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/georgi_demirev-qflu6cqkme2rqeu19ixyz13a4939n23389zj4zh3g8.jpeg" alt="Georgi Demirev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/gdemirev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Demirev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Demirev</h3>
+          <p class="person-role">Founder at Finbryte</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/IMG_6328-Georgi-Demirev-scaled-e1700425186557-qfluay6618d8hs5qfigb5vceo2fv9sbuj0szlont14.jpg" alt="Georgi Demirev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/georgi-demirev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Demirev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Demirev</h3>
+          <p class="person-role">Co-Owner at influ.ai</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/138-Georgi-Kudrev-small-qec315mr1womh3bl8zidtgz3ipfg3yblyeed600qm0.jpg" alt="Georgi Kadrev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/georgikadrev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Kadrev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Kadrev</h3>
+          <p class="person-role">Co-founder &amp; CEO Kelvin Health</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Georgi-Kirilov--qfluie2650jyenclz88zehqryvrh7ivcjuqddjmlrs.jpeg" alt="Georgi Kirilov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/gkkirilov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Kirilov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Kirilov</h3>
+          <p class="person-role">Co-Founder at Nauchi.bg</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Georgi-Malchev--qflulkqhaswxr2q1dltguot0fw29alilnmblxawkoo.jpeg" alt="Georgi Malchev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/georgimalchev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Malchev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Malchev</h3>
+          <p class="person-role">Managing Partner at @Xplora.bg and Creator at Malchev.net</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/George-Mitev-qfluolrrbl275ubnowy6vxahcl4u3hjgqlzxleewmw.jpeg" alt="Georgi Mitev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/georgemitev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Mitev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Mitev</h3>
+          <p class="person-role">Sales &amp; Marketing Executive A Data Pro</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/georgi-nenov-e1700426037111-qflux54zeeqymbx6u3t719q7ll1v0ifowvbpivr648.jpg" alt="Georgi Nenov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/nenov-georgi/overlay/photo/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Nenov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Nenov</h3>
+          <p class="person-role">Founder &amp; Host The Superhuman Podcast</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Georgi-Traykov-qfluzwrviujcszwgoavndkl2kferoff8mkh6e7nfso.jpeg" alt="Georgi Traykov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/georgi-traykov-49797758/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Georgi Traykov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Georgi Traykov</h3>
+          <p class="person-role">Co-founder of Progressive Lawyers and LimeLegal</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Hristo-Hristov--qflv6kgpxlnh1k8asohije3m1old78usjitzrrs1q0.jpeg" alt="Hristo Hristov" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <h3 class="person-name">Hristo Hristov</h3>
+          <p class="person-role">Head of Sales Strategy at DRONAMICS</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/48361735_10156931043564630_8117779959453319168_o-e1612977532229-p2o2djsq1nn45kqfc7lj7xjg5j94loud8cr9vz3id4.jpg" alt="Hristo Hristozov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/hristo-hristozov-62095923/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Hristo Hristozov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-hristo-hristozov/">Hristo Hristozov</a>
+          <p class="person-role">Business &amp; Cultural Consultant</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Hristo-Neychev--qflvan3jjr87cqbb0fvbcd3ipsimk10x3olqmxqmrc.jpeg" alt="Hristo Neychev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/hristoneychev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Hristo Neychev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Hristo Neychev</h3>
+          <p class="person-role">Executive Coach &amp; Startup Advisor</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/hristomir-hristov-qsl77d15br3eoubpsmanzznxt3x1qw3p1x6keejvzs.jpeg" alt="Hristomir Hristov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/hristomir-hristov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Hristomir Hristov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Hristomir Hristov</h3>
+          <p class="person-role">Co-founder &amp; CEO fairytales.app</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Ikonom-Filipov--qflvcuztoo9krl391welqaxp7jktqau3qo20fgg62g.jpeg" alt="Ikonom Filipov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/ikonomfilipov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Ikonom Filipov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Ikonom Filipov</h3>
+          <p class="person-role">Senior Product Manager</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/iskren_mitev-qflvhxciij77bxqdh38860x4gam17ky13qm7j4xsjc.jpeg" alt="Iskren Mitev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/iskrenmitev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Iskren Mitev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Iskren Mitev</h3>
+          <p class="person-role">Founder of Escreo</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Ivan-Sharlandziev--qflvk74h14b5e0fl7kkroya84teyt8yoezdga7kji0.jpeg" alt="Ivan Sharlandziev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/sharlandzhiev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Ivan Sharlandziev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Ivan Sharlandziev</h3>
+          <p class="person-role">Commercial Development at Eurotronics</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Ivon-Lalova-qflvq7bcp0j3kbpk560ymfq8rftdzmsxwpf4nunzqw.jpeg" alt="Ivon Lalova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/ivon-lalova-93124331/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Ivon Lalova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Ivon Lalova</h3>
+          <p class="person-role">Strategic Account Advisor Salesforce</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Jane-Dimitrova--qflvtne1r58y4upc0nnprkf36atu7ohidrj80dk0xk.jpeg" alt="Jane Dimitrova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/janedimitrova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Jane Dimitrova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Jane Dimitrova</h3>
+          <p class="person-role">Founder of FoodoBox</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/julian_sofroniev-qflvyk3pfzyurjkncs1ksbtquqmuerz1q26i8ea0fs.jpeg" alt="Julian Sofroniev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/julian-sofroniev-98739b36/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Julian Sofroniev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Julian Sofroniev</h3>
+          <p class="person-role">CEO at Biodit</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Kamen-Bankovski--qflw1m2tnm5ehx4wilkxe22octksfd3n56ibdrqy7s.jpeg" alt="Kamen Bankovski" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/kamen-bankovski/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Kamen Bankovski">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Kamen Bankovski</h3>
+          <p class="person-role">Vitosha Ventures</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Kateproykova-qflw5kyaifkzinddcbc7x20qne0kxcuucto4btv3y0.jpeg" alt="Kate Proykova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/kateproykova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Kate Proykova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Kate Proykova</h3>
+          <p class="person-role">Product Marketing GPTboost</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Konstantin_Dzhengozov-1-qflw8bncg1c3dpe0c001ov450ui4dkqnqe63pvsrso.png" alt="Konstantin Dzhengozov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/konstantin-dzhengozov-21435a21/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Konstantin Dzhengozov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Konstantin Dzhengozov</h3>
+          <p class="person-role">Co-Founder &amp; CFO Payhawk</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/konstantin-petrov-qsl7esx5fja4lpilcc3c8m2b3x8nomn72r3y69ioqg.jpeg" alt="Konstantin Petrov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/konpet/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Konstantin Petrov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Konstantin Petrov</h3>
+          <p class="person-role">Product Manager at HALO Diagnostics</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/konstantin_rangelov-e1700428266131-qflwjd92qygdsrcgu9v8hks4au2dtjl4924hpxf8oo.webp" alt="Konstantin Rangelov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/konstantinrangelov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Konstantin Rangelov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Konstantin Rangelov</h3>
+          <p class="person-role">Co-Founder &amp; CTO at Dronamics</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Krassen-Draganov-e1700428550579-qflwqs78nwlte0kpjh9a5pf109imjl0vxree0ifflk.jpeg" alt="Krassen Draganov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/krassendraganov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Krassen Draganov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Krassen Draganov</h3>
+          <p class="person-role">Founder and Chief Product Officer at Dynamo Software</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Lyubomir_Nokov-1-qfmqtazvj2hwb05gdeljqj9trdwjamk8rqxf0ld1o8.png" alt="Lyubomir Nokov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/lubonokov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Lyubomir Nokov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Lyubomir Nokov</h3>
+          <p class="person-role">Co-founder and CEO at Harmonica Foods</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Lyubomira-Vutkova-qfmqwc15jun5prr2opq9rrrao2z43il3uqlqoovdmg.jpeg" alt="Lyubomira Vutkova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/lyubomira-vutkova-60504b3a/%20https://www.facebook.com/lyubomira.tileva" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Lyubomira Vutkova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Lyubomira Vutkova</h3>
+          <p class="person-role">Process Improvement &amp; Business Development Lufthansa Technik Sofia</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/418771671_1143929336984965_5483536960377846114_n-qk3ah3nz5zmhi22gkuscucnsju7w7bahfq22fd601k.jpg" alt="Manuela Draganova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/manueladraganova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Manuela Draganova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Manuela Draganova</h3>
+          <p class="person-role">Co-founder &amp; Generative Coach</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Margarit-Ralev-qfmqz6hk8sjev9m92g0ltjwjf2y4eivuktpnzungs8.jpeg" alt="Margarit Ralev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/ralev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Margarit Ralev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Margarit Ralev</h3>
+          <p class="person-role">CEO GEMJI.com</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Mariyan-Marinov-qf1u8fob36ef3m21pd2y6brgjb7mc7qv6hp7wk8b7c.png" alt="Mariyan Marinov" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <h3 class="person-name">Mariyan Marinov</h3>
+          <p class="person-role">Sofia Tech Park</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/martin-marinov-qsl7k1upl8grfbw5p3rcnsdyiddfnsh8sq8jmvqjzs.jpeg" alt="Martin Marinov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/martin-k-marinov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Martin Marinov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Martin Marinov</h3>
+          <p class="person-role">Software engineer at Sensata Technologies</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/martin-markov-qsl7n6ncdcr64jcbegikyzx9slxhbgx188it833b94.jpeg" alt="Martin Markov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/m-markov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Martin Markov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Martin Markov</h3>
+          <p class="person-role">CEO &amp; Co-Founder at Appolica</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Mihal-Kambarev-qfmr7j9wzrz62hhca217zg01idrkto1ye6h1ke9hh4.jpeg" alt="Mihal Kambarev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/mihalkambarev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Mihal Kambarev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Mihal Kambarev</h3>
+          <p class="person-role">Business Development Executive at TechTour</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Mirena-Boycheva-qfmrbnsezlmh0vhm6u89xeivd9fklufjmljre45a60.jpeg" alt="Mirena Boycheva" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/mirenaboycheva/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Mirena Boycheva">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Mirena Boycheva</h3>
+          <p class="person-role">Digital Marketing Specialist at what.</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Miroslav-Dzhokanov-qfmrek4i27latla29lbv4671b15bc8xr0xynntukzc.jpeg" alt="Miroslav Dzhokanov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/mdzhokanov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Miroslav Dzhokanov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-miroslav-dzhokanov/">Miroslav Dzhokanov</a>
+          <p class="person-role">CEO &amp; Co-founder of Shkolo</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Atalaskite-planini-p2niypqewwzmedtx1mvwxs38rlq0utilhfwg519mew.jpg" alt="Momchil Tzvetanov" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-momchil-tzvetanov/">Momchil Tzvetanov</a>
+          <p class="person-role">Founder &amp; CEO of Divlandia and Planinaria</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/monika-dimitrova-qsl7ruwgcp5huqjx3z8svbgs4kw6lagzjdaq4m5ubc.jpeg" alt="Monika Dimitrova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/monikadimitrova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Monika Dimitrova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-momchil-tzvetanov/">Monika Dimitrova</a>
+          <p class="person-role">Marketing Director at SiteGround</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Ned_Dervenkov-1-qfmri4we2ihl0630dmzr3rp6otilms4z6nc6eqjnaw.png" alt="Ned Dervenkov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/ned-dervenkov-6625811b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Ned Dervenkov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Ned Dervenkov</h3>
+          <p class="person-role">CEO of BESCO</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Nick-Hristov-qsl813nbk1t00p4l4z2qdzhyezc4a55yt48m0kgh4o.jpeg" alt="Nick Hristov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/nick-hristov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Nick Hristov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Nick Hristov</h3>
+          <p class="person-role">Head of Product at Email Industries</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-2-1-e1612978482897-p2o32btk7fk87iqpnf6hg6fvw74gig7myzv2bkcwc8.jpg" alt="Nikola Yanev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/nikolayanev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Nikola Yanev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-nikola-yanev/">Nikola Yanev</a>
+          <p class="person-role">Marketing Manager at Eleven Ventures</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Nicholas-Gantchev-qfmru9zcch3wyug4hdx9t7eiwzoa21c5uqoykejkxk.jpeg" alt="Nikolai Gantchev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/nicholasga/?utm_source=share&amp;amp;utm_campaign=share_via&amp;amp;utm_content=profile&amp;amp;utm_medium=ios_app" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Nikolai Gantchev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Nikolai Gantchev</h3>
+          <p class="person-role">Serial Entrepreneur</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Nikolay-Angov--qfmrxcwaqxbr0tz0hpv8zfex0ghlabkhlzo971z4jc.jpeg" alt="Nikolay Angov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/nikolayangov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Nikolay Angov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Nikolay Angov</h3>
+          <p class="person-role">Managing Partner at InnoLED</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-1-2-p2nmt7adu6kgy4o4dhx4au03jb4uxfawiw3tknxho8.jpg" alt="Ognyan Vasilev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/ognyan-v-vasilev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Ognyan Vasilev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-ognyan-vasilev/">Ognyan Vasilev</a>
+          <p class="person-role">Business Development Coach</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/122961342_1679028472252071_3494952239278257828_n-p2nx3yqllm44gy47drfft9tiuroz3f7ctzuo9u73co.jpg" alt="Petko Karagyozov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/petko-karagyozov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Petko Karagyozov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-petko-karagyozov/">Petko Karagyozov</a>
+          <p class="person-role">Learning Designer and Facilitator at IBM Bulgaria</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-5-p2nx43fsjsak2zxdmbgknqmttp1t5wq0in43o804hk.jpg" alt="Petya Grozdarska" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-petya-grozdarska/">Petya Grozdarska</a>
+          <p class="person-role">Learning &amp; Development Trainer at Telerik Academy</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Radostina-Tsenova-qfmsfqmoeahm2b9t5nwlqsff7pvzt8jisyy31upyuw.jpeg" alt="Radostina Tsenova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/radostinatsenova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Radostina Tsenova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Radostina Tsenova</h3>
+          <p class="person-role">Associate at the Bulgarian VC and PE Association</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/ralitsa-ivanova-qsl85vnsaqch1c6q8jfgka3b4hsaer4ugrmgu7dfi0.jpeg" alt="Ralitsa Ivanova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/raivanova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Ralitsa Ivanova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Ralitsa Ivanova</h3>
+          <p class="person-role">Head of Startup Studio Appolica</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Raya-Tsvetkova--qfmsp9protj9rzfgia7fivuo1cwyurdjs52b7ul9rs.jpeg" alt="Raya Tsvetkova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/raya-tsvetkova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Raya Tsvetkova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Raya Tsvetkova</h3>
+          <p class="person-role">Manager and member of the The Future Now Associasion</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Raya-Yunakova-qfmsr1msljyrpgum51u28fq0fk5xe6faoxfbunyi0o.jpeg" alt="Raya Yunakova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/rayayu/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Raya Yunakova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Raya Yunakova</h3>
+          <p class="person-role">Investor LAUNCHub Ventures</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Raycho-Raychev-qf0htru6fqtsdjdcml65ykxkrakkpqhxx44ydm3d14.png" alt="Raycho Raychev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/raychoraychev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Raycho Raychev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Raycho Raychev</h3>
+          <p class="person-role">CEO EnduroSat</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-3-p2nx3vx31409i48au87k3sj52m2vgbw5tlw7u0b9vc.jpg" alt="Rene Tomova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/rene-tomova-82a1951/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Rene Tomova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-rene-tomova/">Rene Tomova</a>
+          <p class="person-role">Co-founder of Creative Shower, Design Partner at Eleven Ventures</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Sisi-Simeonova-qfmsw23t1qttmlkgv7ufj66ihjgeg2brdqojzsiwu0.jpeg" alt="Sisi Simeonova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/svetoslava-simeonova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Sisi Simeonova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Sisi Simeonova</h3>
+          <p class="person-role">Founder of Foody.to</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Slav-Denyakin--qfmsyctlr5z20a8bg7llmlb2rg4p9fg5143a8549mg.jpeg" alt="Slav Denyakin" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/slav-denyakin/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Slav Denyakin">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Slav Denyakin</h3>
+          <p class="person-role">IT Procurement Manager at Mondelēz International</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Stoil-Stoilov-qfmt6f9qez0nnsifc75bj20ibid4bwh751obin5m7s.jpeg" alt="Stoil Stoilov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/stoilstoilov" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Stoil Stoilov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Stoil Stoilov</h3>
+          <p class="person-role">National Assembly of the Republic of Bulgaria</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-3-1-e1612979733967-p2o3yzpnp69xnpanx1grlfpj184mzsvugnzhopxe48.jpg" alt="Stoyan Naydenov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/naydenoff/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Stoyan Naydenov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-stoyan-naydenov/">Stoyan Naydenov</a>
+          <p class="person-role">Founder at Touch Awesome</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Stoyan-Nedin--qfmtewra44muh26osd72jexbdqjetj5yn1p4hkko1k.jpeg" alt="Stoyan Nedin" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/stoyan-nedin-736a492/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Stoyan Nedin">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Stoyan Nedin</h3>
+          <p class="person-role">Venture Partner at Vitosha Venture Partners</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/zarko-photo1-p2lvh63w1hditgjm5xvm46whw54jsbqb1rze1wk2pk.jpg" alt="Svetozar Georgiev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/svetozar-georgiev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Svetozar Georgiev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-svetozar-georgiev/">Svetozar Georgiev</a>
+          <p class="person-role">Co-Founder at Telerik Academy &amp; Campus X</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-8-p2pv7x1cwl7rerxn9r5o1d19zjg9ox4dueh53jwnnc.jpg" alt="Tatiyana Mitkova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/tatyanamitkova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Tatiyana Mitkova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Tatiyana Mitkova</h3>
+          <p class="person-role">Founder of ClaimCompass</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Teodor_Todorov-qf1uji7vkxjzu9z525crjj6weon8zvp21ab3dvtdx4.png" alt="Teodor Todorov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/teodor-todorov1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Teodor Todorov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Teodor Todorov</h3>
+          <p class="person-role">Founder and Mentor Grow IT</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/about-the-company2-1-p2v2edb58nncatygfzjkgfqmc0h9qjb4mn56dmqjeg.jpg" alt="Teofil Shikov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="http://linkedin.com/in/shikov" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Teofil Shikov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-teofil-shikov/">Teofil Shikov</a>
+          <p class="person-role">Founder &amp; CEO of Out2Bound</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/17435861_732350796935083_1590820569699596607_o-p2nlzyj57qjbqv5b4uuyq7nu7r9rgf7j65g02raf94.jpg" alt="Todor Gigilev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/gigilev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Todor Gigilev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-todor-gigilev/">Todor Gigilev</a>
+          <p class="person-role">CEO of Dreamix , Co-Founder of IT Gix &amp; Avtoikonom</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-6-e1612954378389-p2nlkyzs8u0qmox0ndn3yzt98l52q5plryzalxiego.jpg" alt="Todor Sarakchiev" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-todor-sarakchiev/">Todor Sarakchiev</a>
+          <p class="person-role">IT Project Manager &amp; Entrepreneur</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/hKR9-fAu-p2o3ukuxm68h5lpeomste1smn3vluyd7itqfkygxbs.jpeg" alt="Tsvetelina Teneva" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/tzteneva/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Tsvetelina Teneva">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-tzvetelina-teneva/">Tsvetelina Teneva</a>
+          <p class="person-role">Co-founder &amp; Senior Facilitator at The Business Institute</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Valentina_Milanova-1-qfmuod8amov1y65mcikjmfytlkhg2kmn81hh0b694o.png" alt="Valentina Milanova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/valentina-milanova-%F0%9F%87%BA%F0%9F%87%A6-13899564/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Valentina Milanova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Valentina Milanova</h3>
+          <p class="person-role">Founder &amp; CEO Daye</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Vasil_Terziev-qf1ussuf5ya2ngh2s5zy76qzvutx44lhzajy8e18e0.png" alt="Vassil Terziev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/vassil-terziev-24242/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Vassil Terziev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Vassil Terziev</h3>
+          <p class="person-role">Co-Founder of Telerik &amp; Kendo UI</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/vassilena-valchanova-qsl8j0glsebp973yjpsswgs5xb1wyi9txrrp8dwek8.jpeg" alt="Vassilena Valchanova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/vasvalch/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Vassilena Valchanova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Vassilena Valchanova</h3>
+          <p class="person-role">Content Strategist &amp; Brand Messaging Craftswoman</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Velizar_Velichkov-qf1uw7za18ymwdi7t582rtodpbz04h6c480k3mynqw.png" alt="Velizar Velichkov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/velizar-velichkov-2615ab27/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Velizar Velichkov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Velizar Velichkov</h3>
+          <p class="person-role">COO and Partner at 1ForFit</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Venera-Alexandrova-qfmuxdim4j6z7n2kqwqu0o4uji32u5e1gmjzkrtfi0.jpeg" alt="Venera Alexandrova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/veneraalexandrova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Venera Alexandrova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Venera Alexandrova</h3>
+          <p class="person-role">Founder of IPX - startup consulting services</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Venetsia-Netsova-Angova--qfmv0m2lnzmj7ad9ub4kluq07a4lcm8r8ng7330m2g.jpeg" alt="Venetsia Netsova Angova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/venetsia-netsova-angova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Venetsia Netsova Angova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Venetsia Netsova Angova</h3>
+          <p class="person-role">Member of Parliament</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/vesko-kolev-scaled-e1700476112511-qfmv8mn1y4lk7kq419v1dbwikkm9zp2cobq9f14r08.webp" alt="Vesko Kolev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/veselinkolev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Vesko Kolev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Vesko Kolev</h3>
+          <p class="person-role">Founder &amp; CEO icanpreneur</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Victor_Botev-qf1uzdpr07abx6x0d0dxniz5kyeezupuvuyb64a0u0.png" alt="Victor Botev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/victorbotev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Victor Botev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Victor Botev</h3>
+          <p class="person-role">CTO &amp; Co-Founder at Iris AI</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Victor-Nasr--qfmvc0u2ml8u4vsm7qojdh2fsnvzscjgh4jdt03kjc.jpeg" alt="Victor Nasr" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/victor-nasr-9561a614" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Victor Nasr">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Victor Nasr</h3>
+          <p class="person-role">Dell Technologies Sales Executive</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/viktoria-popova-e1700476435603-qfmvh1b32s3w20igxwowo7ixun6gu8fx5xsly4nzco.jpeg" alt="Viktoria Popova" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <h3 class="person-name">Viktoria Popova</h3>
+          <p class="person-role">Co-founder на OurLove Books</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Viktoria-Docheva-e1700476607783-qfmvlizbqa97ixzmpukql2q80x1lm69r4604hq09mg.jpeg" alt="Victoria Docheva" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <h3 class="person-name">Victoria Docheva</h3>
+          <p class="person-role">Product Marketing Manager Amadeus</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Vladimir-Davche-e1565093400171-600x600-1-e1612953651318-p2nl1zn48a1a66hmho9c4a95dgp8a7cqu0paprnm48.jpg" alt="Vladimir Davchev" width="300" height="300" loading="lazy" decoding="async" />
+            
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-vladimir-davchev/">Vladimir Davchev</a>
+          <p class="person-role">Regional Director SE Europe at Takeaway.com</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Vladimir-Hristov--qfmvqgmtlz0eh8tkwhd86bwcaqpz0yv0slaw70ouyg.jpeg" alt="Vladimir Hristov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/hristovv" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Vladimir Hristov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Vladimir Hristov</h3>
+          <p class="person-role">Management Consulting Baringa Partners</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/0-p2nij99yiztvh8a7aycrxoid3hwqa05i0xp0186oqg.jpg" alt="Vladimir Stefanov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/vladimir-stefanov-001b67a5/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Vladimir Stefanov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <a class="person-name" href="https://activator.bg/speaker-vladimir-stefanov/">Vladimir Stefanov</a>
+          <p class="person-role">Life Coach at One Wild Life Bulgaria</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/William-Stephens--qfmw27m71f3flrr6ak7ccd5rm4t58ri8eqve5j9p6g.jpeg" alt="William Stephens" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/william-stevens-681b10/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of William Stephens">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">William Stephens</h3>
+          <p class="person-role">Managing Director Tech Tour</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Yasen-Rusev--qfmw74buq9tc8gmhmol7d4kfakm5fuzrr1iodjzooo.jpeg" alt="Yasen Rusev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/yasenrusev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Yasen Rusev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Yasen Rusev</h3>
+          <p class="person-role">CEO of ESCREO</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/yavor-gochev-qsl8pwlzwnree93iap2b6q5ur12telmyvvzvxfogxk.jpeg" alt="Yavor Gochev" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/yavorgochev/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Yavor Gochev">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Yavor Gochev</h3>
+          <p class="person-role">Rinker Center for Entrepreneurship and Training</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/Yuliya-Ivanova-qfmwa0nxsvs616expfosjw8l8cbw69hz5dxkn9ozi0.jpeg" alt="Yulia Ivanova" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/yuliya-borisova-ivanova/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Yulia Ivanova">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Yulia Ivanova</h3>
+          <p class="person-role">Administrative Director</p>
+        </article>
+        <article class="person">
+          <div class="person-media">
+            <img src="https://activator.bg/wp-content/uploads/elementor/thumbs/iliya-valchanov-qye63ftj1iu8h98qebekkz7lqwifjtx0wndxiyzr94.png" alt="Iliya Valchanov" width="300" height="300" loading="lazy" decoding="async" />
+            <a class="person-in" href="https://www.linkedin.com/in/iliya-valchanov/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Iliya Valchanov">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"/></svg>
+            </a>
+          </div>
+          <h3 class="person-name">Iliya Valchanov</h3>
+          <p class="person-role">CEO @ Team-GPT</p>
+        </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="foot-grid">
+        <nav class="foot-links" aria-label="Footer">
+          <a href="https://activator.bg/newsletter/">Newsletter</a>
+          <a href="https://activator.bg/media-spotlight/">Media Spotlight</a>
+          <a href="https://activator.bg/press-kit/">Press Kit</a>
+          <a href="https://activator.bg/partners/">Partners</a>
+          <a href="https://activator.bg/privacy-policy/">Privacy Policy</a>
+          <a href="https://activator.bg/contacts/">Contacts</a>
+        </nav>
+        <div class="foot-social">
+          <a
+            href="https://www.facebook.com/ABLEActivator/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.3 0-1.3-.1-2.45-.1-2.4 0-4.05 1.5-4.05 4.2v2.2H7.5V13h2.7v8z"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://www.linkedin.com/company/able-activator/"
+            target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4.9 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.2 9.2h3.4V21H3.2zM9.3 9.2h3.25v1.6h.05c.45-.85 1.56-1.75 3.2-1.75 3.43 0 4.06 2.25 4.06 5.18V21h-3.4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.74 0-2 1.35-2 2.75V21H9.3z"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="site-footer-in">
+        <span>&copy; 2022 ABLE Activator, All Rights Reserved</span>
+        <span>Sofia &middot; Bulgaria</span>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          (function () {
+            "use strict";
+
+            /* Mirrors the header's mobile breakpoint in section 3. */
+            var BP = 959;
+
+            function closeDropdowns(except) {
+              var open = document.querySelectorAll(
+                ".nav-item--has-sub.is-open",
+              );
+
+              Array.prototype.forEach.call(open, function (item) {
+                if (item === except) return;
+                item.classList.remove("is-open");
+                var caret = item.querySelector(".nav-caret");
+                if (caret) caret.setAttribute("aria-expanded", "false");
+              });
+            }
+
+            function setMenu(open) {
+              document.body.classList.toggle("is-menu-open", open);
+
+              var toggle = document.querySelector(".nav-toggle");
+              if (toggle) {
+                toggle.setAttribute("aria-expanded", open ? "true" : "false");
+                toggle.setAttribute(
+                  "aria-label",
+                  open ? "Close menu" : "Open menu",
+                );
+              }
+
+              /* Keeps the off-screen panel out of the tab order while closed. */
+              var panel = document.getElementById("mobile-nav");
+              if (panel)
+                panel.setAttribute("aria-hidden", open ? "false" : "true");
+            }
+
+            document.addEventListener("click", function (event) {
+              var target = event.target;
+              if (!target || !target.closest) return;
+
+              var caret = target.closest(".nav-caret");
+              if (caret) {
+                var item = caret.closest(".nav-item");
+                var itemOpen = !item.classList.contains("is-open");
+                closeDropdowns(item);
+                item.classList.toggle("is-open", itemOpen);
+                caret.setAttribute(
+                  "aria-expanded",
+                  itemOpen ? "true" : "false",
+                );
+                return;
+              }
+
+              if (target.closest(".nav-toggle")) {
+                setMenu(!document.body.classList.contains("is-menu-open"));
+                return;
+              }
+
+              if (target.closest("[data-menu-close]")) {
+                setMenu(false);
+                return;
+              }
+
+              var row = target.closest(".mnav-wrap--toggle");
+              if (row) {
+                var mItem = row.closest(".mnav-item");
+                var rowOpen = !mItem.classList.contains("is-open");
+                mItem.classList.toggle("is-open", rowOpen);
+                row.setAttribute("aria-expanded", rowOpen ? "true" : "false");
+                return;
+              }
+
+              /* A link inside the panel navigates away, but same-page anchors
+         would otherwise leave the panel sitting over the target. */
+              if (target.closest(".mnav") && target.closest("a")) {
+                setMenu(false);
+                return;
+              }
+
+              if (!target.closest(".nav-item--has-sub")) closeDropdowns(null);
+            });
+
+            document.addEventListener("keydown", function (event) {
+              if (event.key !== "Escape") return;
+              closeDropdowns(null);
+              setMenu(false);
+            });
+
+            /* Resizing past the breakpoint hides the panel with CSS; the body
+         lock has to be released by hand or the page stays unscrollable. */
+            window.addEventListener("resize", function () {
+              if (window.innerWidth > BP) setMenu(false);
+            });
+
+            setMenu(false);
+          })();
+      });
+    </script>
+  </body>
+</html>

@@ -47,5 +47,16 @@
         "title": "Weekend Activator (BG)"
       }
     ]
+  },
+  {
+    "id": "mentors-and-speakers",
+    "title": "Mentors and Speakers",
+    "blurb": "Volunteer mentors, speakers, and panelists.",
+    "pages": [
+      {
+        "slug": "mentors-and-speakers-1",
+        "title": "Mentors and Speakers"
+      }
+    ]
   }
 ]

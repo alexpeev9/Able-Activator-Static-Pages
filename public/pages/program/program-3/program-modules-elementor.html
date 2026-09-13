@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABLE Activator — Program modules (Elementor)</title>
+<!--
+  Elementor: add an HTML widget, then paste everything from
+  ELEMENTOR-START through ELEMENTOR-END (style + markup + script).
+  Use a full-width section. If scripts are stripped, paste the <script>
+  block into Elementor → Custom Code (body end) as an administrator.
+-->
+</head>
+<body style="margin:0;background:#1c1c1c;">
+
+<!-- ELEMENTOR-START -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&amp;family=Barlow:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+<style>
+.able-pm {
+  --accent: #29abe2;
+  --accent-soft: #7ad2f2;
+  --bg: #1c1c1c;
+  --bg-slab: #1f1f1f;
+  --line: #2b2b2b;
+  --line-soft: #262626;
+  --line-strong: #3a3f42;
+  --text: #e9edef;
+  --text-bright: #ffffff;
+  --text-muted: #a8b1b5;
+  --text-dim: #8d979b;
+  --text-faint: #767f83;
+  --font-body: Barlow, Helvetica, sans-serif;
+  --font-display: Poppins, Helvetica, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --container: 1180px;
+  --slab-pad-y: clamp(36px, 5.4vw, 78px);
+  --slab-pad-x: clamp(16px, 4vw, 40px);
+
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  background: var(--bg-slab);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+.able-pm *,
+.able-pm *::before,
+.able-pm *::after { box-sizing: border-box; }
+.able-pm h2,
+.able-pm h3,
+.able-pm p,
+.able-pm ul,
+.able-pm li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+}
+.able-pm ul { list-style: none; }
+.able-pm button {
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+}
+
+.able-pm .able-pm-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--slab-pad-y) var(--slab-pad-x);
+}
+
+.able-pm .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.able-pm .sec-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(25px, 4vw, 40px);
+  line-height: 1.08;
+  text-transform: uppercase;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+.able-pm .sec-lede {
+  margin: 16px 0 0;
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+.able-pm .mods-intro { margin-bottom: clamp(22px, 3.4vw, 36px); }
+
+.able-pm .mod-item { display: contents; }
+
+.able-pm .mod-head {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 22px;
+  align-items: baseline;
+  column-gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: clamp(14px, 1.7vw, 20px) 2px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: inherit;
+  min-height: 52px;
+  transition: border-color .3s ease;
+}
+.able-pm .mod-head:hover { border-color: #4a5054; }
+.able-pm .mod-head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.able-pm .mod-head-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: #6c7478;
+  transition: color .3s ease;
+}
+.able-pm .mod-head-title {
+  min-width: 0;
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(14px, 1.7vw, 17px);
+  line-height: 1.3;
+  color: var(--text-dim);
+  transition: color .3s ease, transform .3s ease;
+  text-wrap: pretty;
+}
+.able-pm .mod-head-dates {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 7px;
+}
+.able-pm .mod-head-mark {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.able-pm .mod-panel { display: none; }
+.able-pm .mod-panel-head { animation: ablePmPanelHeadIn .5s cubic-bezier(.2, .7, .3, 1) both; }
+.able-pm .mod-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.able-pm .mod-meta-kind { color: var(--accent); }
+.able-pm .mod-meta-sep { color: #3d4245; }
+.able-pm .mod-panel-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 3.6vw, 40px);
+  line-height: 1.12;
+  color: var(--text-bright);
+  text-wrap: balance;
+}
+
+.able-pm .mod-block { margin-top: clamp(24px, 3vw, 34px); }
+.able-pm .mod-block-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.able-pm .mod-block-label--tight { margin-bottom: 4px; }
+
+.able-pm .mod-topics {
+  display: grid;
+  gap: 11px 30px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.able-pm .mod-topics li {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: clamp(14.5px, 1.7vw, 16.5px);
+  line-height: 1.5;
+  color: #cfd6d9;
+  animation: ablePmRowIn .45s cubic-bezier(.2, .7, .3, 1) both;
+}
+.able-pm .mod-topics li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: .55em;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.able-pm .mod-topics li span { min-width: 0; text-wrap: pretty; }
+
+.able-pm .mod-body {
+  margin-top: clamp(22px, 2.6vw, 30px);
+  display: grid;
+  gap: 14px;
+  max-width: 72ch;
+}
+.able-pm .mod-body p {
+  font-size: clamp(14.5px, 1.7vw, 16.5px);
+  line-height: 1.66;
+  color: var(--text-muted);
+  text-wrap: pretty;
+  animation: ablePmRowIn .5s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+.able-pm .mod-day {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  column-gap: 28px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid #2f2f2f;
+}
+@media (max-width: 760px) {
+  .able-pm .mod-day { grid-template-columns: 1fr; row-gap: 6px; }
+}
+.able-pm .mod-day-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-bright);
+}
+.able-pm .mod-day-time { font-size: 13px; color: var(--accent); margin-top: 4px; font-weight: 600; }
+.able-pm .mod-day-purpose { font-size: 15px; line-height: 1.6; color: var(--text-muted); text-wrap: pretty; }
+
+.able-pm .mod-note {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: #b6bec2;
+  max-width: 70ch;
+  text-wrap: pretty;
+}
+
+.able-pm .mod-nav {
+  flex: none;
+  margin-top: auto;
+  padding-top: clamp(24px, 3vw, 34px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.able-pm .mod-nav button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 13px 20px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.able-pm .mod-nav button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.able-pm .mod-prev { background: transparent; border: 1px solid var(--line-strong); color: var(--text); }
+.able-pm .mod-prev:hover { border-color: var(--accent); color: var(--accent); }
+.able-pm .mod-next { background: var(--accent); border: 1px solid var(--accent); color: #0f2833; }
+.able-pm .mod-next:hover { background: var(--accent-soft); border-color: var(--accent-soft); }
+.able-pm .mod-nav button[hidden] { display: none; }
+
+@media (min-width: 880px) {
+  .able-pm .mods {
+    display: grid;
+    grid-template-columns: minmax(210px, 330px) minmax(0, 3fr);
+    column-gap: clamp(24px, 4vw, 68px);
+    align-items: start;
+    align-content: start;
+    grid-template-rows: repeat(40, min-content) auto;
+  }
+  .able-pm .mod-head { grid-column: 1; }
+  .able-pm .mod-head-mark::before { content: "\2192"; }
+  .able-pm .mod-panel {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    min-width: 0;
+    min-height: 560px;
+    flex-direction: column;
+  }
+  .able-pm .mod-item.is-active .mod-head-num { color: var(--accent); }
+  .able-pm .mod-item.is-active .mod-head-title { color: var(--text-bright); transform: translateX(2px); }
+  .able-pm .mod-item.is-active .mod-head { border-bottom-color: var(--accent); }
+  .able-pm .mod-item.is-active .mod-head-mark { opacity: 1; transform: none; }
+  .able-pm .mod-item.is-active .mod-panel {
+    display: flex;
+    animation: ablePmPanelIn .42s cubic-bezier(.2, .7, .3, 1) both;
+  }
+}
+
+@media (max-width: 879px) {
+  .able-pm .mod-head {
+    align-items: start;
+    grid-template-columns: 26px minmax(0, 1fr) 24px;
+    padding: 18px 2px;
+    min-height: 56px;
+  }
+  .able-pm .mod-head-num { line-height: 1.5; }
+  .able-pm .mod-head-title { font-size: 16.5px; }
+  .able-pm .mod-head-dates { display: block; }
+  .able-pm .mod-head-mark {
+    opacity: 1;
+    transform: none;
+    font-size: 16px;
+    line-height: 1.3;
+    transition: transform .3s ease;
+  }
+  .able-pm .mod-head-mark::before { content: "+"; }
+  .able-pm .mods { padding-top: 8px; }
+  .able-pm .mod-panel { padding: 28px 2px 28px; }
+  .able-pm .mod-panel-title { font-size: 20px; line-height: 1.2; margin-bottom: 4px; }
+  .able-pm .mod-topics { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .able-pm .mod-nav { display: none; }
+  .able-pm .mod-item.is-open .mod-head-num { color: var(--accent); }
+  .able-pm .mod-item.is-open .mod-head-title { color: var(--text-bright); }
+  .able-pm .mod-item.is-open .mod-head { border-bottom-color: var(--accent); }
+  .able-pm .mod-item.is-open .mod-head-mark { transform: rotate(45deg); }
+  .able-pm .mod-item.is-open .mod-panel {
+    display: block;
+    animation: ablePmPanelIn .36s cubic-bezier(.2, .7, .3, 1) both;
+  }
+}
+
+@keyframes ablePmPanelIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes ablePmPanelHeadIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes ablePmRowIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .able-pm * { animation: none !important; }
+  .able-pm .mod-head { transition: none; }
+}
+</style>
+
+<section class="able-pm" aria-label="Program modules">
+  <div class="able-pm-inner" id="able-pm-modules">
+    <div class="mods-intro">
+      <div class="eyebrow">The curriculum</div>
+      <h2 class="sec-title">Program modules</h2>
+      <p class="sec-lede">Nine weeks, seven modules and a Demo Day. Weekend modules open Friday evening and run full days Saturday and Sunday; Wednesday evenings host a founder from the Bulgarian start-up ecosystem. Pick a step to see what it covers.</p>
+    </div>
+
+    <div class="mods">
+      <div class="mod-item" data-index="0">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-01">
+          <span class="mod-head-num">01</span>
+          <span class="mod-head-title">Module 1<span class="mod-head-dates">19 – 21 Feb 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-01">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Module 1</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>19 – 21 Feb 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7AM Fri – 8PM Sun</span>
+            </div>
+            <h3 class="mod-panel-title">Leadership and Community Ignition: Thinking Like an Entrepreneur</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Motivation &amp; Inspiration</span></li>
+              <li style="animation-delay:0.145s"><span>Introduction to Entrepreneurship</span></li>
+              <li style="animation-delay:0.190s"><span>Teamwork &amp; Leadership</span></li>
+              <li style="animation-delay:0.235s"><span>Idea Generation &amp; Market Research</span></li>
+              <li style="animation-delay:0.280s"><span>Connecting with Entrepreneurs</span></li>
+              <li style="animation-delay:0.325s"><span>Problem Validation</span></li>
+            </ul>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What each day is for</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 19 Feb</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Opening evening: meet the cohort, the trainers and the ABLE community, and set your intentions for the edition.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Saturday 20 Feb</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">The entrepreneurial mindset, covering teamwork, leadership and how founders make decisions under uncertainty.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Sunday 21 Feb</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Idea generation, first market research and validating that the problem you picked is real.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="1">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-02">
+          <span class="mod-head-num">02</span>
+          <span class="mod-head-title">Wednesday session<span class="mod-head-dates">24 Feb 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-02">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Wednesday session</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>24 Feb 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM Wed</span>
+            </div>
+            <h3 class="mod-panel-title">Founders from the Bulgarian ecosystem</h3>
+          </div>
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Apart from the weekend and Friday evening activities, we hold additional Wednesday events during the program, some of which are exclusive to participants of ABLE Activator. They familiarise you with the stories behind successful Bulgarian start-ups, expand your network, and deepen your understanding of leadership and entrepreneurship.</p>
+            <p style="animation-delay:0.240s">Each Wednesday we host a different guest and give you the chance to get to know their story in a dedicated Q&amp;A session.</p>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">The evening</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Wednesday 24 Feb</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="2">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-03">
+          <span class="mod-head-num">03</span>
+          <span class="mod-head-title">Module 2<span class="mod-head-dates">26 – 28 Feb 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-03">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Module 2</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>26 – 28 Feb 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM Fri – 8PM Sun</span>
+            </div>
+            <h3 class="mod-panel-title">The Path to the Customer: Startup Launchpad</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Team Formation</span></li>
+              <li style="animation-delay:0.145s"><span>Understanding Customer Needs</span></li>
+              <li style="animation-delay:0.190s"><span>Defining Value Proposition</span></li>
+              <li style="animation-delay:0.235s"><span>Building Unfair Advantage</span></li>
+              <li style="animation-delay:0.280s"><span>Identifying Traction Channels</span></li>
+              <li style="animation-delay:0.325s"><span>Crafting Revenue Streams</span></li>
+              <li style="animation-delay:0.370s"><span>Managing Cost Structure</span></li>
+              <li style="animation-delay:0.415s"><span>Establishing Key Metrics</span></li>
+              <li style="animation-delay:0.460s"><span>Testing Hypotheses through Customer Interviews</span></li>
+              <li style="animation-delay:0.505s"><span>Motivation on Pivoting Strategies</span></li>
+            </ul>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What each day is for</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 26 Feb</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Teams are formed and each team picks the customer need it will chase for the rest of the program.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Saturday 27 Feb</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Value proposition, unfair advantage and the traction channels that could realistically reach that customer.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Sunday 28 Feb</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Revenue streams, cost structure and key metrics, then you plan the customer interviews you run during the week.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="3">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-04">
+          <span class="mod-head-num">04</span>
+          <span class="mod-head-title">Wednesday session<span class="mod-head-dates">10 Mar 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-04">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Wednesday session</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>10 Mar 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM Wed</span>
+            </div>
+            <h3 class="mod-panel-title">Founders from the Bulgarian ecosystem</h3>
+          </div>
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">A guest founder joins the cohort for a story and a dedicated Q&amp;A session.</p>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">The evening</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Wednesday 10 Mar</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="4">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-05">
+          <span class="mod-head-num">05</span>
+          <span class="mod-head-title">Module 3<span class="mod-head-dates">12 – 14 Mar 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-05">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Module 3</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>12 – 14 Mar 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM Fri – 8PM Sun</span>
+            </div>
+            <h3 class="mod-panel-title">Refining Your Venture: Innovate &amp; Collaborate</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Analyzing Customer Interview Results</span></li>
+              <li style="animation-delay:0.145s"><span>Setting Expectations for Demo Day Presentations</span></li>
+              <li style="animation-delay:0.190s"><span>Exploring Design Thinking</span></li>
+              <li style="animation-delay:0.235s"><span>Facilitating Team Synergy</span></li>
+              <li style="animation-delay:0.280s"><span>Hands-on Session: Building an MVP through Prototyping</span></li>
+              <li style="animation-delay:0.325s"><span>Pitching Session #1: Presenting Initial Ideas</span></li>
+              <li style="animation-delay:0.370s"><span>Roundtable Discussions</span></li>
+            </ul>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What each day is for</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 12 Mar</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">You bring back what customers actually told you and read the results as a team.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Saturday 13 Mar</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Design thinking and a hands-on prototyping session, and the first version of your MVP takes shape.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Sunday 14 Mar</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Pitching Session #1 in front of trainers, then roundtable feedback and Demo Day expectations.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="5">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-06">
+          <span class="mod-head-num">06</span>
+          <span class="mod-head-title">Module 4<span class="mod-head-dates">19 – 21 Mar 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-06">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Module 4</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>19 – 21 Mar 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>8AM Fri – 8PM Sun</span>
+            </div>
+            <h3 class="mod-panel-title">Market and Business Mastery</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Exploring Go-to-Market Strategies</span></li>
+              <li style="animation-delay:0.145s"><span>Insights into Startup Marketing</span></li>
+              <li style="animation-delay:0.190s"><span>Motivational Panel with Successful Entrepreneurs</span></li>
+              <li style="animation-delay:0.235s"><span>Mastering Sales Techniques and Strategies</span></li>
+              <li style="animation-delay:0.280s"><span>Hands-on Work Time in Teams</span></li>
+              <li style="animation-delay:0.325s"><span>Pitching Session #2: Refining Presentation Skills</span></li>
+              <li style="animation-delay:0.370s"><span>Roundtable Discussions</span></li>
+            </ul>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What each day is for</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 19 Mar</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">How a product reaches its market: go-to-market strategy for your specific idea.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Saturday 20 Mar</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Start-up marketing and sales, including the techniques founders use before they can afford a team.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Sunday 21 Mar</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Focused work time in teams, then Pitching Session #2 and roundtable feedback.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="6">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-07">
+          <span class="mod-head-num">07</span>
+          <span class="mod-head-title">Wednesday sessions<span class="mod-head-dates">31 Mar &amp; 7 Apr 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-07">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Wednesday sessions</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>31 Mar &amp; 7 Apr 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM Wed</span>
+            </div>
+            <h3 class="mod-panel-title">Two guest evenings between modules</h3>
+          </div>
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Two more Wednesday evenings with guests from the ecosystem, each followed by an open Q&amp;A with the cohort.</p>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What each day is for</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Wednesday 31 Mar</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Wednesday 7 Apr</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">One guest founder from the Bulgarian start-up ecosystem tells their story, covering the decisions, the mistakes and the numbers, followed by an open Q&amp;A with the cohort.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="7">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-08">
+          <span class="mod-head-num">08</span>
+          <span class="mod-head-title">Module 5<span class="mod-head-dates">2 – 4 Apr 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-08">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Module 5</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>2 – 4 Apr 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM Fri – 8PM Sun</span>
+            </div>
+            <h3 class="mod-panel-title">Financial Mastery &amp; Strategic Scaling</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Navigating Entrepreneurial Finance</span></li>
+              <li style="animation-delay:0.145s"><span>Teamwork &amp; Collaboration</span></li>
+              <li style="animation-delay:0.190s"><span>Insights into Splitting Equity: The Legal Perspective</span></li>
+              <li style="animation-delay:0.235s"><span>Growth Strategies Tailored for Startups</span></li>
+              <li style="animation-delay:0.280s"><span>Motivational Panel with Successful Entrepreneurs</span></li>
+              <li style="animation-delay:0.325s"><span>In-depth Work Time in Teams</span></li>
+              <li style="animation-delay:0.370s"><span>Pitching Session #3: Showcasing Growth Plans</span></li>
+              <li style="animation-delay:0.415s"><span>Roundtable Discussions: Comprehensive Feedback on Pitches</span></li>
+            </ul>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">What each day is for</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 2 Apr</div>
+                <div class="mod-day-time">7:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Entrepreneurial finance: the numbers a founder has to be able to defend.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Saturday 3 Apr</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Splitting equity from the legal side, plus growth strategies built for early-stage teams.</p>
+            </div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Sunday 4 Apr</div>
+                <div class="mod-day-time">8:00 AM – 8:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Pitching Session #3, the last full rehearsal before Demo Day, and detailed roundtable feedback.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="8">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-09">
+          <span class="mod-head-num">09</span>
+          <span class="mod-head-title">Demo Day<span class="mod-head-dates">15 Apr 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-09">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Demo Day</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>15 Apr 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM – 11PM Wed</span>
+            </div>
+            <h3 class="mod-panel-title">Grand Final Pitch Event</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Grand Final Pitch Event</span></li>
+              <li style="animation-delay:0.145s"><span>Hand-picked Jury from the Start-up Ecosystem</span></li>
+              <li style="animation-delay:0.190s"><span>Representatives of the ABLE Community, Sponsors &amp; Partners</span></li>
+              <li style="animation-delay:0.235s"><span>Announcement of the Best-performing Team</span></li>
+            </ul>
+          </div>
+          <div class="mod-body">
+            <p style="animation-delay:0.160s">Demo Day is the culmination of ABLE Activator. Teams deliver their final pitches in front of a specially selected jury of industry leaders and representatives of the Bulgarian start-up ecosystem with a proven track record.</p>
+            <p style="animation-delay:0.240s">Each team has 5 minutes to showcase their product or service, followed by a 5-minute Q&amp;A with the jury. Each project's potential, progress and impact is measured, and the best-performing team of the edition is announced.</p>
+            <p style="animation-delay:0.320s">The day is a celebration of everything the teams accomplish: self-exploration, team formation and the hard work behind first milestones such as an MVP, first customers or revenue — the grit and determination to build something new with the right product-market fit.</p>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">The evening</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Wednesday 15 Apr</div>
+                <div class="mod-day-time">7:00 PM – 11:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">Each team pitches for five minutes to a hand-picked jury of founders and investors, in front of the ABLE community, sponsors and partners. The evening closes with the announcement of the best-performing team of the edition.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="9">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-10">
+          <span class="mod-head-num">10</span>
+          <span class="mod-head-title">Module 5.1 (Closing)<span class="mod-head-dates">16 Apr 2027</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-10">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Module 5.1 — Closing</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>16 Apr 2027</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>5PM – 9PM Fri</span>
+            </div>
+            <h3 class="mod-panel-title">Reflection and certificate ceremony</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Reflection and key takeaways from the Activator journey</span></li>
+              <li style="animation-delay:0.145s"><span>Official certificate ceremony and celebration with ABLE alumni</span></li>
+            </ul>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">The evening</div>
+            <div class="mod-day">
+              <div>
+                <div class="mod-day-name">Friday 16 Apr</div>
+                <div class="mod-day-time">5:00 PM – 9:00 PM</div>
+              </div>
+              <p class="mod-day-purpose">A closing evening to reflect on the journey with your team and trainers, receive your certificate and celebrate with ABLE alumni.</p>
+            </div>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="mod-item" data-index="10">
+        <button class="mod-head" type="button" aria-expanded="false" aria-controls="able-pm-panel-11">
+          <span class="mod-head-num">11</span>
+          <span class="mod-head-title">Module 6 (Retreat)<span class="mod-head-dates">TBC</span></span>
+          <span class="mod-head-mark" aria-hidden="true"></span>
+        </button>
+        <article class="mod-panel" id="able-pm-panel-11">
+          <div class="mod-panel-head">
+            <div class="mod-meta">
+              <span class="mod-meta-kind">Module 6 — Retreat</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>TBC</span>
+              <span class="mod-meta-sep" aria-hidden="true">/</span>
+              <span>7PM Fri – 1PM Sun</span>
+            </div>
+            <h3 class="mod-panel-title">Welcome to the Community</h3>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label">Topics covered</div>
+            <ul class="mod-topics">
+              <li style="animation-delay:0.100s"><span>Team building activities</span></li>
+              <li style="animation-delay:0.145s"><span>Interactive sessions</span></li>
+              <li style="animation-delay:0.190s"><span>Celebrations and a warm welcome to ABLE</span></li>
+            </ul>
+          </div>
+          <div class="mod-block">
+            <div class="mod-block-label mod-block-label--tight">Good to know</div>
+            <p class="mod-note">A weekend retreat outside Sofia that welcomes the new cohort into the ABLE community. Dates are confirmed with the participants after Demo Day.</p>
+          </div>
+          <div class="mod-nav">
+            <button class="mod-prev" type="button" aria-label="Previous module">&#8592; Prev</button>
+            <button class="mod-next" type="button" aria-label="Next module">Next &#8594;</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var roots = document.querySelectorAll(".able-pm");
+  if (!roots.length) return;
+
+  var WIDE = window.matchMedia("(min-width: 880px)");
+
+  Array.prototype.forEach.call(roots, function (root) {
+    if (root.getAttribute("data-able-pm-ready") === "1") return;
+    root.setAttribute("data-able-pm-ready", "1");
+
+    var group = root.querySelector(".mods");
+    if (!group) return;
+
+    var items = Array.prototype.slice.call(group.querySelectorAll(".mod-item"));
+    if (!items.length) return;
+
+    var active = 0;
+    var open = 0;
+
+    var renderModules = function () {
+      var wide = WIDE.matches;
+      items.forEach(function (item, i) {
+        var isActive = wide ? i === active : i === open;
+        item.classList.toggle("is-active", wide && i === active);
+        item.classList.toggle("is-open", !wide && i === open);
+        var head = item.querySelector(".mod-head");
+        if (head) head.setAttribute("aria-expanded", String(isActive));
+        var prev = item.querySelector(".mod-prev");
+        var next = item.querySelector(".mod-next");
+        if (prev) prev.hidden = i === 0;
+        if (next) next.hidden = i === items.length - 1;
+      });
+    };
+
+    var select = function (i) {
+      active = Math.max(0, Math.min(items.length - 1, i));
+      renderModules();
+    };
+
+    items.forEach(function (item, i) {
+      var head = item.querySelector(".mod-head");
+      if (head) {
+        head.addEventListener("click", function () {
+          if (WIDE.matches) {
+            select(i);
+          } else {
+            open = open === i ? -1 : i;
+            renderModules();
+          }
+        });
+      }
+      var prev = item.querySelector(".mod-prev");
+      var next = item.querySelector(".mod-next");
+      if (prev) prev.addEventListener("click", function () { select(active - 1); });
+      if (next) next.addEventListener("click", function () { select(active + 1); });
+    });
+
+    if (WIDE.addEventListener) {
+      WIDE.addEventListener("change", renderModules);
+    } else {
+      WIDE.addListener(renderModules);
+    }
+
+    renderModules();
+  });
+})();
+</script>
+<!-- ELEMENTOR-END -->
+
+</body>
+</html>
